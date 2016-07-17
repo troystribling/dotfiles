@@ -1,0 +1,13 @@
+#!/bin/bash
+
+THIS_DIR=`pwd`
+rm -rf $HOME/.vim $HOME/.vimrc
+
+function unlinkToHome {
+ if [ -L $HOME/$1 ]; then
+    echo "Removing link " $HOME/$1
+    rm $HOME/$1
+ fi
+}
+
+unlinkToHome .vimrc

@@ -1,0 +1,39 @@
+#!/bin/bash 
+
+THIS_DIR=`pwd`
+VIM_AUTOLOAD=$HOME/.vim/autoload
+VIM_BUNDLE=$HOME/.vim/bundle
+
+mkdir -p $VIM_AUTOLOAD $VIM_BUNDLE
+
+function linkToHome {
+   if ! [ -L $HOME/$1 ]; then
+      echo "Creating link " $HOME/$1 $THIS_DIR/$1
+      ln -s $THIS_DIR/$1 $HOME/$1
+   fi
+}
+
+function gitCloneBundle {
+  if [ ! -f $VIM_BUNDLE/$1 ]; then
+    echo "Installing " $2
+    git clone $1 $VIM_BUNDLE/$2
+  else
+    echo $2 " Installed"
+  fi
+}
+
+linkToHome .vimrc
+
+# intstall pathogen
+if [ ! -f $VIM_AUTOLOAD/pathogen.vim ]; then
+  echo "Installing pathogen.vim"
+  curl -LSso $VIM_AUTOLOAD/pathogen.vim https://tpo.pe/pathogen.vim
+else
+  echo "pathogen.vim Installed"
+fi
+
+# install pathogen bundles
+gitCloneBundle git://github.com/tpope/vim-sensible.git vim-sensible
+gitCloneBundle https://github.com/scrooloose/nerdtree.git nerdtree
+gitCloneBundle https://github.com/kien/ctrlp.vim.git ctrlp.vim
+
