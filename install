@@ -3,6 +3,7 @@
 THIS_DIR=`pwd`
 VIM_AUTOLOAD=$HOME/.vim/autoload
 VIM_BUNDLE=$HOME/.vim/bundle
+PLATFORM=`uname`
 
 mkdir -p $VIM_AUTOLOAD $VIM_BUNDLE
 
@@ -10,18 +11,21 @@ function linkToHome {
    if ! [ -L $HOME/$1 ]; then
       echo "Creating link " $HOME/$1 $THIS_DIR/$1
       ln -s $THIS_DIR/$1 $HOME/$1
+    else
+      echo $HOME/$1 "exits"
    fi
 }
 
 function gitCloneBundle {
-  if [ ! -f $VIM_BUNDLE/$1 ]; then
+  if [ ! -d $VIM_BUNDLE/$2 ]; then
     echo "Installing " $2
-    git clone $1 $VIM_BUNDLE/$2
+    git clone --depth=1 $1 $VIM_BUNDLE/$2
   else
     echo $2 " Installed"
   fi
 }
 
+# link to stratup scripts
 linkToHome .vimrc
 
 # intstall pathogen
@@ -36,4 +40,15 @@ fi
 gitCloneBundle git://github.com/tpope/vim-sensible.git vim-sensible
 gitCloneBundle https://github.com/scrooloose/nerdtree.git nerdtree
 gitCloneBundle https://github.com/kien/ctrlp.vim.git ctrlp.vim
+gitCloneBundle https://github.com/scrooloose/syntastic.git syntastic
+gitCloneBundle git@github.com:keith/swift.vim.git swift.vim
 
+# install platform specific packages
+case $PLATFORM in
+  Linux)
+    source $THIS_DIR/.linux
+    ;;
+  Darwin)
+    source $THIS_DIR/.darwin
+    ;;
+esac
