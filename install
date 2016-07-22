@@ -42,6 +42,7 @@ gitCloneBundle https://github.com/scrooloose/nerdtree.git nerdtree
 gitCloneBundle https://github.com/kien/ctrlp.vim.git ctrlp.vim
 gitCloneBundle https://github.com/scrooloose/syntastic.git syntastic
 gitCloneBundle git@github.com:keith/swift.vim.git swift.vim
+gitCloneBundle https://github.com/scrooloose/nerdcommenter.git nerd-commenter
 
 # install platform specific packages
 case $PLATFORM in
