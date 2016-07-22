@@ -29,6 +29,13 @@ filetype plugin on
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" nerd-comment
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
+
 " syntastic
 let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 set statusline+=%#warningmsg#
