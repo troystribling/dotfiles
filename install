@@ -8,12 +8,11 @@ PLATFORM=`uname`
 mkdir -p $VIM_AUTOLOAD $VIM_BUNDLE
 
 function linkToHome {
-   if ! [ -L $HOME/$1 ]; then
-      echo "Creating link " $HOME/$1 $THIS_DIR/$1
-      ln -s $THIS_DIR/$1 $HOME/$1
-    else
-      echo $HOME/$1 "exits"
+   if [ -L $HOME/$1 ]; then
+      echo "Removing link " $HOME/$1
+      rm $HOME/$1
    fi
+   ln -s $THIS_DIR/$1 $HOME/$1
 }
 
 function gitCloneBundle {
@@ -25,9 +24,6 @@ function gitCloneBundle {
   fi
 }
 
-# link to stratup scripts
-linkToHome .vimrc
-
 # intstall pathogen
 if [ ! -f $VIM_AUTOLOAD/pathogen.vim ]; then
   echo "Installing pathogen.vim"
@@ -35,6 +31,10 @@ if [ ! -f $VIM_AUTOLOAD/pathogen.vim ]; then
 else
   echo "pathogen.vim Installed"
 fi
+
+
+# link to stratup scripts
+linkToHome .vimrc
 
 # install pathogen bundles
 gitCloneBundle git://github.com/tpope/vim-sensible.git vim-sensible

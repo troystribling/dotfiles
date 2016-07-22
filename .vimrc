@@ -23,6 +23,7 @@ set foldlevel=1
 execute pathogen#infect()
 syntax on
 filetype plugin indent on
+filetype plugin on
 
 " nerd tree
 map <C-n> :NERDTreeToggle<CR>
