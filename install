@@ -24,6 +24,10 @@ function gitCloneBundle {
   fi
 }
 
+# link to stratup scripts
+linkToHome .vimrc
+linkToHome .zshrc
+
 # intstall pathogen
 if [ ! -f $VIM_AUTOLOAD/pathogen.vim ]; then
   echo "Installing pathogen.vim"
@@ -42,7 +46,8 @@ gitCloneBundle https://github.com/scrooloose/nerdtree.git nerdtree
 gitCloneBundle https://github.com/kien/ctrlp.vim.git ctrlp.vim
 gitCloneBundle https://github.com/scrooloose/syntastic.git syntastic
 gitCloneBundle git@github.com:keith/swift.vim.git swift.vim
-gitCloneBundle https://github.com/scrooloose/nerdcommenter.git nerdcommenter
+gitCloneBundle https://github.com/scrooloose/nerdcommenter.git nerd-commenter
+gitCloneBundle git://github.com/JuliaEditorSupport/julia-vim.git julia-vim
 
 # install platform specific packages
 case $PLATFORM in
