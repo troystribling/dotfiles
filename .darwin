@@ -1,3 +1,4 @@
 echo "Platform is Darwin"
 brew install htop
 brew install swiftlint
+brew install vim
