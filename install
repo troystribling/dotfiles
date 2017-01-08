@@ -48,6 +48,7 @@ gitCloneBundle https://github.com/scrooloose/syntastic.git syntastic
 gitCloneBundle git@github.com:keith/swift.vim.git swift.vim
 gitCloneBundle https://github.com/scrooloose/nerdcommenter.git nerd-commenter
 gitCloneBundle git://github.com/JuliaEditorSupport/julia-vim.git julia-vim
+gitCloneBundle https://github.com/tomlion/vim-solidity.git vim-solidity
 
 # install platform specific packages
 case $PLATFORM in
