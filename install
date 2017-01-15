@@ -27,6 +27,8 @@ function gitCloneBundle {
 # link to stratup scripts
 linkToHome .vimrc
 linkToHome .zshrc
+linkToHome .juliarc.jl
+
 
 # intstall pathogen
 if [ ! -f $VIM_AUTOLOAD/pathogen.vim ]; then

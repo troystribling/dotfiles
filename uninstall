@@ -1,7 +1,7 @@
 #!/bin/bash
 
 THIS_DIR=`pwd`
-rm -rf $HOME/.vim $HOME/.vimrc
+rm -rf $HOME/.vim
 
 function unlinkToHome {
  if [ -L $HOME/$1 ]; then
@@ -11,3 +11,7 @@ function unlinkToHome {
 }
 
 unlinkToHome .vimrc
+unlinkToHome .zshrc
+unlinkToHome .juliarc.jl
+
+
