@@ -94,6 +94,7 @@ if [[ -e $PY_VIRTUAL_ENVWAPPER ]]; then
   export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python3.5"
   export WORKON_HOME="$HOME/.virtualenvs"
   export PROJECT_HOME="$HOME/Develop/GMNA/python"
+  export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/3.5/bin/"
   source $PY_VIRTUAL_ENVWAPPER
 fi
 
