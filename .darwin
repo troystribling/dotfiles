@@ -1,4 +1,32 @@
+#!/bin/bash
+
+function brewInstallIfNotInstalled {
+   if brew ls --versions $1 > /dev/null; then
+     echo "brew package is installed:" $1
+   else
+     echo "brew package install: " $1
+     brew install $1
+   fi
+ }
+
+
+function brewCaskInstallIfNotInstalled {
+   if brew cask ls --versions $1 &> /dev/null; then
+     echo "brew cask is installed:" $1
+   else
+     echo "brew cask install install: " $1
+     brew cask install $1
+   fi
+ }
+
 echo "Platform is Darwin"
-brew install htop
-brew install swiftlint
-brew install vim
+brewInstallIfNotInstalled htop
+brewInstallIfNotInstalled swiftlint
+brewInstallIfNotInstalled vim
+brewInstallIfNotInstalled tmux
+brewInstallIfNotInstalled postgres
+
+brew tap caskroom/cask
+
+brewCaskInstallIfNotInstalled launchrocket
+brewCaskInstallIfNotInstalled psequel

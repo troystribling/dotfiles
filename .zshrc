@@ -90,7 +90,7 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 PY_VIRTUAL_ENVWAPPER="/Library/Frameworks/Python.framework/Versions/3.5/bin/virtualenvwrapper.sh"
 
-if [ ! -e $PY_VIRTUAL_ENVWAPPER ]; then
+if [[ -e $PY_VIRTUAL_ENVWAPPER ]]; then
   export WORKON_HOME=$HOME/.virtualenvs
   export PROJECT_HOME=$HOME/Develop/GMNA/python
   source $PY_VIRTUAL_ENVWAPPER
