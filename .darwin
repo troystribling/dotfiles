@@ -30,3 +30,4 @@ brew tap caskroom/cask
 
 brewCaskInstallIfNotInstalled launchrocket
 brewCaskInstallIfNotInstalled psequel
+brewCaskInstallIfNotInstalled google-chrome
