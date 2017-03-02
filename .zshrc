@@ -53,7 +53,7 @@ plugins=(git)
 
 # User configuration
 
-export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -84,7 +84,6 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias julia="exec '/Applications/Julia-0.5.app/Contents/Resources/julia/bin/julia'"
-alias jupyter="exec /Users/troy/.julia/v0.5/Conda/deps/usr/bin/jupyter"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
