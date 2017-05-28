@@ -86,15 +86,4 @@ source $ZSH/oh-my-zsh.sh
 alias julia="exec '/Applications/Julia-0.5.app/Contents/Resources/julia/bin/julia'"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-PY_VIRTUAL_ENVWAPPER="/Library/Frameworks/Python.framework/Versions/3.5/bin/virtualenvwrapper.sh"
 eval "$(pyenv init -)"
-
-if [[ -e $PY_VIRTUAL_ENVWAPPER ]]; then
-  export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python3.5"
-  export WORKON_HOME="$HOME/.virtualenvs"
-  export PROJECT_HOME="$HOME/Develop/GMNA/python"
-  export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/3.5/bin/"
-  source $PY_VIRTUAL_ENVWAPPER
-fi
-
