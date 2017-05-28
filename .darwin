@@ -25,6 +25,7 @@ brewInstallIfNotInstalled swiftlint
 brewInstallIfNotInstalled vim
 brewInstallIfNotInstalled tmux
 brewInstallIfNotInstalled postgres
+brewInstallIfNotInstalled pyenv
 
 brew tap caskroom/cask
 
