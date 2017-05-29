@@ -26,6 +26,7 @@ brewInstallIfNotInstalled vim
 brewInstallIfNotInstalled tmux
 brewInstallIfNotInstalled postgres
 brewInstallIfNotInstalled pyenv
+brewInstallIfNotInstalled pyenv-virtualenv
 
 brew tap caskroom/cask
 
