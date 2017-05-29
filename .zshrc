@@ -87,3 +87,4 @@ alias julia="exec '/Applications/Julia-0.5.app/Contents/Resources/julia/bin/juli
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"

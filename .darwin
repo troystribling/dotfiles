@@ -27,6 +27,7 @@ brewInstallIfNotInstalled tmux
 brewInstallIfNotInstalled postgres
 brewInstallIfNotInstalled pyenv
 brewInstallIfNotInstalled pyenv-virtualenv
+brewInstallIfNotInstalled wget
 
 brew tap caskroom/cask
 
