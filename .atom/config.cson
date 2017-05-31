@@ -5,6 +5,17 @@
     disabledPackages: [
       "wrap-guide"
     ]
+    ignoredNames: [
+      ".git"
+      ".hg"
+      ".svn"
+      ".DS_Store"
+      "._*"
+      "Thumbs.db"
+      "desktop.ini"
+      "__pycache__"
+    ]
+    openEmptyEditorOnStart: false
     telemetryConsent: "limited"
     themes: [
       "one-light-ui"
