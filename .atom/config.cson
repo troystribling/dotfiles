@@ -16,6 +16,7 @@
       "Thumbs.db"
       "desktop.ini"
       "__pycache__"
+      "*.pyc"
     ]
     openEmptyEditorOnStart: false
     telemetryConsent: "limited"
