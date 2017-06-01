@@ -1,6 +1,12 @@
 /* @flow */
 
-import { Emitter, CompositeDisposable, Point } from "atom";
+import {
+  Emitter,
+  CompositeDisposable,
+  Disposable,
+  Point,
+  TextEditor
+} from "atom";
 
 import _ from "lodash";
 import { autorun } from "mobx";
@@ -15,6 +21,12 @@ import Inspector from "./components/inspector";
 import ResultView from "./components/result-view";
 import StatusBar from "./components/status-bar";
 
+import InspectorPane from "./panes/inspector";
+import WatchesPane from "./panes/watches";
+import OutputPane from "./panes/output-area";
+
+import { toggleInspector } from "./commands";
+
 import store from "./store";
 import OutputStore from "./store/output";
 
@@ -26,9 +38,13 @@ import AutocompleteProvider from "./autocomplete-provider";
 import HydrogenProvider from "./plugin-api/hydrogen-provider";
 import {
   log,
+  focus,
   reactFactory,
   isMultilanguageGrammar,
-  renderDevTools
+  renderDevTools,
+  INSPECTOR_URI,
+  WATCHES_URI,
+  OUTPUT_AREA_URI
 } from "./utils";
 
 import type Kernel from "./kernel";
@@ -36,16 +52,10 @@ import type Kernel from "./kernel";
 const Hydrogen = {
   config: Config.schema,
 
-  inspector: null,
-
   markerBubbleMap: null,
-
-  watchSidebar: null,
-  watchSidebarIsVisible: false,
 
   activate() {
     this.emitter = new Emitter();
-    this.inspector = new Inspector();
 
     this.markerBubbleMap = {};
 
@@ -81,19 +91,25 @@ const Hydrogen = {
         "hydrogen:run-and-move-down": () => this.run(true),
         "hydrogen:run-cell": () => this.runCell(),
         "hydrogen:run-cell-and-move-down": () => this.runCell(true),
-        "hydrogen:toggle-watches": () => this.toggleWatchSidebar(),
+        "hydrogen:toggle-watches": () => atom.workspace.toggle(WATCHES_URI),
+        "hydrogen:toggle-output-area": () =>
+          atom.workspace.toggle(OUTPUT_AREA_URI),
         "hydrogen:select-kernel": () => this.showKernelPicker(),
         "hydrogen:connect-to-remote-kernel": () => this.showWSKernelPicker(),
         "hydrogen:add-watch": () => {
-          if (!this.watchSidebarIsVisible) this.toggleWatchSidebar();
-          if (this.watchSidebar) this.watchSidebar.addWatchFromEditor();
+          if (store.kernel) {
+            store.kernel.watchesStore.addWatchFromEditor(store.editor);
+            atom.workspace.open(WATCHES_URI, { searchAllPanes: true });
+          }
         },
         "hydrogen:remove-watch": () => {
-          if (!this.watchSidebarIsVisible) this.toggleWatchSidebar();
-          if (this.watchSidebar) this.watchSidebar.removeWatch();
+          if (store.kernel) {
+            store.kernel.watchesStore.removeWatch();
+            atom.workspace.open(WATCHES_URI, { searchAllPanes: true });
+          }
         },
         "hydrogen:update-kernels": () => kernelManager.updateKernelSpecs(),
-        "hydrogen:toggle-inspector": () => this.inspector.toggle(),
+        "hydrogen:toggle-inspector": () => toggleInspector(store),
         "hydrogen:interrupt-kernel": () =>
           this.handleKernelCommand({ command: "interrupt-kernel" }),
         "hydrogen:restart-kernel": () =>
@@ -110,9 +126,8 @@ const Hydrogen = {
     );
 
     store.subscriptions.add(
-      atom.workspace.observeActivePaneItem(item => {
-        const currentEditor = atom.workspace.getActiveTextEditor();
-        store.updateEditor(item === currentEditor ? currentEditor : null);
+      atom.workspace.getCenter().observeActivePaneItem(item => {
+        store.updateEditor(item instanceof TextEditor ? item : null);
       })
     );
 
@@ -147,10 +162,37 @@ const Hydrogen = {
 
     this.hydrogenProvider = null;
 
+    store.subscriptions.add(
+      atom.workspace.addOpener(uri => {
+        switch (uri) {
+          case INSPECTOR_URI:
+            return new InspectorPane(store);
+          case WATCHES_URI:
+            return new WatchesPane(store);
+          case OUTPUT_AREA_URI:
+            return new OutputPane(store);
+        }
+      })
+    );
+
+    store.subscriptions.add(
+      // Destroy any Panes when the package is deactivated.
+      new Disposable(() => {
+        atom.workspace.getPaneItems().forEach(item => {
+          if (
+            item instanceof InspectorPane ||
+            item instanceof WatchesPane ||
+            item instanceof OutputPane
+          ) {
+            item.destroy();
+          }
+        });
+      })
+    );
+
     renderDevTools();
 
     autorun(() => {
-      this.setWatchSidebar(store.kernel);
       this.emitter.emit("did-change-kernel", store.kernel);
     });
   },
@@ -192,35 +234,6 @@ const Hydrogen = {
       return AutocompleteProvider();
     }
     return null;
-  },
-
-  setWatchSidebar(kernel: Kernel) {
-    const sidebar = kernel ? kernel.watchSidebar : null;
-    if (this.watchSidebar === sidebar) {
-      return;
-    }
-
-    if (this.watchSidebar && this.watchSidebar.visible) {
-      this.watchSidebar.hide();
-    }
-
-    this.watchSidebar = sidebar;
-
-    if (this.watchSidebar && this.watchSidebarIsVisible) {
-      this.watchSidebar.show();
-    }
-  },
-
-  toggleWatchSidebar() {
-    if (this.watchSidebarIsVisible) {
-      log("toggleWatchSidebar: hiding sidebar");
-      this.watchSidebarIsVisible = false;
-      if (this.watchSidebar) this.watchSidebar.hide();
-    } else {
-      log("toggleWatchSidebar: showing sidebar");
-      this.watchSidebarIsVisible = true;
-      if (this.watchSidebar) this.watchSidebar.show();
-    }
   },
 
   showKernelCommands() {
@@ -294,22 +307,40 @@ const Hydrogen = {
   },
 
   _createResultBubble(kernel: Kernel, code: string, row: number) {
-    if (
-      this.watchSidebar &&
-      this.watchSidebar.element.contains(document.activeElement)
-    ) {
-      this.watchSidebar.run();
+    if (atom.workspace.getActivePaneItem() instanceof WatchesPane) {
+      kernel.watchesStore.run();
       return;
     }
+    const globalOutputStore = atom.workspace
+      .getPaneItems()
+      .find(item => item instanceof OutputPane)
+      ? kernel.outputStore
+      : null;
 
-    this.clearBubblesOnRow(row);
-    const outputStore = this.insertResultBubble(store.editor, row);
-    kernel.execute(code, result => {
+    const outputStore = this.insertResultBubble(
+      store.editor,
+      row,
+      !globalOutputStore
+    );
+
+    kernel.execute(code, async result => {
       outputStore.appendOutput(result);
+      if (globalOutputStore) {
+        globalOutputStore.appendOutput(result);
+
+        await atom.workspace.open(OUTPUT_AREA_URI, { searchAllPanes: true });
+        focus(store.editor);
+      }
     });
   },
 
-  insertResultBubble(editor: atom$TextEditor, row: number) {
+  insertResultBubble(
+    editor: atom$TextEditor,
+    row: number,
+    showResult: boolean
+  ) {
+    this.clearBubblesOnRow(row);
+
     const buffer = editor.getBuffer();
     const lineLength = buffer.lineLengthForRow(row);
 
@@ -325,7 +356,7 @@ const Hydrogen = {
       editorWidth: editor.getEditorWidthInChars()
     });
 
-    const view = new ResultView(outputStore, marker);
+    const view = new ResultView(outputStore, marker, showResult);
     const { element } = view;
 
     editor.decorateMarker(marker, {

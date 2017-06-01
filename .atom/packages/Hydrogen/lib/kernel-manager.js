@@ -103,7 +103,8 @@ class KernelManager {
     const kernelStartDir = projectPath != null ? projectPath : currentPath;
 
     launchSpec(kernelSpec, {
-      cwd: kernelStartDir
+      cwd: kernelStartDir,
+      stdio: ["ignore", "pipe", "pipe"]
     }).then(({ config, connectionFile, spawn }) => {
       const kernel = new ZMQKernel(
         kernelSpec,

@@ -4,25 +4,31 @@ import { Emitter } from "atom";
 import { observable, action } from "mobx";
 import { is, Map as ImmutableMap } from "immutable";
 
-import { log, msgSpecToNotebookFormat, msgSpecV4toV5 } from "./utils";
+import {
+  log,
+  focus,
+  msgSpecToNotebookFormat,
+  msgSpecV4toV5,
+  INSPECTOR_URI
+} from "./utils";
 import store from "./store";
 
-import WatchSidebar from "./watch-sidebar";
+import WatchesStore from "./store/watches";
+import OutputStore from "./store/output";
 import HydrogenKernel from "./plugin-api/hydrogen-kernel";
 
 export default class Kernel {
   @observable executionState = "loading";
   @observable inspector = {
-    visible: false,
-    bundle: new ImmutableMap(),
-    height: 240
+    bundle: new ImmutableMap()
   };
+  outputStore = new OutputStore();
 
   kernelSpec: Kernelspec;
   grammar: atom$Grammar;
   language: string;
   displayName: string;
-  watchSidebar: WatchSidebar;
+  watchesStore: WatchesStore;
   watchCallbacks: Array<Function> = [];
   emitter = new Emitter();
   pluginWrapper: HydrogenKernel | null = null;
@@ -30,31 +36,28 @@ export default class Kernel {
   constructor(kernelSpec: Kernelspec, grammar: atom$Grammar) {
     this.kernelSpec = kernelSpec;
     this.grammar = grammar;
-    this.watchSidebar = new WatchSidebar(this);
 
     this.language = kernelSpec.language.toLowerCase();
     this.displayName = kernelSpec.display_name;
+
+    this.watchesStore = new WatchesStore(this);
   }
 
   @action setExecutionState(state: string) {
     this.executionState = state;
   }
 
-  @action setInspectorVisibility(visible: boolean) {
-    this.inspector.visible = visible;
-  }
-
-  @action setInspectorHeight(height: number) {
-    this.inspector.height = height;
-  }
-
-  @action setInspectorResult(bundle: ImmutableMap<string, any>) {
-    if (this.inspector.visible === true && is(this.inspector.bundle, bundle)) {
-      this.setInspectorVisibility(false);
+  @action async setInspectorResult(
+    bundle: ImmutableMap<string, any>,
+    editor: ?atom$TextEditor
+  ) {
+    if (is(this.inspector.bundle, bundle)) {
+      await atom.workspace.toggle(INSPECTOR_URI);
     } else if (bundle.size !== 0) {
       this.inspector.bundle = bundle;
-      this.setInspectorVisibility(true);
+      await atom.workspace.open(INSPECTOR_URI, { searchAllPanes: true });
     }
+    focus(editor);
   }
 
   getPluginWrapper() {

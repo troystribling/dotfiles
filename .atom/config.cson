@@ -1,6 +1,8 @@
 "*":
   "autocomplete-python":
     useKite: false
+  autosave:
+    enabled: true
   core:
     disabledPackages: [
       "wrap-guide"

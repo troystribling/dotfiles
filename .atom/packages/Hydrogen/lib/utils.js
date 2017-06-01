@@ -10,6 +10,10 @@ import path from "path";
 import Config from "./config";
 import store from "./store";
 
+export const INSPECTOR_URI = "atom://hydrogen/inspector";
+export const WATCHES_URI = "atom://hydrogen/watch-sidebar";
+export const OUTPUT_AREA_URI = "atom://hydrogen/output-area";
+
 export function reactFactory(
   reactElement: React$Element<any>,
   domElement: HTMLElement,
@@ -24,6 +28,13 @@ export function reactFactory(
   });
 
   disposer.add(disposable);
+}
+
+export function focus(item: ?mixed) {
+  if (item) {
+    const editorPane = atom.workspace.paneForItem(item);
+    if (editorPane) editorPane.activate();
+  }
 }
 
 export function grammarToLanguage(grammar: ?atom$Grammar) {
