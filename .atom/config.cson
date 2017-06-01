@@ -24,6 +24,7 @@
       "one-light-ui"
       "one-dark-syntax"
     ]
+  editor: {}
   "exception-reporting":
     userId: "491ad535-da31-48a5-ae92-ebfdd48bacc8"
   "tree-view":
