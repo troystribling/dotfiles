@@ -13,5 +13,5 @@ function unlinkToHome {
 unlinkToHome .vimrc
 unlinkToHome .zshrc
 unlinkToHome .juliarc.jl
-
+unlinkToHome .atom
 
