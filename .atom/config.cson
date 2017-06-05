@@ -17,6 +17,7 @@
       "desktop.ini"
       "__pycache__"
       "*.pyc"
+      ".tags"
     ]
     openEmptyEditorOnStart: false
     telemetryConsent: "limited"
