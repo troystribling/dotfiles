@@ -75,7 +75,8 @@ const Hydrogen = {
             atom.config.set("Hydrogen.languageMappings", oldValue);
 
             atom.notifications.addError("Hydrogen", {
-              description: "`languageMappings` cannot be updated while kernels are running",
+              description:
+                "`languageMappings` cannot be updated while kernels are running",
               dismissable: false
             });
           }
@@ -264,6 +265,7 @@ const Hydrogen = {
     }
 
     if (command === "switch-kernel") {
+      if (!payload) return;
       this.clearResultBubbles();
       if (kernel) kernel.destroy();
       kernelManager.startKernel(payload, grammar);
@@ -279,7 +281,6 @@ const Hydrogen = {
     if (command === "interrupt-kernel") {
       kernel.interrupt();
     } else if (command === "restart-kernel") {
-      this.clearResultBubbles();
       kernel.restart();
     } else if (command === "shutdown-kernel") {
       this.clearResultBubbles();
@@ -295,13 +296,15 @@ const Hydrogen = {
     }
   },
 
-  createResultBubble(code: string, row: number) {
+  createResultBubble(code: string, row: number, editor: atom$TextEditor) {
+    if (!store.grammar) return;
+
     if (store.kernel) {
       this._createResultBubble(store.kernel, code, row);
       return;
     }
 
-    kernelManager.startKernelFor(store.grammar, (kernel: Kernel) => {
+    kernelManager.startKernelFor(store.grammar, editor, (kernel: ZMQKernel) => {
       this._createResultBubble(kernel, code, row);
     });
   },
@@ -412,13 +415,13 @@ const Hydrogen = {
       if (moveDown === true) {
         codeManager.moveDown(editor, row);
       }
-      this.createResultBubble(code, row);
+      this.createResultBubble(code, row, editor);
     }
   },
 
   runAll() {
-    const { editor, kernel } = store;
-    if (!editor) return;
+    const { editor, kernel, grammar } = store;
+    if (!editor || !grammar) return;
     if (isMultilanguageGrammar(editor.getGrammar())) {
       atom.notifications.addError(
         '"Run All" is not supported for this file type!'
@@ -431,7 +434,7 @@ const Hydrogen = {
       return;
     }
 
-    kernelManager.startKernelFor(store.grammar, (kernel: Kernel) => {
+    kernelManager.startKernelFor(grammar, editor, (kernel: ZMQKernel) => {
       this._runAll(editor, kernel);
     });
   },

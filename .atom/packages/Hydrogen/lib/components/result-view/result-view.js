@@ -14,7 +14,8 @@ import type { IObservableValue } from "mobx";
 import type OutputStore from "./../../store/output";
 type Props = { store: OutputStore, destroy: Function, showResult: boolean };
 
-@observer class ResultViewComponent extends React.Component {
+@observer
+class ResultViewComponent extends React.Component {
   props: Props;
   el: ?HTMLElement;
   containerTooltip = new CompositeDisposable();
@@ -131,12 +132,36 @@ type Props = { store: OutputStore, destroy: Function, showResult: boolean };
                 onClick={this.openInEditor}
               />
               <div
-                className={`icon icon-${this.expanded.get() ? "fold" : "unfold"}`}
+                className={`icon icon-${this.expanded.get()
+                  ? "fold"
+                  : "unfold"}`}
                 onClick={this.toggleExpand}
               />
             </div>}
       </div>
     );
+  }
+
+  scrollToBottom() {
+    if (
+      !this.el ||
+      this.expanded === true ||
+      this.props.store.isPlain === true ||
+      atom.config.get(`Hydrogen.autoScroll`) === false
+    )
+      return;
+    const scrollHeight = this.el.scrollHeight;
+    const height = this.el.clientHeight;
+    const maxScrollTop = scrollHeight - height;
+    this.el.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  componentDidMount() {
+    this.scrollToBottom();
   }
 
   componentWillUnmount() {

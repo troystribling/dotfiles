@@ -108,10 +108,12 @@ export function getEmbeddedScope(
   return _.find(scopes, s => s.indexOf("source.embedded.") === 0);
 }
 
-export function getEditorDirectory(editor: atom$TextEditor) {
+export function getEditorDirectory(editor: ?atom$TextEditor) {
+  if (!editor) return os.homedir();
   const editorPath = editor.getPath();
   return editorPath ? path.dirname(editorPath) : os.homedir();
 }
+
 /* eslint-disable no-console */
 export function log(...message: Array<any>) {
   if (atom.inDevMode() || atom.config.get("Hydrogen.debug")) {

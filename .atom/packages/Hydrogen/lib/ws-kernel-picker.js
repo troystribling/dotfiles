@@ -6,7 +6,7 @@ import tildify from "tildify";
 import v4 from "uuid/v4";
 
 import Config from "./config";
-import * as services from "./jupyter-js-services-shim";
+import { Kernel, Session } from "./jupyter-js-services-shim";
 import WSKernel from "./ws-kernel";
 
 class CustomListView {
@@ -66,7 +66,8 @@ export default class WSKernelPicker {
     const gateways = Config.getJson("gateways", []);
     if (_.isEmpty(gateways)) {
       atom.notifications.addError("No remote kernel gateways available", {
-        description: "Use the Hydrogen package settings to specify the list of remote servers. Hydrogen can use remote kernels on either a Jupyter Kernel Gateway or Jupyter notebook server."
+        description:
+          "Use the Hydrogen package settings to specify the list of remote servers. Hydrogen can use remote kernels on either a Jupyter Kernel Gateway or Jupyter notebook server."
       });
       return;
     }
@@ -88,8 +89,7 @@ export default class WSKernelPicker {
       "No sessions available",
       this.onSession.bind(this)
     );
-    services.Kernel
-      .getSpecs(gatewayInfo.options)
+    Kernel.getSpecs(gatewayInfo.options)
       .then(
         specModels => {
           const kernelSpecs = _.filter(specModels.kernelspecs, spec =>
@@ -103,7 +103,7 @@ export default class WSKernelPicker {
             loadingMessage: "Loading sessions..."
           });
 
-          services.Session.listRunning(gatewayInfo.options).then(
+          Session.listRunning(gatewayInfo.options).then(
             sessionModels => {
               sessionModels = sessionModels.filter(model => {
                 const name = model.kernel ? model.kernel.name : null;
@@ -179,16 +179,14 @@ export default class WSKernelPicker {
         });
       }
     } else {
-      services.Session
-        .connectTo(sessionInfo.model.id, sessionInfo.options)
-        .then(this.onSessionChosen.bind(this));
+      Session.connectTo(sessionInfo.model.id, sessionInfo.options).then(
+        this.onSessionChosen.bind(this)
+      );
     }
   }
 
   startSession(sessionInfo) {
-    services.Session
-      .startNew(sessionInfo.options)
-      .then(this.onSessionChosen.bind(this));
+    Session.startNew(sessionInfo.options).then(this.onSessionChosen.bind(this));
   }
 
   onSessionChosen(session) {

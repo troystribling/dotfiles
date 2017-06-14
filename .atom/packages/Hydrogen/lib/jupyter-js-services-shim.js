@@ -1,4 +1,4 @@
-"use babel";
+/* @flow */
 
 // @jupyterlab/services apparently require overriding globals, as explained in its
 // README: https://github.com/jupyterlab/services
@@ -17,4 +17,4 @@ global.requirejs = requirejs;
 global.XMLHttpRequest = xhr.XMLHttpRequest;
 global.WebSocket = ws;
 
-export * from "@jupyterlab/services";
+export { Kernel, Session } from "@jupyterlab/services";

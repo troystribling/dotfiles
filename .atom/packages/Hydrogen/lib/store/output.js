@@ -61,7 +61,7 @@ export function reduceOutputs(
   return outputs;
 }
 
-function isSingeLine(text: string, availableSpace: number) {
+export function isSingeLine(text: string, availableSpace: number) {
   // If it turns out escapeCarriageReturn is a bottleneck, we should remove it.
   return (
     (text.indexOf("\n") === -1 || text.indexOf("\n") === text.length - 1) &&
@@ -80,7 +80,8 @@ export default class OutputStore {
     editorWidth: 0
   };
 
-  @computed get isPlain(): boolean {
+  @computed
+  get isPlain(): boolean {
     if (this.outputs.length !== 1) return false;
 
     const availableSpace = this.position.editorWidth - this.position.lineLength;
@@ -105,7 +106,8 @@ export default class OutputStore {
     }
   }
 
-  @action appendOutput(message: Object) {
+  @action
+  appendOutput(message: Object) {
     if (message.stream === "execution_count") {
       this.executionCount = message.data;
     } else if (message.stream === "status") {
@@ -117,7 +119,8 @@ export default class OutputStore {
     }
   }
 
-  @action updatePosition(position: {
+  @action
+  updatePosition(position: {
     lineHeight?: number,
     lineLength?: number,
     editorWidth?: number
@@ -126,7 +129,13 @@ export default class OutputStore {
   }
 
   @action setIndex = (index: number) => {
-    this.index = index < this.outputs.length ? index : this.outputs.length - 1;
+    if (index < 0) {
+      this.index = 0;
+    } else if (index < this.outputs.length) {
+      this.index = index;
+    } else {
+      this.index = this.outputs.length - 1;
+    }
   };
 
   @action incrementIndex = () => {
