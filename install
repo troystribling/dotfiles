@@ -24,7 +24,7 @@ function gitCloneBundle {
   fi
 }
 
-# link to stratup scripts
+# link to startup scripts
 linkToHome .vimrc
 linkToHome .zshrc
 linkToHome .juliarc.jl
@@ -37,10 +37,6 @@ if [ ! -f $VIM_AUTOLOAD/pathogen.vim ]; then
 else
   echo "pathogen.vim Installed"
 fi
-
-
-# link to stratup scripts
-linkToHome .vimrc
 
 # install pathogen bundles
 gitCloneBundle git://github.com/tpope/vim-sensible.git vim-sensible
