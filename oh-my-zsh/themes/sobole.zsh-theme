@@ -38,13 +38,7 @@ function current_dir() {
 }
 
 function user_info() {
-  if [[ ! -z "$DEFAULT_USER" ]] && [[ "$USER" != "$DEFAULT_USER" ]]; then
-    # This only works if `$DEFAULT_USER` is not empty.
-    # So, when you log in as other user, using `su` for example,
-    # your shell tells you who you are. Otherwise it stays silent.
-    # You should set `$DEFAULT_USER` somewhere in your `.zshrc`:
-    echo "@$USER "
-  fi
+  echo "$USER@$HOST "
 }
 
 # ----------------------------------------------------------------------------
