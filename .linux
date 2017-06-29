@@ -1,1 +1,3 @@
 echo "Platform is Linux"
+
+linkToHomeTarget .zshrc.linux .zshrc

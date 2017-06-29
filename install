@@ -15,6 +15,14 @@ function linkToHome {
    ln -s $THIS_DIR/$1 $HOME/$1
 }
 
+function linkToHomeTarget {
+   if [ -L $HOME/$1 ]; then
+      echo "Removing link " $HOME/$1
+      rm $HOME/$1
+   fi
+   ln -s $THIS_DIR/$1 $HOME/$2
+}
+
 function gitCloneBundle {
   if [ ! -d $VIM_BUNDLE/$2 ]; then
     echo "Installing " $2
@@ -26,9 +34,7 @@ function gitCloneBundle {
 
 # link to startup scripts
 linkToHome .vimrc
-linkToHome .zshrc
 linkToHome .juliarc.jl
-linkToHome .atom
 
 # intstall pathogen
 if [ ! -f $VIM_AUTOLOAD/pathogen.vim ]; then
