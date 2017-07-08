@@ -5,14 +5,22 @@ import React from "react";
 import * as Immutable from "immutable";
 import { observer } from "mobx-react";
 import { action, observable } from "mobx";
-import { Display } from "@nteract/display-area";
-
+import Display, {
+  DEFAULT_SCROLL_HEIGHT
+} from "@nteract/display-area/lib/display";
 import { transforms, displayOrder } from "./transforms";
 import Status from "./status";
 
 import type { IObservableValue } from "mobx";
 import type OutputStore from "./../../store/output";
-type Props = { store: OutputStore, destroy: Function, showResult: boolean };
+import type Kernel from "./../../kernel";
+
+type Props = {
+  store: OutputStore,
+  kernel: ?Kernel,
+  destroy: Function,
+  showResult: boolean
+};
 
 @observer
 class ResultViewComponent extends React.Component {
@@ -66,7 +74,8 @@ class ResultViewComponent extends React.Component {
     };
   };
 
-  @action toggleExpand = () => {
+  @action
+  toggleExpand = () => {
     this.expanded.set(!this.expanded.get());
   };
 
@@ -79,7 +88,17 @@ class ResultViewComponent extends React.Component {
     };
 
     if (outputs.length === 0 || this.props.showResult === false) {
-      return <Status status={status} style={inlineStyle} />;
+      const kernel = this.props.kernel;
+      return (
+        <Status
+          status={
+            kernel && kernel.executionState !== "busy" && status === "running"
+              ? "error"
+              : status
+          }
+          style={inlineStyle}
+        />
+      );
     }
 
     return (
@@ -131,12 +150,14 @@ class ResultViewComponent extends React.Component {
                 className="icon icon-file-symlink-file"
                 onClick={this.openInEditor}
               />
-              <div
-                className={`icon icon-${this.expanded.get()
-                  ? "fold"
-                  : "unfold"}`}
-                onClick={this.toggleExpand}
-              />
+              {this.el && this.el.scrollHeight > DEFAULT_SCROLL_HEIGHT
+                ? <div
+                    className={`icon icon-${this.expanded.get()
+                      ? "fold"
+                      : "unfold"}`}
+                    onClick={this.toggleExpand}
+                  />
+                : null}
             </div>}
       </div>
     );

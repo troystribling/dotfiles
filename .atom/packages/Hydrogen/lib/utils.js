@@ -6,6 +6,8 @@ import ReactDOM from "react-dom";
 import _ from "lodash";
 import os from "os";
 import path from "path";
+// $FlowFixMe
+import { shell } from "electron";
 
 import Config from "./config";
 import store from "./store";
@@ -114,15 +116,14 @@ export function getEditorDirectory(editor: ?atom$TextEditor) {
   return editorPath ? path.dirname(editorPath) : os.homedir();
 }
 
-/* eslint-disable no-console */
 export function log(...message: Array<any>) {
-  if (atom.inDevMode() || atom.config.get("Hydrogen.debug")) {
+  if (atom.config.get("Hydrogen.debug")) {
     console.trace("Hydrogen:", ...message);
   }
 }
 
 export function renderDevTools() {
-  if (atom.inDevMode() || atom.config.get("Hydrogen.debug")) {
+  if (atom.config.get("Hydrogen.debug")) {
     try {
       const devTools = require("mobx-react-devtools");
       const div = document.createElement("div");
@@ -133,4 +134,57 @@ export function renderDevTools() {
       log("Could not enable dev tools", e);
     }
   }
+}
+
+export function deprecationNote() {
+  atom.notifications.addWarning("This feature will be deprecated soon!", {
+    description:
+      "Connecting to existing kernels via a `connection.json` file will be deprecated soon.\n\nFor some time now Hydrogen supports using [kernel gateways](https://nteract.gitbooks.io/hydrogen/docs/Usage/RemoteKernelConnection.html) for connection to existing kernels. Using that option is a lot simpler yet very powerful.\n\nPlease get in touch with us if using remote kernels isn't a option for you.",
+    dismissable: true,
+    buttons: [
+      {
+        className: "icon icon-x",
+        text: "I really need this feature",
+        onDidClick: () => {
+          shell.openExternal("https://github.com/nteract/hydrogen/issues/858");
+        }
+      },
+      {
+        className: "icon icon-check",
+        text: "I'll try remote kernels",
+        onDidClick: () => {
+          shell.openExternal(
+            "https://nteract.gitbooks.io/hydrogen/docs/Usage/RemoteKernelConnection.html"
+          );
+        }
+      }
+    ]
+  });
+}
+
+export function hotReloadPackage() {
+  const packName = "Hydrogen";
+  const packPath = atom.packages.resolvePackagePath(packName);
+  if (!packPath) return;
+  const packPathPrefix = packPath + path.sep;
+  const zeromqPathPrefix =
+    path.join(packPath, "node_modules", "zeromq") + path.sep;
+
+  console.info(`deactivating ${packName}`);
+  atom.packages.deactivatePackage(packName);
+  atom.packages.unloadPackage(packName);
+
+  // Delete require cache to re-require on activation.
+  // But except zeromq native module which is not re-requireable.
+  const packageLibsExceptZeromq = filePath =>
+    filePath.startsWith(packPathPrefix) &&
+    !filePath.startsWith(zeromqPathPrefix);
+
+  Object.keys(require.cache)
+    .filter(packageLibsExceptZeromq)
+    .forEach(filePath => delete require.cache[filePath]);
+
+  atom.packages.loadPackage(packName);
+  atom.packages.activatePackage(packName);
+  console.info(`activated ${packName}`);
 }

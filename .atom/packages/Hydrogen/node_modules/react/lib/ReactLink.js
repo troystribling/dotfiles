@@ -33,8 +33,6 @@
  * consumption of ReactLink easier; see LinkedValueUtils and LinkedStateMixin.
  */
 
-var React = require('./React');
-
 /**
  * Deprecated: An an easy way to express two-way binding with React. 
  * See https://facebook.github.io/react/docs/two-way-binding-helpers.html
@@ -42,6 +40,7 @@ var React = require('./React');
  * @param {*} value current value of the link
  * @param {function} requestChange callback to request a change
  */
+
 function ReactLink(value, requestChange) {
   this.value = value;
   this.requestChange = requestChange;

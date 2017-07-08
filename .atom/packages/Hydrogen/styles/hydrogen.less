@@ -164,6 +164,8 @@ svg:first-child {
   20% { transform: scaleY(0.8); }
 }
 
+// -------------- Slider ------------------
+
 .slider {
   @btn-size: @component-icon-size + @component-icon-padding;
   @pad: 3px;
@@ -190,12 +192,51 @@ svg:first-child {
   }
 }
 
+// -------------- Sidebar -----------------
+
+.sidebar {
+  padding: 10px;
+
+  .multiline-container {
+    width: 100%;
+    overflow: auto;
+    padding: @component-padding;
+
+    // Style fix for plotly toolbar
+    .modebar-group {
+      display: flex;
+    }
+  }
+
+  video, img, svg {
+    width: unset !important;
+    height: unset !important;
+    max-width: 100% !important;
+  }
+}
+
+// ------------ Output Area ---------------
+
+.output-area {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .history {
+    display: flex;
+    flex-direction: column;
+  }
+  .slider {
+    flex: 0 0 auto;
+  }
+  .multiline-container {
+    flex: 0 1 auto;
+  }
 }
 
 // -------------- Watches -----------------
 
-.hydrogen.watch-sidebar {
-  padding: 10px;
+.watch-sidebar {
   overflow-y: auto;
 
   .watch-view {
@@ -219,22 +260,12 @@ svg:first-child {
   }
 
   .multiline-container {
-    width: 100%;
     max-height: 450px;
-    overflow: auto;
-    padding: @component-padding;
-
-    // Style fix for plotly toolbar
-    .modebar-group {
-      display: flex;
-    }
   }
 
   video, img, svg {
-    width: unset !important;
-    height: unset !important;
-    max-width: 100% !important;
     max-height: 450px !important;
+  }
 }
 }
 

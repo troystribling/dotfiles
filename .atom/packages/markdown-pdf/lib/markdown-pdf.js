@@ -1,10 +1,18 @@
-var fs = require("fs");
-var pdf = require('html-pdf');
-var path = require('path');
-var url = require('url');
-var less = require('less');
-var mdpreview = null;
+// module-level variables
+let fs;
+let pdf;
+let path;
+let url;
+let less;
+let mdpreview;
 
+function loadDeps() {
+  fs = require("fs");
+  pdf = require('html-pdf');
+  path = require('path');
+  url = require('url');
+  less = require('less');
+}
 
 module.exports = {
 
@@ -49,6 +57,7 @@ module.exports = {
   },
 
   activate: function() {
+    loadDeps();
     atom.commands.add('atom-workspace', 'markdown-pdf:convert', this.convert);
   },
 
@@ -90,6 +99,7 @@ var converter = {
       mdpreview.mainModule.copyHtml();  //get html on clipboard
     }
     else if (mdpreview.name === 'markdown-preview-plus') {
+      callback = atom.clipboard.write.bind(atom.clipboard);
       mdpreview.mainModule.copyHtml(callback, 200); // copy parsed markdown with maths scaled 200%
     }
 
@@ -172,13 +182,14 @@ function makePdf(inputHtml, outputPath){
 
 function processSrc(src){
   //make a local img src path into a "file:///absolute/path/" if it isn't already
-
-  if(url.parse(src).protocol){
+  var protocol = url.parse(src).protocol;
+  if(protocol == 'http:' || protocol == 'https:' || protocol == 'file:'){
     //if the src already starts with "file://", "https://", etc., it's already in the right form (URI)
     return src;
   }
   else if(path.resolve(src) !== src){
     //if path is not absolute and has no protocol, it should be relative, so make it a URI
+    //NOTE: previewer already took care of relative paths
     src = path.resolve(path.dirname(outPath), src);
     return 'file:///' + src;
   }
@@ -190,7 +201,7 @@ function processSrc(src){
 
 function getOutputPath(){
   var markdownPath = atom.workspace.getActivePaneItem().getPath();
-  if (!isMd(markdownPath)){    //file is saved as something other than markdown-type file
+  if (!isMd(markdownPath)){    //show warning
     atom.notifications.addWarning(
       'Warning: File not saved as markdown type.',
       {
@@ -199,7 +210,7 @@ function getOutputPath(){
       }
     );
   }
-  else if (!markdownPath){      //file is unsaved
+  else if (!markdownPath){      //show warning and continue
     atom.notifications.addWarning('Warning: File not saved!.', {detail: 'Attempting conversion anyway.'});
     var treeDirPath = atom.packages.getActivePackage('tree-view').mainModule.treeView.selectedPath;
     if(!fs.lstatSync(treeDirPath).isDirectory()){
@@ -211,10 +222,10 @@ function getOutputPath(){
     var outputPath = path.join(treeDirPath, outName);
     return outputPath;
   }
-  else{
-    var out = markdownPath.replace(markdownPath.split(path.sep).slice(-1)[0], markdownPath.split(path.sep).slice(-1)[0].replace(getExtension(markdownPath), atom.config.get('markdown-pdf.type')));
-    return out;
-  }
+  var parsePath = path.parse(markdownPath);
+  var out = path.join(parsePath.dir, parsePath.name +
+    '.' + atom.config.get('markdown-pdf.type'));
+  return out;
 }
 
 function isMd(path){

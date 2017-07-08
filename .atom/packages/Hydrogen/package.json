@@ -2,40 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/5f/s171_hxd1d587kbn5d0jw6j80000gs/T/d-117514-83525-1cv1ugv.jeogh9f6r/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33032-t71lqw.5agxm6ajor/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/5f/s171_hxd1d587kbn5d0jw6j80000gs/T/d-117514-83525-1cv1ugv.jeogh9f6r/package.tgz",
-        "spec": "/private/var/folders/5f/s171_hxd1d587kbn5d0jw6j80000gs/T/d-117514-83525-1cv1ugv.jeogh9f6r/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33032-t71lqw.5agxm6ajor/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33032-t71lqw.5agxm6ajor/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/5f/s171_hxd1d587kbn5d0jw6j80000gs/T/apm-install-dir-117514-83525-a1rkks.mjvur6n7b9"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-11768-33032-1x0s4tn.9s9mx3whfr"
     ]
   ],
-  "_from": "../d-117514-83525-1cv1ugv.jeogh9f6r/package.tgz",
-  "_id": "Hydrogen@1.16.0",
+  "_from": "../d-11768-33032-t71lqw.5agxm6ajor/package.tgz",
+  "_id": "Hydrogen@1.19.0",
   "_inCache": true,
-  "_installable": true,
   "_location": "/Hydrogen",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/5f/s171_hxd1d587kbn5d0jw6j80000gs/T/d-117514-83525-1cv1ugv.jeogh9f6r/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33032-t71lqw.5agxm6ajor/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/5f/s171_hxd1d587kbn5d0jw6j80000gs/T/d-117514-83525-1cv1ugv.jeogh9f6r/package.tgz",
-    "spec": "/private/var/folders/5f/s171_hxd1d587kbn5d0jw6j80000gs/T/d-117514-83525-1cv1ugv.jeogh9f6r/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33032-t71lqw.5agxm6ajor/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33032-t71lqw.5agxm6ajor/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-117514-83525-1cv1ugv.jeogh9f6r/package.tgz",
-  "_shasum": "e64daf5013cb0680c2bd8acfe271b73ad17079a3",
+  "_resolved": "file:../d-11768-33032-t71lqw.5agxm6ajor/package.tgz",
+  "_shasum": "7c9479201506ebea69bc3ca34a9ec7c8eaec5eea",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/5f/s171_hxd1d587kbn5d0jw6j80000gs/T/d-117514-83525-1cv1ugv.jeogh9f6r/package.tgz",
-  "_where": "/private/var/folders/5f/s171_hxd1d587kbn5d0jw6j80000gs/T/apm-install-dir-117514-83525-a1rkks.mjvur6n7b9",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33032-t71lqw.5agxm6ajor/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-11768-33032-1x0s4tn.9s9mx3whfr",
   "activationCommands": {
     "atom-text-editor": [
       "hydrogen:select-kernel",
@@ -45,7 +44,9 @@
       "hydrogen:run-all",
       "hydrogen:run-all-above",
       "hydrogen:run-cell",
-      "hydrogen:run-cell-and-move-down"
+      "hydrogen:run-cell-and-move-down",
+      "hydrogen:restart-kernel-and-re-evaluate-bubbles",
+      "hydrogen:toggle-bubble"
     ]
   },
   "atomTestRunner": "atom-jasmine2-test-runner",
@@ -90,19 +91,14 @@
   },
   "description": "Run code and get results inline using Jupyter kernels like IPython, IJulia, and iTorch",
   "devDependencies": {
-    "atom-jasmine2-test-runner": "^0.7.2",
-    "babel-eslint": "^7.1.0",
+    "atom-jasmine2-test-runner": "^0.8.0",
     "enzyme": "^2.8.2",
-    "eslint": "^3.16.1",
-    "eslint-config-prettier": "^2.0.0",
-    "eslint-plugin-flowtype": "^2.30.4",
-    "eslint-plugin-prettier": "^2.0.1",
     "flow-bin": "^0.46.0",
-    "husky": "^0.13.3",
-    "lint-staged": "^3.4.0",
+    "husky": "^0.14.0",
+    "lint-staged": "^4.0.0",
     "markdox": "^0.1.10",
     "mobx-react-devtools": "^4.2.11",
-    "prettier": "~1.4.2",
+    "prettier": "1.5.2",
     "react-test-renderer": "^15.5.4"
   },
   "engines": {
@@ -152,13 +148,11 @@
   },
   "scripts": {
     "build:docs": "markdox lib/plugin-api/hydrogen-provider.js lib/plugin-api/hydrogen-kernel.js -o docs/PluginAPI.md",
-    "fix": "eslint . --fix",
     "flow": "flow",
-    "lint": "eslint .",
     "precommit": "lint-staged",
     "prettier": "prettier --write 'lib/**/*.js' 'spec/**/*.js'"
   },
-  "version": "1.16.0",
+  "version": "1.19.0",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -404,12 +398,12 @@
       },
       {
         "name": "js-tokens",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "path": "node_modules/js-tokens/index.js"
       },
       {
         "name": "jsonfile",
-        "version": "3.0.0",
+        "version": "3.0.1",
         "path": "node_modules/jsonfile/index.js"
       },
       {
@@ -489,12 +483,12 @@
       },
       {
         "name": "mobx",
-        "version": "3.1.15",
+        "version": "3.2.0",
         "path": "node_modules/mobx/lib/mobx.js"
       },
       {
         "name": "mobx-react",
-        "version": "4.2.1",
+        "version": "4.2.2",
         "path": "node_modules/mobx-react/index.js"
       },
       {
@@ -529,7 +523,7 @@
       },
       {
         "name": "npmlog",
-        "version": "4.1.0",
+        "version": "4.1.2",
         "path": "node_modules/npmlog/log.js"
       },
       {
@@ -569,7 +563,7 @@
       },
       {
         "name": "prebuild-install",
-        "version": "2.1.2",
+        "version": "2.2.0",
         "path": "node_modules/prebuild-install/index.js"
       },
       {
@@ -579,7 +573,7 @@
       },
       {
         "name": "promise",
-        "version": "7.1.1",
+        "version": "7.3.1",
         "path": "node_modules/promise/index.js"
       },
       {
@@ -594,7 +588,7 @@
       },
       {
         "name": "pure-color",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "path": "node_modules/pure-color/index.js"
       },
       {
@@ -609,7 +603,7 @@
       },
       {
         "name": "react",
-        "version": "15.6.0",
+        "version": "15.6.1",
         "path": "node_modules/react/react.js"
       },
       {
@@ -619,7 +613,7 @@
       },
       {
         "name": "react-dom",
-        "version": "15.6.0",
+        "version": "15.6.1",
         "path": "node_modules/react-dom/index.js"
       },
       {
@@ -634,7 +628,7 @@
       },
       {
         "name": "readable-stream",
-        "version": "2.2.11",
+        "version": "2.3.3",
         "path": "node_modules/readable-stream/readable.js"
       },
       {
@@ -659,7 +653,7 @@
       },
       {
         "name": "safe-buffer",
-        "version": "5.0.1",
+        "version": "5.1.1",
         "path": "node_modules/safe-buffer/index.js"
       },
       {
@@ -689,7 +683,7 @@
       },
       {
         "name": "string_decoder",
-        "version": "1.0.2",
+        "version": "1.0.3",
         "path": "node_modules/string_decoder/lib/string_decoder.js"
       },
       {
@@ -729,12 +723,12 @@
       },
       {
         "name": "tunnel-agent",
-        "version": "0.4.3",
+        "version": "0.6.0",
         "path": "node_modules/tunnel-agent/index.js"
       },
       {
         "name": "ua-parser-js",
-        "version": "0.7.12",
+        "version": "0.7.13",
         "path": "node_modules/ua-parser-js/src/ua-parser.js"
       },
       {
@@ -759,7 +753,7 @@
       },
       {
         "name": "uuid",
-        "version": "3.0.1",
+        "version": "3.1.0",
         "path": "node_modules/uuid/index.js"
       },
       {
@@ -783,6 +777,11 @@
         "path": "node_modules/ws/index.js"
       },
       {
+        "name": "safe-buffer",
+        "version": "5.0.1",
+        "path": "node_modules/ws/node_modules/safe-buffer/index.js"
+      },
+      {
         "name": "xmlhttprequest",
         "version": "1.8.0",
         "path": "node_modules/xmlhttprequest/lib/XMLHttpRequest.js"
@@ -799,7 +798,7 @@
       },
       {
         "name": "zeromq",
-        "version": "4.3.0",
+        "version": "4.5.0",
         "path": "node_modules/zeromq/index.js"
       }
     ],
@@ -928,6 +927,7 @@
         "node_modules/pascalcase/package.json",
         "node_modules/path-posix/package.json",
         "node_modules/portfinder/package.json",
+        "node_modules/prebuild-install/package-lock.json",
         "node_modules/prebuild-install/package.json",
         "node_modules/process-nextick-args/package.json",
         "node_modules/promise/package.json",
@@ -968,10 +968,12 @@
         "node_modules/unzip-response/package.json",
         "node_modules/url-parse/package.json",
         "node_modules/util-deprecate/package.json",
+        "node_modules/uuid/.eslintrc.json",
         "node_modules/uuid/package.json",
         "node_modules/whatwg-fetch/package.json",
         "node_modules/wide-align/package.json",
         "node_modules/wrappy/package.json",
+        "node_modules/ws/node_modules/safe-buffer/package.json",
         "node_modules/ws/package.json",
         "node_modules/xmlhttprequest/package.json",
         "node_modules/xss-filters/bower.json",
@@ -1008,6 +1010,7 @@
         "lib/plugin-api/hydrogen-provider.js",
         "lib/signal-list-view.js",
         "lib/store/index.js",
+        "lib/store/markers.js",
         "lib/store/output.js",
         "lib/store/watch.js",
         "lib/store/watches.js",
@@ -1131,7 +1134,9 @@
         "node_modules/@phosphor/coreutils/lib/json.js",
         "node_modules/@phosphor/coreutils/lib/mime.js",
         "node_modules/@phosphor/coreutils/lib/promise.js",
+        "node_modules/@phosphor/coreutils/lib/random.js",
         "node_modules/@phosphor/coreutils/lib/token.js",
+        "node_modules/@phosphor/coreutils/lib/uuid.js",
         "node_modules/@phosphor/disposable/lib/index.js",
         "node_modules/@phosphor/messaging/lib/index.js",
         "node_modules/@phosphor/signaling/lib/index.js",
@@ -5508,6 +5513,7 @@
         "node_modules/pure-color/convert/cmyk2rgb.js",
         "node_modules/pure-color/convert/hsl2hsv.js",
         "node_modules/pure-color/convert/hsl2rgb.js",
+        "node_modules/pure-color/convert/hsl2string.js",
         "node_modules/pure-color/convert/hsv2hsl.js",
         "node_modules/pure-color/convert/hsv2rgb.js",
         "node_modules/pure-color/convert/hwb2rgb.js",
@@ -5800,6 +5806,7 @@
         "node_modules/readable-stream/lib/_stream_transform.js",
         "node_modules/readable-stream/lib/_stream_writable.js",
         "node_modules/readable-stream/lib/internal/streams/BufferList.js",
+        "node_modules/readable-stream/lib/internal/streams/destroy.js",
         "node_modules/readable-stream/lib/internal/streams/stream-browser.js",
         "node_modules/readable-stream/lib/internal/streams/stream.js",
         "node_modules/readable-stream/passthrough.js",
@@ -5830,7 +5837,6 @@
         "node_modules/resize-observer-polyfill/src/utils/geometry.js",
         "node_modules/resize-observer-polyfill/src/utils/isBrowser.js",
         "node_modules/resize-observer-polyfill/src/utils/throttle.js",
-        "node_modules/safe-buffer/browser.js",
         "node_modules/safe-buffer/index.js",
         "node_modules/safe-buffer/test.js",
         "node_modules/set-blocking/index.js",
@@ -5864,8 +5870,11 @@
         "node_modules/uuid/lib/bytesToUuid.js",
         "node_modules/uuid/lib/rng-browser.js",
         "node_modules/uuid/lib/rng.js",
+        "node_modules/uuid/lib/sha1-browser.js",
+        "node_modules/uuid/lib/sha1.js",
         "node_modules/uuid/v1.js",
         "node_modules/uuid/v4.js",
+        "node_modules/uuid/v5.js",
         "node_modules/whatwg-fetch/fetch.js",
         "node_modules/wide-align/align.js",
         "node_modules/wrappy/wrappy.js",
@@ -5881,6 +5890,9 @@
         "node_modules/ws/lib/Validation.js",
         "node_modules/ws/lib/WebSocket.js",
         "node_modules/ws/lib/WebSocketServer.js",
+        "node_modules/ws/node_modules/safe-buffer/browser.js",
+        "node_modules/ws/node_modules/safe-buffer/index.js",
+        "node_modules/ws/node_modules/safe-buffer/test.js",
         "node_modules/xmlhttprequest/lib/XMLHttpRequest.js",
         "node_modules/xss-filters/Gruntfile.js",
         "node_modules/xss-filters/dist/xss-filters.1.2.0.min.js",
@@ -5906,6 +5918,7 @@
         "node_modules/zeromq/index.js",
         "node_modules/zeromq/lib/index.js",
         "node_modules/zeromq/scripts/download.js",
+        "node_modules/zeromq/scripts/prebuild-install.js",
         "node_modules/zeromq/scripts/preinstall.js"
       ],
       ".node": [
@@ -6258,7 +6271,7 @@
           "rc": "^1.1.6",
           "simple-get": "^1.4.2",
           "tar-fs": "^1.13.0",
-          "tunnel-agent": "^0.4.3",
+          "tunnel-agent": "^0.6.0",
           "xtend": "4.0.1"
         }
       },
@@ -6313,11 +6326,11 @@
           "node_modules/react"
         ],
         "dependencies": {
-          "create-react-class": "^15.5.2",
+          "create-react-class": "^15.6.0",
           "fbjs": "^0.8.9",
           "loose-envify": "^1.1.0",
           "object-assign": "^4.1.0",
-          "prop-types": "^15.5.7"
+          "prop-types": "^15.5.10"
         }
       },
       {
@@ -6342,7 +6355,7 @@
           "fbjs": "^0.8.9",
           "loose-envify": "^1.1.0",
           "object-assign": "^4.1.0",
-          "prop-types": "~15.5.7"
+          "prop-types": "^15.5.10"
         }
       },
       {
@@ -6377,11 +6390,11 @@
         ],
         "dependencies": {
           "core-util-is": "~1.0.0",
-          "inherits": "~2.0.1",
+          "inherits": "~2.0.3",
           "isarray": "~1.0.0",
           "process-nextick-args": "~1.0.6",
-          "safe-buffer": "~5.0.1",
-          "string_decoder": "~1.0.0",
+          "safe-buffer": "~5.1.1",
+          "string_decoder": "~1.0.3",
           "util-deprecate": "~1.0.1"
         }
       },
@@ -6416,7 +6429,7 @@
           "node_modules/string_decoder"
         ],
         "dependencies": {
-          "safe-buffer": "~5.0.1"
+          "safe-buffer": "~5.1.0"
         }
       },
       {
@@ -6466,6 +6479,14 @@
         ],
         "dependencies": {
           "os-homedir": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/tunnel-agent"
+        ],
+        "dependencies": {
+          "safe-buffer": "^5.0.1"
         }
       },
       {

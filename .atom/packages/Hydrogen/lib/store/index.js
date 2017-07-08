@@ -5,12 +5,15 @@ import { observable, computed, action } from "mobx";
 import { isMultilanguageGrammar, getEmbeddedScope } from "./../utils";
 
 import Config from "./../config";
+import MarkerStore from "./markers";
 import kernelManager from "./../kernel-manager";
 import type Kernel from "./../kernel";
 
 class Store {
   subscriptions = new CompositeDisposable();
-  @observable runningKernels = new Map();
+  markers = new MarkerStore();
+  @observable startingKernels: Map<string, boolean> = new Map();
+  @observable runningKernels: Map<string, Kernel> = new Map();
   @observable editor = atom.workspace.getActiveTextEditor();
   @observable grammar: ?atom$Grammar;
 
@@ -26,9 +29,17 @@ class Store {
   }
 
   @action
+  startKernel(kernelDisplayName: string) {
+    this.startingKernels.set(kernelDisplayName, true);
+  }
+
+  @action
   newKernel(kernel: Kernel) {
-    const mappedLanguage = Config.getJson("languageMappings")[kernel.language];
-    this.runningKernels.set(mappedLanguage || kernel.language, kernel);
+    const mappedLanguage =
+      Config.getJson("languageMappings")[kernel.language] || kernel.language;
+    this.runningKernels.set(mappedLanguage, kernel);
+    // delete startingKernel since store.kernel now in place to prevent duplicate kernel
+    this.startingKernels.delete(kernel.kernelSpec.display_name);
   }
 
   @action
@@ -43,6 +54,7 @@ class Store {
   @action
   dispose() {
     this.subscriptions.dispose();
+    this.markers.clear();
     this.runningKernels.forEach(kernel => kernel.destroy());
     this.runningKernels = new Map();
   }

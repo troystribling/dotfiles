@@ -832,6 +832,7 @@ declare class atom$TextEditor extends atom$Model {
   getCursorScreenPosition(): atom$Point,
   getCursorScreenPositions(): Array<atom$Point>,
   getLastCursor(): atom$Cursor,
+  getLastSelection(): atom$Selection,
   moveToBeginningOfLine(): void,
   moveToEndOfLine(): void,
   moveToBottom(): void,
@@ -952,6 +953,7 @@ declare class atom$TextEditor extends atom$Model {
   // Undocumented Methods
   getDefaultCharWidth(): number,
   getLineHeightInPixels(): number,
+  getEditorWidthInChars(): number,
   moveToTop(): void,
   tokenForBufferPosition(position: atom$Point | [?number, ?number]): atom$Token,
   onDidConflict(callback: () => void): IDisposable,
@@ -1157,9 +1159,10 @@ declare class atom$Workspace {
   getActivePane(): atom$Pane,
   activateNextPane(): boolean,
   activatePreviousPane(): boolean,
-  paneForURI(uri: string): atom$Pane,
+  paneForURI(uri: string): ?atom$Pane,
   paneForItem(item: mixed): ?atom$Pane,
   paneContainerForItem(item: mixed): ?atom$Dock | ?atom$WorkspaceCenter,
+  paneContainerForURI(uri: string): ?atom$Dock | ?atom$WorkspaceCenter,
 
   // Panels
   getBottomPanels(): Array<atom$Panel>,
@@ -1893,6 +1896,7 @@ declare class atom$Selection {
       undo?: boolean,
     },
   ): string,
+  getBufferRowRange(): [number, number]
 }
 
 declare class atom$LanguageMode {

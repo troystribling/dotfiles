@@ -102,6 +102,10 @@ export default class ZMQKernel extends Kernel {
     this.ioSocket.on("message", this.onIOMessage.bind(this));
     this.stdinSocket.on("message", this.onStdinMessage.bind(this));
 
+    this.monitor(done);
+  }
+
+  monitor(done: ?Function) {
     try {
       let socketNames = ["shellSocket", "controlSocket", "ioSocket"];
 
@@ -168,7 +172,12 @@ export default class ZMQKernel extends Kernel {
 
   restart(onRestarted: ?Function) {
     if (this.kernelProcess) {
+      if (this.executionState === "restarting") {
+        return;
+      }
+      this.setExecutionState("restarting");
       this.shutdown(true);
+      this._kill();
       const { spawn } = launchSpecFromConnectionInfo(
         this.kernelSpec,
         this.connection,
@@ -176,12 +185,14 @@ export default class ZMQKernel extends Kernel {
         this.options
       );
       this.kernelProcess = spawn;
-      return;
+      this.monitor(() => {
+        if (onRestarted) onRestarted(this);
+      });
+    } else {
+      log("ZMQKernel: restart ignored:", this);
+      atom.notifications.addWarning("Cannot restart this kernel");
+      if (onRestarted) onRestarted(this);
     }
-
-    log("ZMQKernel: restart ignored:", this);
-    atom.notifications.addWarning("Cannot restart this kernel");
-    if (onRestarted) onRestarted(this);
   }
 
   // onResults is a callback that may be called multiple times
@@ -368,7 +379,6 @@ export default class ZMQKernel extends Kernel {
       callback(result);
     }
   }
-  /* eslint-enable camelcase*/
 
   _isValidMessage(message: Message) {
     if (!message) {
@@ -427,7 +437,7 @@ export default class ZMQKernel extends Kernel {
 
     if (this.kernelProcess) {
       this._kill();
-      fs.unlink(this.connectionFile);
+      fs.unlinkSync(this.connectionFile);
     }
 
     this.shellSocket.close();

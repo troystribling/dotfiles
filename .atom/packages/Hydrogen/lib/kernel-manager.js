@@ -11,7 +11,7 @@ import ZMQKernel from "./zmq-kernel";
 
 import KernelPicker from "./kernel-picker";
 import store from "./store";
-import { getEditorDirectory, log } from "./utils";
+import { getEditorDirectory, log, deprecationNote } from "./utils";
 
 import type { Connection } from "./zmq-kernel";
 
@@ -66,6 +66,7 @@ class KernelManager {
     connectionFile: string,
     onStarted: (kernel: ZMQKernel) => void
   ) {
+    deprecationNote();
     const language = grammar.name;
 
     log("KernelManager: startExistingKernel: Assuming", language);
@@ -105,6 +106,12 @@ class KernelManager {
     onStarted: ?(kernel: ZMQKernel) => void
   ) {
     const displayName = kernelSpec.display_name;
+
+    // if kernel startup already in progress don't start additional kernel
+    if (store.startingKernels.get(displayName)) return;
+
+    store.startKernel(displayName);
+
     let currentPath = getEditorDirectory(store.editor);
     let projectPath;
 
@@ -241,7 +248,7 @@ class KernelManager {
   }
 
   updateKernelSpecs(callback: ?Function) {
-    this._kernelSpecs = this.getKernelSpecsFromSettings;
+    this._kernelSpecs = this.getKernelSpecsFromSettings();
     this.getKernelSpecsFromJupyter((err, kernelSpecsFromJupyter) => {
       if (!err) {
         this.mergeKernelSpecs(kernelSpecsFromJupyter);

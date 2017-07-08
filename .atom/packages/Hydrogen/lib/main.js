@@ -44,7 +44,8 @@ import {
   renderDevTools,
   INSPECTOR_URI,
   WATCHES_URI,
-  OUTPUT_AREA_URI
+  OUTPUT_AREA_URI,
+  hotReloadPackage
 } from "./utils";
 
 import type Kernel from "./kernel";
@@ -52,12 +53,8 @@ import type Kernel from "./kernel";
 const Hydrogen = {
   config: Config.schema,
 
-  markerBubbleMap: null,
-
   activate() {
     this.emitter = new Emitter();
-
-    this.markerBubbleMap = {};
 
     let skipLanguageMappingsChange = false;
     store.subscriptions.add(
@@ -115,16 +112,27 @@ const Hydrogen = {
           this.handleKernelCommand({ command: "interrupt-kernel" }),
         "hydrogen:restart-kernel": () =>
           this.handleKernelCommand({ command: "restart-kernel" }),
+        "hydrogen:restart-kernel-and-re-evaluate-bubbles": () =>
+          this.restartKernelAndReEvaluateBubbles(),
         "hydrogen:shutdown-kernel": () =>
-          this.handleKernelCommand({ command: "shutdown-kernel" })
+          this.handleKernelCommand({ command: "shutdown-kernel" }),
+        "hydrogen:toggle-bubble": () => this.toggleBubble()
       })
     );
 
     store.subscriptions.add(
       atom.commands.add("atom-workspace", {
-        "hydrogen:clear-results": () => this.clearResultBubbles()
+        "hydrogen:clear-results": () => store.markers.clear()
       })
     );
+
+    if (atom.inDevMode()) {
+      store.subscriptions.add(
+        atom.commands.add("atom-workspace", {
+          "hydrogen:hot-reload-package": () => hotReloadPackage()
+        })
+      );
+    }
 
     store.subscriptions.add(
       atom.workspace.getCenter().observeActivePaneItem(item => {
@@ -266,7 +274,7 @@ const Hydrogen = {
 
     if (command === "switch-kernel") {
       if (!payload) return;
-      this.clearResultBubbles();
+      store.markers.clear();
       if (kernel) kernel.destroy();
       kernelManager.startKernel(payload, grammar);
       return;
@@ -283,7 +291,7 @@ const Hydrogen = {
     } else if (command === "restart-kernel") {
       kernel.restart();
     } else if (command === "shutdown-kernel") {
-      this.clearResultBubbles();
+      store.markers.clear();
       // Note that destroy alone does not shut down a WSKernel
       kernel.shutdown();
       kernel.destroy();
@@ -291,25 +299,30 @@ const Hydrogen = {
       // $FlowFixMe Will only be called if remote kernel
       if (kernel instanceof WSKernel) kernel.promptRename();
     } else if (command === "disconnect-kernel") {
-      this.clearResultBubbles();
+      store.markers.clear();
       kernel.destroy();
     }
   },
 
-  createResultBubble(code: string, row: number, editor: atom$TextEditor) {
+  createResultBubble(editor: atom$TextEditor, code: string, row: number) {
     if (!store.grammar) return;
 
     if (store.kernel) {
-      this._createResultBubble(store.kernel, code, row);
+      this._createResultBubble(editor, store.kernel, code, row);
       return;
     }
 
     kernelManager.startKernelFor(store.grammar, editor, (kernel: ZMQKernel) => {
-      this._createResultBubble(kernel, code, row);
+      this._createResultBubble(editor, kernel, code, row);
     });
   },
 
-  _createResultBubble(kernel: Kernel, code: string, row: number) {
+  _createResultBubble(
+    editor: atom$TextEditor,
+    kernel: Kernel,
+    code: string,
+    row: number
+  ) {
     if (atom.workspace.getActivePaneItem() instanceof WatchesPane) {
       kernel.watchesStore.run();
       return;
@@ -320,8 +333,10 @@ const Hydrogen = {
       ? kernel.outputStore
       : null;
 
-    const outputStore = this.insertResultBubble(
-      store.editor,
+    const { outputStore } = new ResultView(
+      store.markers,
+      kernel,
+      editor,
       row,
       !globalOutputStore
     );
@@ -331,75 +346,56 @@ const Hydrogen = {
       if (globalOutputStore) {
         globalOutputStore.appendOutput(result);
 
-        await atom.workspace.open(OUTPUT_AREA_URI, { searchAllPanes: true });
-        focus(store.editor);
+        if (store.kernel !== kernel) return;
+
+        const container = atom.workspace.paneContainerForURI(OUTPUT_AREA_URI);
+        const pane = atom.workspace.paneForURI(OUTPUT_AREA_URI);
+        if (
+          (container && container.isVisible && !container.isVisible()) ||
+          (pane && pane.itemForURI(OUTPUT_AREA_URI) !== pane.getActiveItem())
+        ) {
+          await atom.workspace.open(OUTPUT_AREA_URI, { searchAllPanes: true });
+          focus(store.editor);
+        }
       }
     });
   },
 
-  insertResultBubble(
-    editor: atom$TextEditor,
-    row: number,
-    showResult: boolean
-  ) {
-    this.clearBubblesOnRow(row);
+  restartKernelAndReEvaluateBubbles() {
+    const { editor, kernel, markers } = store;
 
-    const buffer = editor.getBuffer();
-    const lineLength = buffer.lineLengthForRow(row);
-
-    const point = new Point(row, lineLength);
-    const marker = editor.markBufferPosition(point, { invalidate: "touch" });
-    const lineHeight = editor.getLineHeightInPixels();
-
-    const outputStore = new OutputStore();
-    outputStore.updatePosition({
-      lineLength: lineLength,
-      lineHeight: editor.getLineHeightInPixels(),
-      // $FlowFixMe: Missing flow type
-      editorWidth: editor.getEditorWidthInChars()
+    let breakpoints = [];
+    markers.markers.forEach((bubble: ResultView) => {
+      breakpoints.push(bubble.marker.getBufferRange().start);
     });
+    store.markers.clear();
 
-    const view = new ResultView(outputStore, marker, showResult);
-    const { element } = view;
-
-    editor.decorateMarker(marker, {
-      type: "block",
-      item: element,
-      position: "after"
-    });
-
-    this.markerBubbleMap[marker.id] = view;
-    marker.onDidChange(event => {
-      log("marker.onDidChange:", marker);
-      if (!event.isValid) {
-        view.destroy();
-        delete this.markerBubbleMap[marker.id];
-      } else {
-        outputStore.updatePosition({
-          lineLength: marker.getStartBufferPosition().column
-        });
-      }
-    });
-    return outputStore;
+    if (!editor || !kernel) {
+      this.runAll(breakpoints);
+    } else {
+      kernel.restart(() => this.runAll(breakpoints));
+    }
   },
 
-  clearResultBubbles() {
-    _.forEach(this.markerBubbleMap, (bubble: ResultView) => bubble.destroy());
-    this.markerBubbleMap = {};
-  },
+  toggleBubble() {
+    const { editor, kernel, markers } = store;
+    if (!editor) return;
+    const [startRow, endRow] = editor.getLastSelection().getBufferRowRange();
 
-  clearBubblesOnRow(row: number) {
-    log("clearBubblesOnRow:", row);
-    _.forEach(this.markerBubbleMap, (bubble: ResultView) => {
-      const { marker } = bubble;
-      if (!marker) return;
-      const range = marker.getBufferRange();
-      if (range.start.row <= row && row <= range.end.row) {
-        log("clearBubblesOnRow:", row, bubble);
-        bubble.destroy();
-        delete this.markerBubbleMap[marker.id];
+    for (let row = startRow; row <= endRow; row++) {
+      const destroyed = markers.clearOnRow(row);
+
+      if (!destroyed) {
+        const { outputStore } = new ResultView(
+          markers,
+          kernel,
+          editor,
+          row,
+          true
+        );
+        outputStore.status = "empty";
       }
-    });
+    }
   },
 
   run(moveDown: boolean = false) {
@@ -415,11 +411,11 @@ const Hydrogen = {
       if (moveDown === true) {
         codeManager.moveDown(editor, row);
       }
-      this.createResultBubble(code, row, editor);
+      this.createResultBubble(editor, code, row);
     }
   },
 
-  runAll() {
+  runAll(breakpoints: ?Array<atom$Point>) {
     const { editor, kernel, grammar } = store;
     if (!editor || !grammar) return;
     if (isMultilanguageGrammar(editor.getGrammar())) {
@@ -430,23 +426,27 @@ const Hydrogen = {
     }
 
     if (editor && kernel) {
-      this._runAll(editor, kernel);
+      this._runAll(editor, kernel, breakpoints);
       return;
     }
 
     kernelManager.startKernelFor(grammar, editor, (kernel: ZMQKernel) => {
-      this._runAll(editor, kernel);
+      this._runAll(editor, kernel, breakpoints);
     });
   },
 
-  _runAll(editor: atom$TextEditor, kernel: Kernel) {
-    const cells = codeManager.getCells(editor);
+  _runAll(
+    editor: atom$TextEditor,
+    kernel: Kernel,
+    breakpoints?: Array<atom$Point>
+  ) {
+    let cells = codeManager.getCells(editor, breakpoints);
     _.forEach(
       cells,
       ({ start, end }: { start: atom$Point, end: atom$Point }) => {
         const code = codeManager.getTextInRange(editor, start, end);
         const endRow = codeManager.escapeBlankRows(editor, start.row, end.row);
-        this._createResultBubble(kernel, code, endRow);
+        this._createResultBubble(editor, kernel, code, endRow);
       }
     );
   },
@@ -466,7 +466,7 @@ const Hydrogen = {
     const code = codeManager.getRows(editor, 0, row);
 
     if (code) {
-      this.createResultBubble(code, row);
+      this.createResultBubble(editor, code, row);
     }
   },
 
@@ -481,7 +481,7 @@ const Hydrogen = {
       if (moveDown === true) {
         codeManager.moveDown(editor, endRow);
       }
-      this.createResultBubble(code, endRow);
+      this.createResultBubble(editor, code, endRow);
     }
   },
 
@@ -506,7 +506,7 @@ const Hydrogen = {
   showWSKernelPicker() {
     if (!this.wsKernelPicker) {
       this.wsKernelPicker = new WSKernelPicker((kernel: Kernel) => {
-        this.clearResultBubbles();
+        store.markers.clear();
 
         if (kernel instanceof ZMQKernel) kernel.destroy();
 
