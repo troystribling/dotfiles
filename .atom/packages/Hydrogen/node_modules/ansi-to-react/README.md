@@ -1,7 +1,5 @@
 # ANSI to React
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/nteract/ansi-to-react.svg)](https://greenkeeper.io/)
-
 Convert ANSI Escape Codes to pretty text output for React.
 
 ```

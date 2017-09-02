@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33043-fl50es.iza9z77gb9/package.tgz",
+        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33043-fl50es.iza9z77gb9/package.tgz",
-        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33043-fl50es.iza9z77gb9/package.tgz",
+        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
+        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-11768-33043-1azv0uv.v3kvpzm2t9"
+      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-11781-53424-1e3j26f.0f1msiqkt9"
     ]
   ],
-  "_from": "../d-11768-33043-fl50es.iza9z77gb9/package.tgz",
-  "_id": "markdown-pdf@1.5.4",
+  "_from": "../d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
+  "_id": "markdown-pdf@2.0.3",
   "_inCache": true,
   "_location": "/markdown-pdf",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33043-fl50es.iza9z77gb9/package.tgz",
+    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33043-fl50es.iza9z77gb9/package.tgz",
-    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33043-fl50es.iza9z77gb9/package.tgz",
+    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
+    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-11768-33043-fl50es.iza9z77gb9/package.tgz",
-  "_shasum": "1bf937ce54fa5e9f7de091ce5d47781862dd11a0",
+  "_resolved": "file:../d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
+  "_shasum": "c74bd34a07d666e02e6ff058af74b0afd16faaed",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-11768-33043-fl50es.iza9z77gb9/package.tgz",
-  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-11768-33043-1azv0uv.v3kvpzm2t9",
+  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
+  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-11781-53424-1e3j26f.0f1msiqkt9",
   "activationCommands": {
     "atom-workspace": "markdown-pdf:convert"
   },
@@ -47,7 +47,9 @@
   },
   "dependencies": {
     "html-pdf": "2.0.x",
-    "less": "^1.7.0"
+    "less": "^1.7.0",
+    "loophole": "^1.1.0",
+    "mdpdf": "^1.5.1"
   },
   "description": "Convert markdown to pdf, png or jpeg on the fly.",
   "devDependencies": {
@@ -61,16 +63,26 @@
   "main": "./lib/markdown-pdf",
   "name": "markdown-pdf",
   "optionalDependencies": {},
-  "readme": "## [Markdown to PDF](https://atom.io/packages/markdown-pdf)\n\nConvert markdown-formatted documents to pdf, png or jpeg files without ever leaving Atom.\n\n### Usage\nJust focus the window containing your markdown file and use the `convert` command.\n\nThe output PDF will be styled similar to the github-flavored markdown on github.com, as well as any user styles you have added. It will appear in the same directory as the Markdown you are converting, with the same name and a different extension.\n\n![markdown-pdf](https://raw.githubusercontent.com/travs/markdown-pdf/master/assets/testpdf.png)\n\nYou can set parameters in the package's settings, such as page size, orientation, and output format (pdf, png or jpeg).\n\n### How it works\n\nThe HTML provided by running the markdown through [marked](https://www.npmjs.org/package/marked) is prepended with the css from the [markdown-preview atom package](https://github.com/atom/markdown-preview). The syntax-highlights styling is pulled from the user's currently-active theme and added in the same way.\n\nThis HTML+CSS is then fed to [html-pdf](https://www.npmjs.org/package/html-pdf), which outputs the final image (pdf, png or jpeg) doc.\n\nThe package has dependencies on [tree-view](https://github.com/atom/tree-view) and [markdown-preview](https://github.com/atom/markdown-preview), but since these are included in the default atom installation, you probably won't have to worry about that.\n\n#### Heart it? Hate it?\nFeel free to run `apm star 'markdown-pdf'` or give some feedback :smile:\n\n##### Special thanks to these folks\n\n- [@schmurphy](https://github.com/NKMR6194): [#11](https://github.com/travs/markdown-pdf/pull/11)\n- [@NKMR6194](https://github.com/NKMR6194): [#51](https://github.com/travs/markdown-pdf/pull/51), [#83](https://github.com/travs/markdown-pdf/pull/83)\n- [@Nicnl](https://github.com/Nicnl): [#28](https://github.com/travs/markdown-pdf/pull/28)\n- [@brianchung808](https://github.com/brianchung808): [#34](https://github.com/travs/markdown-pdf/pull/34)\n- [@hdmi](https://github.com/hdmi): [#53](https://github.com/travs/markdown-pdf/pull/53)\n- [@CumpsD](https://github.com/CumpsD): [#59](https://github.com/travs/markdown-pdf/pull/59)\n- [@pydolan](https://github.com/pydolan): [#72](https://github.com/travs/markdown-pdf/pull/72), [#74](https://github.com/travs/markdown-pdf/pull/74)\n- [@Galadirith](https://github.com/Galadirith): [#88](https://github.com/travs/markdown-pdf/pull/88)\n\n##### My other Atom package\n\nIf you're using Atom to develop Atom, you could use a [devtools upgrade](https://github.com/travs/dev-tools-themes).\n",
+  "readme": "## [Markdown to PDF](https://atom.io/packages/markdown-pdf)\n\nConvert markdown-formatted documents to pdf files without ever leaving Atom.\n\n### Usage\nJust focus the window containing your markdown file and use the `convert` command.\n\nThe output PDF will be styled similar to the markdown on `github.com`, as well as any user styles you have added.\nIt will appear in the same directory as the Markdown you are converting, with the same name and a `.pdf` extension.\n\n![markdown-pdf](https://raw.githubusercontent.com/travs/markdown-pdf/master/assets/testpdf.png)\n\nYou can set parameters in the package's settings, such as page and border size.\n\n#### Heart it? Hate it?\nFeel free to run `apm star 'markdown-pdf'` or give some feedback :smile:\n\n##### Special thanks to these folks\n\n- [@BlueHatbRit](https://github.com/blueHatbRit): for helping integrate the essential [`mdpdf`](https://github.com/bluehatbrit/mdpdf) converter module\n- [@schmurphy](https://github.com/NKMR6194): [#11](https://github.com/travs/markdown-pdf/pull/11)\n- [@NKMR6194](https://github.com/NKMR6194): [#51](https://github.com/travs/markdown-pdf/pull/51), [#83](https://github.com/travs/markdown-pdf/pull/83)\n- [@Nicnl](https://github.com/Nicnl): [#28](https://github.com/travs/markdown-pdf/pull/28)\n- [@brianchung808](https://github.com/brianchung808): [#34](https://github.com/travs/markdown-pdf/pull/34)\n- [@hdmi](https://github.com/hdmi): [#53](https://github.com/travs/markdown-pdf/pull/53)\n- [@CumpsD](https://github.com/CumpsD): [#59](https://github.com/travs/markdown-pdf/pull/59)\n- [@pydolan](https://github.com/pydolan): [#72](https://github.com/travs/markdown-pdf/pull/72), [#74](https://github.com/travs/markdown-pdf/pull/74)\n- [@Galadirith](https://github.com/Galadirith): [#88](https://github.com/travs/markdown-pdf/pull/88)\n\n##### My other Atom package\n\nIf you're using Atom to develop Atom, you could use a [devtools upgrade](https://github.com/travs/dev-tools-themes).\n",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/travs/markdown-pdf.git"
   },
-  "version": "1.5.4",
+  "version": "2.0.3",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
+      {
+        "name": "ajv",
+        "version": "4.11.8",
+        "path": "node_modules/ajv/lib/ajv.js"
+      },
+      {
+        "name": "align-text",
+        "version": "0.1.4",
+        "path": "node_modules/align-text/index.js"
+      },
       {
         "name": "amdefine",
         "version": "1.0.1",
@@ -82,9 +94,9 @@
         "path": "node_modules/ansi-regex/index.js"
       },
       {
-        "name": "ansi-styles",
-        "version": "2.2.1",
-        "path": "node_modules/ansi-styles/index.js"
+        "name": "array-find-index",
+        "version": "1.0.2",
+        "path": "node_modules/array-find-index/index.js"
       },
       {
         "name": "asn1",
@@ -117,9 +129,24 @@
         "path": "node_modules/aws4/aws4.js"
       },
       {
+        "name": "barbe",
+        "version": "2.2.1",
+        "path": "node_modules/barbe/lib/index.js"
+      },
+      {
         "name": "bcrypt-pbkdf",
         "version": "1.0.1",
         "path": "node_modules/bcrypt-pbkdf/index.js"
+      },
+      {
+        "name": "bluebird",
+        "version": "3.5.0",
+        "path": "node_modules/bluebird/js/release/bluebird.js"
+      },
+      {
+        "name": "boolbase",
+        "version": "1.0.0",
+        "path": "node_modules/boolbase/index.js"
       },
       {
         "name": "boom",
@@ -127,14 +154,39 @@
         "path": "node_modules/boom/lib/index.js"
       },
       {
+        "name": "builtin-modules",
+        "version": "1.1.1",
+        "path": "node_modules/builtin-modules/index.js"
+      },
+      {
+        "name": "camelcase",
+        "version": "1.2.1",
+        "path": "node_modules/camelcase/index.js"
+      },
+      {
+        "name": "camelcase-keys",
+        "version": "2.1.0",
+        "path": "node_modules/camelcase-keys/index.js"
+      },
+      {
+        "name": "camelcase",
+        "version": "2.1.1",
+        "path": "node_modules/camelcase-keys/node_modules/camelcase/index.js"
+      },
+      {
         "name": "caseless",
-        "version": "0.11.0",
+        "version": "0.12.0",
         "path": "node_modules/caseless/index.js"
       },
       {
-        "name": "chalk",
-        "version": "1.1.3",
-        "path": "node_modules/chalk/index.js"
+        "name": "center-align",
+        "version": "0.1.3",
+        "path": "node_modules/center-align/index.js"
+      },
+      {
+        "name": "cheerio",
+        "version": "0.22.0",
+        "path": "node_modules/cheerio/index.js"
       },
       {
         "name": "clean-css",
@@ -142,9 +194,24 @@
         "path": "node_modules/clean-css/index.js"
       },
       {
-        "name": "commander",
-        "version": "2.2.0",
-        "path": "node_modules/clean-css/node_modules/commander/index.js"
+        "name": "cliui",
+        "version": "2.1.0",
+        "path": "node_modules/cliui/index.js"
+      },
+      {
+        "name": "wordwrap",
+        "version": "0.0.2",
+        "path": "node_modules/cliui/node_modules/wordwrap/index.js"
+      },
+      {
+        "name": "co",
+        "version": "4.6.0",
+        "path": "node_modules/co/index.js"
+      },
+      {
+        "name": "code-point-at",
+        "version": "1.1.0",
+        "path": "node_modules/code-point-at/index.js"
       },
       {
         "name": "combined-stream",
@@ -153,12 +220,12 @@
       },
       {
         "name": "commander",
-        "version": "2.11.0",
+        "version": "2.2.0",
         "path": "node_modules/commander/index.js"
       },
       {
         "name": "concat-stream",
-        "version": "1.5.0",
+        "version": "1.6.0",
         "path": "node_modules/concat-stream/index.js"
       },
       {
@@ -167,14 +234,34 @@
         "path": "node_modules/core-util-is/lib/util.js"
       },
       {
+        "name": "cross-spawn",
+        "version": "5.1.0",
+        "path": "node_modules/cross-spawn/index.js"
+      },
+      {
         "name": "cryptiles",
         "version": "2.0.5",
         "path": "node_modules/cryptiles/lib/index.js"
       },
       {
+        "name": "css-select",
+        "version": "1.2.0",
+        "path": "node_modules/css-select/index.js"
+      },
+      {
+        "name": "css-what",
+        "version": "2.1.0",
+        "path": "node_modules/css-what/index.js"
+      },
+      {
         "name": "ctype",
         "version": "0.5.3",
         "path": "node_modules/ctype/ctype.js"
+      },
+      {
+        "name": "currently-unhandled",
+        "version": "0.4.1",
+        "path": "node_modules/currently-unhandled/index.js"
       },
       {
         "name": "dashdash",
@@ -188,8 +275,13 @@
       },
       {
         "name": "debug",
-        "version": "0.7.4",
-        "path": "node_modules/debug/lib/debug.js"
+        "version": "2.2.0",
+        "path": "node_modules/debug/node.js"
+      },
+      {
+        "name": "decamelize",
+        "version": "1.2.0",
+        "path": "node_modules/decamelize/index.js"
       },
       {
         "name": "delayed-stream",
@@ -197,9 +289,49 @@
         "path": "node_modules/delayed-stream/lib/delayed_stream.js"
       },
       {
+        "name": "dom-serializer",
+        "version": "0.1.0",
+        "path": "node_modules/dom-serializer/index.js"
+      },
+      {
+        "name": "domelementtype",
+        "version": "1.1.3",
+        "path": "node_modules/dom-serializer/node_modules/domelementtype/index.js"
+      },
+      {
+        "name": "domelementtype",
+        "version": "1.3.0",
+        "path": "node_modules/domelementtype/index.js"
+      },
+      {
+        "name": "domhandler",
+        "version": "2.4.1",
+        "path": "node_modules/domhandler/index.js"
+      },
+      {
+        "name": "domutils",
+        "version": "1.5.1",
+        "path": "node_modules/domutils/index.js"
+      },
+      {
         "name": "ecc-jsbn",
         "version": "0.1.1",
         "path": "node_modules/ecc-jsbn/index.js"
+      },
+      {
+        "name": "emojer",
+        "version": "1.0.6",
+        "path": "node_modules/emojer/lib/index.js"
+      },
+      {
+        "name": "entities",
+        "version": "1.1.1",
+        "path": "node_modules/entities/index.js"
+      },
+      {
+        "name": "error-ex",
+        "version": "1.3.1",
+        "path": "node_modules/error-ex/index.js"
       },
       {
         "name": "es6-promise",
@@ -207,9 +339,9 @@
         "path": "node_modules/es6-promise/dist/es6-promise.js"
       },
       {
-        "name": "escape-string-regexp",
-        "version": "1.0.5",
-        "path": "node_modules/escape-string-regexp/index.js"
+        "name": "execa",
+        "version": "0.7.0",
+        "path": "node_modules/execa/index.js"
       },
       {
         "name": "extend",
@@ -218,18 +350,28 @@
       },
       {
         "name": "extract-zip",
-        "version": "1.5.0",
+        "version": "1.6.5",
         "path": "node_modules/extract-zip/index.js"
       },
       {
         "name": "extsprintf",
-        "version": "1.0.2",
+        "version": "1.3.0",
         "path": "node_modules/extsprintf/lib/extsprintf.js"
       },
       {
         "name": "fd-slicer",
         "version": "1.0.1",
         "path": "node_modules/fd-slicer/index.js"
+      },
+      {
+        "name": "file-url",
+        "version": "2.0.2",
+        "path": "node_modules/file-url/index.js"
+      },
+      {
+        "name": "find-up",
+        "version": "1.1.2",
+        "path": "node_modules/find-up/index.js"
       },
       {
         "name": "forever-agent",
@@ -247,14 +389,19 @@
         "path": "node_modules/fs-extra/lib/index.js"
       },
       {
-        "name": "generate-function",
-        "version": "2.0.0",
-        "path": "node_modules/generate-function/index.js"
+        "name": "get-caller-file",
+        "version": "1.0.2",
+        "path": "node_modules/get-caller-file/index.js"
       },
       {
-        "name": "generate-object-property",
-        "version": "1.2.0",
-        "path": "node_modules/generate-object-property/index.js"
+        "name": "get-stdin",
+        "version": "4.0.1",
+        "path": "node_modules/get-stdin/index.js"
+      },
+      {
+        "name": "get-stream",
+        "version": "3.0.0",
+        "path": "node_modules/get-stream/index.js"
       },
       {
         "name": "getpass",
@@ -272,14 +419,29 @@
         "path": "node_modules/graceful-fs/graceful-fs.js"
       },
       {
-        "name": "har-validator",
-        "version": "2.0.6",
-        "path": "node_modules/har-validator/lib/index.js"
+        "name": "handlebars",
+        "version": "4.0.10",
+        "path": "node_modules/handlebars/lib/index.js"
       },
       {
-        "name": "has-ansi",
-        "version": "2.0.0",
-        "path": "node_modules/has-ansi/index.js"
+        "name": "async",
+        "version": "1.5.2",
+        "path": "node_modules/handlebars/node_modules/async/lib/async.js"
+      },
+      {
+        "name": "source-map",
+        "version": "0.4.4",
+        "path": "node_modules/handlebars/node_modules/source-map/lib/source-map.js"
+      },
+      {
+        "name": "har-schema",
+        "version": "1.0.5",
+        "path": "node_modules/har-schema/lib/index.js"
+      },
+      {
+        "name": "har-validator",
+        "version": "4.2.1",
+        "path": "node_modules/har-validator/lib/node4/promise.js"
       },
       {
         "name": "hasha",
@@ -297,9 +459,19 @@
         "path": "node_modules/hoek/lib/index.js"
       },
       {
+        "name": "hosted-git-info",
+        "version": "2.5.0",
+        "path": "node_modules/hosted-git-info/index.js"
+      },
+      {
         "name": "html-pdf",
         "version": "2.0.1",
         "path": "node_modules/html-pdf/lib/index.js"
+      },
+      {
+        "name": "htmlparser2",
+        "version": "3.9.2",
+        "path": "node_modules/htmlparser2/lib/index.js"
       },
       {
         "name": "http-signature",
@@ -307,19 +479,44 @@
         "path": "node_modules/http-signature/lib/index.js"
       },
       {
+        "name": "indent-string",
+        "version": "2.1.0",
+        "path": "node_modules/indent-string/index.js"
+      },
+      {
         "name": "inherits",
         "version": "2.0.3",
         "path": "node_modules/inherits/inherits.js"
       },
       {
-        "name": "is-my-json-valid",
-        "version": "2.16.0",
-        "path": "node_modules/is-my-json-valid/index.js"
+        "name": "invert-kv",
+        "version": "1.0.0",
+        "path": "node_modules/invert-kv/index.js"
       },
       {
-        "name": "is-property",
+        "name": "is-arrayish",
+        "version": "0.2.1",
+        "path": "node_modules/is-arrayish/index.js"
+      },
+      {
+        "name": "is-buffer",
+        "version": "1.1.5",
+        "path": "node_modules/is-buffer/index.js"
+      },
+      {
+        "name": "is-builtin-module",
+        "version": "1.0.0",
+        "path": "node_modules/is-builtin-module/index.js"
+      },
+      {
+        "name": "is-finite",
         "version": "1.0.2",
-        "path": "node_modules/is-property/is-property.js"
+        "path": "node_modules/is-finite/index.js"
+      },
+      {
+        "name": "is-fullwidth-code-point",
+        "version": "1.0.0",
+        "path": "node_modules/is-fullwidth-code-point/index.js"
       },
       {
         "name": "is-stream",
@@ -330,6 +527,11 @@
         "name": "is-typedarray",
         "version": "1.0.0",
         "path": "node_modules/is-typedarray/index.js"
+      },
+      {
+        "name": "is-utf8",
+        "version": "0.2.1",
+        "path": "node_modules/is-utf8/is-utf8.js"
       },
       {
         "name": "isarray",
@@ -357,6 +559,11 @@
         "path": "node_modules/json-schema/lib/validate.js"
       },
       {
+        "name": "json-stable-stringify",
+        "version": "1.0.1",
+        "path": "node_modules/json-stable-stringify/index.js"
+      },
+      {
         "name": "json-stringify-safe",
         "version": "5.0.1",
         "path": "node_modules/json-stringify-safe/stringify.js"
@@ -367,13 +574,13 @@
         "path": "node_modules/jsonfile/index.js"
       },
       {
-        "name": "jsonpointer",
-        "version": "4.0.1",
-        "path": "node_modules/jsonpointer/jsonpointer.js"
+        "name": "jsonify",
+        "version": "0.0.0",
+        "path": "node_modules/jsonify/index.js"
       },
       {
         "name": "jsprim",
-        "version": "1.4.0",
+        "version": "1.4.1",
         "path": "node_modules/jsprim/lib/jsprim.js"
       },
       {
@@ -387,9 +594,24 @@
         "path": "node_modules/kew/kew.js"
       },
       {
+        "name": "kind-of",
+        "version": "3.2.2",
+        "path": "node_modules/kind-of/index.js"
+      },
+      {
         "name": "klaw",
         "version": "1.3.1",
         "path": "node_modules/klaw/src/index.js"
+      },
+      {
+        "name": "lazy-cache",
+        "version": "1.0.4",
+        "path": "node_modules/lazy-cache/index.js"
+      },
+      {
+        "name": "lcid",
+        "version": "1.0.0",
+        "path": "node_modules/lcid/index.js"
       },
       {
         "name": "less",
@@ -492,19 +714,159 @@
         "path": "node_modules/less/node_modules/sntp/index.js"
       },
       {
+        "name": "tunnel-agent",
+        "version": "0.4.3",
+        "path": "node_modules/less/node_modules/tunnel-agent/index.js"
+      },
+      {
+        "name": "load-json-file",
+        "version": "1.1.0",
+        "path": "node_modules/load-json-file/index.js"
+      },
+      {
+        "name": "locate-path",
+        "version": "2.0.0",
+        "path": "node_modules/locate-path/index.js"
+      },
+      {
+        "name": "path-exists",
+        "version": "3.0.0",
+        "path": "node_modules/locate-path/node_modules/path-exists/index.js"
+      },
+      {
+        "name": "lodash.assignin",
+        "version": "4.2.0",
+        "path": "node_modules/lodash.assignin/index.js"
+      },
+      {
+        "name": "lodash.bind",
+        "version": "4.2.1",
+        "path": "node_modules/lodash.bind/index.js"
+      },
+      {
+        "name": "lodash.defaults",
+        "version": "4.2.0",
+        "path": "node_modules/lodash.defaults/index.js"
+      },
+      {
+        "name": "lodash.filter",
+        "version": "4.6.0",
+        "path": "node_modules/lodash.filter/index.js"
+      },
+      {
+        "name": "lodash.flatten",
+        "version": "4.4.0",
+        "path": "node_modules/lodash.flatten/index.js"
+      },
+      {
+        "name": "lodash.foreach",
+        "version": "4.5.0",
+        "path": "node_modules/lodash.foreach/index.js"
+      },
+      {
+        "name": "lodash.map",
+        "version": "4.6.0",
+        "path": "node_modules/lodash.map/index.js"
+      },
+      {
+        "name": "lodash.merge",
+        "version": "4.6.0",
+        "path": "node_modules/lodash.merge/index.js"
+      },
+      {
+        "name": "lodash.pick",
+        "version": "4.4.0",
+        "path": "node_modules/lodash.pick/index.js"
+      },
+      {
+        "name": "lodash.reduce",
+        "version": "4.6.0",
+        "path": "node_modules/lodash.reduce/index.js"
+      },
+      {
+        "name": "lodash.reject",
+        "version": "4.6.0",
+        "path": "node_modules/lodash.reject/index.js"
+      },
+      {
+        "name": "lodash.some",
+        "version": "4.6.0",
+        "path": "node_modules/lodash.some/index.js"
+      },
+      {
+        "name": "longest",
+        "version": "1.0.1",
+        "path": "node_modules/longest/index.js"
+      },
+      {
+        "name": "loophole",
+        "version": "1.1.0",
+        "path": "node_modules/loophole/lib/loophole.js"
+      },
+      {
+        "name": "loud-rejection",
+        "version": "1.6.0",
+        "path": "node_modules/loud-rejection/index.js"
+      },
+      {
+        "name": "lru-cache",
+        "version": "4.1.1",
+        "path": "node_modules/lru-cache/index.js"
+      },
+      {
+        "name": "map-obj",
+        "version": "1.0.1",
+        "path": "node_modules/map-obj/index.js"
+      },
+      {
+        "name": "match-all",
+        "version": "1.2.2",
+        "path": "node_modules/match-all/lib/index.js"
+      },
+      {
+        "name": "mdpdf",
+        "version": "1.5.1",
+        "path": "node_modules/mdpdf/index.js"
+      },
+      {
+        "name": "html-pdf",
+        "version": "2.1.0",
+        "path": "node_modules/mdpdf/node_modules/html-pdf/lib/index.js"
+      },
+      {
+        "name": "mem",
+        "version": "1.1.0",
+        "path": "node_modules/mem/index.js"
+      },
+      {
+        "name": "meow",
+        "version": "3.7.0",
+        "path": "node_modules/meow/index.js"
+      },
+      {
+        "name": "minimist",
+        "version": "1.2.0",
+        "path": "node_modules/meow/node_modules/minimist/index.js"
+      },
+      {
         "name": "mime",
         "version": "1.2.11",
         "path": "node_modules/mime/mime.js"
       },
       {
         "name": "mime-db",
-        "version": "1.27.0",
+        "version": "1.29.0",
         "path": "node_modules/mime-db/index.js"
       },
       {
         "name": "mime-types",
-        "version": "2.1.15",
+        "version": "2.1.16",
         "path": "node_modules/mime-types/index.js"
+      },
+      {
+        "name": "mimic-fn",
+        "version": "1.1.0",
+        "path": "node_modules/mimic-fn/index.js"
       },
       {
         "name": "minimist",
@@ -517,9 +879,34 @@
         "path": "node_modules/mkdirp/index.js"
       },
       {
+        "name": "ms",
+        "version": "0.7.1",
+        "path": "node_modules/ms/index.js"
+      },
+      {
         "name": "natives",
         "version": "1.1.0",
         "path": "node_modules/natives/index.js"
+      },
+      {
+        "name": "normalize-package-data",
+        "version": "2.4.0",
+        "path": "node_modules/normalize-package-data/lib/normalize.js"
+      },
+      {
+        "name": "npm-run-path",
+        "version": "2.0.2",
+        "path": "node_modules/npm-run-path/index.js"
+      },
+      {
+        "name": "nth-check",
+        "version": "1.0.1",
+        "path": "node_modules/nth-check/index.js"
+      },
+      {
+        "name": "number-is-nan",
+        "version": "1.0.1",
+        "path": "node_modules/number-is-nan/index.js"
       },
       {
         "name": "oauth-sign",
@@ -527,14 +914,74 @@
         "path": "node_modules/oauth-sign/index.js"
       },
       {
+        "name": "object-assign",
+        "version": "4.1.1",
+        "path": "node_modules/object-assign/index.js"
+      },
+      {
+        "name": "optimist",
+        "version": "0.6.1",
+        "path": "node_modules/optimist/index.js"
+      },
+      {
+        "name": "os-locale",
+        "version": "2.1.0",
+        "path": "node_modules/os-locale/index.js"
+      },
+      {
+        "name": "p-finally",
+        "version": "1.0.0",
+        "path": "node_modules/p-finally/index.js"
+      },
+      {
+        "name": "p-limit",
+        "version": "1.1.0",
+        "path": "node_modules/p-limit/index.js"
+      },
+      {
+        "name": "p-locate",
+        "version": "2.0.0",
+        "path": "node_modules/p-locate/index.js"
+      },
+      {
+        "name": "parse-json",
+        "version": "2.2.0",
+        "path": "node_modules/parse-json/index.js"
+      },
+      {
+        "name": "path-exists",
+        "version": "2.1.0",
+        "path": "node_modules/path-exists/index.js"
+      },
+      {
+        "name": "path-key",
+        "version": "2.0.1",
+        "path": "node_modules/path-key/index.js"
+      },
+      {
+        "name": "path-type",
+        "version": "1.1.0",
+        "path": "node_modules/path-type/index.js"
+      },
+      {
         "name": "pend",
         "version": "1.2.0",
         "path": "node_modules/pend/index.js"
       },
       {
+        "name": "performance-now",
+        "version": "0.2.0",
+        "path": "node_modules/performance-now/lib/performance-now.js"
+      },
+      {
         "name": "phantomjs-prebuilt",
-        "version": "2.1.14",
+        "version": "2.1.15",
         "path": "node_modules/phantomjs-prebuilt/lib/phantomjs.js"
+      },
+      {
+        "name": "pify",
+        "version": "2.3.0",
+        "path": "node_modules/pify/index.js"
       },
       {
         "name": "pinkie",
@@ -557,29 +1004,174 @@
         "path": "node_modules/progress/index.js"
       },
       {
+        "name": "pseudomap",
+        "version": "1.0.2",
+        "path": "node_modules/pseudomap/map.js"
+      },
+      {
         "name": "punycode",
         "version": "1.4.1",
         "path": "node_modules/punycode/punycode.js"
       },
       {
         "name": "qs",
-        "version": "6.3.2",
+        "version": "6.4.0",
         "path": "node_modules/qs/lib/index.js"
       },
       {
+        "name": "read-pkg",
+        "version": "1.1.0",
+        "path": "node_modules/read-pkg/index.js"
+      },
+      {
+        "name": "read-pkg-up",
+        "version": "1.0.1",
+        "path": "node_modules/read-pkg-up/index.js"
+      },
+      {
         "name": "readable-stream",
-        "version": "2.0.6",
+        "version": "2.3.3",
         "path": "node_modules/readable-stream/readable.js"
       },
       {
+        "name": "redent",
+        "version": "1.0.0",
+        "path": "node_modules/redent/index.js"
+      },
+      {
+        "name": "regex-emoji",
+        "version": "2.0.5",
+        "path": "node_modules/regex-emoji/lib/index.js"
+      },
+      {
+        "name": "regex-escape",
+        "version": "3.4.6",
+        "path": "node_modules/regex-escape/lib/index.js"
+      },
+      {
+        "name": "repeat-string",
+        "version": "1.6.1",
+        "path": "node_modules/repeat-string/index.js"
+      },
+      {
+        "name": "repeating",
+        "version": "2.0.1",
+        "path": "node_modules/repeating/index.js"
+      },
+      {
         "name": "request",
-        "version": "2.79.0",
+        "version": "2.81.0",
         "path": "node_modules/request/index.js"
       },
       {
         "name": "request-progress",
         "version": "2.0.1",
         "path": "node_modules/request-progress/index.js"
+      },
+      {
+        "name": "require-directory",
+        "version": "2.1.1",
+        "path": "node_modules/require-directory/index.js"
+      },
+      {
+        "name": "require-main-filename",
+        "version": "1.0.1",
+        "path": "node_modules/require-main-filename/index.js"
+      },
+      {
+        "name": "right-align",
+        "version": "0.1.3",
+        "path": "node_modules/right-align/index.js"
+      },
+      {
+        "name": "safe-buffer",
+        "version": "5.1.1",
+        "path": "node_modules/safe-buffer/index.js"
+      },
+      {
+        "name": "semver",
+        "version": "5.4.1",
+        "path": "node_modules/semver/semver.js"
+      },
+      {
+        "name": "set-blocking",
+        "version": "2.0.0",
+        "path": "node_modules/set-blocking/index.js"
+      },
+      {
+        "name": "shebang-command",
+        "version": "1.2.0",
+        "path": "node_modules/shebang-command/index.js"
+      },
+      {
+        "name": "shebang-regex",
+        "version": "1.0.0",
+        "path": "node_modules/shebang-regex/index.js"
+      },
+      {
+        "name": "showdown",
+        "version": "1.7.3",
+        "path": "node_modules/showdown/dist/showdown.js"
+      },
+      {
+        "name": "camelcase",
+        "version": "4.1.0",
+        "path": "node_modules/showdown/node_modules/camelcase/index.js"
+      },
+      {
+        "name": "cliui",
+        "version": "3.2.0",
+        "path": "node_modules/showdown/node_modules/cliui/index.js"
+      },
+      {
+        "name": "string-width",
+        "version": "1.0.2",
+        "path": "node_modules/showdown/node_modules/cliui/node_modules/string-width/index.js"
+      },
+      {
+        "name": "find-up",
+        "version": "2.1.0",
+        "path": "node_modules/showdown/node_modules/find-up/index.js"
+      },
+      {
+        "name": "load-json-file",
+        "version": "2.0.0",
+        "path": "node_modules/showdown/node_modules/load-json-file/index.js"
+      },
+      {
+        "name": "path-type",
+        "version": "2.0.0",
+        "path": "node_modules/showdown/node_modules/path-type/index.js"
+      },
+      {
+        "name": "read-pkg",
+        "version": "2.0.0",
+        "path": "node_modules/showdown/node_modules/read-pkg/index.js"
+      },
+      {
+        "name": "read-pkg-up",
+        "version": "2.0.0",
+        "path": "node_modules/showdown/node_modules/read-pkg-up/index.js"
+      },
+      {
+        "name": "strip-bom",
+        "version": "3.0.0",
+        "path": "node_modules/showdown/node_modules/strip-bom/index.js"
+      },
+      {
+        "name": "yargs",
+        "version": "8.0.2",
+        "path": "node_modules/showdown/node_modules/yargs/index.js"
+      },
+      {
+        "name": "showdown-emoji",
+        "version": "1.0.4",
+        "path": "node_modules/showdown-emoji/lib/index.js"
+      },
+      {
+        "name": "signal-exit",
+        "version": "3.0.2",
+        "path": "node_modules/signal-exit/index.js"
       },
       {
         "name": "sntp",
@@ -590,6 +1182,21 @@
         "name": "source-map",
         "version": "0.1.43",
         "path": "node_modules/source-map/lib/source-map.js"
+      },
+      {
+        "name": "spdx-correct",
+        "version": "1.0.2",
+        "path": "node_modules/spdx-correct/index.js"
+      },
+      {
+        "name": "spdx-expression-parse",
+        "version": "1.0.4",
+        "path": "node_modules/spdx-expression-parse/index.js"
+      },
+      {
+        "name": "spdx-license-ids",
+        "version": "1.2.2",
+        "path": "node_modules/spdx-license-ids/spdx-license-ids.json"
       },
       {
         "name": "sshpk",
@@ -603,8 +1210,28 @@
       },
       {
         "name": "string_decoder",
-        "version": "0.10.31",
-        "path": "node_modules/string_decoder/index.js"
+        "version": "1.0.3",
+        "path": "node_modules/string_decoder/lib/string_decoder.js"
+      },
+      {
+        "name": "string-width",
+        "version": "2.1.1",
+        "path": "node_modules/string-width/index.js"
+      },
+      {
+        "name": "ansi-regex",
+        "version": "3.0.0",
+        "path": "node_modules/string-width/node_modules/ansi-regex/index.js"
+      },
+      {
+        "name": "is-fullwidth-code-point",
+        "version": "2.0.0",
+        "path": "node_modules/string-width/node_modules/is-fullwidth-code-point/index.js"
+      },
+      {
+        "name": "strip-ansi",
+        "version": "4.0.0",
+        "path": "node_modules/string-width/node_modules/strip-ansi/index.js"
       },
       {
         "name": "stringstream",
@@ -617,9 +1244,19 @@
         "path": "node_modules/strip-ansi/index.js"
       },
       {
-        "name": "supports-color",
+        "name": "strip-bom",
         "version": "2.0.0",
-        "path": "node_modules/supports-color/index.js"
+        "path": "node_modules/strip-bom/index.js"
+      },
+      {
+        "name": "strip-eof",
+        "version": "1.0.0",
+        "path": "node_modules/strip-eof/index.js"
+      },
+      {
+        "name": "strip-indent",
+        "version": "1.0.1",
+        "path": "node_modules/strip-indent/index.js"
       },
       {
         "name": "throttleit",
@@ -632,8 +1269,13 @@
         "path": "node_modules/tough-cookie/lib/cookie.js"
       },
       {
+        "name": "trim-newlines",
+        "version": "1.0.0",
+        "path": "node_modules/trim-newlines/index.js"
+      },
+      {
         "name": "tunnel-agent",
-        "version": "0.4.3",
+        "version": "0.6.0",
         "path": "node_modules/tunnel-agent/index.js"
       },
       {
@@ -647,6 +1289,21 @@
         "path": "node_modules/typedarray/index.js"
       },
       {
+        "name": "uglify-js",
+        "version": "2.8.29",
+        "path": "node_modules/uglify-js/tools/node.js"
+      },
+      {
+        "name": "source-map",
+        "version": "0.5.7",
+        "path": "node_modules/uglify-js/node_modules/source-map/source-map.js"
+      },
+      {
+        "name": "uglify-to-browserify",
+        "version": "1.0.2",
+        "path": "node_modules/uglify-to-browserify/index.js"
+      },
+      {
         "name": "util-deprecate",
         "version": "1.0.2",
         "path": "node_modules/util-deprecate/node.js"
@@ -657,9 +1314,19 @@
         "path": "node_modules/uuid/index.js"
       },
       {
+        "name": "validate-npm-package-license",
+        "version": "3.0.1",
+        "path": "node_modules/validate-npm-package-license/index.js"
+      },
+      {
         "name": "verror",
-        "version": "1.3.6",
+        "version": "1.10.0",
         "path": "node_modules/verror/lib/verror.js"
+      },
+      {
+        "name": "assert-plus",
+        "version": "1.0.0",
+        "path": "node_modules/verror/node_modules/assert-plus/assert.js"
       },
       {
         "name": "which",
@@ -667,9 +1334,54 @@
         "path": "node_modules/which/which.js"
       },
       {
-        "name": "xtend",
-        "version": "4.0.1",
-        "path": "node_modules/xtend/immutable.js"
+        "name": "which-module",
+        "version": "2.0.0",
+        "path": "node_modules/which-module/index.js"
+      },
+      {
+        "name": "window-size",
+        "version": "0.1.0",
+        "path": "node_modules/window-size/index.js"
+      },
+      {
+        "name": "wordwrap",
+        "version": "0.0.3",
+        "path": "node_modules/wordwrap/index.js"
+      },
+      {
+        "name": "wrap-ansi",
+        "version": "2.1.0",
+        "path": "node_modules/wrap-ansi/index.js"
+      },
+      {
+        "name": "string-width",
+        "version": "1.0.2",
+        "path": "node_modules/wrap-ansi/node_modules/string-width/index.js"
+      },
+      {
+        "name": "y18n",
+        "version": "3.2.1",
+        "path": "node_modules/y18n/index.js"
+      },
+      {
+        "name": "yallist",
+        "version": "2.1.2",
+        "path": "node_modules/yallist/yallist.js"
+      },
+      {
+        "name": "yargs",
+        "version": "3.10.0",
+        "path": "node_modules/yargs/index.js"
+      },
+      {
+        "name": "yargs-parser",
+        "version": "7.0.0",
+        "path": "node_modules/yargs-parser/index.js"
+      },
+      {
+        "name": "camelcase",
+        "version": "4.1.0",
+        "path": "node_modules/yargs-parser/node_modules/camelcase/index.js"
       },
       {
         "name": "yauzl",
@@ -679,11 +1391,60 @@
     ],
     "extensions": {
       ".js": [
+        "lib/fallback.js",
         "lib/markdown-pdf.js",
+        "lib/util.js",
+        "node_modules/ajv/.tonic_example.js",
+        "node_modules/ajv/dist/ajv.bundle.js",
+        "node_modules/ajv/dist/ajv.min.js",
+        "node_modules/ajv/dist/nodent.min.js",
+        "node_modules/ajv/dist/regenerator.min.js",
+        "node_modules/ajv/lib/ajv.js",
+        "node_modules/ajv/lib/async.js",
+        "node_modules/ajv/lib/cache.js",
+        "node_modules/ajv/lib/compile/_rules.js",
+        "node_modules/ajv/lib/compile/equal.js",
+        "node_modules/ajv/lib/compile/formats.js",
+        "node_modules/ajv/lib/compile/index.js",
+        "node_modules/ajv/lib/compile/resolve.js",
+        "node_modules/ajv/lib/compile/rules.js",
+        "node_modules/ajv/lib/compile/schema_obj.js",
+        "node_modules/ajv/lib/compile/ucs2length.js",
+        "node_modules/ajv/lib/compile/util.js",
+        "node_modules/ajv/lib/compile/validation_error.js",
+        "node_modules/ajv/lib/dotjs/_formatLimit.js",
+        "node_modules/ajv/lib/dotjs/_limit.js",
+        "node_modules/ajv/lib/dotjs/_limitItems.js",
+        "node_modules/ajv/lib/dotjs/_limitLength.js",
+        "node_modules/ajv/lib/dotjs/_limitProperties.js",
+        "node_modules/ajv/lib/dotjs/allOf.js",
+        "node_modules/ajv/lib/dotjs/anyOf.js",
+        "node_modules/ajv/lib/dotjs/constant.js",
+        "node_modules/ajv/lib/dotjs/custom.js",
+        "node_modules/ajv/lib/dotjs/dependencies.js",
+        "node_modules/ajv/lib/dotjs/enum.js",
+        "node_modules/ajv/lib/dotjs/format.js",
+        "node_modules/ajv/lib/dotjs/items.js",
+        "node_modules/ajv/lib/dotjs/multipleOf.js",
+        "node_modules/ajv/lib/dotjs/not.js",
+        "node_modules/ajv/lib/dotjs/oneOf.js",
+        "node_modules/ajv/lib/dotjs/pattern.js",
+        "node_modules/ajv/lib/dotjs/patternRequired.js",
+        "node_modules/ajv/lib/dotjs/properties.js",
+        "node_modules/ajv/lib/dotjs/ref.js",
+        "node_modules/ajv/lib/dotjs/required.js",
+        "node_modules/ajv/lib/dotjs/switch.js",
+        "node_modules/ajv/lib/dotjs/uniqueItems.js",
+        "node_modules/ajv/lib/dotjs/validate.js",
+        "node_modules/ajv/lib/keyword.js",
+        "node_modules/ajv/lib/v5.js",
+        "node_modules/ajv/scripts/bundle.js",
+        "node_modules/ajv/scripts/compile-dots.js",
+        "node_modules/align-text/index.js",
         "node_modules/amdefine/amdefine.js",
         "node_modules/amdefine/intercept.js",
         "node_modules/ansi-regex/index.js",
-        "node_modules/ansi-styles/index.js",
+        "node_modules/array-find-index/index.js",
         "node_modules/asn1/lib/ber/errors.js",
         "node_modules/asn1/lib/ber/index.js",
         "node_modules/asn1/lib/ber/reader.js",
@@ -715,11 +1476,71 @@
         "node_modules/aws-sign2/index.js",
         "node_modules/aws4/aws4.js",
         "node_modules/aws4/lru.js",
+        "node_modules/barbe/example/index.js",
+        "node_modules/barbe/lib/index.js",
         "node_modules/bcrypt-pbkdf/index.js",
+        "node_modules/bluebird/js/browser/bluebird.core.js",
+        "node_modules/bluebird/js/browser/bluebird.core.min.js",
+        "node_modules/bluebird/js/browser/bluebird.js",
+        "node_modules/bluebird/js/browser/bluebird.min.js",
+        "node_modules/bluebird/js/release/any.js",
+        "node_modules/bluebird/js/release/assert.js",
+        "node_modules/bluebird/js/release/async.js",
+        "node_modules/bluebird/js/release/bind.js",
+        "node_modules/bluebird/js/release/bluebird.js",
+        "node_modules/bluebird/js/release/call_get.js",
+        "node_modules/bluebird/js/release/cancel.js",
+        "node_modules/bluebird/js/release/catch_filter.js",
+        "node_modules/bluebird/js/release/context.js",
+        "node_modules/bluebird/js/release/debuggability.js",
+        "node_modules/bluebird/js/release/direct_resolve.js",
+        "node_modules/bluebird/js/release/each.js",
+        "node_modules/bluebird/js/release/errors.js",
+        "node_modules/bluebird/js/release/es5.js",
+        "node_modules/bluebird/js/release/filter.js",
+        "node_modules/bluebird/js/release/finally.js",
+        "node_modules/bluebird/js/release/generators.js",
+        "node_modules/bluebird/js/release/join.js",
+        "node_modules/bluebird/js/release/map.js",
+        "node_modules/bluebird/js/release/method.js",
+        "node_modules/bluebird/js/release/nodeback.js",
+        "node_modules/bluebird/js/release/nodeify.js",
+        "node_modules/bluebird/js/release/promise.js",
+        "node_modules/bluebird/js/release/promise_array.js",
+        "node_modules/bluebird/js/release/promisify.js",
+        "node_modules/bluebird/js/release/props.js",
+        "node_modules/bluebird/js/release/queue.js",
+        "node_modules/bluebird/js/release/race.js",
+        "node_modules/bluebird/js/release/reduce.js",
+        "node_modules/bluebird/js/release/schedule.js",
+        "node_modules/bluebird/js/release/settle.js",
+        "node_modules/bluebird/js/release/some.js",
+        "node_modules/bluebird/js/release/synchronous_inspection.js",
+        "node_modules/bluebird/js/release/thenables.js",
+        "node_modules/bluebird/js/release/timers.js",
+        "node_modules/bluebird/js/release/using.js",
+        "node_modules/bluebird/js/release/util.js",
+        "node_modules/boolbase/index.js",
         "node_modules/boom/lib/index.js",
+        "node_modules/builtin-modules/index.js",
+        "node_modules/builtin-modules/static.js",
+        "node_modules/camelcase/index.js",
+        "node_modules/camelcase-keys/index.js",
+        "node_modules/camelcase-keys/node_modules/camelcase/index.js",
         "node_modules/caseless/index.js",
         "node_modules/caseless/test.js",
-        "node_modules/chalk/index.js",
+        "node_modules/center-align/index.js",
+        "node_modules/center-align/utils.js",
+        "node_modules/cheerio/index.js",
+        "node_modules/cheerio/lib/api/attributes.js",
+        "node_modules/cheerio/lib/api/css.js",
+        "node_modules/cheerio/lib/api/forms.js",
+        "node_modules/cheerio/lib/api/manipulation.js",
+        "node_modules/cheerio/lib/api/traversing.js",
+        "node_modules/cheerio/lib/cheerio.js",
+        "node_modules/cheerio/lib/parse.js",
+        "node_modules/cheerio/lib/static.js",
+        "node_modules/cheerio/lib/utils.js",
         "node_modules/clean-css/index.js",
         "node_modules/clean-css/lib/clean.js",
         "node_modules/clean-css/lib/colors/hsl-to-hex.js",
@@ -747,26 +1568,69 @@
         "node_modules/clean-css/lib/text/quote-scanner.js",
         "node_modules/clean-css/lib/text/splitter.js",
         "node_modules/clean-css/lib/text/urls.js",
-        "node_modules/clean-css/node_modules/commander/index.js",
+        "node_modules/cliui/index.js",
+        "node_modules/cliui/node_modules/wordwrap/example/center.js",
+        "node_modules/cliui/node_modules/wordwrap/example/meat.js",
+        "node_modules/cliui/node_modules/wordwrap/index.js",
+        "node_modules/co/index.js",
+        "node_modules/code-point-at/index.js",
         "node_modules/combined-stream/lib/combined_stream.js",
         "node_modules/commander/index.js",
         "node_modules/concat-stream/index.js",
         "node_modules/core-util-is/lib/util.js",
         "node_modules/core-util-is/test.js",
+        "node_modules/cross-spawn/index.js",
+        "node_modules/cross-spawn/lib/enoent.js",
+        "node_modules/cross-spawn/lib/parse.js",
+        "node_modules/cross-spawn/lib/util/escapeArgument.js",
+        "node_modules/cross-spawn/lib/util/escapeCommand.js",
+        "node_modules/cross-spawn/lib/util/hasEmptyArgumentBug.js",
+        "node_modules/cross-spawn/lib/util/readShebang.js",
+        "node_modules/cross-spawn/lib/util/resolveCommand.js",
         "node_modules/cryptiles/lib/index.js",
+        "node_modules/css-select/index.js",
+        "node_modules/css-select/lib/attributes.js",
+        "node_modules/css-select/lib/compile.js",
+        "node_modules/css-select/lib/general.js",
+        "node_modules/css-select/lib/pseudos.js",
+        "node_modules/css-select/lib/sort.js",
+        "node_modules/css-what/index.js",
         "node_modules/ctype/ctf.js",
         "node_modules/ctype/ctio.js",
         "node_modules/ctype/ctype.js",
+        "node_modules/currently-unhandled/browser.js",
+        "node_modules/currently-unhandled/core.js",
+        "node_modules/currently-unhandled/index.js",
         "node_modules/dashdash/lib/dashdash.js",
         "node_modules/dashdash/node_modules/assert-plus/assert.js",
+        "node_modules/debug/browser.js",
         "node_modules/debug/debug.js",
-        "node_modules/debug/index.js",
-        "node_modules/debug/lib/debug.js",
+        "node_modules/debug/node.js",
+        "node_modules/decamelize/index.js",
         "node_modules/delayed-stream/lib/delayed_stream.js",
+        "node_modules/dom-serializer/index.js",
+        "node_modules/dom-serializer/node_modules/domelementtype/index.js",
+        "node_modules/domelementtype/index.js",
+        "node_modules/domhandler/index.js",
+        "node_modules/domhandler/lib/element.js",
+        "node_modules/domhandler/lib/node.js",
+        "node_modules/domutils/index.js",
+        "node_modules/domutils/lib/helpers.js",
+        "node_modules/domutils/lib/legacy.js",
+        "node_modules/domutils/lib/manipulation.js",
+        "node_modules/domutils/lib/querying.js",
+        "node_modules/domutils/lib/stringify.js",
+        "node_modules/domutils/lib/traversal.js",
         "node_modules/ecc-jsbn/index.js",
         "node_modules/ecc-jsbn/lib/ec.js",
         "node_modules/ecc-jsbn/lib/sec.js",
         "node_modules/ecc-jsbn/test.js",
+        "node_modules/emojer/lib/index.js",
+        "node_modules/entities/index.js",
+        "node_modules/entities/lib/decode.js",
+        "node_modules/entities/lib/decode_codepoint.js",
+        "node_modules/entities/lib/encode.js",
+        "node_modules/error-ex/index.js",
         "node_modules/es6-promise/auto.js",
         "node_modules/es6-promise/dist/es6-promise.auto.js",
         "node_modules/es6-promise/dist/es6-promise.auto.min.js",
@@ -784,13 +1648,16 @@
         "node_modules/es6-promise/lib/es6-promise/then.js",
         "node_modules/es6-promise/lib/es6-promise/utils.js",
         "node_modules/es6-promise/lib/es6-promise.js",
-        "node_modules/escape-string-regexp/index.js",
+        "node_modules/execa/index.js",
+        "node_modules/execa/lib/errname.js",
+        "node_modules/execa/lib/stdio.js",
         "node_modules/extend/index.js",
         "node_modules/extract-zip/cli.js",
         "node_modules/extract-zip/index.js",
-        "node_modules/extsprintf/examples/simple.js",
         "node_modules/extsprintf/lib/extsprintf.js",
         "node_modules/fd-slicer/index.js",
+        "node_modules/file-url/index.js",
+        "node_modules/find-up/index.js",
         "node_modules/forever-agent/index.js",
         "node_modules/form-data/lib/browser.js",
         "node_modules/form-data/lib/form_data.js",
@@ -825,23 +1692,151 @@
         "node_modules/fs-extra/lib/util/utimes.js",
         "node_modules/fs-extra/lib/walk/index.js",
         "node_modules/fs-extra/lib/walk-sync/index.js",
-        "node_modules/generate-function/example.js",
-        "node_modules/generate-function/index.js",
-        "node_modules/generate-function/test.js",
-        "node_modules/generate-object-property/index.js",
-        "node_modules/generate-object-property/test.js",
+        "node_modules/get-caller-file/index.js",
+        "node_modules/get-stdin/index.js",
+        "node_modules/get-stream/buffer-stream.js",
+        "node_modules/get-stream/index.js",
         "node_modules/getpass/lib/index.js",
         "node_modules/getpass/node_modules/assert-plus/assert.js",
         "node_modules/graceful-fs/fs.js",
         "node_modules/graceful-fs/graceful-fs.js",
         "node_modules/graceful-fs/legacy-streams.js",
         "node_modules/graceful-fs/polyfills.js",
-        "node_modules/har-validator/lib/async.js",
-        "node_modules/har-validator/lib/error.js",
-        "node_modules/har-validator/lib/index.js",
-        "node_modules/har-validator/lib/runner.js",
-        "node_modules/har-validator/lib/schemas/index.js",
-        "node_modules/has-ansi/index.js",
+        "node_modules/handlebars/dist/amd/handlebars/base.js",
+        "node_modules/handlebars/dist/amd/handlebars/compiler/ast.js",
+        "node_modules/handlebars/dist/amd/handlebars/compiler/base.js",
+        "node_modules/handlebars/dist/amd/handlebars/compiler/code-gen.js",
+        "node_modules/handlebars/dist/amd/handlebars/compiler/compiler.js",
+        "node_modules/handlebars/dist/amd/handlebars/compiler/helpers.js",
+        "node_modules/handlebars/dist/amd/handlebars/compiler/javascript-compiler.js",
+        "node_modules/handlebars/dist/amd/handlebars/compiler/parser.js",
+        "node_modules/handlebars/dist/amd/handlebars/compiler/printer.js",
+        "node_modules/handlebars/dist/amd/handlebars/compiler/visitor.js",
+        "node_modules/handlebars/dist/amd/handlebars/compiler/whitespace-control.js",
+        "node_modules/handlebars/dist/amd/handlebars/decorators/inline.js",
+        "node_modules/handlebars/dist/amd/handlebars/decorators.js",
+        "node_modules/handlebars/dist/amd/handlebars/exception.js",
+        "node_modules/handlebars/dist/amd/handlebars/helpers/block-helper-missing.js",
+        "node_modules/handlebars/dist/amd/handlebars/helpers/each.js",
+        "node_modules/handlebars/dist/amd/handlebars/helpers/helper-missing.js",
+        "node_modules/handlebars/dist/amd/handlebars/helpers/if.js",
+        "node_modules/handlebars/dist/amd/handlebars/helpers/log.js",
+        "node_modules/handlebars/dist/amd/handlebars/helpers/lookup.js",
+        "node_modules/handlebars/dist/amd/handlebars/helpers/with.js",
+        "node_modules/handlebars/dist/amd/handlebars/helpers.js",
+        "node_modules/handlebars/dist/amd/handlebars/logger.js",
+        "node_modules/handlebars/dist/amd/handlebars/no-conflict.js",
+        "node_modules/handlebars/dist/amd/handlebars/runtime.js",
+        "node_modules/handlebars/dist/amd/handlebars/safe-string.js",
+        "node_modules/handlebars/dist/amd/handlebars/utils.js",
+        "node_modules/handlebars/dist/amd/handlebars.js",
+        "node_modules/handlebars/dist/amd/handlebars.runtime.js",
+        "node_modules/handlebars/dist/amd/precompiler.js",
+        "node_modules/handlebars/dist/cjs/handlebars/base.js",
+        "node_modules/handlebars/dist/cjs/handlebars/compiler/ast.js",
+        "node_modules/handlebars/dist/cjs/handlebars/compiler/base.js",
+        "node_modules/handlebars/dist/cjs/handlebars/compiler/code-gen.js",
+        "node_modules/handlebars/dist/cjs/handlebars/compiler/compiler.js",
+        "node_modules/handlebars/dist/cjs/handlebars/compiler/helpers.js",
+        "node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js",
+        "node_modules/handlebars/dist/cjs/handlebars/compiler/parser.js",
+        "node_modules/handlebars/dist/cjs/handlebars/compiler/printer.js",
+        "node_modules/handlebars/dist/cjs/handlebars/compiler/visitor.js",
+        "node_modules/handlebars/dist/cjs/handlebars/compiler/whitespace-control.js",
+        "node_modules/handlebars/dist/cjs/handlebars/decorators/inline.js",
+        "node_modules/handlebars/dist/cjs/handlebars/decorators.js",
+        "node_modules/handlebars/dist/cjs/handlebars/exception.js",
+        "node_modules/handlebars/dist/cjs/handlebars/helpers/block-helper-missing.js",
+        "node_modules/handlebars/dist/cjs/handlebars/helpers/each.js",
+        "node_modules/handlebars/dist/cjs/handlebars/helpers/helper-missing.js",
+        "node_modules/handlebars/dist/cjs/handlebars/helpers/if.js",
+        "node_modules/handlebars/dist/cjs/handlebars/helpers/log.js",
+        "node_modules/handlebars/dist/cjs/handlebars/helpers/lookup.js",
+        "node_modules/handlebars/dist/cjs/handlebars/helpers/with.js",
+        "node_modules/handlebars/dist/cjs/handlebars/helpers.js",
+        "node_modules/handlebars/dist/cjs/handlebars/logger.js",
+        "node_modules/handlebars/dist/cjs/handlebars/no-conflict.js",
+        "node_modules/handlebars/dist/cjs/handlebars/runtime.js",
+        "node_modules/handlebars/dist/cjs/handlebars/safe-string.js",
+        "node_modules/handlebars/dist/cjs/handlebars/utils.js",
+        "node_modules/handlebars/dist/cjs/handlebars.js",
+        "node_modules/handlebars/dist/cjs/handlebars.runtime.js",
+        "node_modules/handlebars/dist/cjs/precompiler.js",
+        "node_modules/handlebars/dist/handlebars.amd.js",
+        "node_modules/handlebars/dist/handlebars.amd.min.js",
+        "node_modules/handlebars/dist/handlebars.js",
+        "node_modules/handlebars/dist/handlebars.min.js",
+        "node_modules/handlebars/dist/handlebars.runtime.amd.js",
+        "node_modules/handlebars/dist/handlebars.runtime.amd.min.js",
+        "node_modules/handlebars/dist/handlebars.runtime.js",
+        "node_modules/handlebars/dist/handlebars.runtime.min.js",
+        "node_modules/handlebars/lib/handlebars/base.js",
+        "node_modules/handlebars/lib/handlebars/compiler/ast.js",
+        "node_modules/handlebars/lib/handlebars/compiler/base.js",
+        "node_modules/handlebars/lib/handlebars/compiler/code-gen.js",
+        "node_modules/handlebars/lib/handlebars/compiler/compiler.js",
+        "node_modules/handlebars/lib/handlebars/compiler/helpers.js",
+        "node_modules/handlebars/lib/handlebars/compiler/javascript-compiler.js",
+        "node_modules/handlebars/lib/handlebars/compiler/parser.js",
+        "node_modules/handlebars/lib/handlebars/compiler/printer.js",
+        "node_modules/handlebars/lib/handlebars/compiler/visitor.js",
+        "node_modules/handlebars/lib/handlebars/compiler/whitespace-control.js",
+        "node_modules/handlebars/lib/handlebars/decorators/inline.js",
+        "node_modules/handlebars/lib/handlebars/decorators.js",
+        "node_modules/handlebars/lib/handlebars/exception.js",
+        "node_modules/handlebars/lib/handlebars/helpers/block-helper-missing.js",
+        "node_modules/handlebars/lib/handlebars/helpers/each.js",
+        "node_modules/handlebars/lib/handlebars/helpers/helper-missing.js",
+        "node_modules/handlebars/lib/handlebars/helpers/if.js",
+        "node_modules/handlebars/lib/handlebars/helpers/log.js",
+        "node_modules/handlebars/lib/handlebars/helpers/lookup.js",
+        "node_modules/handlebars/lib/handlebars/helpers/with.js",
+        "node_modules/handlebars/lib/handlebars/helpers.js",
+        "node_modules/handlebars/lib/handlebars/logger.js",
+        "node_modules/handlebars/lib/handlebars/no-conflict.js",
+        "node_modules/handlebars/lib/handlebars/runtime.js",
+        "node_modules/handlebars/lib/handlebars/safe-string.js",
+        "node_modules/handlebars/lib/handlebars/utils.js",
+        "node_modules/handlebars/lib/handlebars.js",
+        "node_modules/handlebars/lib/handlebars.runtime.js",
+        "node_modules/handlebars/lib/index.js",
+        "node_modules/handlebars/lib/precompiler.js",
+        "node_modules/handlebars/node_modules/async/dist/async.js",
+        "node_modules/handlebars/node_modules/async/dist/async.min.js",
+        "node_modules/handlebars/node_modules/async/lib/async.js",
+        "node_modules/handlebars/node_modules/source-map/build/assert-shim.js",
+        "node_modules/handlebars/node_modules/source-map/build/mini-require.js",
+        "node_modules/handlebars/node_modules/source-map/build/suffix-browser.js",
+        "node_modules/handlebars/node_modules/source-map/build/test-prefix.js",
+        "node_modules/handlebars/node_modules/source-map/build/test-suffix.js",
+        "node_modules/handlebars/node_modules/source-map/lib/source-map/array-set.js",
+        "node_modules/handlebars/node_modules/source-map/lib/source-map/base64-vlq.js",
+        "node_modules/handlebars/node_modules/source-map/lib/source-map/base64.js",
+        "node_modules/handlebars/node_modules/source-map/lib/source-map/binary-search.js",
+        "node_modules/handlebars/node_modules/source-map/lib/source-map/mapping-list.js",
+        "node_modules/handlebars/node_modules/source-map/lib/source-map/quick-sort.js",
+        "node_modules/handlebars/node_modules/source-map/lib/source-map/source-map-consumer.js",
+        "node_modules/handlebars/node_modules/source-map/lib/source-map/source-map-generator.js",
+        "node_modules/handlebars/node_modules/source-map/lib/source-map/source-node.js",
+        "node_modules/handlebars/node_modules/source-map/lib/source-map/util.js",
+        "node_modules/handlebars/node_modules/source-map/lib/source-map.js",
+        "node_modules/handlebars/runtime.js",
+        "node_modules/har-schema/lib/index.js",
+        "node_modules/har-validator/lib/browser/async.js",
+        "node_modules/har-validator/lib/browser/error.js",
+        "node_modules/har-validator/lib/browser/promise.js",
+        "node_modules/har-validator/lib/node4/async.js",
+        "node_modules/har-validator/lib/node4/error.js",
+        "node_modules/har-validator/lib/node4/promise.js",
+        "node_modules/har-validator/lib/node6/async.js",
+        "node_modules/har-validator/lib/node6/error.js",
+        "node_modules/har-validator/lib/node6/promise.js",
+        "node_modules/har-validator/lib/node7/async.js",
+        "node_modules/har-validator/lib/node7/error.js",
+        "node_modules/har-validator/lib/node7/promise.js",
+        "node_modules/har-validator/src/async.js",
+        "node_modules/har-validator/src/error.js",
+        "node_modules/har-validator/src/promise.js",
         "node_modules/hasha/index.js",
         "node_modules/hawk/dist/client.js",
         "node_modules/hawk/example/usage.js",
@@ -853,25 +1848,39 @@
         "node_modules/hawk/lib/utils.js",
         "node_modules/hoek/lib/escape.js",
         "node_modules/hoek/lib/index.js",
+        "node_modules/hosted-git-info/git-host-info.js",
+        "node_modules/hosted-git-info/git-host.js",
+        "node_modules/hosted-git-info/index.js",
         "node_modules/html-pdf/bin/index.js",
         "node_modules/html-pdf/lib/index.js",
         "node_modules/html-pdf/lib/pdf.js",
         "node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js",
+        "node_modules/htmlparser2/lib/CollectingHandler.js",
+        "node_modules/htmlparser2/lib/FeedHandler.js",
+        "node_modules/htmlparser2/lib/Parser.js",
+        "node_modules/htmlparser2/lib/ProxyHandler.js",
+        "node_modules/htmlparser2/lib/Stream.js",
+        "node_modules/htmlparser2/lib/Tokenizer.js",
+        "node_modules/htmlparser2/lib/WritableStream.js",
+        "node_modules/htmlparser2/lib/index.js",
         "node_modules/http-signature/lib/index.js",
         "node_modules/http-signature/lib/parser.js",
         "node_modules/http-signature/lib/signer.js",
         "node_modules/http-signature/lib/utils.js",
         "node_modules/http-signature/lib/verify.js",
+        "node_modules/indent-string/index.js",
         "node_modules/inherits/inherits.js",
         "node_modules/inherits/inherits_browser.js",
-        "node_modules/is-my-json-valid/example.js",
-        "node_modules/is-my-json-valid/formats.js",
-        "node_modules/is-my-json-valid/index.js",
-        "node_modules/is-my-json-valid/require.js",
-        "node_modules/is-property/is-property.js",
+        "node_modules/invert-kv/index.js",
+        "node_modules/is-arrayish/index.js",
+        "node_modules/is-buffer/index.js",
+        "node_modules/is-builtin-module/index.js",
+        "node_modules/is-finite/index.js",
+        "node_modules/is-fullwidth-code-point/index.js",
         "node_modules/is-stream/index.js",
         "node_modules/is-typedarray/index.js",
         "node_modules/is-typedarray/test.js",
+        "node_modules/is-utf8/is-utf8.js",
         "node_modules/isarray/index.js",
         "node_modules/isarray/test.js",
         "node_modules/isexe/index.js",
@@ -883,14 +1892,24 @@
         "node_modules/jsbn/index.js",
         "node_modules/json-schema/lib/links.js",
         "node_modules/json-schema/lib/validate.js",
+        "node_modules/json-stable-stringify/example/key_cmp.js",
+        "node_modules/json-stable-stringify/example/nested.js",
+        "node_modules/json-stable-stringify/example/str.js",
+        "node_modules/json-stable-stringify/example/value_cmp.js",
+        "node_modules/json-stable-stringify/index.js",
         "node_modules/json-stringify-safe/stringify.js",
         "node_modules/jsonfile/index.js",
-        "node_modules/jsonpointer/jsonpointer.js",
+        "node_modules/jsonify/index.js",
+        "node_modules/jsonify/lib/parse.js",
+        "node_modules/jsonify/lib/stringify.js",
         "node_modules/jsprim/lib/jsprim.js",
         "node_modules/jsprim/node_modules/assert-plus/assert.js",
         "node_modules/kew/kew.js",
+        "node_modules/kind-of/index.js",
         "node_modules/klaw/src/assign.js",
         "node_modules/klaw/src/index.js",
+        "node_modules/lazy-cache/index.js",
+        "node_modules/lcid/index.js",
         "node_modules/less/.grunt/grunt-contrib-jasmine/boot.js",
         "node_modules/less/.grunt/grunt-contrib-jasmine/es5-shim.js",
         "node_modules/less/.grunt/grunt-contrib-jasmine/jasmine-helper.js",
@@ -1099,20 +2118,97 @@
         "node_modules/less/node_modules/sntp/examples/time.js",
         "node_modules/less/node_modules/sntp/index.js",
         "node_modules/less/node_modules/sntp/lib/index.js",
+        "node_modules/less/node_modules/tunnel-agent/index.js",
         "node_modules/less/tmp/less.js",
+        "node_modules/load-json-file/index.js",
+        "node_modules/locate-path/index.js",
+        "node_modules/locate-path/node_modules/path-exists/index.js",
+        "node_modules/lodash.assignin/index.js",
+        "node_modules/lodash.bind/index.js",
+        "node_modules/lodash.defaults/index.js",
+        "node_modules/lodash.filter/index.js",
+        "node_modules/lodash.flatten/index.js",
+        "node_modules/lodash.foreach/index.js",
+        "node_modules/lodash.map/index.js",
+        "node_modules/lodash.merge/index.js",
+        "node_modules/lodash.pick/index.js",
+        "node_modules/lodash.reduce/index.js",
+        "node_modules/lodash.reject/index.js",
+        "node_modules/lodash.some/index.js",
+        "node_modules/longest/index.js",
+        "node_modules/loophole/lib/loophole.js",
+        "node_modules/loud-rejection/api.js",
+        "node_modules/loud-rejection/index.js",
+        "node_modules/loud-rejection/register.js",
+        "node_modules/lru-cache/index.js",
+        "node_modules/map-obj/index.js",
+        "node_modules/match-all/lib/index.js",
+        "node_modules/mdpdf/assets/highlight/highlight.pack.js",
+        "node_modules/mdpdf/bin/index.js",
+        "node_modules/mdpdf/examples/api/index.js",
+        "node_modules/mdpdf/index.js",
+        "node_modules/mdpdf/node_modules/html-pdf/bin/index.js",
+        "node_modules/mdpdf/node_modules/html-pdf/lib/index.js",
+        "node_modules/mdpdf/node_modules/html-pdf/lib/pdf.js",
+        "node_modules/mdpdf/node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js",
+        "node_modules/mem/index.js",
+        "node_modules/meow/index.js",
+        "node_modules/meow/node_modules/minimist/example/parse.js",
+        "node_modules/meow/node_modules/minimist/index.js",
         "node_modules/mime/mime.js",
         "node_modules/mime/test.js",
         "node_modules/mime-db/index.js",
         "node_modules/mime-types/index.js",
+        "node_modules/mimic-fn/index.js",
         "node_modules/minimist/example/parse.js",
         "node_modules/minimist/index.js",
         "node_modules/mkdirp/bin/cmd.js",
         "node_modules/mkdirp/examples/pow.js",
         "node_modules/mkdirp/index.js",
+        "node_modules/ms/index.js",
         "node_modules/natives/index.js",
+        "node_modules/normalize-package-data/lib/extract_description.js",
+        "node_modules/normalize-package-data/lib/fixer.js",
+        "node_modules/normalize-package-data/lib/make_warning.js",
+        "node_modules/normalize-package-data/lib/normalize.js",
+        "node_modules/normalize-package-data/lib/safe_format.js",
+        "node_modules/npm-run-path/index.js",
+        "node_modules/nth-check/compile.js",
+        "node_modules/nth-check/index.js",
+        "node_modules/nth-check/parse.js",
+        "node_modules/nth-check/test.js",
+        "node_modules/number-is-nan/index.js",
         "node_modules/oauth-sign/index.js",
+        "node_modules/object-assign/index.js",
+        "node_modules/optimist/example/bool.js",
+        "node_modules/optimist/example/boolean_double.js",
+        "node_modules/optimist/example/boolean_single.js",
+        "node_modules/optimist/example/default_hash.js",
+        "node_modules/optimist/example/default_singles.js",
+        "node_modules/optimist/example/divide.js",
+        "node_modules/optimist/example/line_count.js",
+        "node_modules/optimist/example/line_count_options.js",
+        "node_modules/optimist/example/line_count_wrap.js",
+        "node_modules/optimist/example/nonopt.js",
+        "node_modules/optimist/example/reflect.js",
+        "node_modules/optimist/example/short.js",
+        "node_modules/optimist/example/string.js",
+        "node_modules/optimist/example/usage-options.js",
+        "node_modules/optimist/example/xup.js",
+        "node_modules/optimist/index.js",
+        "node_modules/os-locale/index.js",
+        "node_modules/p-finally/index.js",
+        "node_modules/p-limit/index.js",
+        "node_modules/p-locate/index.js",
+        "node_modules/parse-json/index.js",
+        "node_modules/parse-json/vendor/parse.js",
+        "node_modules/parse-json/vendor/unicode.js",
+        "node_modules/path-exists/index.js",
+        "node_modules/path-key/index.js",
+        "node_modules/path-type/index.js",
         "node_modules/pend/index.js",
         "node_modules/pend/test.js",
+        "node_modules/performance-now/lib/performance-now.js",
         "node_modules/phantomjs-prebuilt/install.js",
         "node_modules/phantomjs-prebuilt/lib/location.js",
         "node_modules/phantomjs-prebuilt/lib/phantom/examples/arguments.js",
@@ -1162,12 +2258,15 @@
         "node_modules/phantomjs-prebuilt/lib/phantom/examples/walk_through_frames.js",
         "node_modules/phantomjs-prebuilt/lib/phantomjs.js",
         "node_modules/phantomjs-prebuilt/lib/util.js",
+        "node_modules/pify/index.js",
         "node_modules/pinkie/index.js",
         "node_modules/pinkie-promise/index.js",
         "node_modules/process-nextick-args/index.js",
         "node_modules/process-nextick-args/test.js",
         "node_modules/progress/index.js",
         "node_modules/progress/lib/node-progress.js",
+        "node_modules/pseudomap/map.js",
+        "node_modules/pseudomap/pseudomap.js",
         "node_modules/punycode/punycode.js",
         "node_modules/qs/dist/qs.js",
         "node_modules/qs/lib/formats.js",
@@ -1175,16 +2274,30 @@
         "node_modules/qs/lib/parse.js",
         "node_modules/qs/lib/stringify.js",
         "node_modules/qs/lib/utils.js",
+        "node_modules/read-pkg/index.js",
+        "node_modules/read-pkg-up/index.js",
+        "node_modules/readable-stream/duplex-browser.js",
         "node_modules/readable-stream/duplex.js",
         "node_modules/readable-stream/lib/_stream_duplex.js",
         "node_modules/readable-stream/lib/_stream_passthrough.js",
         "node_modules/readable-stream/lib/_stream_readable.js",
         "node_modules/readable-stream/lib/_stream_transform.js",
         "node_modules/readable-stream/lib/_stream_writable.js",
+        "node_modules/readable-stream/lib/internal/streams/BufferList.js",
+        "node_modules/readable-stream/lib/internal/streams/destroy.js",
+        "node_modules/readable-stream/lib/internal/streams/stream-browser.js",
+        "node_modules/readable-stream/lib/internal/streams/stream.js",
         "node_modules/readable-stream/passthrough.js",
+        "node_modules/readable-stream/readable-browser.js",
         "node_modules/readable-stream/readable.js",
         "node_modules/readable-stream/transform.js",
+        "node_modules/readable-stream/writable-browser.js",
         "node_modules/readable-stream/writable.js",
+        "node_modules/redent/index.js",
+        "node_modules/regex-emoji/lib/index.js",
+        "node_modules/regex-escape/lib/index.js",
+        "node_modules/repeat-string/index.js",
+        "node_modules/repeating/index.js",
         "node_modules/request/index.js",
         "node_modules/request/lib/auth.js",
         "node_modules/request/lib/cookies.js",
@@ -1199,6 +2312,83 @@
         "node_modules/request/request.js",
         "node_modules/request-progress/foo.js",
         "node_modules/request-progress/index.js",
+        "node_modules/require-directory/index.js",
+        "node_modules/require-main-filename/index.js",
+        "node_modules/require-main-filename/test.js",
+        "node_modules/right-align/index.js",
+        "node_modules/safe-buffer/index.js",
+        "node_modules/safe-buffer/test.js",
+        "node_modules/semver/semver.js",
+        "node_modules/set-blocking/index.js",
+        "node_modules/shebang-command/index.js",
+        "node_modules/shebang-regex/index.js",
+        "node_modules/showdown/Gruntfile.js",
+        "node_modules/showdown/bin/showdown.js",
+        "node_modules/showdown/dist/showdown.js",
+        "node_modules/showdown/dist/showdown.min.js",
+        "node_modules/showdown/node_modules/camelcase/index.js",
+        "node_modules/showdown/node_modules/cliui/index.js",
+        "node_modules/showdown/node_modules/cliui/node_modules/string-width/index.js",
+        "node_modules/showdown/node_modules/find-up/index.js",
+        "node_modules/showdown/node_modules/load-json-file/index.js",
+        "node_modules/showdown/node_modules/path-type/index.js",
+        "node_modules/showdown/node_modules/read-pkg/index.js",
+        "node_modules/showdown/node_modules/read-pkg-up/index.js",
+        "node_modules/showdown/node_modules/strip-bom/index.js",
+        "node_modules/showdown/node_modules/yargs/index.js",
+        "node_modules/showdown/node_modules/yargs/lib/apply-extends.js",
+        "node_modules/showdown/node_modules/yargs/lib/argsert.js",
+        "node_modules/showdown/node_modules/yargs/lib/assign.js",
+        "node_modules/showdown/node_modules/yargs/lib/command.js",
+        "node_modules/showdown/node_modules/yargs/lib/completion.js",
+        "node_modules/showdown/node_modules/yargs/lib/levenshtein.js",
+        "node_modules/showdown/node_modules/yargs/lib/obj-filter.js",
+        "node_modules/showdown/node_modules/yargs/lib/usage.js",
+        "node_modules/showdown/node_modules/yargs/lib/validation.js",
+        "node_modules/showdown/node_modules/yargs/lib/yerror.js",
+        "node_modules/showdown/node_modules/yargs/yargs.js",
+        "node_modules/showdown/src/cli/cli.js",
+        "node_modules/showdown/src/cli/makehtml.cmd.js",
+        "node_modules/showdown/src/cli/messenger.js",
+        "node_modules/showdown/src/converter.js",
+        "node_modules/showdown/src/helpers.js",
+        "node_modules/showdown/src/loader.js",
+        "node_modules/showdown/src/options.js",
+        "node_modules/showdown/src/showdown.js",
+        "node_modules/showdown/src/subParsers/anchors.js",
+        "node_modules/showdown/src/subParsers/autoLinks.js",
+        "node_modules/showdown/src/subParsers/blockGamut.js",
+        "node_modules/showdown/src/subParsers/blockQuotes.js",
+        "node_modules/showdown/src/subParsers/codeBlocks.js",
+        "node_modules/showdown/src/subParsers/codeSpans.js",
+        "node_modules/showdown/src/subParsers/detab.js",
+        "node_modules/showdown/src/subParsers/encodeAmpsAndAngles.js",
+        "node_modules/showdown/src/subParsers/encodeBackslashEscapes.js",
+        "node_modules/showdown/src/subParsers/encodeCode.js",
+        "node_modules/showdown/src/subParsers/escapeSpecialCharsWithinTagAttributes.js",
+        "node_modules/showdown/src/subParsers/githubCodeBlocks.js",
+        "node_modules/showdown/src/subParsers/hashBlock.js",
+        "node_modules/showdown/src/subParsers/hashCodeTags.js",
+        "node_modules/showdown/src/subParsers/hashElement.js",
+        "node_modules/showdown/src/subParsers/hashHTMLBlocks.js",
+        "node_modules/showdown/src/subParsers/hashHTMLSpans.js",
+        "node_modules/showdown/src/subParsers/hashPreCodeTags.js",
+        "node_modules/showdown/src/subParsers/headers.js",
+        "node_modules/showdown/src/subParsers/horizontalRule.js",
+        "node_modules/showdown/src/subParsers/images.js",
+        "node_modules/showdown/src/subParsers/italicsAndBold.js",
+        "node_modules/showdown/src/subParsers/lists.js",
+        "node_modules/showdown/src/subParsers/outdent.js",
+        "node_modules/showdown/src/subParsers/paragraphs.js",
+        "node_modules/showdown/src/subParsers/runExtension.js",
+        "node_modules/showdown/src/subParsers/spanGamut.js",
+        "node_modules/showdown/src/subParsers/strikethrough.js",
+        "node_modules/showdown/src/subParsers/stripLinkDefinitions.js",
+        "node_modules/showdown/src/subParsers/tables.js",
+        "node_modules/showdown/src/subParsers/unescapeSpecialChars.js",
+        "node_modules/showdown-emoji/lib/index.js",
+        "node_modules/signal-exit/index.js",
+        "node_modules/signal-exit/signals.js",
         "node_modules/sntp/examples/offset.js",
         "node_modules/sntp/examples/time.js",
         "node_modules/sntp/index.js",
@@ -1219,6 +2409,9 @@
         "node_modules/source-map/lib/source-map/source-node.js",
         "node_modules/source-map/lib/source-map/util.js",
         "node_modules/source-map/lib/source-map.js",
+        "node_modules/spdx-correct/index.js",
+        "node_modules/spdx-expression-parse/index.js",
+        "node_modules/spdx-expression-parse/parser.js",
         "node_modules/sshpk/lib/algs.js",
         "node_modules/sshpk/lib/certificate.js",
         "node_modules/sshpk/lib/dhe.js",
@@ -1243,11 +2436,18 @@
         "node_modules/sshpk/lib/ssh-buffer.js",
         "node_modules/sshpk/lib/utils.js",
         "node_modules/sshpk/node_modules/assert-plus/assert.js",
-        "node_modules/string_decoder/index.js",
+        "node_modules/string-width/index.js",
+        "node_modules/string-width/node_modules/ansi-regex/index.js",
+        "node_modules/string-width/node_modules/is-fullwidth-code-point/index.js",
+        "node_modules/string-width/node_modules/strip-ansi/index.js",
+        "node_modules/string_decoder/lib/string_decoder.js",
         "node_modules/stringstream/example.js",
         "node_modules/stringstream/stringstream.js",
         "node_modules/strip-ansi/index.js",
-        "node_modules/supports-color/index.js",
+        "node_modules/strip-bom/index.js",
+        "node_modules/strip-eof/index.js",
+        "node_modules/strip-indent/cli.js",
+        "node_modules/strip-indent/index.js",
         "node_modules/throttleit/example.js",
         "node_modules/throttleit/index.js",
         "node_modules/throttleit/test.js",
@@ -1257,6 +2457,7 @@
         "node_modules/tough-cookie/lib/permuteDomain.js",
         "node_modules/tough-cookie/lib/pubsuffix.js",
         "node_modules/tough-cookie/lib/store.js",
+        "node_modules/trim-newlines/index.js",
         "node_modules/tunnel-agent/index.js",
         "node_modules/tweetnacl/nacl-fast.js",
         "node_modules/tweetnacl/nacl-fast.min.js",
@@ -1264,6 +2465,34 @@
         "node_modules/tweetnacl/nacl.min.js",
         "node_modules/typedarray/example/tarray.js",
         "node_modules/typedarray/index.js",
+        "node_modules/uglify-js/bin/extract-props.js",
+        "node_modules/uglify-js/lib/ast.js",
+        "node_modules/uglify-js/lib/compress.js",
+        "node_modules/uglify-js/lib/mozilla-ast.js",
+        "node_modules/uglify-js/lib/output.js",
+        "node_modules/uglify-js/lib/parse.js",
+        "node_modules/uglify-js/lib/propmangle.js",
+        "node_modules/uglify-js/lib/scope.js",
+        "node_modules/uglify-js/lib/sourcemap.js",
+        "node_modules/uglify-js/lib/transform.js",
+        "node_modules/uglify-js/lib/utils.js",
+        "node_modules/uglify-js/node_modules/source-map/dist/source-map.debug.js",
+        "node_modules/uglify-js/node_modules/source-map/dist/source-map.js",
+        "node_modules/uglify-js/node_modules/source-map/dist/source-map.min.js",
+        "node_modules/uglify-js/node_modules/source-map/lib/array-set.js",
+        "node_modules/uglify-js/node_modules/source-map/lib/base64-vlq.js",
+        "node_modules/uglify-js/node_modules/source-map/lib/base64.js",
+        "node_modules/uglify-js/node_modules/source-map/lib/binary-search.js",
+        "node_modules/uglify-js/node_modules/source-map/lib/mapping-list.js",
+        "node_modules/uglify-js/node_modules/source-map/lib/quick-sort.js",
+        "node_modules/uglify-js/node_modules/source-map/lib/source-map-consumer.js",
+        "node_modules/uglify-js/node_modules/source-map/lib/source-map-generator.js",
+        "node_modules/uglify-js/node_modules/source-map/lib/source-node.js",
+        "node_modules/uglify-js/node_modules/source-map/lib/util.js",
+        "node_modules/uglify-js/node_modules/source-map/source-map.js",
+        "node_modules/uglify-js/tools/exports.js",
+        "node_modules/uglify-js/tools/node.js",
+        "node_modules/uglify-to-browserify/index.js",
         "node_modules/util-deprecate/browser.js",
         "node_modules/util-deprecate/node.js",
         "node_modules/uuid/index.js",
@@ -1275,22 +2504,38 @@
         "node_modules/uuid/v1.js",
         "node_modules/uuid/v4.js",
         "node_modules/uuid/v5.js",
-        "node_modules/verror/examples/levels-verror.js",
-        "node_modules/verror/examples/levels-werror.js",
-        "node_modules/verror/examples/varargs.js",
-        "node_modules/verror/examples/verror.js",
-        "node_modules/verror/examples/werror.js",
+        "node_modules/validate-npm-package-license/index.js",
         "node_modules/verror/lib/verror.js",
+        "node_modules/verror/node_modules/assert-plus/assert.js",
         "node_modules/which/which.js",
-        "node_modules/xtend/immutable.js",
-        "node_modules/xtend/mutable.js",
-        "node_modules/xtend/test.js",
+        "node_modules/which-module/index.js",
+        "node_modules/window-size/index.js",
+        "node_modules/wordwrap/example/center.js",
+        "node_modules/wordwrap/example/meat.js",
+        "node_modules/wordwrap/index.js",
+        "node_modules/wrap-ansi/index.js",
+        "node_modules/wrap-ansi/node_modules/string-width/index.js",
+        "node_modules/y18n/index.js",
+        "node_modules/yallist/iterator.js",
+        "node_modules/yallist/yallist.js",
+        "node_modules/yargs/index.js",
+        "node_modules/yargs/lib/completion.js",
+        "node_modules/yargs/lib/parser.js",
+        "node_modules/yargs/lib/usage.js",
+        "node_modules/yargs/lib/validation.js",
+        "node_modules/yargs-parser/index.js",
+        "node_modules/yargs-parser/lib/tokenize-arg-string.js",
+        "node_modules/yargs-parser/node_modules/camelcase/index.js",
         "node_modules/yauzl/index.js"
       ],
       ".json": [
+        "node_modules/ajv/lib/refs/json-schema-draft-04.json",
+        "node_modules/ajv/lib/refs/json-schema-v5.json",
+        "node_modules/ajv/package.json",
+        "node_modules/align-text/package.json",
         "node_modules/amdefine/package.json",
         "node_modules/ansi-regex/package.json",
-        "node_modules/ansi-styles/package.json",
+        "node_modules/array-find-index/package.json",
         "node_modules/asn1/package.json",
         "node_modules/assert-plus/package.json",
         "node_modules/async/bower.json",
@@ -1299,81 +2544,135 @@
         "node_modules/asynckit/package.json",
         "node_modules/aws-sign2/package.json",
         "node_modules/aws4/package.json",
+        "node_modules/barbe/package.json",
         "node_modules/bcrypt-pbkdf/package.json",
+        "node_modules/bluebird/package.json",
+        "node_modules/boolbase/package.json",
         "node_modules/boom/package.json",
+        "node_modules/builtin-modules/builtin-modules.json",
+        "node_modules/builtin-modules/package.json",
+        "node_modules/camelcase/package.json",
+        "node_modules/camelcase-keys/node_modules/camelcase/package.json",
+        "node_modules/camelcase-keys/package.json",
         "node_modules/caseless/package.json",
-        "node_modules/chalk/package.json",
-        "node_modules/clean-css/node_modules/commander/package.json",
+        "node_modules/center-align/package.json",
+        "node_modules/cheerio/package.json",
         "node_modules/clean-css/package.json",
+        "node_modules/cliui/node_modules/wordwrap/package.json",
+        "node_modules/cliui/package.json",
+        "node_modules/co/package.json",
+        "node_modules/code-point-at/package.json",
         "node_modules/combined-stream/package.json",
         "node_modules/commander/package.json",
         "node_modules/concat-stream/package.json",
         "node_modules/core-util-is/package.json",
+        "node_modules/cross-spawn/package.json",
         "node_modules/cryptiles/package.json",
+        "node_modules/css-select/lib/procedure.json",
+        "node_modules/css-select/package.json",
+        "node_modules/css-what/package.json",
         "node_modules/ctype/package.json",
+        "node_modules/currently-unhandled/package.json",
         "node_modules/dashdash/node_modules/assert-plus/package.json",
         "node_modules/dashdash/package.json",
+        "node_modules/debug/bower.json",
+        "node_modules/debug/component.json",
         "node_modules/debug/package.json",
+        "node_modules/decamelize/package.json",
         "node_modules/delayed-stream/package.json",
+        "node_modules/dom-serializer/node_modules/domelementtype/package.json",
+        "node_modules/dom-serializer/package.json",
+        "node_modules/domelementtype/package.json",
+        "node_modules/domhandler/package.json",
+        "node_modules/domutils/package.json",
         "node_modules/ecc-jsbn/package.json",
+        "node_modules/emojer/package.json",
+        "node_modules/entities/maps/decode.json",
+        "node_modules/entities/maps/entities.json",
+        "node_modules/entities/maps/legacy.json",
+        "node_modules/entities/maps/xml.json",
+        "node_modules/entities/package.json",
+        "node_modules/error-ex/package.json",
         "node_modules/es6-promise/package.json",
-        "node_modules/escape-string-regexp/package.json",
+        "node_modules/execa/package.json",
         "node_modules/extend/.jscs.json",
         "node_modules/extend/component.json",
         "node_modules/extend/package.json",
         "node_modules/extract-zip/package.json",
         "node_modules/extsprintf/package.json",
         "node_modules/fd-slicer/package.json",
+        "node_modules/file-url/package.json",
+        "node_modules/find-up/package.json",
         "node_modules/forever-agent/package.json",
         "node_modules/form-data/package.json",
         "node_modules/fs-extra/package.json",
-        "node_modules/generate-function/package.json",
-        "node_modules/generate-object-property/package.json",
+        "node_modules/get-caller-file/package.json",
+        "node_modules/get-stdin/package.json",
+        "node_modules/get-stream/package.json",
         "node_modules/getpass/node_modules/assert-plus/package.json",
         "node_modules/getpass/package.json",
         "node_modules/graceful-fs/package.json",
-        "node_modules/har-validator/lib/schemas/cache.json",
-        "node_modules/har-validator/lib/schemas/cacheEntry.json",
-        "node_modules/har-validator/lib/schemas/content.json",
-        "node_modules/har-validator/lib/schemas/cookie.json",
-        "node_modules/har-validator/lib/schemas/creator.json",
-        "node_modules/har-validator/lib/schemas/entry.json",
-        "node_modules/har-validator/lib/schemas/har.json",
-        "node_modules/har-validator/lib/schemas/log.json",
-        "node_modules/har-validator/lib/schemas/page.json",
-        "node_modules/har-validator/lib/schemas/pageTimings.json",
-        "node_modules/har-validator/lib/schemas/postData.json",
-        "node_modules/har-validator/lib/schemas/record.json",
-        "node_modules/har-validator/lib/schemas/request.json",
-        "node_modules/har-validator/lib/schemas/response.json",
-        "node_modules/har-validator/lib/schemas/timings.json",
+        "node_modules/handlebars/node_modules/async/package.json",
+        "node_modules/handlebars/node_modules/source-map/package.json",
+        "node_modules/handlebars/package.json",
+        "node_modules/har-schema/lib/afterRequest.json",
+        "node_modules/har-schema/lib/beforeRequest.json",
+        "node_modules/har-schema/lib/browser.json",
+        "node_modules/har-schema/lib/cache.json",
+        "node_modules/har-schema/lib/content.json",
+        "node_modules/har-schema/lib/cookie.json",
+        "node_modules/har-schema/lib/creator.json",
+        "node_modules/har-schema/lib/entry.json",
+        "node_modules/har-schema/lib/har.json",
+        "node_modules/har-schema/lib/header.json",
+        "node_modules/har-schema/lib/log.json",
+        "node_modules/har-schema/lib/page.json",
+        "node_modules/har-schema/lib/pageTimings.json",
+        "node_modules/har-schema/lib/postData.json",
+        "node_modules/har-schema/lib/query.json",
+        "node_modules/har-schema/lib/request.json",
+        "node_modules/har-schema/lib/response.json",
+        "node_modules/har-schema/lib/timings.json",
+        "node_modules/har-schema/package.json",
         "node_modules/har-validator/package.json",
-        "node_modules/has-ansi/package.json",
         "node_modules/hasha/package.json",
         "node_modules/hawk/bower.json",
         "node_modules/hawk/component.json",
         "node_modules/hawk/package.json",
         "node_modules/hoek/package.json",
+        "node_modules/hosted-git-info/package.json",
         "node_modules/html-pdf/package.json",
+        "node_modules/htmlparser2/package.json",
         "node_modules/http-signature/package.json",
+        "node_modules/indent-string/package.json",
         "node_modules/inherits/package.json",
-        "node_modules/is-my-json-valid/package.json",
-        "node_modules/is-property/package.json",
+        "node_modules/invert-kv/package.json",
+        "node_modules/is-arrayish/package.json",
+        "node_modules/is-buffer/package.json",
+        "node_modules/is-builtin-module/package.json",
+        "node_modules/is-finite/package.json",
+        "node_modules/is-fullwidth-code-point/package.json",
         "node_modules/is-stream/package.json",
         "node_modules/is-typedarray/package.json",
+        "node_modules/is-utf8/package.json",
         "node_modules/isarray/component.json",
         "node_modules/isarray/package.json",
         "node_modules/isexe/package.json",
         "node_modules/isstream/package.json",
         "node_modules/jsbn/package.json",
         "node_modules/json-schema/package.json",
+        "node_modules/json-stable-stringify/package.json",
         "node_modules/json-stringify-safe/package.json",
         "node_modules/jsonfile/package.json",
-        "node_modules/jsonpointer/package.json",
+        "node_modules/jsonify/package.json",
         "node_modules/jsprim/node_modules/assert-plus/package.json",
         "node_modules/jsprim/package.json",
         "node_modules/kew/package.json",
+        "node_modules/kind-of/package.json",
         "node_modules/klaw/package.json",
+        "node_modules/lazy-cache/package.json",
+        "node_modules/lcid/lcid.json",
+        "node_modules/lcid/package.json",
         "node_modules/less/bower.json",
         "node_modules/less/node_modules/asn1/package.json",
         "node_modules/less/node_modules/assert-plus/package.json",
@@ -1400,48 +2699,180 @@
         "node_modules/less/node_modules/qs/package.json",
         "node_modules/less/node_modules/request/package.json",
         "node_modules/less/node_modules/sntp/package.json",
+        "node_modules/less/node_modules/tunnel-agent/package.json",
         "node_modules/less/package.json",
+        "node_modules/load-json-file/package.json",
+        "node_modules/locate-path/node_modules/path-exists/package.json",
+        "node_modules/locate-path/package.json",
+        "node_modules/lodash.assignin/package.json",
+        "node_modules/lodash.bind/package.json",
+        "node_modules/lodash.defaults/package.json",
+        "node_modules/lodash.filter/package.json",
+        "node_modules/lodash.flatten/package.json",
+        "node_modules/lodash.foreach/package.json",
+        "node_modules/lodash.map/package.json",
+        "node_modules/lodash.merge/package.json",
+        "node_modules/lodash.pick/package.json",
+        "node_modules/lodash.reduce/package.json",
+        "node_modules/lodash.reject/package.json",
+        "node_modules/lodash.some/package.json",
+        "node_modules/longest/package.json",
+        "node_modules/loophole/package.json",
+        "node_modules/loud-rejection/package.json",
+        "node_modules/lru-cache/package.json",
+        "node_modules/map-obj/package.json",
+        "node_modules/match-all/package.json",
+        "node_modules/mdpdf/node_modules/html-pdf/package.json",
+        "node_modules/mdpdf/package.json",
+        "node_modules/mem/package.json",
+        "node_modules/meow/node_modules/minimist/package.json",
+        "node_modules/meow/package.json",
         "node_modules/mime/package.json",
         "node_modules/mime-db/db.json",
         "node_modules/mime-db/package.json",
         "node_modules/mime-types/package.json",
+        "node_modules/mimic-fn/package.json",
         "node_modules/minimist/package.json",
         "node_modules/mkdirp/package.json",
+        "node_modules/ms/package.json",
         "node_modules/natives/package.json",
+        "node_modules/normalize-package-data/lib/typos.json",
+        "node_modules/normalize-package-data/lib/warning_messages.json",
+        "node_modules/normalize-package-data/package.json",
+        "node_modules/npm-run-path/package.json",
+        "node_modules/nth-check/package.json",
+        "node_modules/number-is-nan/package.json",
         "node_modules/oauth-sign/package.json",
+        "node_modules/object-assign/package.json",
+        "node_modules/optimist/package.json",
+        "node_modules/os-locale/package.json",
+        "node_modules/p-finally/package.json",
+        "node_modules/p-limit/package.json",
+        "node_modules/p-locate/package.json",
+        "node_modules/parse-json/package.json",
+        "node_modules/path-exists/package.json",
+        "node_modules/path-key/package.json",
+        "node_modules/path-type/package.json",
         "node_modules/pend/package.json",
+        "node_modules/performance-now/package.json",
         "node_modules/phantomjs-prebuilt/package.json",
+        "node_modules/pify/package.json",
         "node_modules/pinkie/package.json",
         "node_modules/pinkie-promise/package.json",
         "node_modules/process-nextick-args/package.json",
         "node_modules/progress/package.json",
+        "node_modules/pseudomap/package.json",
         "node_modules/punycode/package.json",
+        "node_modules/qs/.jscs.json",
         "node_modules/qs/package.json",
+        "node_modules/read-pkg/package.json",
+        "node_modules/read-pkg-up/package.json",
         "node_modules/readable-stream/package.json",
+        "node_modules/redent/package.json",
+        "node_modules/regex-emoji/package.json",
+        "node_modules/regex-escape/package.json",
+        "node_modules/repeat-string/package.json",
+        "node_modules/repeating/package.json",
         "node_modules/request/package.json",
         "node_modules/request-progress/package.json",
+        "node_modules/require-directory/package.json",
+        "node_modules/require-main-filename/package.json",
+        "node_modules/right-align/package.json",
+        "node_modules/safe-buffer/package.json",
+        "node_modules/semver/package.json",
+        "node_modules/set-blocking/package.json",
+        "node_modules/shebang-command/package.json",
+        "node_modules/shebang-regex/package.json",
+        "node_modules/showdown/.eslintrc.json",
+        "node_modules/showdown/bower.json",
+        "node_modules/showdown/node_modules/camelcase/package.json",
+        "node_modules/showdown/node_modules/cliui/node_modules/string-width/package.json",
+        "node_modules/showdown/node_modules/cliui/package.json",
+        "node_modules/showdown/node_modules/find-up/package.json",
+        "node_modules/showdown/node_modules/load-json-file/package.json",
+        "node_modules/showdown/node_modules/path-type/package.json",
+        "node_modules/showdown/node_modules/read-pkg/package.json",
+        "node_modules/showdown/node_modules/read-pkg-up/package.json",
+        "node_modules/showdown/node_modules/strip-bom/package.json",
+        "node_modules/showdown/node_modules/yargs/locales/be.json",
+        "node_modules/showdown/node_modules/yargs/locales/de.json",
+        "node_modules/showdown/node_modules/yargs/locales/en.json",
+        "node_modules/showdown/node_modules/yargs/locales/es.json",
+        "node_modules/showdown/node_modules/yargs/locales/fr.json",
+        "node_modules/showdown/node_modules/yargs/locales/hi.json",
+        "node_modules/showdown/node_modules/yargs/locales/hu.json",
+        "node_modules/showdown/node_modules/yargs/locales/id.json",
+        "node_modules/showdown/node_modules/yargs/locales/it.json",
+        "node_modules/showdown/node_modules/yargs/locales/ja.json",
+        "node_modules/showdown/node_modules/yargs/locales/ko.json",
+        "node_modules/showdown/node_modules/yargs/locales/nb.json",
+        "node_modules/showdown/node_modules/yargs/locales/nl.json",
+        "node_modules/showdown/node_modules/yargs/locales/pirate.json",
+        "node_modules/showdown/node_modules/yargs/locales/pl.json",
+        "node_modules/showdown/node_modules/yargs/locales/pt.json",
+        "node_modules/showdown/node_modules/yargs/locales/pt_BR.json",
+        "node_modules/showdown/node_modules/yargs/locales/ru.json",
+        "node_modules/showdown/node_modules/yargs/locales/th.json",
+        "node_modules/showdown/node_modules/yargs/locales/tr.json",
+        "node_modules/showdown/node_modules/yargs/locales/zh_CN.json",
+        "node_modules/showdown/node_modules/yargs/locales/zh_TW.json",
+        "node_modules/showdown/node_modules/yargs/package.json",
+        "node_modules/showdown/package.json",
+        "node_modules/showdown/performance.json",
+        "node_modules/showdown-emoji/package.json",
+        "node_modules/signal-exit/package.json",
         "node_modules/sntp/package.json",
         "node_modules/source-map/package.json",
+        "node_modules/spdx-correct/package.json",
+        "node_modules/spdx-expression-parse/package.json",
+        "node_modules/spdx-license-ids/package.json",
+        "node_modules/spdx-license-ids/spdx-license-ids.json",
         "node_modules/sshpk/node_modules/assert-plus/package.json",
         "node_modules/sshpk/package.json",
+        "node_modules/string-width/node_modules/ansi-regex/package.json",
+        "node_modules/string-width/node_modules/is-fullwidth-code-point/package.json",
+        "node_modules/string-width/node_modules/strip-ansi/package.json",
+        "node_modules/string-width/package.json",
         "node_modules/string_decoder/package.json",
         "node_modules/stringstream/package.json",
         "node_modules/strip-ansi/package.json",
-        "node_modules/supports-color/package.json",
+        "node_modules/strip-bom/package.json",
+        "node_modules/strip-eof/package.json",
+        "node_modules/strip-indent/package.json",
         "node_modules/throttleit/component.json",
         "node_modules/throttleit/package.json",
         "node_modules/tough-cookie/package.json",
+        "node_modules/trim-newlines/package.json",
         "node_modules/tunnel-agent/package.json",
         "node_modules/tweetnacl/package.json",
         "node_modules/typedarray/package.json",
+        "node_modules/uglify-js/node_modules/source-map/package.json",
+        "node_modules/uglify-js/package.json",
+        "node_modules/uglify-js/tools/domprops.json",
+        "node_modules/uglify-to-browserify/package.json",
         "node_modules/util-deprecate/package.json",
         "node_modules/uuid/.eslintrc.json",
         "node_modules/uuid/package.json",
+        "node_modules/validate-npm-package-license/package.json",
+        "node_modules/verror/node_modules/assert-plus/package.json",
         "node_modules/verror/package.json",
         "node_modules/which/package.json",
-        "node_modules/xtend/package.json",
+        "node_modules/which-module/package.json",
+        "node_modules/window-size/package.json",
+        "node_modules/wordwrap/package.json",
+        "node_modules/wrap-ansi/node_modules/string-width/package.json",
+        "node_modules/wrap-ansi/package.json",
+        "node_modules/y18n/package.json",
+        "node_modules/yallist/package.json",
+        "node_modules/yargs/package.json",
+        "node_modules/yargs-parser/node_modules/camelcase/package.json",
+        "node_modules/yargs-parser/package.json",
         "node_modules/yauzl/package.json",
+        "package-lock.json",
         "package.json"
+      ],
+      ".coffee": [
+        "node_modules/performance-now/src/performance-now.coffee"
       ]
     },
     "folders": [
@@ -1455,7 +2886,45 @@
         ],
         "dependencies": {
           "html-pdf": "2.0.x",
-          "less": "^1.7.0"
+          "less": "^1.7.0",
+          "loophole": "^1.1.0",
+          "mdpdf": "^1.5.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/ajv",
+          "node_modules/ajv/dist",
+          "node_modules/ajv/lib",
+          "node_modules/ajv/lib/compile",
+          "node_modules/ajv/lib/dotjs",
+          "node_modules/ajv/lib/refs",
+          "node_modules/ajv/scripts"
+        ],
+        "dependencies": {
+          "co": "^4.6.0",
+          "json-stable-stringify": "^1.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/align-text"
+        ],
+        "dependencies": {
+          "kind-of": "^3.0.2",
+          "longest": "^1.0.1",
+          "repeat-string": "^1.5.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/barbe/example",
+          "node_modules/barbe/lib",
+          "node_modules/barbe",
+          "node_modules/barbe/test"
+        ],
+        "dependencies": {
+          "regex-escape": "^3.0.0"
         }
       },
       {
@@ -1478,14 +2947,45 @@
       },
       {
         "paths": [
-          "node_modules/chalk"
+          "node_modules/camelcase-keys"
         ],
         "dependencies": {
-          "ansi-styles": "^2.2.1",
-          "escape-string-regexp": "^1.0.2",
-          "has-ansi": "^2.0.0",
-          "strip-ansi": "^3.0.0",
-          "supports-color": "^2.0.0"
+          "camelcase": "^2.0.0",
+          "map-obj": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/center-align"
+        ],
+        "dependencies": {
+          "align-text": "^0.1.3",
+          "lazy-cache": "^1.0.3"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/cheerio",
+          "node_modules/cheerio/lib/api",
+          "node_modules/cheerio/lib"
+        ],
+        "dependencies": {
+          "css-select": "~1.2.0",
+          "dom-serializer": "~0.1.0",
+          "entities": "~1.1.1",
+          "htmlparser2": "^3.9.1",
+          "lodash.assignin": "^4.0.9",
+          "lodash.bind": "^4.1.4",
+          "lodash.defaults": "^4.0.1",
+          "lodash.filter": "^4.4.0",
+          "lodash.flatten": "^4.2.0",
+          "lodash.foreach": "^4.3.0",
+          "lodash.map": "^4.4.0",
+          "lodash.merge": "^4.4.0",
+          "lodash.pick": "^4.2.1",
+          "lodash.reduce": "^4.4.0",
+          "lodash.reject": "^4.4.0",
+          "lodash.some": "^4.4.0"
         }
       },
       {
@@ -1505,6 +3005,17 @@
       },
       {
         "paths": [
+          "node_modules/cliui",
+          "node_modules/cliui/test"
+        ],
+        "dependencies": {
+          "center-align": "^0.1.1",
+          "right-align": "^0.1.1",
+          "wordwrap": "0.0.2"
+        }
+      },
+      {
+        "paths": [
           "node_modules/combined-stream/lib",
           "node_modules/combined-stream"
         ],
@@ -1517,9 +3028,21 @@
           "node_modules/concat-stream"
         ],
         "dependencies": {
-          "inherits": "~2.0.1",
-          "readable-stream": "~2.0.0",
-          "typedarray": "~0.0.5"
+          "inherits": "^2.0.3",
+          "readable-stream": "^2.2.2",
+          "typedarray": "^0.0.6"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/cross-spawn",
+          "node_modules/cross-spawn/lib",
+          "node_modules/cross-spawn/lib/util"
+        ],
+        "dependencies": {
+          "lru-cache": "^4.0.1",
+          "shebang-command": "^1.2.0",
+          "which": "^1.2.9"
         }
       },
       {
@@ -1534,11 +3057,71 @@
       },
       {
         "paths": [
+          "node_modules/css-select",
+          "node_modules/css-select/lib"
+        ],
+        "dependencies": {
+          "boolbase": "~1.0.0",
+          "css-what": "2.1",
+          "domutils": "1.5.1",
+          "nth-check": "~1.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/currently-unhandled"
+        ],
+        "dependencies": {
+          "array-find-index": "^1.0.1"
+        }
+      },
+      {
+        "paths": [
           "node_modules/dashdash/lib",
           "node_modules/dashdash"
         ],
         "dependencies": {
           "assert-plus": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/debug"
+        ],
+        "dependencies": {
+          "ms": "0.7.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/dom-serializer"
+        ],
+        "dependencies": {
+          "domelementtype": "~1.1.1",
+          "entities": "~1.1.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/domhandler",
+          "node_modules/domhandler/lib",
+          "node_modules/domhandler/test/cases",
+          "node_modules/domhandler/test"
+        ],
+        "dependencies": {
+          "domelementtype": "1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/domutils",
+          "node_modules/domutils/lib",
+          "node_modules/domutils/test",
+          "node_modules/domutils/test/tests"
+        ],
+        "dependencies": {
+          "dom-serializer": "0",
+          "domelementtype": "1"
         }
       },
       {
@@ -1552,11 +3135,45 @@
       },
       {
         "paths": [
+          "node_modules/emojer/lib",
+          "node_modules/emojer"
+        ],
+        "dependencies": {
+          "barbe": "^2.2.1",
+          "match-all": "^1.1.1",
+          "regex-emoji": "^2.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/error-ex"
+        ],
+        "dependencies": {
+          "is-arrayish": "^0.2.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/execa",
+          "node_modules/execa/lib"
+        ],
+        "dependencies": {
+          "cross-spawn": "^5.0.1",
+          "get-stream": "^3.0.0",
+          "is-stream": "^1.1.0",
+          "npm-run-path": "^2.0.0",
+          "p-finally": "^1.0.0",
+          "signal-exit": "^3.0.0",
+          "strip-eof": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
           "node_modules/extract-zip"
         ],
         "dependencies": {
-          "concat-stream": "1.5.0",
-          "debug": "0.7.4",
+          "concat-stream": "1.6.0",
+          "debug": "2.2.0",
           "mkdirp": "0.5.0",
           "yauzl": "2.4.1"
         }
@@ -1568,6 +3185,15 @@
         ],
         "dependencies": {
           "pend": "~1.2.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/find-up"
+        ],
+        "dependencies": {
+          "path-exists": "^2.0.0",
+          "pinkie-promise": "^2.0.0"
         }
       },
       {
@@ -1606,14 +3232,6 @@
       },
       {
         "paths": [
-          "node_modules/generate-object-property"
-        ],
-        "dependencies": {
-          "is-property": "^1.0.0"
-        }
-      },
-      {
-        "paths": [
           "node_modules/getpass/lib",
           "node_modules/getpass"
         ],
@@ -1623,23 +3241,54 @@
       },
       {
         "paths": [
-          "node_modules/har-validator/lib",
-          "node_modules/har-validator/lib/schemas",
-          "node_modules/har-validator"
+          "node_modules/handlebars/dist/amd/handlebars",
+          "node_modules/handlebars/dist/amd/handlebars/compiler",
+          "node_modules/handlebars/dist/amd/handlebars/decorators",
+          "node_modules/handlebars/dist/amd/handlebars/helpers",
+          "node_modules/handlebars/dist/amd",
+          "node_modules/handlebars/dist/cjs/handlebars",
+          "node_modules/handlebars/dist/cjs/handlebars/compiler",
+          "node_modules/handlebars/dist/cjs/handlebars/decorators",
+          "node_modules/handlebars/dist/cjs/handlebars/helpers",
+          "node_modules/handlebars/dist/cjs",
+          "node_modules/handlebars/dist",
+          "node_modules/handlebars/lib/handlebars",
+          "node_modules/handlebars/lib/handlebars/compiler",
+          "node_modules/handlebars/lib/handlebars/decorators",
+          "node_modules/handlebars/lib/handlebars/helpers",
+          "node_modules/handlebars/lib",
+          "node_modules/handlebars"
         ],
         "dependencies": {
-          "chalk": "^1.1.1",
-          "commander": "^2.9.0",
-          "is-my-json-valid": "^2.12.4",
-          "pinkie-promise": "^2.0.0"
+          "async": "^1.4.0",
+          "optimist": "^0.6.1",
+          "source-map": "^0.4.4",
+          "uglify-js": "^2.6"
         }
       },
       {
         "paths": [
-          "node_modules/has-ansi"
+          "node_modules/handlebars/node_modules/source-map/build",
+          "node_modules/handlebars/node_modules/source-map/lib/source-map",
+          "node_modules/handlebars/node_modules/source-map/lib",
+          "node_modules/handlebars/node_modules/source-map"
         ],
         "dependencies": {
-          "ansi-regex": "^2.0.0"
+          "amdefine": ">=0.0.4"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/har-validator/lib/browser",
+          "node_modules/har-validator/lib/node4",
+          "node_modules/har-validator/lib/node6",
+          "node_modules/har-validator/lib/node7",
+          "node_modules/har-validator",
+          "node_modules/har-validator/src"
+        ],
+        "dependencies": {
+          "ajv": "^4.9.1",
+          "har-schema": "^1.0.5"
         }
       },
       {
@@ -1679,6 +3328,20 @@
       },
       {
         "paths": [
+          "node_modules/htmlparser2/lib",
+          "node_modules/htmlparser2"
+        ],
+        "dependencies": {
+          "domelementtype": "^1.3.0",
+          "domhandler": "^2.3.0",
+          "domutils": "^1.5.1",
+          "entities": "^1.1.1",
+          "inherits": "^2.0.1",
+          "readable-stream": "^2.0.2"
+        }
+      },
+      {
+        "paths": [
           "node_modules/http-signature/lib",
           "node_modules/http-signature"
         ],
@@ -1690,16 +3353,44 @@
       },
       {
         "paths": [
-          "node_modules/is-my-json-valid",
-          "node_modules/is-my-json-valid/test/fixtures",
-          "node_modules/is-my-json-valid/test/json-schema-draft4",
-          "node_modules/is-my-json-valid/test"
+          "node_modules/indent-string"
         ],
         "dependencies": {
-          "generate-function": "^2.0.0",
-          "generate-object-property": "^1.1.0",
-          "jsonpointer": "^4.0.0",
-          "xtend": "^4.0.0"
+          "repeating": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/is-builtin-module"
+        ],
+        "dependencies": {
+          "builtin-modules": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/is-finite"
+        ],
+        "dependencies": {
+          "number-is-nan": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/is-fullwidth-code-point"
+        ],
+        "dependencies": {
+          "number-is-nan": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/json-stable-stringify/example",
+          "node_modules/json-stable-stringify",
+          "node_modules/json-stable-stringify/test"
+        ],
+        "dependencies": {
+          "jsonify": "~0.0.0"
         }
       },
       {
@@ -1717,9 +3408,17 @@
         ],
         "dependencies": {
           "assert-plus": "1.0.0",
-          "extsprintf": "1.0.2",
+          "extsprintf": "1.3.0",
           "json-schema": "0.2.3",
-          "verror": "1.3.6"
+          "verror": "1.10.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/kind-of"
+        ],
+        "dependencies": {
+          "is-buffer": "^1.1.5"
         }
       },
       {
@@ -1729,6 +3428,14 @@
         ],
         "dependencies": {
           "graceful-fs": "^4.1.9"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/lcid"
+        ],
+        "dependencies": {
+          "invert-kv": "^1.0.0"
         }
       },
       {
@@ -1867,10 +3574,105 @@
       },
       {
         "paths": [
+          "node_modules/load-json-file"
+        ],
+        "dependencies": {
+          "graceful-fs": "^4.1.2",
+          "parse-json": "^2.2.0",
+          "pify": "^2.0.0",
+          "pinkie-promise": "^2.0.0",
+          "strip-bom": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/locate-path"
+        ],
+        "dependencies": {
+          "p-locate": "^2.0.0",
+          "path-exists": "^3.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/loud-rejection"
+        ],
+        "dependencies": {
+          "currently-unhandled": "^0.4.1",
+          "signal-exit": "^3.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/lru-cache"
+        ],
+        "dependencies": {
+          "pseudomap": "^1.0.2",
+          "yallist": "^2.1.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/mdpdf/assets/highlight",
+          "node_modules/mdpdf/bin",
+          "node_modules/mdpdf/examples/api",
+          "node_modules/mdpdf",
+          "node_modules/mdpdf/tests"
+        ],
+        "dependencies": {
+          "bluebird": "^3.4.7",
+          "cheerio": "^0.22.0",
+          "file-url": "^2.0.2",
+          "handlebars": "^4.0.6",
+          "html-pdf": "^2.1.0",
+          "loophole": "^1.1.0",
+          "meow": "^3.7.0",
+          "showdown": "^1.6.0",
+          "showdown-emoji": "^1.0.3"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/mdpdf/node_modules/html-pdf/bin",
+          "node_modules/mdpdf/node_modules/html-pdf/lib",
+          "node_modules/mdpdf/node_modules/html-pdf/lib/scripts",
+          "node_modules/mdpdf/node_modules/html-pdf"
+        ],
+        "dependencies": {
+          "phantomjs-prebuilt": "^2.1.4"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/mem"
+        ],
+        "dependencies": {
+          "mimic-fn": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/meow"
+        ],
+        "dependencies": {
+          "camelcase-keys": "^2.0.0",
+          "decamelize": "^1.1.2",
+          "loud-rejection": "^1.0.0",
+          "map-obj": "^1.0.1",
+          "minimist": "^1.1.3",
+          "normalize-package-data": "^2.3.4",
+          "object-assign": "^4.0.1",
+          "read-pkg-up": "^1.0.1",
+          "redent": "^1.0.0",
+          "trim-newlines": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
           "node_modules/mime-types"
         ],
         "dependencies": {
-          "mime-db": "~1.27.0"
+          "mime-db": "~1.29.0"
         }
       },
       {
@@ -1886,6 +3688,91 @@
       },
       {
         "paths": [
+          "node_modules/normalize-package-data/lib",
+          "node_modules/normalize-package-data"
+        ],
+        "dependencies": {
+          "hosted-git-info": "^2.1.4",
+          "is-builtin-module": "^1.0.0",
+          "semver": "2 || 3 || 4 || 5",
+          "validate-npm-package-license": "^3.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/npm-run-path"
+        ],
+        "dependencies": {
+          "path-key": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/nth-check"
+        ],
+        "dependencies": {
+          "boolbase": "~1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/optimist/example",
+          "node_modules/optimist",
+          "node_modules/optimist/test/_",
+          "node_modules/optimist/test"
+        ],
+        "dependencies": {
+          "minimist": "~0.0.1",
+          "wordwrap": "~0.0.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/os-locale"
+        ],
+        "dependencies": {
+          "execa": "^0.7.0",
+          "lcid": "^1.0.0",
+          "mem": "^1.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/p-locate"
+        ],
+        "dependencies": {
+          "p-limit": "^1.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/parse-json",
+          "node_modules/parse-json/vendor"
+        ],
+        "dependencies": {
+          "error-ex": "^1.2.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/path-exists"
+        ],
+        "dependencies": {
+          "pinkie-promise": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/path-type"
+        ],
+        "dependencies": {
+          "graceful-fs": "^4.1.2",
+          "pify": "^2.0.0",
+          "pinkie-promise": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
           "node_modules/phantomjs-prebuilt",
           "node_modules/phantomjs-prebuilt/lib",
           "node_modules/phantomjs-prebuilt/lib/phantom/examples",
@@ -1893,12 +3780,12 @@
         ],
         "dependencies": {
           "es6-promise": "~4.0.3",
-          "extract-zip": "~1.5.0",
+          "extract-zip": "~1.6.5",
           "fs-extra": "~1.0.0",
           "hasha": "~2.2.0",
           "kew": "~0.7.0",
           "progress": "~1.1.8",
-          "request": "~2.79.0",
+          "request": "~2.81.0",
           "request-progress": "~2.0.1",
           "which": "~1.2.10"
         }
@@ -1913,16 +3800,54 @@
       },
       {
         "paths": [
+          "node_modules/read-pkg"
+        ],
+        "dependencies": {
+          "load-json-file": "^1.0.0",
+          "normalize-package-data": "^2.3.2",
+          "path-type": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/read-pkg-up"
+        ],
+        "dependencies": {
+          "find-up": "^1.0.0",
+          "read-pkg": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
           "node_modules/readable-stream",
-          "node_modules/readable-stream/lib"
+          "node_modules/readable-stream/lib",
+          "node_modules/readable-stream/lib/internal/streams"
         ],
         "dependencies": {
           "core-util-is": "~1.0.0",
-          "inherits": "~2.0.1",
+          "inherits": "~2.0.3",
           "isarray": "~1.0.0",
           "process-nextick-args": "~1.0.6",
-          "string_decoder": "~0.10.x",
+          "safe-buffer": "~5.1.1",
+          "string_decoder": "~1.0.3",
           "util-deprecate": "~1.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/redent"
+        ],
+        "dependencies": {
+          "indent-string": "^2.1.0",
+          "strip-indent": "^1.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/repeating"
+        ],
+        "dependencies": {
+          "is-finite": "^1.0.0"
         }
       },
       {
@@ -1933,12 +3858,12 @@
         "dependencies": {
           "aws-sign2": "~0.6.0",
           "aws4": "^1.2.1",
-          "caseless": "~0.11.0",
+          "caseless": "~0.12.0",
           "combined-stream": "~1.0.5",
           "extend": "~3.0.0",
           "forever-agent": "~0.6.1",
           "form-data": "~2.1.1",
-          "har-validator": "~2.0.6",
+          "har-validator": "~4.2.1",
           "hawk": "~3.1.3",
           "http-signature": "~1.1.0",
           "is-typedarray": "~1.0.0",
@@ -1946,10 +3871,12 @@
           "json-stringify-safe": "~5.0.1",
           "mime-types": "~2.1.7",
           "oauth-sign": "~0.8.1",
-          "qs": "~6.3.0",
+          "performance-now": "^0.2.0",
+          "qs": "~6.4.0",
+          "safe-buffer": "^5.0.1",
           "stringstream": "~0.0.4",
           "tough-cookie": "~2.3.0",
-          "tunnel-agent": "~0.4.1",
+          "tunnel-agent": "^0.6.0",
           "uuid": "^3.0.0"
         }
       },
@@ -1960,6 +3887,135 @@
         ],
         "dependencies": {
           "throttleit": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/right-align"
+        ],
+        "dependencies": {
+          "align-text": "^0.1.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/shebang-command"
+        ],
+        "dependencies": {
+          "shebang-regex": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/showdown",
+          "node_modules/showdown/bin",
+          "node_modules/showdown/dist",
+          "node_modules/showdown/src/cli",
+          "node_modules/showdown/src",
+          "node_modules/showdown/src/subParsers",
+          "node_modules/showdown/test",
+          "node_modules/showdown/test/node",
+          "node_modules/showdown/test/performance"
+        ],
+        "dependencies": {
+          "yargs": "^8.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/showdown/node_modules/cliui"
+        ],
+        "dependencies": {
+          "string-width": "^1.0.1",
+          "strip-ansi": "^3.0.1",
+          "wrap-ansi": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/showdown/node_modules/cliui/node_modules/string-width"
+        ],
+        "dependencies": {
+          "code-point-at": "^1.0.0",
+          "is-fullwidth-code-point": "^1.0.0",
+          "strip-ansi": "^3.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/showdown/node_modules/find-up"
+        ],
+        "dependencies": {
+          "locate-path": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/showdown/node_modules/load-json-file"
+        ],
+        "dependencies": {
+          "graceful-fs": "^4.1.2",
+          "parse-json": "^2.2.0",
+          "pify": "^2.0.0",
+          "strip-bom": "^3.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/showdown/node_modules/path-type"
+        ],
+        "dependencies": {
+          "pify": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/showdown/node_modules/read-pkg"
+        ],
+        "dependencies": {
+          "load-json-file": "^2.0.0",
+          "normalize-package-data": "^2.3.2",
+          "path-type": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/showdown/node_modules/read-pkg-up"
+        ],
+        "dependencies": {
+          "find-up": "^2.0.0",
+          "read-pkg": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/showdown/node_modules/yargs",
+          "node_modules/showdown/node_modules/yargs/lib",
+          "node_modules/showdown/node_modules/yargs/locales"
+        ],
+        "dependencies": {
+          "camelcase": "^4.1.0",
+          "cliui": "^3.2.0",
+          "decamelize": "^1.1.1",
+          "get-caller-file": "^1.0.1",
+          "os-locale": "^2.0.0",
+          "read-pkg-up": "^2.0.0",
+          "require-directory": "^2.1.1",
+          "require-main-filename": "^1.0.1",
+          "set-blocking": "^2.0.0",
+          "string-width": "^2.0.0",
+          "which-module": "^2.0.0",
+          "y18n": "^3.2.1",
+          "yargs-parser": "^7.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/showdown-emoji/lib",
+          "node_modules/showdown-emoji"
+        ],
+        "dependencies": {
+          "emojer": "^1.0.4"
         }
       },
       {
@@ -1988,6 +4044,14 @@
       },
       {
         "paths": [
+          "node_modules/spdx-correct"
+        ],
+        "dependencies": {
+          "spdx-license-ids": "^1.0.2"
+        }
+      },
+      {
+        "paths": [
           "node_modules/sshpk/lib",
           "node_modules/sshpk/lib/formats",
           "node_modules/sshpk"
@@ -2005,10 +4069,52 @@
       },
       {
         "paths": [
+          "node_modules/string_decoder/lib",
+          "node_modules/string_decoder"
+        ],
+        "dependencies": {
+          "safe-buffer": "~5.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/string-width"
+        ],
+        "dependencies": {
+          "is-fullwidth-code-point": "^2.0.0",
+          "strip-ansi": "^4.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/string-width/node_modules/strip-ansi"
+        ],
+        "dependencies": {
+          "ansi-regex": "^3.0.0"
+        }
+      },
+      {
+        "paths": [
           "node_modules/strip-ansi"
         ],
         "dependencies": {
           "ansi-regex": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/strip-bom"
+        ],
+        "dependencies": {
+          "is-utf8": "^0.2.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/strip-indent"
+        ],
+        "dependencies": {
+          "get-stdin": "^4.0.1"
         }
       },
       {
@@ -2022,13 +4128,43 @@
       },
       {
         "paths": [
-          "node_modules/verror/examples",
-          "node_modules/verror/lib",
-          "node_modules/verror",
-          "node_modules/verror/tests"
+          "node_modules/tunnel-agent"
         ],
         "dependencies": {
-          "extsprintf": "1.0.2"
+          "safe-buffer": "^5.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/uglify-js/bin",
+          "node_modules/uglify-js/lib",
+          "node_modules/uglify-js",
+          "node_modules/uglify-js/tools"
+        ],
+        "dependencies": {
+          "source-map": "~0.5.1",
+          "uglify-to-browserify": "~1.0.0",
+          "yargs": "~3.10.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/validate-npm-package-license"
+        ],
+        "dependencies": {
+          "spdx-correct": "~1.0.0",
+          "spdx-expression-parse": "~1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/verror/lib",
+          "node_modules/verror"
+        ],
+        "dependencies": {
+          "assert-plus": "^1.0.0",
+          "core-util-is": "1.0.2",
+          "extsprintf": "^1.2.0"
         }
       },
       {
@@ -2037,6 +4173,46 @@
         ],
         "dependencies": {
           "isexe": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/wrap-ansi"
+        ],
+        "dependencies": {
+          "string-width": "^1.0.1",
+          "strip-ansi": "^3.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/wrap-ansi/node_modules/string-width"
+        ],
+        "dependencies": {
+          "code-point-at": "^1.0.0",
+          "is-fullwidth-code-point": "^1.0.0",
+          "strip-ansi": "^3.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/yargs",
+          "node_modules/yargs/lib"
+        ],
+        "dependencies": {
+          "camelcase": "^1.0.2",
+          "cliui": "^2.1.0",
+          "decamelize": "^1.0.0",
+          "window-size": "0.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/yargs-parser",
+          "node_modules/yargs-parser/lib"
+        ],
+        "dependencies": {
+          "camelcase": "^4.1.0"
         }
       },
       {

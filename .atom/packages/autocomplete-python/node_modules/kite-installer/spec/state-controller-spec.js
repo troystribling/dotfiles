@@ -11,7 +11,7 @@ const {
   withKiteInstalled, withKiteRunning, withKiteNotRunning,
   withKiteReachable, withKiteNotReachable,
   withKiteNotAuthenticated, withKiteWhitelistedPaths,
-  withRoutes, withFakeServer,
+  withRoutes, withFakeServer, withKiteEnterpriseRunning,
 } = require('./spec-helpers.js');
 
 describe('StateController', () => {
@@ -62,26 +62,8 @@ describe('StateController', () => {
       });
     });
 
-    // withKiteWhitelistedPaths(['/path/to/dir'], () => {
-    //   describe('and a path not in the whitelist', () => {
-    //     it('returns a promise resolved with the corresponding state', () => {
-    //       waitsForPromise(() => StateController.handleState('/path/to/other/dir').then(state => {
-    //         expect(state).toEqual(StateController.STATES.AUTHENTICATED);
-    //       }));
-    //     });
-    //   });
-    //
-    //   describe('and a path in the whitelist', () => {
-    //     it('returns a promise resolved with the corresponding state', () => {
-    //       waitsForPromise(() => StateController.handleState('/path/to/dir').then(state => {
-    //         expect(state).toEqual(StateController.STATES.WHITELISTED);
-    //       }));
-    //     });
-    //   });
-    // });
-
     withKiteReachable([
-      [o => o.path === '/api/account/authenticated', o => fakeResponse(500)],
+      [o => o.path === '/clientapi/user', o => fakeResponse(500)],
     ], () => {
       describe('and an unexpected response from Kite', () => {
         it('returns a rejected promise', () => {
@@ -183,6 +165,29 @@ describe('StateController', () => {
         });
       });
     });
+
+    withKiteEnterpriseRunning(() => {
+      describe('and is reachable', () => {
+        beforeEach(() => {
+          spyOn(http, 'request').andCallFake(fakeRequestMethod(true));
+        });
+
+        it('returns a resolving promise', () => {
+          waitsForPromise(() => StateController.isKiteReachable());
+        });
+      });
+
+      describe('and is not reachable', () => {
+        beforeEach(() => {
+          spyOn(http, 'request').andCallFake(fakeRequestMethod(false));
+        });
+
+        it('returns a rejected promise', () => {
+          waitsForPromise({shouldReject: true}, () =>
+            StateController.isKiteReachable());
+        });
+      });
+    });
   });
 
   describe('.waitForKite()', () => {
@@ -234,7 +239,7 @@ describe('StateController', () => {
         });
       });
 
-      describe('when the request ends a 200 status code but the wrong data', () => {
+      xdescribe('when the request ends a 200 status code but the wrong data', () => {
         beforeEach(() => {
           spyOn(http, 'request').andCallFake(fakeRequestMethod(fakeResponse(200)));
         });

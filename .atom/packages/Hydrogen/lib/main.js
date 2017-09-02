@@ -82,6 +82,13 @@ const Hydrogen = {
     );
 
     store.subscriptions.add(
+      // enable/disable mobx-react-devtools logging
+      atom.config.onDidChange("Hydrogen.debug", ({ newValue }) =>
+        renderDevTools(newValue)
+      )
+    );
+
+    store.subscriptions.add(
       atom.commands.add("atom-text-editor:not([mini])", {
         "hydrogen:run": () => this.run(),
         "hydrogen:run-all": () => this.runAll(),
@@ -514,7 +521,7 @@ const Hydrogen = {
       });
     }
 
-    this.wsKernelPicker.toggle(store.grammar, (kernelSpec: Kernelspec) =>
+    this.wsKernelPicker.toggle((kernelSpec: Kernelspec) =>
       kernelManager.kernelSpecProvidesGrammar(kernelSpec, store.grammar)
     );
   }

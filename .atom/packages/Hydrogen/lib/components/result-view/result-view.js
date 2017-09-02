@@ -2,9 +2,8 @@
 
 import { CompositeDisposable } from "atom";
 import React from "react";
-import * as Immutable from "immutable";
 import { observer } from "mobx-react";
-import { action, observable } from "mobx";
+import { action, observable, toJS } from "mobx";
 import Display, {
   DEFAULT_SCROLL_HEIGHT
 } from "@nteract/display-area/lib/display";
@@ -35,6 +34,14 @@ class ResultViewComponent extends React.Component {
     return this.el.innerText ? this.el.innerText.trim() : "";
   };
 
+  handleClick = (event: MouseEvent) => {
+    if (event.ctrlKey || event.metaKey) {
+      this.openInEditor();
+    } else {
+      this.copyToClipboard();
+    }
+  };
+
   copyToClipboard = () => {
     atom.clipboard.write(this.getAllText());
     atom.notifications.addSuccess("Copied to clipboard");
@@ -48,9 +55,16 @@ class ResultViewComponent extends React.Component {
     if (!element || !comp.disposables || comp.disposables.size > 0) return;
     comp.add(
       atom.tooltips.add(element, {
-        title: this.props.store.executionCount
-          ? `Copy to clipboard (Out[${this.props.store.executionCount}])`
-          : "Copy to clipboard"
+        title: () => {
+          const ctrlOrCmdMessage = `Click to copy,
+          ${process.platform === "darwin"
+            ? "Cmd"
+            : "Ctrl"}+Click to open in editor`;
+
+          return this.props.store.executionCount
+            ? `${ctrlOrCmdMessage} (Out[${this.props.store.executionCount}])`
+            : ctrlOrCmdMessage;
+        }
       })
     );
   };
@@ -104,7 +118,7 @@ class ResultViewComponent extends React.Component {
     return (
       <div
         className={isPlain ? "inline-container" : "multiline-container"}
-        onClick={isPlain ? this.copyToClipboard : false}
+        onClick={isPlain ? this.handleClick : false}
         style={
           isPlain
             ? inlineStyle
@@ -129,11 +143,11 @@ class ResultViewComponent extends React.Component {
               });
             }
           }}
-          outputs={Immutable.List(outputs.peek())}
+          outputs={toJS(outputs)}
           displayOrder={displayOrder}
           transforms={transforms}
           theme="light"
-          models={Immutable.Map()}
+          models={{}}
           expanded={this.expanded.get()}
         />
         {isPlain
@@ -143,12 +157,8 @@ class ResultViewComponent extends React.Component {
               <div style={{ flex: 1, minHeight: "0.25em" }} />
               <div
                 className="icon icon-clippy"
-                onClick={this.copyToClipboard}
+                onClick={this.handleClick}
                 ref={this.addCopyButtonTooltip}
-              />
-              <div
-                className="icon icon-file-symlink-file"
-                onClick={this.openInEditor}
               />
               {this.el && this.el.scrollHeight > DEFAULT_SCROLL_HEIGHT
                 ? <div

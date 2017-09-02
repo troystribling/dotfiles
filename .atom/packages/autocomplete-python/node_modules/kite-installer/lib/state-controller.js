@@ -67,10 +67,30 @@ const StateController = {
       });
   },
 
+  hasManyKiteInstallation() {
+    return this.support.hasManyKiteInstallation();
+  },
+
+  hasManyKiteEnterpriseInstallation() {
+    return this.support.hasManyKiteEnterpriseInstallation();
+  },
+
   isKiteInstalled() {
     Logger.verbose('isKiteInstalled called');
     return this.isKiteSupported()
     .then(() => this.support.isKiteInstalled());
+  },
+
+  isKiteEnterpriseInstalled() {
+    Logger.verbose('isKiteEnterpriseInstalled called');
+    return this.isKiteSupported()
+    .then(() => this.support.isKiteEnterpriseInstalled());
+  },
+
+  hasBothKiteInstalled() {
+    Logger.verbose('hasBothKiteInstalled called');
+    return this.isKiteSupported()
+    .then(() => this.support.hasBothKiteInstalled());
   },
 
   canInstallKite() {
@@ -152,9 +172,54 @@ const StateController = {
     });
   },
 
+  runKiteAndWait(attempts, interval) {
+    Logger.verbose('runKiteAndWait called', attempts, interval);
+    return this.runKite().then(() => this.waitForKite(attempts, interval));
+  },
+
+  isKiteEnterpriseRunning() {
+    Logger.verbose('isKiteEnterpriseRunning called');
+    return this.isKiteEnterpriseInstalled()
+    .then(() => this.support.isKiteEnterpriseRunning());
+  },
+
+  canRunKiteEnterprise() {
+    Logger.verbose('canRunKiteEnterprise called');
+    return this.isKiteEnterpriseInstalled()
+    .then(() =>
+      utils.reversePromise(this.isKiteEnterpriseRunning(),
+        new KiteError('bad_state', STATES.RUNNING)));
+  },
+
+  runKiteEnterprise() {
+    Logger.verbose('runKiteEnterprise called');
+    return this.canRunKiteEnterprise()
+    .then(() => this.support.runKiteEnterprise())
+    .catch((err) => {
+      if (err.data !== STATES.RUNNING) {
+        throw err;
+      }
+    });
+  },
+
+  runKiteEnterpriseAndWait(attempts, interval) {
+    Logger.verbose('runKiteEnterpriseAndWait called', attempts, interval);
+    return this.runKiteEnterprise().then(() => this.waitForKite(attempts, interval));
+  },
+
   isKiteReachable() {
     Logger.verbose('isKiteReachable called');
-    return this.isKiteRunning()
+    return utils.anyPromise([
+      this.isKiteRunning(),
+      this.isKiteEnterpriseRunning(),
+    ])
+    .catch(errs => {
+      throw errs.reduce((m, err) => {
+        if (!m) { return err; }
+        if (err.data > m.data) { return err; }
+        return m;
+      }, null);
+    })
     .then(() =>
       this.client.request({
         path: '/system',
@@ -169,17 +234,12 @@ const StateController = {
     return utils.retryPromise(() => this.isKiteReachable(), attempts, interval);
   },
 
-  runKiteAndWait(attempts, interval) {
-    Logger.verbose('runKiteAndWait called', attempts, interval);
-    return this.runKite().then(() => this.waitForKite(attempts, interval));
-  },
-
   isUserAuthenticated() {
     Logger.verbose('isUserAuthenticated called');
     return this.isKiteReachable()
     .then(() =>
       this.client.request({
-        path: '/api/account/authenticated',
+        path: '/clientapi/user',
         method: 'GET',
       }).catch(err => {
         throw new KiteError('http_error', err);
@@ -187,12 +247,7 @@ const StateController = {
     .then((resp) => {
       switch (resp.statusCode) {
         case 200:
-          return utils.handleResponseData(resp)
-          .then((data) => {
-            if (data !== 'authenticated') {
-              throw new KiteError('bad_state', STATES.REACHABLE);
-            }
-          });
+          return utils.handleResponseData(resp);
         case 401:
           throw new KiteError('bad_state', STATES.REACHABLE);
         default:
@@ -210,10 +265,7 @@ const StateController = {
     Logger.verbose('authenticateUser called');
     return this.canAuthenticateUser()
     .then(() => {
-      const content = querystring.stringify({
-        email, password,
-        localtoken: this.client.LOCAL_TOKEN,
-      });
+      const content = querystring.stringify({email, password});
       return this.client.request({
         path: '/api/account/login',
         method: 'POST',
@@ -242,10 +294,7 @@ const StateController = {
     Logger.verbose('authenticateSessionID called');
     return this.canAuthenticateUser()
     .then(() => {
-      const content = querystring.stringify({
-        key,
-        localtoken: this.client.LOCAL_TOKEN,
-      });
+      const content = querystring.stringify({key});
       return this.client.request({
         path: '/api/account/authenticate',
         method: 'POST',
@@ -284,7 +333,7 @@ const StateController = {
     return !path
       ? Promise.reject(new KiteError('no path provided'))
       : this.client.request({
-        path: `/clientapi/permissions/authorized?filename=${encodeURI(path)}&localtoken=${this.client.LOCAL_TOKEN}`,
+        path: `/clientapi/permissions/authorized?filename=${encodeURI(path)}`,
         method: 'GET',
       })
       .catch(err => { throw new KiteError('http_error', err); })
@@ -305,7 +354,7 @@ const StateController = {
       new KiteError('bad_state', STATES.WHITELISTED)))
     .then(() =>
       this.client.request({
-        path: `/clientapi/projectdir?filename=${encodeURI(path)}&localtoken=${this.client.LOCAL_TOKEN}`,
+        path: `/clientapi/projectdir?filename=${encodeURI(path)}`,
         method: 'GET',
       })
       .catch(err => { throw new KiteError('http_error', err); })
@@ -323,7 +372,7 @@ const StateController = {
     Logger.verbose('whitelistPath called', path);
     return this.canWhitelistPath(path).then(() => {
       return this.client.request({
-        path: `/clientapi/permissions/whitelist?localtoken=${this.client.LOCAL_TOKEN}`,
+        path: '/clientapi/permissions/whitelist',
         method: 'PUT',
       }, JSON.stringify([path]))
       .catch(err => {
@@ -344,7 +393,7 @@ const StateController = {
     Logger.verbose('blacklistPath called', path);
     return this.canWhitelistPath(path).then(() => {
       return this.client.request({
-        path: `/clientapi/permissions/blacklist?localtoken=${this.client.LOCAL_TOKEN}`,
+        path: '/clientapi/permissions/blacklist',
         method: 'PUT',
       }, JSON.stringify({
         paths: [path],
