@@ -22,11 +22,11 @@ type Props = {
 };
 
 @observer
-class ResultViewComponent extends React.Component {
-  props: Props;
+class ResultViewComponent extends React.Component<Props> {
   el: ?HTMLElement;
   containerTooltip = new CompositeDisposable();
   buttonTooltip = new CompositeDisposable();
+  closeTooltip = new CompositeDisposable();
   expanded: IObservableValue<boolean> = observable(false);
 
   getAllText = () => {
@@ -55,16 +55,24 @@ class ResultViewComponent extends React.Component {
     if (!element || !comp.disposables || comp.disposables.size > 0) return;
     comp.add(
       atom.tooltips.add(element, {
-        title: () => {
-          const ctrlOrCmdMessage = `Click to copy,
+        title: `Click to copy,
           ${process.platform === "darwin"
             ? "Cmd"
-            : "Ctrl"}+Click to open in editor`;
+            : "Ctrl"}+Click to open in editor`
+      })
+    );
+  };
 
-          return this.props.store.executionCount
-            ? `${ctrlOrCmdMessage} (Out[${this.props.store.executionCount}])`
-            : ctrlOrCmdMessage;
-        }
+  addCloseButtonTooltip = (
+    element: ?HTMLElement,
+    comp: atom$CompositeDisposable
+  ) => {
+    if (!element || !comp.disposables || comp.disposables.size > 0) return;
+    comp.add(
+      atom.tooltips.add(element, {
+        title: this.props.store.executionCount
+          ? `Close (Out[${this.props.store.executionCount}])`
+          : "Close result"
       })
     );
   };
@@ -106,9 +114,13 @@ class ResultViewComponent extends React.Component {
       return (
         <Status
           status={
-            kernel && kernel.executionState !== "busy" && status === "running"
-              ? "error"
-              : status
+            kernel &&
+            kernel.executionState !== "busy" &&
+            status === "running" ? (
+              "error"
+            ) : (
+              status
+            )
           }
           style={inlineStyle}
         />
@@ -120,9 +132,11 @@ class ResultViewComponent extends React.Component {
         className={isPlain ? "inline-container" : "multiline-container"}
         onClick={isPlain ? this.handleClick : false}
         style={
-          isPlain
-            ? inlineStyle
-            : { maxWidth: `${position.editorWidth}ch`, margin: "0px" }
+          isPlain ? (
+            inlineStyle
+          ) : (
+            { maxWidth: `${position.editorWidth}ch`, margin: "0px" }
+          )
         }
       >
         <Display
@@ -137,7 +151,7 @@ class ResultViewComponent extends React.Component {
             // React's event handler doesn't properly handle event.stopPropagation() for
             // events outside the React context. Using proxy.el saves us a extra div.
             // We only need this in the text editor, therefore we check showStatus.
-            if (!this.expanded.get() && !isPlain) {
+            if (!this.expanded.get() && !isPlain && ref.el) {
               ref.el.addEventListener("wheel", this.onWheel(ref.el), {
                 passive: true
               });
@@ -150,25 +164,34 @@ class ResultViewComponent extends React.Component {
           models={{}}
           expanded={this.expanded.get()}
         />
-        {isPlain
-          ? null
-          : <div className="toolbar">
-              <div className="icon icon-x" onClick={this.props.destroy} />
-              <div style={{ flex: 1, minHeight: "0.25em" }} />
+        {isPlain ? null : (
+          <div className="toolbar">
+            <div
+              className="icon icon-x"
+              onClick={this.props.destroy}
+              ref={ref => this.addCloseButtonTooltip(ref, this.closeTooltip)}
+            />
+
+            <div style={{ flex: 1, minHeight: "0.25em" }} />
+
+            {this.getAllText().length > 0 ? (
               <div
                 className="icon icon-clippy"
                 onClick={this.handleClick}
                 ref={this.addCopyButtonTooltip}
               />
-              {this.el && this.el.scrollHeight > DEFAULT_SCROLL_HEIGHT
-                ? <div
-                    className={`icon icon-${this.expanded.get()
-                      ? "fold"
-                      : "unfold"}`}
-                    onClick={this.toggleExpand}
-                  />
-                : null}
-            </div>}
+            ) : null}
+
+            {this.el && this.el.scrollHeight > DEFAULT_SCROLL_HEIGHT ? (
+              <div
+                className={`icon icon-${this.expanded.get()
+                  ? "fold"
+                  : "unfold"}`}
+                onClick={this.toggleExpand}
+              />
+            ) : null}
+          </div>
+        )}
       </div>
     );
   }
@@ -198,6 +221,7 @@ class ResultViewComponent extends React.Component {
   componentWillUnmount() {
     this.containerTooltip.dispose();
     this.buttonTooltip.dispose();
+    this.closeTooltip.dispose();
   }
 }
 

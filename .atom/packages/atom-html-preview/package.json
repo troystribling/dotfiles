@@ -2,15 +2,15 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117520-84481-1njpnhf.n7kzsn61or/package.tgz",
+        "raw": "/private/tmp/d-11783-59938-mxsun6.jv57qwu3di/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117520-84481-1njpnhf.n7kzsn61or/package.tgz",
-        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117520-84481-1njpnhf.n7kzsn61or/package.tgz",
+        "rawSpec": "/private/tmp/d-11783-59938-mxsun6.jv57qwu3di/package.tgz",
+        "spec": "/private/tmp/d-11783-59938-mxsun6.jv57qwu3di/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-117520-84481-1rh81ys.ojz3bx1or"
+      "/private/tmp/apm-install-dir-11783-59938-14r0e4c.kx4r9vygb9"
     ]
   ],
   "_atomModuleCache": {
@@ -33,7 +33,7 @@
       },
       {
         "name": "es5-ext",
-        "version": "0.10.23",
+        "version": "0.10.30",
         "path": "node_modules/es5-ext/index.js"
       },
       {
@@ -177,6 +177,7 @@
         "node_modules/es5-ext/array/#/indexes-of.js",
         "node_modules/es5-ext/array/#/intersection.js",
         "node_modules/es5-ext/array/#/is-copy.js",
+        "node_modules/es5-ext/array/#/is-empty.js",
         "node_modules/es5-ext/array/#/is-uniq.js",
         "node_modules/es5-ext/array/#/keys/implement.js",
         "node_modules/es5-ext/array/#/keys/index.js",
@@ -400,6 +401,8 @@
         "node_modules/es5-ext/object/copy.js",
         "node_modules/es5-ext/object/count.js",
         "node_modules/es5-ext/object/create.js",
+        "node_modules/es5-ext/object/ensure-array.js",
+        "node_modules/es5-ext/object/ensure-finite-number.js",
         "node_modules/es5-ext/object/ensure-natural-number-value.js",
         "node_modules/es5-ext/object/ensure-natural-number.js",
         "node_modules/es5-ext/object/ensure-promise.js",
@@ -418,6 +421,7 @@
         "node_modules/es5-ext/object/is-copy-deep.js",
         "node_modules/es5-ext/object/is-copy.js",
         "node_modules/es5-ext/object/is-empty.js",
+        "node_modules/es5-ext/object/is-finite-number.js",
         "node_modules/es5-ext/object/is-number-value.js",
         "node_modules/es5-ext/object/is-object.js",
         "node_modules/es5-ext/object/is-plain-object.js",
@@ -451,6 +455,7 @@
         "node_modules/es5-ext/object/validate-array-like.js",
         "node_modules/es5-ext/object/validate-stringifiable-value.js",
         "node_modules/es5-ext/object/validate-stringifiable.js",
+        "node_modules/es5-ext/optional-chaining.js",
         "node_modules/es5-ext/reg-exp/#/index.js",
         "node_modules/es5-ext/reg-exp/#/is-sticky.js",
         "node_modules/es5-ext/reg-exp/#/is-unicode.js",
@@ -533,6 +538,7 @@
         "node_modules/es5-ext/string/raw/index.js",
         "node_modules/es5-ext/string/raw/is-implemented.js",
         "node_modules/es5-ext/string/raw/shim.js",
+        "node_modules/es5-ext/to-short-string-representation.js",
         "node_modules/es6-iterator/#/chain.js",
         "node_modules/es6-iterator/array.js",
         "node_modules/es6-iterator/for-of.js",
@@ -988,30 +994,33 @@
       }
     ]
   },
-  "_from": "../d-117520-84481-1njpnhf.n7kzsn61or/package.tgz",
-  "_id": "atom-html-preview@0.1.22",
+  "_from": "../d-11783-59938-mxsun6.jv57qwu3di/package.tgz",
+  "_id": "atom-html-preview@0.2.2",
   "_inCache": true,
   "_location": "/atom-html-preview",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117520-84481-1njpnhf.n7kzsn61or/package.tgz",
+    "raw": "/private/tmp/d-11783-59938-mxsun6.jv57qwu3di/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117520-84481-1njpnhf.n7kzsn61or/package.tgz",
-    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117520-84481-1njpnhf.n7kzsn61or/package.tgz",
+    "rawSpec": "/private/tmp/d-11783-59938-mxsun6.jv57qwu3di/package.tgz",
+    "spec": "/private/tmp/d-11783-59938-mxsun6.jv57qwu3di/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-117520-84481-1njpnhf.n7kzsn61or/package.tgz",
+  "_resolved": "file:../d-11783-59938-mxsun6.jv57qwu3di/package.tgz",
   "_shasum": "1b6a3d9636c2b2411e84e1c95ab2121ea54e153e",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117520-84481-1njpnhf.n7kzsn61or/package.tgz",
-  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-117520-84481-1rh81ys.ojz3bx1or",
+  "_spec": "/private/tmp/d-11783-59938-mxsun6.jv57qwu3di/package.tgz",
+  "_where": "/private/tmp/apm-install-dir-11783-59938-14r0e4c.kx4r9vygb9",
+  "activationHooks": [
+    "language-html:grammar-used"
+  ],
   "bugs": {
-    "url": "https://github.com/webBoxio/atom-html-preview/issues"
+    "url": "https://github.com/harmsk/atom-html-preview/issues"
   },
   "dependencies": {
     "atom-space-pen-views": "^2.0.5"
@@ -1021,16 +1030,16 @@
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
   },
-  "homepage": "https://github.com/webBoxio/atom-html-preview",
+  "homepage": "https://github.com/harmsk/atom-html-preview",
   "license": "MIT",
   "main": "./lib/atom-html-preview",
   "name": "atom-html-preview",
   "optionalDependencies": {},
-  "readme": "# Atom HTML Preview\n\nA live preview tool for Atom Editor.\n\nInstall:\n```bash\napm install atom-html-preview\n```\n\nToogle HTML Preview:\n\nPress `CTRL-P` in editor to open Preview.\n\n![Atom HTML Preview](https://dl.dropboxusercontent.com/u/20947008/webbox/atom/atom-html-preview.png)\n\nAn example with [Twitter Bootstrap 3 Package][1]\n\n![Atom HTML Preview with Bootstrap](https://dl.dropboxusercontent.com/u/20947008/webbox/atom/atom-bootstrap-3.gif)\n\n[1]: http://atom.io/packages/atom-bootstrap3\n",
+  "readme": "# Atom HTML Preview\n\nA live preview tool for Atom Editor.\n\nInstall:\n```bash\napm install atom-html-preview\n```\n\nToogle HTML Preview:\n\nPress `CTRL-P` in editor to open Preview.",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webBoxio/atom-html-preview.git"
+    "url": "git+https://github.com/harmsk/atom-html-preview.git"
   },
-  "version": "0.1.22"
+  "version": "0.2.2"
 }

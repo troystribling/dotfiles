@@ -37,6 +37,21 @@ export function focus(item: ?mixed) {
   }
 }
 
+export function openOrShowDock(URI: string) {
+  // atom.workspace.open(URI) will activate/focus the dock by default
+  // dock.toggle() or dock.show() will leave focus wherever it was
+
+  // this function is basically workspace.open, except it
+  // will not focus the pane if there is an open instance of that view
+
+  const dock = atom.workspace.paneContainerForURI(URI);
+  if (!dock) {
+    atom.workspace.open(URI, { searchAllPanes: true });
+  } else {
+    dock.show();
+  }
+}
+
 export function grammarToLanguage(grammar: ?atom$Grammar) {
   if (!grammar) return null;
   const grammarLanguage = grammar.name.toLowerCase();
@@ -90,8 +105,12 @@ const markupGrammars = new Set([
   "text.md",
   "source.weave.noweb",
   "source.weave.md",
+  "source.weave.latex",
+  "source.weave.restructuredtext",
   "source.pweave.noweb",
-  "source.pweave.md"
+  "source.pweave.md",
+  "source.pweave.latex",
+  "source.pweave.restructuredtext"
 ]);
 
 export function isMultilanguageGrammar(grammar: atom$Grammar) {
@@ -116,7 +135,7 @@ export function getEditorDirectory(editor: ?atom$TextEditor) {
 
 export function log(...message: Array<any>) {
   if (atom.config.get("Hydrogen.debug")) {
-    console.trace("Hydrogen:", ...message);
+    console.debug("Hydrogen:", ...message);
   }
 }
 

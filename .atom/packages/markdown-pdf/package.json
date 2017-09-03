@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
+        "raw": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
-        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
+        "rawSpec": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
+        "spec": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-11781-53424-1e3j26f.0f1msiqkt9"
+      "/private/tmp/apm-install-dir-11783-59950-os3o72.1s2qgmbo6r"
     ]
   ],
-  "_from": "../d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
-  "_id": "markdown-pdf@2.0.3",
+  "_from": "../d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
+  "_id": "markdown-pdf@2.0.4",
   "_inCache": true,
   "_location": "/markdown-pdf",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
+    "raw": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
-    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
+    "rawSpec": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
+    "spec": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
-  "_shasum": "c74bd34a07d666e02e6ff058af74b0afd16faaed",
+  "_resolved": "file:../d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
+  "_shasum": "577a59d634e9a5ca6225d9e6b3cede533ddd990f",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53424-zrtgnr.l7bhd50zfr/package.tgz",
-  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-11781-53424-1e3j26f.0f1msiqkt9",
+  "_spec": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
+  "_where": "/private/tmp/apm-install-dir-11783-59950-os3o72.1s2qgmbo6r",
   "activationCommands": {
     "atom-workspace": "markdown-pdf:convert"
   },
@@ -47,9 +47,10 @@
   },
   "dependencies": {
     "html-pdf": "2.0.x",
-    "less": "^1.7.0",
+    "less": "^2.7.2",
     "loophole": "^1.1.0",
-    "mdpdf": "^1.5.1"
+    "mdpdf": "^1.5.1",
+    "tmp": "0.0.33"
   },
   "description": "Convert markdown to pdf, png or jpeg on the fly.",
   "devDependencies": {
@@ -69,7 +70,7 @@
     "type": "git",
     "url": "git+https://github.com/travs/markdown-pdf.git"
   },
-  "version": "2.0.3",
+  "version": "2.0.4",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -99,6 +100,11 @@
         "path": "node_modules/array-find-index/index.js"
       },
       {
+        "name": "asap",
+        "version": "2.0.6",
+        "path": "node_modules/asap/asap.js"
+      },
+      {
         "name": "asn1",
         "version": "0.2.3",
         "path": "node_modules/asn1/lib/index.js"
@@ -110,7 +116,7 @@
       },
       {
         "name": "async",
-        "version": "0.9.2",
+        "version": "1.5.2",
         "path": "node_modules/async/lib/async.js"
       },
       {
@@ -189,11 +195,6 @@
         "path": "node_modules/cheerio/index.js"
       },
       {
-        "name": "clean-css",
-        "version": "2.2.23",
-        "path": "node_modules/clean-css/index.js"
-      },
-      {
         "name": "cliui",
         "version": "2.1.0",
         "path": "node_modules/cliui/index.js"
@@ -217,11 +218,6 @@
         "name": "combined-stream",
         "version": "1.0.5",
         "path": "node_modules/combined-stream/lib/combined_stream.js"
-      },
-      {
-        "name": "commander",
-        "version": "2.2.0",
-        "path": "node_modules/commander/index.js"
       },
       {
         "name": "concat-stream",
@@ -252,11 +248,6 @@
         "name": "css-what",
         "version": "2.1.0",
         "path": "node_modules/css-what/index.js"
-      },
-      {
-        "name": "ctype",
-        "version": "0.5.3",
-        "path": "node_modules/ctype/ctype.js"
       },
       {
         "name": "currently-unhandled",
@@ -327,6 +318,11 @@
         "name": "entities",
         "version": "1.1.1",
         "path": "node_modules/entities/index.js"
+      },
+      {
+        "name": "errno",
+        "version": "0.1.4",
+        "path": "node_modules/errno/errno.js"
       },
       {
         "name": "error-ex",
@@ -424,11 +420,6 @@
         "path": "node_modules/handlebars/lib/index.js"
       },
       {
-        "name": "async",
-        "version": "1.5.2",
-        "path": "node_modules/handlebars/node_modules/async/lib/async.js"
-      },
-      {
         "name": "source-map",
         "version": "0.4.4",
         "path": "node_modules/handlebars/node_modules/source-map/lib/source-map.js"
@@ -477,6 +468,11 @@
         "name": "http-signature",
         "version": "1.1.1",
         "path": "node_modules/http-signature/lib/index.js"
+      },
+      {
+        "name": "image-size",
+        "version": "0.5.5",
+        "path": "node_modules/image-size/lib/index.js"
       },
       {
         "name": "indent-string",
@@ -615,108 +611,8 @@
       },
       {
         "name": "less",
-        "version": "1.7.5",
-        "path": "node_modules/less/lib/less/index.js"
-      },
-      {
-        "name": "asn1",
-        "version": "0.1.11",
-        "path": "node_modules/less/node_modules/asn1/lib/index.js"
-      },
-      {
-        "name": "assert-plus",
-        "version": "0.1.5",
-        "path": "node_modules/less/node_modules/assert-plus/assert.js"
-      },
-      {
-        "name": "aws-sign2",
-        "version": "0.5.0",
-        "path": "node_modules/less/node_modules/aws-sign2/index.js"
-      },
-      {
-        "name": "boom",
-        "version": "0.4.2",
-        "path": "node_modules/less/node_modules/boom/index.js"
-      },
-      {
-        "name": "combined-stream",
-        "version": "0.0.7",
-        "path": "node_modules/less/node_modules/combined-stream/lib/combined_stream.js"
-      },
-      {
-        "name": "cryptiles",
-        "version": "0.2.2",
-        "path": "node_modules/less/node_modules/cryptiles/index.js"
-      },
-      {
-        "name": "delayed-stream",
-        "version": "0.0.5",
-        "path": "node_modules/less/node_modules/delayed-stream/lib/delayed_stream.js"
-      },
-      {
-        "name": "forever-agent",
-        "version": "0.5.2",
-        "path": "node_modules/less/node_modules/forever-agent/index.js"
-      },
-      {
-        "name": "form-data",
-        "version": "0.1.4",
-        "path": "node_modules/less/node_modules/form-data/lib/form_data.js"
-      },
-      {
-        "name": "graceful-fs",
-        "version": "3.0.11",
-        "path": "node_modules/less/node_modules/graceful-fs/graceful-fs.js"
-      },
-      {
-        "name": "hawk",
-        "version": "1.1.1",
-        "path": "node_modules/less/node_modules/hawk/index.js"
-      },
-      {
-        "name": "hoek",
-        "version": "0.9.1",
-        "path": "node_modules/less/node_modules/hoek/index.js"
-      },
-      {
-        "name": "http-signature",
-        "version": "0.10.1",
-        "path": "node_modules/less/node_modules/http-signature/lib/index.js"
-      },
-      {
-        "name": "mime-types",
-        "version": "1.0.2",
-        "path": "node_modules/less/node_modules/mime-types/lib/index.js"
-      },
-      {
-        "name": "node-uuid",
-        "version": "1.4.8",
-        "path": "node_modules/less/node_modules/node-uuid/uuid.js"
-      },
-      {
-        "name": "oauth-sign",
-        "version": "0.3.0",
-        "path": "node_modules/less/node_modules/oauth-sign/index.js"
-      },
-      {
-        "name": "qs",
-        "version": "1.0.2",
-        "path": "node_modules/less/node_modules/qs/index.js"
-      },
-      {
-        "name": "request",
-        "version": "2.40.0",
-        "path": "node_modules/less/node_modules/request/index.js"
-      },
-      {
-        "name": "sntp",
-        "version": "0.2.4",
-        "path": "node_modules/less/node_modules/sntp/index.js"
-      },
-      {
-        "name": "tunnel-agent",
-        "version": "0.4.3",
-        "path": "node_modules/less/node_modules/tunnel-agent/index.js"
+        "version": "2.7.2",
+        "path": "node_modules/less/index.js"
       },
       {
         "name": "load-json-file",
@@ -850,17 +746,17 @@
       },
       {
         "name": "mime",
-        "version": "1.2.11",
+        "version": "1.4.0",
         "path": "node_modules/mime/mime.js"
       },
       {
         "name": "mime-db",
-        "version": "1.29.0",
+        "version": "1.30.0",
         "path": "node_modules/mime-db/index.js"
       },
       {
         "name": "mime-types",
-        "version": "2.1.16",
+        "version": "2.1.17",
         "path": "node_modules/mime-types/index.js"
       },
       {
@@ -882,11 +778,6 @@
         "name": "ms",
         "version": "0.7.1",
         "path": "node_modules/ms/index.js"
-      },
-      {
-        "name": "natives",
-        "version": "1.1.0",
-        "path": "node_modules/natives/index.js"
       },
       {
         "name": "normalize-package-data",
@@ -927,6 +818,11 @@
         "name": "os-locale",
         "version": "2.1.0",
         "path": "node_modules/os-locale/index.js"
+      },
+      {
+        "name": "os-tmpdir",
+        "version": "1.0.2",
+        "path": "node_modules/os-tmpdir/index.js"
       },
       {
         "name": "p-finally",
@@ -1002,6 +898,16 @@
         "name": "progress",
         "version": "1.1.8",
         "path": "node_modules/progress/index.js"
+      },
+      {
+        "name": "promise",
+        "version": "7.3.1",
+        "path": "node_modules/promise/index.js"
+      },
+      {
+        "name": "prr",
+        "version": "0.0.0",
+        "path": "node_modules/prr/prr.js"
       },
       {
         "name": "pseudomap",
@@ -1180,8 +1086,8 @@
       },
       {
         "name": "source-map",
-        "version": "0.1.43",
-        "path": "node_modules/source-map/lib/source-map.js"
+        "version": "0.5.7",
+        "path": "node_modules/source-map/source-map.js"
       },
       {
         "name": "spdx-correct",
@@ -1264,6 +1170,11 @@
         "path": "node_modules/throttleit/index.js"
       },
       {
+        "name": "tmp",
+        "version": "0.0.33",
+        "path": "node_modules/tmp/lib/tmp.js"
+      },
+      {
         "name": "tough-cookie",
         "version": "2.3.2",
         "path": "node_modules/tough-cookie/lib/cookie.js"
@@ -1292,11 +1203,6 @@
         "name": "uglify-js",
         "version": "2.8.29",
         "path": "node_modules/uglify-js/tools/node.js"
-      },
-      {
-        "name": "source-map",
-        "version": "0.5.7",
-        "path": "node_modules/uglify-js/node_modules/source-map/source-map.js"
       },
       {
         "name": "uglify-to-browserify",
@@ -1445,6 +1351,10 @@
         "node_modules/amdefine/intercept.js",
         "node_modules/ansi-regex/index.js",
         "node_modules/array-find-index/index.js",
+        "node_modules/asap/asap.js",
+        "node_modules/asap/browser-asap.js",
+        "node_modules/asap/browser-raw.js",
+        "node_modules/asap/raw.js",
         "node_modules/asn1/lib/ber/errors.js",
         "node_modules/asn1/lib/ber/index.js",
         "node_modules/asn1/lib/ber/reader.js",
@@ -1454,8 +1364,9 @@
         "node_modules/asn1/tst/ber/reader.test.js",
         "node_modules/asn1/tst/ber/writer.test.js",
         "node_modules/assert-plus/assert.js",
+        "node_modules/async/dist/async.js",
+        "node_modules/async/dist/async.min.js",
         "node_modules/async/lib/async.js",
-        "node_modules/async/support/sync-package-managers.js",
         "node_modules/asynckit/bench.js",
         "node_modules/asynckit/index.js",
         "node_modules/asynckit/lib/abort.js",
@@ -1541,33 +1452,6 @@
         "node_modules/cheerio/lib/parse.js",
         "node_modules/cheerio/lib/static.js",
         "node_modules/cheerio/lib/utils.js",
-        "node_modules/clean-css/index.js",
-        "node_modules/clean-css/lib/clean.js",
-        "node_modules/clean-css/lib/colors/hsl-to-hex.js",
-        "node_modules/clean-css/lib/colors/long-to-short-hex.js",
-        "node_modules/clean-css/lib/colors/rgb-to-hex.js",
-        "node_modules/clean-css/lib/colors/shortener.js",
-        "node_modules/clean-css/lib/images/url-rebase.js",
-        "node_modules/clean-css/lib/images/url-rewriter.js",
-        "node_modules/clean-css/lib/imports/inliner.js",
-        "node_modules/clean-css/lib/properties/optimizer.js",
-        "node_modules/clean-css/lib/properties/override-compactor.js",
-        "node_modules/clean-css/lib/properties/processable.js",
-        "node_modules/clean-css/lib/properties/scanner.js",
-        "node_modules/clean-css/lib/properties/shorthand-compactor.js",
-        "node_modules/clean-css/lib/properties/token.js",
-        "node_modules/clean-css/lib/properties/validator.js",
-        "node_modules/clean-css/lib/selectors/empty-removal.js",
-        "node_modules/clean-css/lib/selectors/optimizer.js",
-        "node_modules/clean-css/lib/selectors/tokenizer.js",
-        "node_modules/clean-css/lib/text/comments.js",
-        "node_modules/clean-css/lib/text/escape-store.js",
-        "node_modules/clean-css/lib/text/expressions.js",
-        "node_modules/clean-css/lib/text/free.js",
-        "node_modules/clean-css/lib/text/name-quotes.js",
-        "node_modules/clean-css/lib/text/quote-scanner.js",
-        "node_modules/clean-css/lib/text/splitter.js",
-        "node_modules/clean-css/lib/text/urls.js",
         "node_modules/cliui/index.js",
         "node_modules/cliui/node_modules/wordwrap/example/center.js",
         "node_modules/cliui/node_modules/wordwrap/example/meat.js",
@@ -1575,7 +1459,6 @@
         "node_modules/co/index.js",
         "node_modules/code-point-at/index.js",
         "node_modules/combined-stream/lib/combined_stream.js",
-        "node_modules/commander/index.js",
         "node_modules/concat-stream/index.js",
         "node_modules/core-util-is/lib/util.js",
         "node_modules/core-util-is/test.js",
@@ -1595,9 +1478,6 @@
         "node_modules/css-select/lib/pseudos.js",
         "node_modules/css-select/lib/sort.js",
         "node_modules/css-what/index.js",
-        "node_modules/ctype/ctf.js",
-        "node_modules/ctype/ctio.js",
-        "node_modules/ctype/ctype.js",
         "node_modules/currently-unhandled/browser.js",
         "node_modules/currently-unhandled/core.js",
         "node_modules/currently-unhandled/index.js",
@@ -1630,6 +1510,11 @@
         "node_modules/entities/lib/decode.js",
         "node_modules/entities/lib/decode_codepoint.js",
         "node_modules/entities/lib/encode.js",
+        "node_modules/errno/build.js",
+        "node_modules/errno/cli.js",
+        "node_modules/errno/custom.js",
+        "node_modules/errno/errno.js",
+        "node_modules/errno/test.js",
         "node_modules/error-ex/index.js",
         "node_modules/es6-promise/auto.js",
         "node_modules/es6-promise/dist/es6-promise.auto.js",
@@ -1801,9 +1686,6 @@
         "node_modules/handlebars/lib/handlebars.runtime.js",
         "node_modules/handlebars/lib/index.js",
         "node_modules/handlebars/lib/precompiler.js",
-        "node_modules/handlebars/node_modules/async/dist/async.js",
-        "node_modules/handlebars/node_modules/async/dist/async.min.js",
-        "node_modules/handlebars/node_modules/async/lib/async.js",
         "node_modules/handlebars/node_modules/source-map/build/assert-shim.js",
         "node_modules/handlebars/node_modules/source-map/build/mini-require.js",
         "node_modules/handlebars/node_modules/source-map/build/suffix-browser.js",
@@ -1868,6 +1750,20 @@
         "node_modules/http-signature/lib/signer.js",
         "node_modules/http-signature/lib/utils.js",
         "node_modules/http-signature/lib/verify.js",
+        "node_modules/image-size/bin/image-size.js",
+        "node_modules/image-size/lib/detector.js",
+        "node_modules/image-size/lib/index.js",
+        "node_modules/image-size/lib/readUInt.js",
+        "node_modules/image-size/lib/types/bmp.js",
+        "node_modules/image-size/lib/types/dds.js",
+        "node_modules/image-size/lib/types/gif.js",
+        "node_modules/image-size/lib/types/jpg.js",
+        "node_modules/image-size/lib/types/png.js",
+        "node_modules/image-size/lib/types/psd.js",
+        "node_modules/image-size/lib/types/svg.js",
+        "node_modules/image-size/lib/types/tiff.js",
+        "node_modules/image-size/lib/types/webp.js",
+        "node_modules/image-size/lib/types.js",
         "node_modules/indent-string/index.js",
         "node_modules/inherits/inherits.js",
         "node_modules/inherits/inherits_browser.js",
@@ -1910,126 +1806,57 @@
         "node_modules/klaw/src/index.js",
         "node_modules/lazy-cache/index.js",
         "node_modules/lcid/index.js",
-        "node_modules/less/.grunt/grunt-contrib-jasmine/boot.js",
-        "node_modules/less/.grunt/grunt-contrib-jasmine/es5-shim.js",
-        "node_modules/less/.grunt/grunt-contrib-jasmine/jasmine-helper.js",
-        "node_modules/less/.grunt/grunt-contrib-jasmine/jasmine-html.js",
-        "node_modules/less/.grunt/grunt-contrib-jasmine/jasmine.js",
-        "node_modules/less/.grunt/grunt-contrib-jasmine/phantom-polyfill.js",
-        "node_modules/less/.grunt/grunt-contrib-jasmine/reporter.js",
         "node_modules/less/Gruntfile.js",
-        "node_modules/less/benchmark/less-benchmark.js",
-        "node_modules/less/build/amd.js",
-        "node_modules/less/build/browser-header.js",
-        "node_modules/less/build/require-rhino.js",
-        "node_modules/less/build/require.js",
-        "node_modules/less/build/rhino-header.js",
-        "node_modules/less/build/rhino-modules.js",
-        "node_modules/less/dist/less-1.1.0.js",
-        "node_modules/less/dist/less-1.1.0.min.js",
-        "node_modules/less/dist/less-1.1.1.js",
-        "node_modules/less/dist/less-1.1.1.min.js",
-        "node_modules/less/dist/less-1.1.2.js",
-        "node_modules/less/dist/less-1.1.2.min.js",
-        "node_modules/less/dist/less-1.1.3.js",
-        "node_modules/less/dist/less-1.1.3.min.js",
-        "node_modules/less/dist/less-1.1.4.js",
-        "node_modules/less/dist/less-1.1.4.min.js",
-        "node_modules/less/dist/less-1.1.5.js",
-        "node_modules/less/dist/less-1.1.5.min.js",
-        "node_modules/less/dist/less-1.1.6.js",
-        "node_modules/less/dist/less-1.1.6.min.js",
-        "node_modules/less/dist/less-1.2.0.js",
-        "node_modules/less/dist/less-1.2.0.min.js",
-        "node_modules/less/dist/less-1.2.1.js",
-        "node_modules/less/dist/less-1.2.1.min.js",
-        "node_modules/less/dist/less-1.2.2.js",
-        "node_modules/less/dist/less-1.2.2.min.js",
-        "node_modules/less/dist/less-1.3.0.js",
-        "node_modules/less/dist/less-1.3.0.min.js",
-        "node_modules/less/dist/less-1.3.1.js",
-        "node_modules/less/dist/less-1.3.1.min.js",
-        "node_modules/less/dist/less-1.3.2.js",
-        "node_modules/less/dist/less-1.3.2.min.js",
-        "node_modules/less/dist/less-1.3.3.js",
-        "node_modules/less/dist/less-1.3.3.min.js",
-        "node_modules/less/dist/less-1.4.0-beta.js",
-        "node_modules/less/dist/less-1.4.0-beta.min.js",
-        "node_modules/less/dist/less-1.4.0.js",
-        "node_modules/less/dist/less-1.4.0.min.js",
-        "node_modules/less/dist/less-1.4.1.js",
-        "node_modules/less/dist/less-1.4.1.min.js",
-        "node_modules/less/dist/less-1.4.2.js",
-        "node_modules/less/dist/less-1.4.2.min.js",
-        "node_modules/less/dist/less-1.5.0.js",
-        "node_modules/less/dist/less-1.5.0.min.js",
-        "node_modules/less/dist/less-1.5.1.js",
-        "node_modules/less/dist/less-1.5.1.min.js",
-        "node_modules/less/dist/less-1.6.0.js",
-        "node_modules/less/dist/less-1.6.0.min.js",
-        "node_modules/less/dist/less-1.6.1.js",
-        "node_modules/less/dist/less-1.6.1.min.js",
-        "node_modules/less/dist/less-1.6.2.js",
-        "node_modules/less/dist/less-1.6.2.min.js",
-        "node_modules/less/dist/less-1.6.3.js",
-        "node_modules/less/dist/less-1.6.3.min.js",
-        "node_modules/less/dist/less-1.7.0.js",
-        "node_modules/less/dist/less-1.7.0.min.js",
-        "node_modules/less/dist/less-1.7.1.js",
-        "node_modules/less/dist/less-1.7.1.min.js",
-        "node_modules/less/dist/less-1.7.2.js",
-        "node_modules/less/dist/less-1.7.2.min.js",
-        "node_modules/less/dist/less-1.7.3.js",
-        "node_modules/less/dist/less-1.7.3.min.js",
-        "node_modules/less/dist/less-1.7.4.js",
-        "node_modules/less/dist/less-1.7.4.min.js",
-        "node_modules/less/dist/less-1.7.5.js",
-        "node_modules/less/dist/less-1.7.5.min.js",
-        "node_modules/less/dist/less-rhino-1.1.3.js",
-        "node_modules/less/dist/less-rhino-1.1.5.js",
-        "node_modules/less/dist/less-rhino-1.3.1.js",
-        "node_modules/less/dist/less-rhino-1.3.2.js",
-        "node_modules/less/dist/less-rhino-1.3.3.js",
-        "node_modules/less/dist/less-rhino-1.4.0.js",
-        "node_modules/less/dist/less-rhino-1.5.1.js",
-        "node_modules/less/dist/less-rhino-1.6.2.js",
-        "node_modules/less/dist/less-rhino-1.6.3.js",
-        "node_modules/less/dist/less-rhino-1.7.0.js",
-        "node_modules/less/dist/less-rhino-1.7.1.js",
-        "node_modules/less/dist/less-rhino-1.7.2.js",
-        "node_modules/less/dist/less-rhino-1.7.3.js",
-        "node_modules/less/dist/less-rhino-1.7.4.js",
-        "node_modules/less/dist/less-rhino-1.7.5.js",
-        "node_modules/less/dist/lessc-rhino-1.6.2.js",
-        "node_modules/less/dist/lessc-rhino-1.6.3.js",
-        "node_modules/less/dist/lessc-rhino-1.7.0.js",
-        "node_modules/less/dist/lessc-rhino-1.7.1.js",
-        "node_modules/less/dist/lessc-rhino-1.7.2.js",
-        "node_modules/less/dist/lessc-rhino-1.7.3.js",
-        "node_modules/less/dist/lessc-rhino-1.7.4.js",
-        "node_modules/less/dist/lessc-rhino-1.7.5.js",
-        "node_modules/less/lib/less/browser.js",
-        "node_modules/less/lib/less/colors.js",
-        "node_modules/less/lib/less/encoder.js",
-        "node_modules/less/lib/less/env.js",
-        "node_modules/less/lib/less/extend-visitor.js",
-        "node_modules/less/lib/less/fs.js",
-        "node_modules/less/lib/less/functions.js",
-        "node_modules/less/lib/less/import-visitor.js",
+        "node_modules/less/browser.js",
+        "node_modules/less/dist/less.js",
+        "node_modules/less/dist/less.min.js",
+        "node_modules/less/index.js",
+        "node_modules/less/lib/less/contexts.js",
+        "node_modules/less/lib/less/data/colors.js",
+        "node_modules/less/lib/less/data/index.js",
+        "node_modules/less/lib/less/data/unit-conversions.js",
+        "node_modules/less/lib/less/environment/abstract-file-manager.js",
+        "node_modules/less/lib/less/environment/environment-api.js",
+        "node_modules/less/lib/less/environment/environment.js",
+        "node_modules/less/lib/less/environment/file-manager-api.js",
+        "node_modules/less/lib/less/functions/color-blending.js",
+        "node_modules/less/lib/less/functions/color.js",
+        "node_modules/less/lib/less/functions/data-uri.js",
+        "node_modules/less/lib/less/functions/default.js",
+        "node_modules/less/lib/less/functions/function-caller.js",
+        "node_modules/less/lib/less/functions/function-registry.js",
+        "node_modules/less/lib/less/functions/index.js",
+        "node_modules/less/lib/less/functions/math-helper.js",
+        "node_modules/less/lib/less/functions/math.js",
+        "node_modules/less/lib/less/functions/number.js",
+        "node_modules/less/lib/less/functions/string.js",
+        "node_modules/less/lib/less/functions/svg.js",
+        "node_modules/less/lib/less/functions/types.js",
+        "node_modules/less/lib/less/import-manager.js",
         "node_modules/less/lib/less/index.js",
-        "node_modules/less/lib/less/join-selector-visitor.js",
-        "node_modules/less/lib/less/lessc_helper.js",
-        "node_modules/less/lib/less/parser.js",
-        "node_modules/less/lib/less/rhino.js",
+        "node_modules/less/lib/less/less-error.js",
+        "node_modules/less/lib/less/logger.js",
+        "node_modules/less/lib/less/parse-tree.js",
+        "node_modules/less/lib/less/parse.js",
+        "node_modules/less/lib/less/parser/chunker.js",
+        "node_modules/less/lib/less/parser/parser-input.js",
+        "node_modules/less/lib/less/parser/parser.js",
+        "node_modules/less/lib/less/plugin-manager.js",
+        "node_modules/less/lib/less/plugins/function-importer.js",
+        "node_modules/less/lib/less/render.js",
+        "node_modules/less/lib/less/source-map-builder.js",
         "node_modules/less/lib/less/source-map-output.js",
-        "node_modules/less/lib/less/to-css-visitor.js",
+        "node_modules/less/lib/less/transform-tree.js",
         "node_modules/less/lib/less/tree/alpha.js",
         "node_modules/less/lib/less/tree/anonymous.js",
         "node_modules/less/lib/less/tree/assignment.js",
+        "node_modules/less/lib/less/tree/attribute.js",
         "node_modules/less/lib/less/tree/call.js",
         "node_modules/less/lib/less/tree/color.js",
+        "node_modules/less/lib/less/tree/combinator.js",
         "node_modules/less/lib/less/tree/comment.js",
         "node_modules/less/lib/less/tree/condition.js",
+        "node_modules/less/lib/less/tree/debug-info.js",
         "node_modules/less/lib/less/tree/detached-ruleset.js",
         "node_modules/less/lib/less/tree/dimension.js",
         "node_modules/less/lib/less/tree/directive.js",
@@ -2037,11 +1864,15 @@
         "node_modules/less/lib/less/tree/expression.js",
         "node_modules/less/lib/less/tree/extend.js",
         "node_modules/less/lib/less/tree/import.js",
+        "node_modules/less/lib/less/tree/index.js",
         "node_modules/less/lib/less/tree/javascript.js",
+        "node_modules/less/lib/less/tree/js-eval-node.js",
         "node_modules/less/lib/less/tree/keyword.js",
         "node_modules/less/lib/less/tree/media.js",
-        "node_modules/less/lib/less/tree/mixin.js",
+        "node_modules/less/lib/less/tree/mixin-call.js",
+        "node_modules/less/lib/less/tree/mixin-definition.js",
         "node_modules/less/lib/less/tree/negative.js",
+        "node_modules/less/lib/less/tree/node.js",
         "node_modules/less/lib/less/tree/operation.js",
         "node_modules/less/lib/less/tree/paren.js",
         "node_modules/less/lib/less/tree/quoted.js",
@@ -2050,76 +1881,41 @@
         "node_modules/less/lib/less/tree/ruleset.js",
         "node_modules/less/lib/less/tree/selector.js",
         "node_modules/less/lib/less/tree/unicode-descriptor.js",
+        "node_modules/less/lib/less/tree/unit.js",
         "node_modules/less/lib/less/tree/url.js",
         "node_modules/less/lib/less/tree/value.js",
         "node_modules/less/lib/less/tree/variable.js",
-        "node_modules/less/lib/less/tree.js",
-        "node_modules/less/lib/less/visitor.js",
+        "node_modules/less/lib/less/utils.js",
+        "node_modules/less/lib/less/visitors/extend-visitor.js",
+        "node_modules/less/lib/less/visitors/import-sequencer.js",
+        "node_modules/less/lib/less/visitors/import-visitor.js",
+        "node_modules/less/lib/less/visitors/index.js",
+        "node_modules/less/lib/less/visitors/join-selector-visitor.js",
+        "node_modules/less/lib/less/visitors/set-tree-visibility-visitor.js",
+        "node_modules/less/lib/less/visitors/to-css-visitor.js",
+        "node_modules/less/lib/less/visitors/visitor.js",
+        "node_modules/less/lib/less-browser/add-default-options.js",
+        "node_modules/less/lib/less-browser/bootstrap.js",
+        "node_modules/less/lib/less-browser/browser.js",
+        "node_modules/less/lib/less-browser/cache.js",
+        "node_modules/less/lib/less-browser/error-reporting.js",
+        "node_modules/less/lib/less-browser/file-manager.js",
+        "node_modules/less/lib/less-browser/image-size.js",
+        "node_modules/less/lib/less-browser/index.js",
+        "node_modules/less/lib/less-browser/log-listener.js",
+        "node_modules/less/lib/less-browser/utils.js",
+        "node_modules/less/lib/less-node/environment.js",
+        "node_modules/less/lib/less-node/file-manager.js",
+        "node_modules/less/lib/less-node/fs.js",
+        "node_modules/less/lib/less-node/image-size.js",
+        "node_modules/less/lib/less-node/index.js",
+        "node_modules/less/lib/less-node/lessc-helper.js",
+        "node_modules/less/lib/less-node/plugin-loader.js",
+        "node_modules/less/lib/less-node/url-file-manager.js",
+        "node_modules/less/lib/less-rhino/index.js",
         "node_modules/less/lib/source-map/source-map-0.1.31.js",
         "node_modules/less/lib/source-map/source-map-footer.js",
         "node_modules/less/lib/source-map/source-map-header.js",
-        "node_modules/less/node_modules/asn1/lib/ber/errors.js",
-        "node_modules/less/node_modules/asn1/lib/ber/index.js",
-        "node_modules/less/node_modules/asn1/lib/ber/reader.js",
-        "node_modules/less/node_modules/asn1/lib/ber/types.js",
-        "node_modules/less/node_modules/asn1/lib/ber/writer.js",
-        "node_modules/less/node_modules/asn1/lib/index.js",
-        "node_modules/less/node_modules/asn1/tst/ber/reader.test.js",
-        "node_modules/less/node_modules/asn1/tst/ber/writer.test.js",
-        "node_modules/less/node_modules/assert-plus/assert.js",
-        "node_modules/less/node_modules/aws-sign2/index.js",
-        "node_modules/less/node_modules/boom/index.js",
-        "node_modules/less/node_modules/boom/lib/index.js",
-        "node_modules/less/node_modules/combined-stream/lib/combined_stream.js",
-        "node_modules/less/node_modules/cryptiles/index.js",
-        "node_modules/less/node_modules/cryptiles/lib/index.js",
-        "node_modules/less/node_modules/delayed-stream/lib/delayed_stream.js",
-        "node_modules/less/node_modules/forever-agent/index.js",
-        "node_modules/less/node_modules/form-data/lib/form_data.js",
-        "node_modules/less/node_modules/graceful-fs/fs.js",
-        "node_modules/less/node_modules/graceful-fs/graceful-fs.js",
-        "node_modules/less/node_modules/graceful-fs/polyfills.js",
-        "node_modules/less/node_modules/hawk/example/usage.js",
-        "node_modules/less/node_modules/hawk/index.js",
-        "node_modules/less/node_modules/hawk/lib/browser.js",
-        "node_modules/less/node_modules/hawk/lib/client.js",
-        "node_modules/less/node_modules/hawk/lib/crypto.js",
-        "node_modules/less/node_modules/hawk/lib/index.js",
-        "node_modules/less/node_modules/hawk/lib/server.js",
-        "node_modules/less/node_modules/hawk/lib/utils.js",
-        "node_modules/less/node_modules/hoek/index.js",
-        "node_modules/less/node_modules/hoek/lib/escape.js",
-        "node_modules/less/node_modules/hoek/lib/index.js",
-        "node_modules/less/node_modules/http-signature/lib/index.js",
-        "node_modules/less/node_modules/http-signature/lib/parser.js",
-        "node_modules/less/node_modules/http-signature/lib/signer.js",
-        "node_modules/less/node_modules/http-signature/lib/util.js",
-        "node_modules/less/node_modules/http-signature/lib/verify.js",
-        "node_modules/less/node_modules/mime-types/lib/index.js",
-        "node_modules/less/node_modules/node-uuid/benchmark/benchmark.js",
-        "node_modules/less/node_modules/node-uuid/lib/sha1-browser.js",
-        "node_modules/less/node_modules/node-uuid/uuid.js",
-        "node_modules/less/node_modules/node-uuid/v3.js",
-        "node_modules/less/node_modules/oauth-sign/index.js",
-        "node_modules/less/node_modules/oauth-sign/test.js",
-        "node_modules/less/node_modules/qs/index.js",
-        "node_modules/less/node_modules/qs/lib/index.js",
-        "node_modules/less/node_modules/qs/lib/parse.js",
-        "node_modules/less/node_modules/qs/lib/stringify.js",
-        "node_modules/less/node_modules/qs/lib/utils.js",
-        "node_modules/less/node_modules/request/index.js",
-        "node_modules/less/node_modules/request/lib/cookies.js",
-        "node_modules/less/node_modules/request/lib/copy.js",
-        "node_modules/less/node_modules/request/lib/debug.js",
-        "node_modules/less/node_modules/request/lib/getSafe.js",
-        "node_modules/less/node_modules/request/lib/optional.js",
-        "node_modules/less/node_modules/request/request.js",
-        "node_modules/less/node_modules/sntp/examples/offset.js",
-        "node_modules/less/node_modules/sntp/examples/time.js",
-        "node_modules/less/node_modules/sntp/index.js",
-        "node_modules/less/node_modules/sntp/lib/index.js",
-        "node_modules/less/node_modules/tunnel-agent/index.js",
-        "node_modules/less/tmp/less.js",
         "node_modules/load-json-file/index.js",
         "node_modules/locate-path/index.js",
         "node_modules/locate-path/node_modules/path-exists/index.js",
@@ -2155,8 +1951,10 @@
         "node_modules/meow/index.js",
         "node_modules/meow/node_modules/minimist/example/parse.js",
         "node_modules/meow/node_modules/minimist/index.js",
+        "node_modules/mime/build/build.js",
+        "node_modules/mime/build/test.js",
+        "node_modules/mime/cli.js",
         "node_modules/mime/mime.js",
-        "node_modules/mime/test.js",
         "node_modules/mime-db/index.js",
         "node_modules/mime-types/index.js",
         "node_modules/mimic-fn/index.js",
@@ -2166,7 +1964,6 @@
         "node_modules/mkdirp/examples/pow.js",
         "node_modules/mkdirp/index.js",
         "node_modules/ms/index.js",
-        "node_modules/natives/index.js",
         "node_modules/normalize-package-data/lib/extract_description.js",
         "node_modules/normalize-package-data/lib/fixer.js",
         "node_modules/normalize-package-data/lib/make_warning.js",
@@ -2197,6 +1994,7 @@
         "node_modules/optimist/example/xup.js",
         "node_modules/optimist/index.js",
         "node_modules/os-locale/index.js",
+        "node_modules/os-tmpdir/index.js",
         "node_modules/p-finally/index.js",
         "node_modules/p-limit/index.js",
         "node_modules/p-locate/index.js",
@@ -2265,6 +2063,45 @@
         "node_modules/process-nextick-args/test.js",
         "node_modules/progress/index.js",
         "node_modules/progress/lib/node-progress.js",
+        "node_modules/promise/build.js",
+        "node_modules/promise/core.js",
+        "node_modules/promise/domains/core.js",
+        "node_modules/promise/domains/done.js",
+        "node_modules/promise/domains/es6-extensions.js",
+        "node_modules/promise/domains/finally.js",
+        "node_modules/promise/domains/index.js",
+        "node_modules/promise/domains/node-extensions.js",
+        "node_modules/promise/domains/rejection-tracking.js",
+        "node_modules/promise/domains/synchronous.js",
+        "node_modules/promise/index.js",
+        "node_modules/promise/lib/core.js",
+        "node_modules/promise/lib/done.js",
+        "node_modules/promise/lib/es6-extensions.js",
+        "node_modules/promise/lib/finally.js",
+        "node_modules/promise/lib/index.js",
+        "node_modules/promise/lib/node-extensions.js",
+        "node_modules/promise/lib/rejection-tracking.js",
+        "node_modules/promise/lib/synchronous.js",
+        "node_modules/promise/polyfill-done.js",
+        "node_modules/promise/polyfill.js",
+        "node_modules/promise/setimmediate/core.js",
+        "node_modules/promise/setimmediate/done.js",
+        "node_modules/promise/setimmediate/es6-extensions.js",
+        "node_modules/promise/setimmediate/finally.js",
+        "node_modules/promise/setimmediate/index.js",
+        "node_modules/promise/setimmediate/node-extensions.js",
+        "node_modules/promise/setimmediate/rejection-tracking.js",
+        "node_modules/promise/setimmediate/synchronous.js",
+        "node_modules/promise/src/core.js",
+        "node_modules/promise/src/done.js",
+        "node_modules/promise/src/es6-extensions.js",
+        "node_modules/promise/src/finally.js",
+        "node_modules/promise/src/index.js",
+        "node_modules/promise/src/node-extensions.js",
+        "node_modules/promise/src/rejection-tracking.js",
+        "node_modules/promise/src/synchronous.js",
+        "node_modules/prr/prr.js",
+        "node_modules/prr/test.js",
         "node_modules/pseudomap/map.js",
         "node_modules/pseudomap/pseudomap.js",
         "node_modules/punycode/punycode.js",
@@ -2393,22 +2230,20 @@
         "node_modules/sntp/examples/time.js",
         "node_modules/sntp/index.js",
         "node_modules/sntp/lib/index.js",
-        "node_modules/source-map/Makefile.dryice.js",
-        "node_modules/source-map/build/assert-shim.js",
-        "node_modules/source-map/build/mini-require.js",
-        "node_modules/source-map/build/suffix-browser.js",
-        "node_modules/source-map/build/test-prefix.js",
-        "node_modules/source-map/build/test-suffix.js",
-        "node_modules/source-map/lib/source-map/array-set.js",
-        "node_modules/source-map/lib/source-map/base64-vlq.js",
-        "node_modules/source-map/lib/source-map/base64.js",
-        "node_modules/source-map/lib/source-map/binary-search.js",
-        "node_modules/source-map/lib/source-map/mapping-list.js",
-        "node_modules/source-map/lib/source-map/source-map-consumer.js",
-        "node_modules/source-map/lib/source-map/source-map-generator.js",
-        "node_modules/source-map/lib/source-map/source-node.js",
-        "node_modules/source-map/lib/source-map/util.js",
-        "node_modules/source-map/lib/source-map.js",
+        "node_modules/source-map/dist/source-map.debug.js",
+        "node_modules/source-map/dist/source-map.js",
+        "node_modules/source-map/dist/source-map.min.js",
+        "node_modules/source-map/lib/array-set.js",
+        "node_modules/source-map/lib/base64-vlq.js",
+        "node_modules/source-map/lib/base64.js",
+        "node_modules/source-map/lib/binary-search.js",
+        "node_modules/source-map/lib/mapping-list.js",
+        "node_modules/source-map/lib/quick-sort.js",
+        "node_modules/source-map/lib/source-map-consumer.js",
+        "node_modules/source-map/lib/source-map-generator.js",
+        "node_modules/source-map/lib/source-node.js",
+        "node_modules/source-map/lib/util.js",
+        "node_modules/source-map/source-map.js",
         "node_modules/spdx-correct/index.js",
         "node_modules/spdx-expression-parse/index.js",
         "node_modules/spdx-expression-parse/parser.js",
@@ -2451,6 +2286,7 @@
         "node_modules/throttleit/example.js",
         "node_modules/throttleit/index.js",
         "node_modules/throttleit/test.js",
+        "node_modules/tmp/lib/tmp.js",
         "node_modules/tough-cookie/lib/cookie.js",
         "node_modules/tough-cookie/lib/memstore.js",
         "node_modules/tough-cookie/lib/pathMatch.js",
@@ -2476,20 +2312,6 @@
         "node_modules/uglify-js/lib/sourcemap.js",
         "node_modules/uglify-js/lib/transform.js",
         "node_modules/uglify-js/lib/utils.js",
-        "node_modules/uglify-js/node_modules/source-map/dist/source-map.debug.js",
-        "node_modules/uglify-js/node_modules/source-map/dist/source-map.js",
-        "node_modules/uglify-js/node_modules/source-map/dist/source-map.min.js",
-        "node_modules/uglify-js/node_modules/source-map/lib/array-set.js",
-        "node_modules/uglify-js/node_modules/source-map/lib/base64-vlq.js",
-        "node_modules/uglify-js/node_modules/source-map/lib/base64.js",
-        "node_modules/uglify-js/node_modules/source-map/lib/binary-search.js",
-        "node_modules/uglify-js/node_modules/source-map/lib/mapping-list.js",
-        "node_modules/uglify-js/node_modules/source-map/lib/quick-sort.js",
-        "node_modules/uglify-js/node_modules/source-map/lib/source-map-consumer.js",
-        "node_modules/uglify-js/node_modules/source-map/lib/source-map-generator.js",
-        "node_modules/uglify-js/node_modules/source-map/lib/source-node.js",
-        "node_modules/uglify-js/node_modules/source-map/lib/util.js",
-        "node_modules/uglify-js/node_modules/source-map/source-map.js",
         "node_modules/uglify-js/tools/exports.js",
         "node_modules/uglify-js/tools/node.js",
         "node_modules/uglify-to-browserify/index.js",
@@ -2536,10 +2358,9 @@
         "node_modules/amdefine/package.json",
         "node_modules/ansi-regex/package.json",
         "node_modules/array-find-index/package.json",
+        "node_modules/asap/package.json",
         "node_modules/asn1/package.json",
         "node_modules/assert-plus/package.json",
-        "node_modules/async/bower.json",
-        "node_modules/async/component.json",
         "node_modules/async/package.json",
         "node_modules/asynckit/package.json",
         "node_modules/aws-sign2/package.json",
@@ -2557,13 +2378,11 @@
         "node_modules/caseless/package.json",
         "node_modules/center-align/package.json",
         "node_modules/cheerio/package.json",
-        "node_modules/clean-css/package.json",
         "node_modules/cliui/node_modules/wordwrap/package.json",
         "node_modules/cliui/package.json",
         "node_modules/co/package.json",
         "node_modules/code-point-at/package.json",
         "node_modules/combined-stream/package.json",
-        "node_modules/commander/package.json",
         "node_modules/concat-stream/package.json",
         "node_modules/core-util-is/package.json",
         "node_modules/cross-spawn/package.json",
@@ -2571,7 +2390,6 @@
         "node_modules/css-select/lib/procedure.json",
         "node_modules/css-select/package.json",
         "node_modules/css-what/package.json",
-        "node_modules/ctype/package.json",
         "node_modules/currently-unhandled/package.json",
         "node_modules/dashdash/node_modules/assert-plus/package.json",
         "node_modules/dashdash/package.json",
@@ -2592,6 +2410,7 @@
         "node_modules/entities/maps/legacy.json",
         "node_modules/entities/maps/xml.json",
         "node_modules/entities/package.json",
+        "node_modules/errno/package.json",
         "node_modules/error-ex/package.json",
         "node_modules/es6-promise/package.json",
         "node_modules/execa/package.json",
@@ -2612,7 +2431,6 @@
         "node_modules/getpass/node_modules/assert-plus/package.json",
         "node_modules/getpass/package.json",
         "node_modules/graceful-fs/package.json",
-        "node_modules/handlebars/node_modules/async/package.json",
         "node_modules/handlebars/node_modules/source-map/package.json",
         "node_modules/handlebars/package.json",
         "node_modules/har-schema/lib/afterRequest.json",
@@ -2644,6 +2462,7 @@
         "node_modules/html-pdf/package.json",
         "node_modules/htmlparser2/package.json",
         "node_modules/http-signature/package.json",
+        "node_modules/image-size/package.json",
         "node_modules/indent-string/package.json",
         "node_modules/inherits/package.json",
         "node_modules/invert-kv/package.json",
@@ -2674,32 +2493,6 @@
         "node_modules/lcid/lcid.json",
         "node_modules/lcid/package.json",
         "node_modules/less/bower.json",
-        "node_modules/less/node_modules/asn1/package.json",
-        "node_modules/less/node_modules/assert-plus/package.json",
-        "node_modules/less/node_modules/aws-sign2/package.json",
-        "node_modules/less/node_modules/boom/package.json",
-        "node_modules/less/node_modules/combined-stream/package.json",
-        "node_modules/less/node_modules/cryptiles/package.json",
-        "node_modules/less/node_modules/delayed-stream/package.json",
-        "node_modules/less/node_modules/forever-agent/package.json",
-        "node_modules/less/node_modules/form-data/package.json",
-        "node_modules/less/node_modules/graceful-fs/package.json",
-        "node_modules/less/node_modules/hawk/package.json",
-        "node_modules/less/node_modules/hoek/package.json",
-        "node_modules/less/node_modules/http-signature/package.json",
-        "node_modules/less/node_modules/mime-types/component.json",
-        "node_modules/less/node_modules/mime-types/lib/custom.json",
-        "node_modules/less/node_modules/mime-types/lib/mime.json",
-        "node_modules/less/node_modules/mime-types/lib/node.json",
-        "node_modules/less/node_modules/mime-types/package.json",
-        "node_modules/less/node_modules/node-uuid/bower.json",
-        "node_modules/less/node_modules/node-uuid/component.json",
-        "node_modules/less/node_modules/node-uuid/package.json",
-        "node_modules/less/node_modules/oauth-sign/package.json",
-        "node_modules/less/node_modules/qs/package.json",
-        "node_modules/less/node_modules/request/package.json",
-        "node_modules/less/node_modules/sntp/package.json",
-        "node_modules/less/node_modules/tunnel-agent/package.json",
         "node_modules/less/package.json",
         "node_modules/load-json-file/package.json",
         "node_modules/locate-path/node_modules/path-exists/package.json",
@@ -2728,6 +2521,7 @@
         "node_modules/meow/node_modules/minimist/package.json",
         "node_modules/meow/package.json",
         "node_modules/mime/package.json",
+        "node_modules/mime/types.json",
         "node_modules/mime-db/db.json",
         "node_modules/mime-db/package.json",
         "node_modules/mime-types/package.json",
@@ -2735,7 +2529,6 @@
         "node_modules/minimist/package.json",
         "node_modules/mkdirp/package.json",
         "node_modules/ms/package.json",
-        "node_modules/natives/package.json",
         "node_modules/normalize-package-data/lib/typos.json",
         "node_modules/normalize-package-data/lib/warning_messages.json",
         "node_modules/normalize-package-data/package.json",
@@ -2746,6 +2539,7 @@
         "node_modules/object-assign/package.json",
         "node_modules/optimist/package.json",
         "node_modules/os-locale/package.json",
+        "node_modules/os-tmpdir/package.json",
         "node_modules/p-finally/package.json",
         "node_modules/p-limit/package.json",
         "node_modules/p-locate/package.json",
@@ -2761,6 +2555,8 @@
         "node_modules/pinkie-promise/package.json",
         "node_modules/process-nextick-args/package.json",
         "node_modules/progress/package.json",
+        "node_modules/promise/package.json",
+        "node_modules/prr/package.json",
         "node_modules/pseudomap/package.json",
         "node_modules/punycode/package.json",
         "node_modules/qs/.jscs.json",
@@ -2841,12 +2637,12 @@
         "node_modules/strip-indent/package.json",
         "node_modules/throttleit/component.json",
         "node_modules/throttleit/package.json",
+        "node_modules/tmp/package.json",
         "node_modules/tough-cookie/package.json",
         "node_modules/trim-newlines/package.json",
         "node_modules/tunnel-agent/package.json",
         "node_modules/tweetnacl/package.json",
         "node_modules/typedarray/package.json",
-        "node_modules/uglify-js/node_modules/source-map/package.json",
         "node_modules/uglify-js/package.json",
         "node_modules/uglify-js/tools/domprops.json",
         "node_modules/uglify-to-browserify/package.json",
@@ -2886,9 +2682,10 @@
         ],
         "dependencies": {
           "html-pdf": "2.0.x",
-          "less": "^1.7.0",
+          "less": "^2.7.2",
           "loophole": "^1.1.0",
-          "mdpdf": "^1.5.1"
+          "mdpdf": "^1.5.1",
+          "tmp": "0.0.33"
         }
       },
       {
@@ -2986,21 +2783,6 @@
           "lodash.reduce": "^4.4.0",
           "lodash.reject": "^4.4.0",
           "lodash.some": "^4.4.0"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/clean-css",
-          "node_modules/clean-css/lib",
-          "node_modules/clean-css/lib/colors",
-          "node_modules/clean-css/lib/images",
-          "node_modules/clean-css/lib/imports",
-          "node_modules/clean-css/lib/properties",
-          "node_modules/clean-css/lib/selectors",
-          "node_modules/clean-css/lib/text"
-        ],
-        "dependencies": {
-          "commander": "2.2.x"
         }
       },
       {
@@ -3142,6 +2924,14 @@
           "barbe": "^2.2.1",
           "match-all": "^1.1.1",
           "regex-emoji": "^2.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/errno"
+        ],
+        "dependencies": {
+          "prr": "~0.0.0"
         }
       },
       {
@@ -3440,136 +3230,46 @@
       },
       {
         "paths": [
-          "node_modules/less/.grunt/grunt-contrib-jasmine",
           "node_modules/less",
-          "node_modules/less/benchmark",
-          "node_modules/less/build",
           "node_modules/less/dist",
           "node_modules/less/lib/less",
+          "node_modules/less/lib/less/data",
+          "node_modules/less/lib/less/environment",
+          "node_modules/less/lib/less/functions",
+          "node_modules/less/lib/less/parser",
+          "node_modules/less/lib/less/plugins",
           "node_modules/less/lib/less/tree",
+          "node_modules/less/lib/less/visitors",
+          "node_modules/less/lib/less-browser",
+          "node_modules/less/lib/less-node",
+          "node_modules/less/lib/less-rhino",
           "node_modules/less/lib/source-map",
           "node_modules/less/test/browser",
           "node_modules/less/test",
           "node_modules/less/test/less/globalVars",
           "node_modules/less/test/less/modifyVars",
+          "node_modules/less/test/less/plugin",
           "node_modules/less/test/less/sourcemaps",
+          "node_modules/less/test/less-bom/globalVars",
+          "node_modules/less/test/less-bom/modifyVars",
+          "node_modules/less/test/less-bom/plugin",
+          "node_modules/less/test/less-bom/sourcemaps",
+          "node_modules/less/test/plugins/filemanager",
+          "node_modules/less/test/plugins/postprocess",
+          "node_modules/less/test/plugins/preprocess",
+          "node_modules/less/test/plugins/visitor",
           "node_modules/less/test/rhino",
-          "node_modules/less/test/sourcemaps",
-          "node_modules/less/tmp"
+          "node_modules/less/test/sourcemaps"
         ],
         "dependencies": {
-          "clean-css": "2.2.x",
-          "graceful-fs": "~3.0.2",
-          "mime": "~1.2.11",
-          "mkdirp": "~0.5.0",
-          "request": "~2.40.0",
-          "source-map": "0.1.x"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/less/node_modules/boom",
-          "node_modules/less/node_modules/boom/lib",
-          "node_modules/less/node_modules/boom/test"
-        ],
-        "dependencies": {
-          "hoek": "0.9.x"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/less/node_modules/combined-stream/lib",
-          "node_modules/less/node_modules/combined-stream"
-        ],
-        "dependencies": {
-          "delayed-stream": "0.0.5"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/less/node_modules/cryptiles",
-          "node_modules/less/node_modules/cryptiles/lib",
-          "node_modules/less/node_modules/cryptiles/test"
-        ],
-        "dependencies": {
-          "boom": "0.4.x"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/less/node_modules/form-data/lib",
-          "node_modules/less/node_modules/form-data"
-        ],
-        "dependencies": {
-          "async": "~0.9.0",
-          "combined-stream": "~0.0.4",
-          "mime": "~1.2.11"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/less/node_modules/graceful-fs",
-          "node_modules/less/node_modules/graceful-fs/test"
-        ],
-        "dependencies": {
-          "natives": "^1.1.0"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/less/node_modules/hawk/example",
-          "node_modules/less/node_modules/hawk",
-          "node_modules/less/node_modules/hawk/lib",
-          "node_modules/less/node_modules/hawk/test"
-        ],
-        "dependencies": {
-          "boom": "0.4.x",
-          "cryptiles": "0.2.x",
-          "hoek": "0.9.x",
-          "sntp": "0.2.x"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/less/node_modules/http-signature/lib",
-          "node_modules/less/node_modules/http-signature"
-        ],
-        "dependencies": {
-          "asn1": "0.1.11",
-          "assert-plus": "^0.1.5",
-          "ctype": "0.5.3"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/less/node_modules/request",
-          "node_modules/less/node_modules/request/lib"
-        ],
-        "dependencies": {
-          "aws-sign2": "~0.5.0",
-          "forever-agent": "~0.5.0",
-          "form-data": "~0.1.0",
-          "hawk": "1.1.1",
-          "http-signature": "~0.10.0",
-          "json-stringify-safe": "~5.0.0",
-          "mime-types": "~1.0.1",
-          "node-uuid": "~1.4.0",
-          "oauth-sign": "~0.3.0",
-          "qs": "~1.0.0",
-          "stringstream": "~0.0.4",
-          "tough-cookie": ">=0.12.0",
-          "tunnel-agent": "~0.4.0"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/less/node_modules/sntp/examples",
-          "node_modules/less/node_modules/sntp",
-          "node_modules/less/node_modules/sntp/lib",
-          "node_modules/less/node_modules/sntp/test"
-        ],
-        "dependencies": {
-          "hoek": "0.9.x"
+          "errno": "^0.1.1",
+          "graceful-fs": "^4.1.2",
+          "image-size": "~0.5.0",
+          "mime": "^1.2.11",
+          "mkdirp": "^0.5.0",
+          "promise": "^7.1.1",
+          "request": "^2.72.0",
+          "source-map": "^0.5.3"
         }
       },
       {
@@ -3672,7 +3372,7 @@
           "node_modules/mime-types"
         ],
         "dependencies": {
-          "mime-db": "~1.29.0"
+          "mime-db": "~1.30.0"
         }
       },
       {
@@ -3796,6 +3496,18 @@
         ],
         "dependencies": {
           "pinkie": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/promise",
+          "node_modules/promise/domains",
+          "node_modules/promise/lib",
+          "node_modules/promise/setimmediate",
+          "node_modules/promise/src"
+        ],
+        "dependencies": {
+          "asap": "~2.0.3"
         }
       },
       {
@@ -4031,19 +3743,6 @@
       },
       {
         "paths": [
-          "node_modules/source-map",
-          "node_modules/source-map/build",
-          "node_modules/source-map/lib/source-map",
-          "node_modules/source-map/lib",
-          "node_modules/source-map/test",
-          "node_modules/source-map/test/source-map"
-        ],
-        "dependencies": {
-          "amdefine": ">=0.0.4"
-        }
-      },
-      {
-        "paths": [
           "node_modules/spdx-correct"
         ],
         "dependencies": {
@@ -4115,6 +3814,15 @@
         ],
         "dependencies": {
           "get-stdin": "^4.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/tmp/lib",
+          "node_modules/tmp"
+        ],
+        "dependencies": {
+          "os-tmpdir": "~1.0.2"
         }
       },
       {

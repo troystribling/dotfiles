@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53267-177upig.7jcfu07ldi/package.tgz",
+        "raw": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53267-177upig.7jcfu07ldi/package.tgz",
-        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53267-177upig.7jcfu07ldi/package.tgz",
+        "rawSpec": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
+        "spec": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-11781-53267-1oq000b.t0n66o5hfr"
+      "/private/tmp/apm-install-dir-11783-59928-yqmfzf.djnstt9"
     ]
   ],
-  "_from": "../d-11781-53267-177upig.7jcfu07ldi/package.tgz",
-  "_id": "Hydrogen@1.20.0",
+  "_from": "../d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
+  "_id": "Hydrogen@1.21.1",
   "_inCache": true,
   "_location": "/Hydrogen",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53267-177upig.7jcfu07ldi/package.tgz",
+    "raw": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53267-177upig.7jcfu07ldi/package.tgz",
-    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53267-177upig.7jcfu07ldi/package.tgz",
+    "rawSpec": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
+    "spec": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-11781-53267-177upig.7jcfu07ldi/package.tgz",
-  "_shasum": "a5c8dafde055b7460fabb5ec6fb117ae4a2d9622",
+  "_resolved": "file:../d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
+  "_shasum": "babdb3888080aec7c69db091826ea70388058e58",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53267-177upig.7jcfu07ldi/package.tgz",
-  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-11781-53267-1oq000b.t0n66o5hfr",
+  "_spec": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
+  "_where": "/private/tmp/apm-install-dir-11783-59928-yqmfzf.djnstt9",
   "activationCommands": {
     "atom-text-editor": [
       "hydrogen:select-kernel",
@@ -66,9 +66,9 @@
   },
   "dependencies": {
     "@jupyterlab/services": "^0.42.0",
-    "@nteract/display-area": "^2.0.1",
-    "@nteract/transform-plotly": "^2.0.1",
-    "@nteract/transforms": "^2.0.1",
+    "@nteract/display-area": "^2.4.0",
+    "@nteract/transform-plotly": "^2.2.0",
+    "@nteract/transforms": "^2.4.0",
     "atom-select-list": "^0.2.0",
     "escape-carriage": "^1.2.0",
     "escape-string-regexp": "^1.0.5",
@@ -91,12 +91,12 @@
   "devDependencies": {
     "atom-jasmine2-test-runner": "^1.0.0",
     "enzyme": "^2.8.2",
-    "flow-bin": "^0.52.0",
+    "flow-bin": "^0.54.0",
     "husky": "^0.14.0",
     "lint-staged": "^4.0.0",
     "markdox": "^0.1.10",
     "mobx-react-devtools": "^4.2.11",
-    "prettier": "1.5.3",
+    "prettier": "1.6.1",
     "react-test-renderer": "^15.5.4"
   },
   "engines": {
@@ -134,7 +134,7 @@
     },
     "hydrogen.provider": {
       "versions": {
-        "1.0.0": "provideHydrogen"
+        "1.1.0": "provideHydrogen"
       }
     }
   },
@@ -150,7 +150,7 @@
     "precommit": "lint-staged",
     "prettier": "prettier --write 'lib/**/*.js' 'spec/**/*.js'"
   },
-  "version": "1.20.0",
+  "version": "1.21.1",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -166,7 +166,7 @@
       },
       {
         "name": "ansi-to-react",
-        "version": "1.5.2",
+        "version": "1.6.0",
         "path": "node_modules/ansi-to-react/lib/index.js"
       },
       {
@@ -6041,9 +6041,9 @@
         ],
         "dependencies": {
           "@jupyterlab/services": "^0.42.0",
-          "@nteract/display-area": "^2.0.1",
-          "@nteract/transform-plotly": "^2.0.1",
-          "@nteract/transforms": "^2.0.1",
+          "@nteract/display-area": "^2.4.0",
+          "@nteract/transform-plotly": "^2.2.0",
+          "@nteract/transforms": "^2.4.0",
           "atom-select-list": "^0.2.0",
           "escape-carriage": "^1.2.0",
           "escape-string-regexp": "^1.0.5",

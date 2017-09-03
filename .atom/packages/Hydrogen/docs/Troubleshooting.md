@@ -97,3 +97,56 @@ Again, there are a number of possible causes and solutions:
   been seen recently. Please, post in issue
   [#53](https://github.com/nteract/hydrogen/issues/53) the details of your
   installation.
+
+## Setting environment variables on Windows
+
+### Problem:
+
+On Windows if Python is not added to your environment variables, Hydrogen won't be able to locate your Python installations (`No kernel specs found`).
+
+![Kernel specs not found](https://preview.ibb.co/jw40ta/Screenshot_40.png)
+
+### Solution:
+
+To solve this problem you need to add Python to your systems environment variables. This can be done in 2 ways:
+
+- During Python installation
+- Manually adding in the Environment variables
+
+#### During Python installation:
+
+While installing Python check *Add Python to environment variables*. It will do the rest of work for you!
+
+![Python setup Wizard](https://preview.ibb.co/d8w8eF/Screenshot_48.png)
+
+
+If you already have Python installed then you may not need to uninstall it just follow the steps:
+
+- Go to the *Uninstall or Change a Program* Menu
+- Select your Python version
+- Click on the *Uninstall/Change* button
+- Select *Modify* from the appeared menu
+- Click on *Next*
+- Check mark *Add python to environment variables*
+- And finish the installation process
+
+![Adding python to system environment variables](https://d2mxuefqeaa7sj.cloudfront.net/s_72AB4F9B801403E4852A7178F94F1BB891F67B88E721FB948C0DB4747940E7E2_1504306245381_Uninstall.gif)
+
+#### Manually adding Python to Environment variables:
+
+You can also add Python to the environment variables manually
+
+  - In *Control Panel* search for *environment variables*
+  - Click on *Edit system environment variables*
+  - Click on *Environment variables*
+  - From the *System variables* tab select *Path* and click on *Edit*
+  - Click on *New* and add `C:\Program Files\Python36\Scripts\`
+  - Click on *New* again and add `C:\Program Files\Python36\`
+  - Click on *OK* to finish, now your problem is fixed!
+
+![Adding environment Variables manually](https://media.giphy.com/media/xT9IgpHU1lZEoVxQFW/giphy.gif)
+
+
+You should see something like this,
+
+![Result](https://d2mxuefqeaa7sj.cloudfront.net/s_72AB4F9B801403E4852A7178F94F1BB891F67B88E721FB948C0DB4747940E7E2_1504306452541_test.gif)
