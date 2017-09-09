@@ -1,0 +1,91 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/tmp/d-11789-72394-6u5zeg.y9h8lzyqfr/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/tmp/d-11789-72394-6u5zeg.y9h8lzyqfr/package.tgz",
+        "spec": "/private/tmp/d-11789-72394-6u5zeg.y9h8lzyqfr/package.tgz",
+        "type": "local"
+      },
+      "/private/tmp/apm-install-dir-11789-72394-1o57go0.a35uufecdi"
+    ]
+  ],
+  "_from": "../d-11789-72394-6u5zeg.y9h8lzyqfr/package.tgz",
+  "_id": "autocomplete-solidity@0.3.3",
+  "_inCache": true,
+  "_location": "/autocomplete-solidity",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/tmp/d-11789-72394-6u5zeg.y9h8lzyqfr/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/tmp/d-11789-72394-6u5zeg.y9h8lzyqfr/package.tgz",
+    "spec": "/private/tmp/d-11789-72394-6u5zeg.y9h8lzyqfr/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-11789-72394-6u5zeg.y9h8lzyqfr/package.tgz",
+  "_shasum": "f2b505f9baff5fc4e4dd2c69b443b5f23686e8d9",
+  "_shrinkwrap": null,
+  "_spec": "/private/tmp/d-11789-72394-6u5zeg.y9h8lzyqfr/package.tgz",
+  "_where": "/private/tmp/apm-install-dir-11789-72394-1o57go0.a35uufecdi",
+  "bugs": {
+    "url": "https://github.com/austp/autocomplete-solidity/issues"
+  },
+  "dependencies": {},
+  "description": "Autocomplete+ provider for Solidity",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/austp/autocomplete-solidity#readme",
+  "keywords": [
+    "solidity",
+    "autocomplete-plus",
+    "autocomplete",
+    "ethereum",
+    "ether"
+  ],
+  "license": "MIT",
+  "main": "./src/autocomplete-solidity",
+  "name": "autocomplete-solidity",
+  "optionalDependencies": {},
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "provide"
+      }
+    }
+  },
+  "readme": "# autocomplete-solidity\n\n*An Autocomplete+ provider for Solidity.*\n\nThis package parses your Solidity files to give you contextual autocomplete suggestions. That means not only does this package give you suggestions for base constructs / types, but it will also suggest your variables, functions, contracts, etc. What's more is that it will only give you suggestions when they allowed syntax-wise. (This is based on context level so you still could get some suggestions out of place, but nothing too radical should be happening.)\n\n### Autocomplete Example\n![autocomplete-solidity](https://cloud.githubusercontent.com/assets/2007045/15446666/daf7144c-1ee4-11e6-93fa-e2902ef954b9.gif)\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austp/autocomplete-solidity.git"
+  },
+  "version": "0.3.3",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "package.json"
+      ],
+      ".js": [
+        "src/autocomplete-solidity.js",
+        "src/providers/Provider.js",
+        "src/providers/base-provider.js",
+        "src/providers/context-provider.js",
+        "src/util/contracts.js",
+        "src/util/parser.js"
+      ]
+    },
+    "folders": []
+  }
+}
