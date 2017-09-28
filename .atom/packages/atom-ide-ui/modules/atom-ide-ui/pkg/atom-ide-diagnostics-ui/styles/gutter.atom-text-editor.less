@@ -1,0 +1,35 @@
+@import "ui-variables";
+@import "octicon-mixins.less";
+@import "octicon-utf-codes.less";
+
+// Styles for gutter glyphs.
+
+.gutter[gutter-name=diagnostics-gutter] {
+  min-width: 0.5em;
+}
+
+.diagnostics-gutter-ui-gutter-error,
+.diagnostics-gutter-ui-gutter-warning,
+.diagnostics-gutter-ui-gutter-info {
+  // Needs to match .debugger-breakpoint-icon
+  .octicon(triangle-right, @size: 130%);
+  text-align: left;
+  display: block;
+  width: 0.8em;
+
+  // Makes it smaller, but respects the line-height :)
+  transform: scale(0.7);
+  transform-origin: left;
+}
+
+.diagnostics-gutter-ui-gutter-error {
+  color: @text-color-error;
+}
+
+.diagnostics-gutter-ui-gutter-warning {
+  color: @text-color-warning;
+}
+
+.diagnostics-gutter-ui-gutter-info {
+  color: @text-color-info;
+}

@@ -3,7 +3,7 @@
 import PythonIndent from "../lib/python-indent";
 
 describe("python-indent", () => {
-    const FILE_NAME = "fixture.py";
+    const FILE_NAME = "../../fixture.py";
     let buffer = null;
     let editor = null;
     let pythonIndent = null;
@@ -40,7 +40,7 @@ describe("python-indent", () => {
 
     describe("package", () =>
         it("loads python file and package", () => {
-            expect(editor.getPath()).toContain(FILE_NAME);
+            expect(editor.getPath()).toContain("fixture.py");
             expect(atom.packages.isPackageActive("python-indent")).toBe(true);
         }),
     );
@@ -221,6 +221,36 @@ describe("python-indent", () => {
                 editor.insertText("param_b,\n");
                 editor.autoIndentSelectedRows(2);
                 expect(buffer.lineForRow(2)).toBe(" ".repeat(9));
+            });
+
+            /*
+            def test(x):
+                return (
+                    x
+                )
+            */
+            it("does not dedent too much when doing hanging indent w/ return", () => {
+                editor.insertText("def test(x):\n");
+                pythonIndent.indent();
+                expect(buffer.lineForRow(1)).toBe(" ".repeat(4));
+                editor.insertText("return (\n");
+                pythonIndent.indent();
+                expect(buffer.lineForRow(2)).toBe(" ".repeat(8));
+            });
+
+            /*
+            def test(x):
+                yield (
+                    x
+                )
+            */
+            it("does not dedent too much when doing hanging indent w/ return", () => {
+                editor.insertText("def test(x):\n");
+                pythonIndent.indent();
+                expect(buffer.lineForRow(1)).toBe(" ".repeat(4));
+                editor.insertText("yield (\n");
+                pythonIndent.indent();
+                expect(buffer.lineForRow(2)).toBe(" ".repeat(8));
             });
 
             /*

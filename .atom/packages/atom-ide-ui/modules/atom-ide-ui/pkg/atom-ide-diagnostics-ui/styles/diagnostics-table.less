@@ -1,0 +1,80 @@
+@import "ui-variables";
+.diagnostics-ui-table-container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+
+  & > div:first-child {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+  }
+
+  .nuclide-ui-table {
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+
+    td:last-child,
+    th:last-child {
+      border-right-width: 0;
+    }
+  }
+}
+
+.nuclide-ui-table-cell-text-align-right {
+  text-align: right;
+}
+
+.diagnostics-ui-table-container-empty .nuclide-ui-table {
+  border-bottom-width: 0;
+}
+
+.diagnostics-ui-table-message {
+  text-align: center;
+
+  &.highlight-warning,
+  &.highlight-error {
+    border-radius: 0;
+    padding: (@component-padding / 2) 0 @component-padding 0;
+  }
+}
+
+.diagnostics-ui-empty-component {
+  font-style: italic;
+  padding: 1em;
+  text-align: center;
+}
+
+.nuclide-diagnostics-ui-path-cell {
+  direction: rtl;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+.nuclide-diagnostics-ui-cell-dir.nuclide-ui-table-body-cell {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.nuclide-diagnostics-ui-cell-filename.nuclide-ui-table-body-cell {
+  font-weight: 600;
+}
+
+.nuclide-diagnostics-ui-line-number {
+  opacity: 0.5;
+  font-weight: normal;
+}
+
+.nuclide-diagnostics-ui-cell-classification {
+  text-align: center;
+  .icon::before {
+    margin-right: 0;
+  }
+}
+
+.nuclide-diagnostics-ui-description-cell {
+  overflow: hidden;
+}

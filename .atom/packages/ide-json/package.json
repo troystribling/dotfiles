@@ -1,0 +1,493 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42640-1uqymq.ap9djnstt9/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42640-1uqymq.ap9djnstt9/package.tgz",
+        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42640-1uqymq.ap9djnstt9/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117828-42640-1s69vj.3ncplow29"
+    ]
+  ],
+  "_from": "../d-117828-42640-1uqymq.ap9djnstt9/package.tgz",
+  "_id": "ide-json@0.1.0",
+  "_inCache": true,
+  "_location": "/ide-json",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42640-1uqymq.ap9djnstt9/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42640-1uqymq.ap9djnstt9/package.tgz",
+    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42640-1uqymq.ap9djnstt9/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117828-42640-1uqymq.ap9djnstt9/package.tgz",
+  "_shasum": "7d8bcbcecb8459c7273310a437be0c4d6a14e7d0",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42640-1uqymq.ap9djnstt9/package.tgz",
+  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117828-42640-1s69vj.3ncplow29",
+  "author": {
+    "name": "Ryan Watts",
+    "email": "ryandwatts@gmail.com",
+    "url": "https://github.com/rwatts3"
+  },
+  "bugs": {
+    "url": "https://github.com/rwatts3/atom-ide-json/issues"
+  },
+  "consumedServices": {
+    "linter-indie": {
+      "versions": {
+        "2.0.0": "consumeLinterV2"
+      }
+    },
+    "datatip": {
+      "versions": {
+        "0.1.0": "consumeDatatip"
+      }
+    }
+  },
+  "dependencies": {
+    "atom-languageclient": "^0.4.0",
+    "fuzzaldrin-plus": "^0.4.1",
+    "vscode-json-languageserver-bin": "latest"
+  },
+  "description": "JSON language support for Atom-IDE.",
+  "devDependencies": {
+    "@types/node": "latest",
+    "typescript": "^2.4.2"
+  },
+  "engines": {
+    "atom": ">=1.19.0"
+  },
+  "enhancedScopes": [
+    "source.json"
+  ],
+  "homepage": "https://github.com/rwatts3/atom-ide-json#readme",
+  "keywords": [
+    "atom-ide",
+    "json",
+    "lsp",
+    "language-client"
+  ],
+  "license": "MIT",
+  "main": "./build/main",
+  "name": "ide-json",
+  "optionalDependencies": {},
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "provideAutocomplete"
+      }
+    },
+    "definitions": {
+      "versions": {
+        "0.1.0": "provideDefinitions"
+      }
+    },
+    "find-references": {
+      "versions": {
+        "0.1.0": "provideFindReferences"
+      }
+    },
+    "outline-view": {
+      "versions": {
+        "0.1.0": "provideOutlines"
+      }
+    }
+  },
+  "readme": "# IDE-JSON package\n\nJSON language support for Atom-IDE, powered by [VSCODE JSON Language Server](https://github.com/vscode-langservers/vscode-json-languageserver-bin).\n\n## Companion Packages\nThis package is currently a *Work in Progress*.  You should also install:\n\n1. The **atom-ide-ui** package to expose the functionality within Atom\n\n## Development\n1. Clone this repo `$ git clone https://github.com/rwatts3/atom-ide-json <my-dir>`\n2. cd to the repos directory `$ cd <my-dir>`\n3. Install Deps `$ npm i`\n4. Start the app in dev mode. `$ npm run dev`\n\n## License\nMIT License.  See [the license](LICENSE.md) for more details.\n\n> This package was [`Made By Ryan Watts`](https://www.ryanwatts.me)",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rwatts3/atom-ide-json.git"
+  },
+  "scripts": {
+    "compile": "tsc",
+    "dev": "tsc --watch",
+    "prepublish": "npm run compile"
+  },
+  "version": "0.1.0",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [
+      {
+        "name": "agent-base",
+        "version": "1.0.2",
+        "path": "node_modules/agent-base/agent.js"
+      },
+      {
+        "name": "atom-languageclient",
+        "version": "0.4.1",
+        "path": "node_modules/atom-languageclient/build/lib/main.js"
+      },
+      {
+        "name": "debug",
+        "version": "2.6.9",
+        "path": "node_modules/debug/src/index.js"
+      },
+      {
+        "name": "extend",
+        "version": "3.0.1",
+        "path": "node_modules/extend/index.js"
+      },
+      {
+        "name": "fuzzaldrin-plus",
+        "version": "0.4.1",
+        "path": "node_modules/fuzzaldrin-plus/lib/fuzzaldrin.js"
+      },
+      {
+        "name": "http-proxy-agent",
+        "version": "0.2.7",
+        "path": "node_modules/http-proxy-agent/http-proxy-agent.js"
+      },
+      {
+        "name": "https-proxy-agent",
+        "version": "0.3.6",
+        "path": "node_modules/https-proxy-agent/https-proxy-agent.js"
+      },
+      {
+        "name": "jsonc-parser",
+        "version": "0.4.2",
+        "path": "node_modules/jsonc-parser/lib/main.js"
+      },
+      {
+        "name": "ms",
+        "version": "2.0.0",
+        "path": "node_modules/ms/index.js"
+      },
+      {
+        "name": "request-light",
+        "version": "0.2.1",
+        "path": "node_modules/request-light/lib/main.js"
+      },
+      {
+        "name": "vscode-json-languageservice",
+        "version": "2.0.20",
+        "path": "node_modules/vscode-json-languageservice/lib/jsonLanguageService.js"
+      },
+      {
+        "name": "jsonc-parser",
+        "version": "1.0.0",
+        "path": "node_modules/vscode-json-languageservice/node_modules/jsonc-parser/lib/main.js"
+      },
+      {
+        "name": "vscode-jsonrpc",
+        "version": "3.4.1",
+        "path": "node_modules/vscode-jsonrpc/lib/main.js"
+      },
+      {
+        "name": "vscode-languageserver",
+        "version": "3.4.3",
+        "path": "node_modules/vscode-languageserver/lib/main.js"
+      },
+      {
+        "name": "vscode-languageserver-protocol",
+        "version": "3.4.4",
+        "path": "node_modules/vscode-languageserver-protocol/lib/main.js"
+      },
+      {
+        "name": "vscode-languageserver-types",
+        "version": "3.4.0",
+        "path": "node_modules/vscode-languageserver-types/lib/main.js"
+      },
+      {
+        "name": "vscode-nls",
+        "version": "2.0.2",
+        "path": "node_modules/vscode-nls/lib/main.js"
+      },
+      {
+        "name": "vscode-uri",
+        "version": "1.0.1",
+        "path": "node_modules/vscode-uri/lib/index.js"
+      }
+    ],
+    "extensions": {
+      ".js": [
+        "node_modules/agent-base/agent.js",
+        "node_modules/atom-languageclient/.eslintrc.js",
+        "node_modules/atom-languageclient/build/lib/adapters/autocomplete-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/code-format-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/code-highlight-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/datatip-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/definition-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/document-sync-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/find-references-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/linter-push-v2-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/notifications-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/outline-view-adapter.js",
+        "node_modules/atom-languageclient/build/lib/auto-languageclient.js",
+        "node_modules/atom-languageclient/build/lib/convert.js",
+        "node_modules/atom-languageclient/build/lib/download-file.js",
+        "node_modules/atom-languageclient/build/lib/languageclient.js",
+        "node_modules/atom-languageclient/build/lib/logger.js",
+        "node_modules/atom-languageclient/build/lib/main.js",
+        "node_modules/atom-languageclient/build/lib/server-manager.js",
+        "node_modules/atom-languageclient/build/lib/utils.js",
+        "node_modules/atom-languageclient/lib/adapters/autocomplete-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/code-format-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/code-highlight-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/datatip-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/definition-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/document-sync-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/find-references-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/linter-push-v2-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/notifications-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/outline-view-adapter.js",
+        "node_modules/atom-languageclient/lib/auto-languageclient.js",
+        "node_modules/atom-languageclient/lib/convert.js",
+        "node_modules/atom-languageclient/lib/download-file.js",
+        "node_modules/atom-languageclient/lib/languageclient.js",
+        "node_modules/atom-languageclient/lib/logger.js",
+        "node_modules/atom-languageclient/lib/main.js",
+        "node_modules/atom-languageclient/lib/server-manager.js",
+        "node_modules/atom-languageclient/lib/utils.js",
+        "node_modules/debug/karma.conf.js",
+        "node_modules/debug/node.js",
+        "node_modules/debug/src/browser.js",
+        "node_modules/debug/src/debug.js",
+        "node_modules/debug/src/index.js",
+        "node_modules/debug/src/inspector-log.js",
+        "node_modules/debug/src/node.js",
+        "node_modules/extend/index.js",
+        "node_modules/fuzzaldrin-plus/dist-browser/0.3.1/fuzzaldrin-plus.js",
+        "node_modules/fuzzaldrin-plus/dist-browser/0.3.1/fuzzaldrin-plus.min.js",
+        "node_modules/fuzzaldrin-plus/dist-browser/fuzzaldrin-plus.js",
+        "node_modules/fuzzaldrin-plus/dist-browser/fuzzaldrin-plus.min.js",
+        "node_modules/fuzzaldrin-plus/lib/filter.js",
+        "node_modules/fuzzaldrin-plus/lib/fuzzaldrin.js",
+        "node_modules/fuzzaldrin-plus/lib/matcher.js",
+        "node_modules/fuzzaldrin-plus/lib/pathScorer.js",
+        "node_modules/fuzzaldrin-plus/lib/query.js",
+        "node_modules/fuzzaldrin-plus/lib/scorer.js",
+        "node_modules/fuzzaldrin-plus/src/lib/filter.js",
+        "node_modules/fuzzaldrin-plus/src/lib/matcher.js",
+        "node_modules/fuzzaldrin-plus/src/lib/pathScorer.js",
+        "node_modules/fuzzaldrin-plus/src/lib/query.js",
+        "node_modules/fuzzaldrin-plus/src/lib/scorer.js",
+        "node_modules/http-proxy-agent/http-proxy-agent.js",
+        "node_modules/https-proxy-agent/https-proxy-agent.js",
+        "node_modules/jsonc-parser/lib/main.js",
+        "node_modules/ms/index.js",
+        "node_modules/request-light/lib/main.js",
+        "node_modules/vscode-json-languageserver-bin/jsonServerMain.js",
+        "node_modules/vscode-json-languageserver-bin/languageModelCache.js",
+        "node_modules/vscode-json-languageserver-bin/utils/strings.js",
+        "node_modules/vscode-json-languageserver-bin/utils/uri.js",
+        "node_modules/vscode-json-languageservice/lib/jsonContributions.js",
+        "node_modules/vscode-json-languageservice/lib/jsonLanguageService.js",
+        "node_modules/vscode-json-languageservice/lib/jsonSchema.js",
+        "node_modules/vscode-json-languageservice/lib/parser/jsonParser.js",
+        "node_modules/vscode-json-languageservice/lib/services/configuration.js",
+        "node_modules/vscode-json-languageservice/lib/services/jsonCompletion.js",
+        "node_modules/vscode-json-languageservice/lib/services/jsonDocumentSymbols.js",
+        "node_modules/vscode-json-languageservice/lib/services/jsonFormatter.js",
+        "node_modules/vscode-json-languageservice/lib/services/jsonHover.js",
+        "node_modules/vscode-json-languageservice/lib/services/jsonSchemaService.js",
+        "node_modules/vscode-json-languageservice/lib/services/jsonValidation.js",
+        "node_modules/vscode-json-languageservice/lib/utils/colors.js",
+        "node_modules/vscode-json-languageservice/lib/utils/json.js",
+        "node_modules/vscode-json-languageservice/lib/utils/objects.js",
+        "node_modules/vscode-json-languageservice/lib/utils/strings.js",
+        "node_modules/vscode-json-languageservice/node_modules/jsonc-parser/lib/main.js",
+        "node_modules/vscode-jsonrpc/lib/cancellation.js",
+        "node_modules/vscode-jsonrpc/lib/events.js",
+        "node_modules/vscode-jsonrpc/lib/is.js",
+        "node_modules/vscode-jsonrpc/lib/linkedMap.js",
+        "node_modules/vscode-jsonrpc/lib/main.js",
+        "node_modules/vscode-jsonrpc/lib/messageReader.js",
+        "node_modules/vscode-jsonrpc/lib/messageWriter.js",
+        "node_modules/vscode-jsonrpc/lib/messages.js",
+        "node_modules/vscode-jsonrpc/lib/pipeSupport.js",
+        "node_modules/vscode-jsonrpc/lib/thenable.js",
+        "node_modules/vscode-languageserver/lib/configuration.proposed.js",
+        "node_modules/vscode-languageserver/lib/files.js",
+        "node_modules/vscode-languageserver/lib/main.js",
+        "node_modules/vscode-languageserver/lib/resolve.js",
+        "node_modules/vscode-languageserver/lib/thenable.js",
+        "node_modules/vscode-languageserver/lib/utils/is.js",
+        "node_modules/vscode-languageserver/lib/utils/uuid.js",
+        "node_modules/vscode-languageserver/lib/workspaceFolders.proposed.js",
+        "node_modules/vscode-languageserver-protocol/lib/main.js",
+        "node_modules/vscode-languageserver-protocol/lib/protocol.colorProvider.proposed.js",
+        "node_modules/vscode-languageserver-protocol/lib/protocol.configuration.proposed.js",
+        "node_modules/vscode-languageserver-protocol/lib/protocol.js",
+        "node_modules/vscode-languageserver-protocol/lib/protocol.workspaceFolders.proposed.js",
+        "node_modules/vscode-languageserver-protocol/lib/utils/is.js",
+        "node_modules/vscode-languageserver-protocol/types/lib/main.js",
+        "node_modules/vscode-languageserver-types/lib/main.js",
+        "node_modules/vscode-nls/lib/main.js",
+        "node_modules/vscode-uri/lib/index.js"
+      ],
+      ".json": [
+        "node_modules/agent-base/package.json",
+        "node_modules/atom-languageclient/package.json",
+        "node_modules/debug/component.json",
+        "node_modules/debug/package.json",
+        "node_modules/extend/.jscs.json",
+        "node_modules/extend/component.json",
+        "node_modules/extend/package.json",
+        "node_modules/fuzzaldrin-plus/bower.json",
+        "node_modules/fuzzaldrin-plus/demo/movies.json",
+        "node_modules/fuzzaldrin-plus/package.json",
+        "node_modules/http-proxy-agent/package.json",
+        "node_modules/https-proxy-agent/package.json",
+        "node_modules/jsonc-parser/package.json",
+        "node_modules/ms/package.json",
+        "node_modules/request-light/package.json",
+        "node_modules/vscode-json-languageserver-bin/package.json",
+        "node_modules/vscode-json-languageservice/node_modules/jsonc-parser/package.json",
+        "node_modules/vscode-json-languageservice/package.json",
+        "node_modules/vscode-jsonrpc/package.json",
+        "node_modules/vscode-languageserver/package.json",
+        "node_modules/vscode-languageserver-protocol/package.json",
+        "node_modules/vscode-languageserver-types/package.json",
+        "node_modules/vscode-nls/package.json",
+        "node_modules/vscode-uri/.vscode/settings.json",
+        "node_modules/vscode-uri/package.json",
+        "package-lock.json",
+        "package.json",
+        "tsconfig.json"
+      ]
+    },
+    "folders": [
+      {
+        "paths": [
+          "",
+          "spec"
+        ],
+        "dependencies": {
+          "atom-languageclient": "^0.4.0",
+          "fuzzaldrin-plus": "^0.4.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-languageclient",
+          "node_modules/atom-languageclient/build/lib/adapters",
+          "node_modules/atom-languageclient/build/lib",
+          "node_modules/atom-languageclient/build/test/adapters",
+          "node_modules/atom-languageclient/build/test",
+          "node_modules/atom-languageclient/lib/adapters",
+          "node_modules/atom-languageclient/lib",
+          "node_modules/atom-languageclient/test/adapters",
+          "node_modules/atom-languageclient/test"
+        ],
+        "dependencies": {
+          "vscode-jsonrpc": "^3.3.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/debug",
+          "node_modules/debug/src"
+        ],
+        "dependencies": {
+          "ms": "2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/http-proxy-agent",
+          "node_modules/http-proxy-agent/test"
+        ],
+        "dependencies": {
+          "agent-base": "~1.0.1",
+          "debug": "2",
+          "extend": "3"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/https-proxy-agent",
+          "node_modules/https-proxy-agent/test"
+        ],
+        "dependencies": {
+          "agent-base": "~1.0.1",
+          "debug": "2",
+          "extend": "3"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/jsonc-parser/lib",
+          "node_modules/jsonc-parser"
+        ],
+        "dependencies": {
+          "vscode-nls": "^2.0.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/request-light/lib",
+          "node_modules/request-light"
+        ],
+        "dependencies": {
+          "http-proxy-agent": "^0.2.6",
+          "https-proxy-agent": "^0.3.5",
+          "vscode-nls": "^2.0.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/vscode-json-languageserver-bin",
+          "node_modules/vscode-json-languageserver-bin/utils"
+        ],
+        "dependencies": {
+          "jsonc-parser": "^0.4.2",
+          "request-light": "^0.2.1",
+          "vscode-json-languageservice": "^2.0.13",
+          "vscode-languageserver": "^3.1.0-alpha.1",
+          "vscode-nls": "^2.0.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/vscode-json-languageservice/lib",
+          "node_modules/vscode-json-languageservice/lib/parser",
+          "node_modules/vscode-json-languageservice/lib/services",
+          "node_modules/vscode-json-languageservice/lib/utils",
+          "node_modules/vscode-json-languageservice"
+        ],
+        "dependencies": {
+          "jsonc-parser": "^1.0.0",
+          "vscode-languageserver-types": "^3.4.0",
+          "vscode-nls": "^2.0.2",
+          "vscode-uri": "^1.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/vscode-languageserver/lib",
+          "node_modules/vscode-languageserver/lib/utils",
+          "node_modules/vscode-languageserver"
+        ],
+        "dependencies": {
+          "vscode-languageserver-protocol": "^3.4.1",
+          "vscode-uri": "^1.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/vscode-languageserver-protocol/lib",
+          "node_modules/vscode-languageserver-protocol/lib/utils",
+          "node_modules/vscode-languageserver-protocol",
+          "node_modules/vscode-languageserver-protocol/types/lib",
+          "node_modules/vscode-languageserver-protocol/types/lib/test"
+        ],
+        "dependencies": {
+          "vscode-jsonrpc": "^3.4.1",
+          "vscode-languageserver-types": "^3.4.0"
+        }
+      }
+    ]
+  }
+}

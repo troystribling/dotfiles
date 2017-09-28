@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
+        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42420-oi1lgn.tkqqrjatt9/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
-        "spec": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
+        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42420-oi1lgn.tkqqrjatt9/package.tgz",
+        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42420-oi1lgn.tkqqrjatt9/package.tgz",
         "type": "local"
       },
-      "/private/tmp/apm-install-dir-11783-59950-os3o72.1s2qgmbo6r"
+      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117828-42420-2vv5td.4x4vq2gldi"
     ]
   ],
-  "_from": "../d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
-  "_id": "markdown-pdf@2.0.4",
+  "_from": "../d-117828-42420-oi1lgn.tkqqrjatt9/package.tgz",
+  "_id": "markdown-pdf@2.1.0",
   "_inCache": true,
   "_location": "/markdown-pdf",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
+    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42420-oi1lgn.tkqqrjatt9/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
-    "spec": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
+    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42420-oi1lgn.tkqqrjatt9/package.tgz",
+    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42420-oi1lgn.tkqqrjatt9/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
-  "_shasum": "577a59d634e9a5ca6225d9e6b3cede533ddd990f",
+  "_resolved": "file:../d-117828-42420-oi1lgn.tkqqrjatt9/package.tgz",
+  "_shasum": "3eb4ab355a0dfcf36b5aba29143cba591f3cbe4e",
   "_shrinkwrap": null,
-  "_spec": "/private/tmp/d-11783-59950-ovgrpx.0fy0wo2yb9/package.tgz",
-  "_where": "/private/tmp/apm-install-dir-11783-59950-os3o72.1s2qgmbo6r",
+  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42420-oi1lgn.tkqqrjatt9/package.tgz",
+  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117828-42420-2vv5td.4x4vq2gldi",
   "activationCommands": {
     "atom-workspace": "markdown-pdf:convert"
   },
@@ -64,13 +64,13 @@
   "main": "./lib/markdown-pdf",
   "name": "markdown-pdf",
   "optionalDependencies": {},
-  "readme": "## [Markdown to PDF](https://atom.io/packages/markdown-pdf)\n\nConvert markdown-formatted documents to pdf files without ever leaving Atom.\n\n### Usage\nJust focus the window containing your markdown file and use the `convert` command.\n\nThe output PDF will be styled similar to the markdown on `github.com`, as well as any user styles you have added.\nIt will appear in the same directory as the Markdown you are converting, with the same name and a `.pdf` extension.\n\n![markdown-pdf](https://raw.githubusercontent.com/travs/markdown-pdf/master/assets/testpdf.png)\n\nYou can set parameters in the package's settings, such as page and border size.\n\n#### Heart it? Hate it?\nFeel free to run `apm star 'markdown-pdf'` or give some feedback :smile:\n\n##### Special thanks to these folks\n\n- [@BlueHatbRit](https://github.com/blueHatbRit): for helping integrate the essential [`mdpdf`](https://github.com/bluehatbrit/mdpdf) converter module\n- [@schmurphy](https://github.com/NKMR6194): [#11](https://github.com/travs/markdown-pdf/pull/11)\n- [@NKMR6194](https://github.com/NKMR6194): [#51](https://github.com/travs/markdown-pdf/pull/51), [#83](https://github.com/travs/markdown-pdf/pull/83)\n- [@Nicnl](https://github.com/Nicnl): [#28](https://github.com/travs/markdown-pdf/pull/28)\n- [@brianchung808](https://github.com/brianchung808): [#34](https://github.com/travs/markdown-pdf/pull/34)\n- [@hdmi](https://github.com/hdmi): [#53](https://github.com/travs/markdown-pdf/pull/53)\n- [@CumpsD](https://github.com/CumpsD): [#59](https://github.com/travs/markdown-pdf/pull/59)\n- [@pydolan](https://github.com/pydolan): [#72](https://github.com/travs/markdown-pdf/pull/72), [#74](https://github.com/travs/markdown-pdf/pull/74)\n- [@Galadirith](https://github.com/Galadirith): [#88](https://github.com/travs/markdown-pdf/pull/88)\n\n##### My other Atom package\n\nIf you're using Atom to develop Atom, you could use a [devtools upgrade](https://github.com/travs/dev-tools-themes).\n",
+  "readme": "## [Markdown to PDF](https://atom.io/packages/markdown-pdf)\n\nConvert markdown-formatted documents to pdf files without ever leaving Atom.\n\n### Usage\nJust focus the window containing your markdown file and use the `convert` command (`Packages > Markdown PDF > Convert`).\n\nThe output PDF will be styled similar to the markdown on `github.com`, as well as any [user styles](https://flight-manual.atom.io/using-atom/sections/basic-customization/#style-tweaks) you have added.\n\nIt will appear in the same directory as the Markdown you are converting, with the same name and a `.pdf` extension.\n\n![markdown-pdf](https://raw.githubusercontent.com/travs/markdown-pdf/master/assets/testpdf.png)\n\nYou can set parameters in the package's settings, such as page and border size.\n\n#### Heart it? Hate it?\nFeel free to run `apm star 'markdown-pdf'` or give some feedback :smile:\n\n##### Special thanks to these folks\n\n- [@BlueHatbRit](https://github.com/blueHatbRit): for helping integrate the essential [`mdpdf`](https://github.com/bluehatbrit/mdpdf) converter module\n- [@schmurphy](https://github.com/NKMR6194): [#11](https://github.com/travs/markdown-pdf/pull/11)\n- [@NKMR6194](https://github.com/NKMR6194): [#51](https://github.com/travs/markdown-pdf/pull/51), [#83](https://github.com/travs/markdown-pdf/pull/83)\n- [@Nicnl](https://github.com/Nicnl): [#28](https://github.com/travs/markdown-pdf/pull/28)\n- [@brianchung808](https://github.com/brianchung808): [#34](https://github.com/travs/markdown-pdf/pull/34)\n- [@hdmi](https://github.com/hdmi): [#53](https://github.com/travs/markdown-pdf/pull/53)\n- [@CumpsD](https://github.com/CumpsD): [#59](https://github.com/travs/markdown-pdf/pull/59)\n- [@pydolan](https://github.com/pydolan): [#72](https://github.com/travs/markdown-pdf/pull/72), [#74](https://github.com/travs/markdown-pdf/pull/74)\n- [@Galadirith](https://github.com/Galadirith): [#88](https://github.com/travs/markdown-pdf/pull/88)\n\n##### My other Atom package\n\nIf you're using Atom to develop Atom, you could use a [devtools upgrade](https://github.com/travs/dev-tools-themes).\n",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/travs/markdown-pdf.git"
   },
-  "version": "2.0.4",
+  "version": "2.1.0",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -311,7 +311,7 @@
       },
       {
         "name": "emojer",
-        "version": "1.0.6",
+        "version": "1.0.7",
         "path": "node_modules/emojer/lib/index.js"
       },
       {
@@ -716,7 +716,7 @@
       },
       {
         "name": "match-all",
-        "version": "1.2.2",
+        "version": "1.2.3",
         "path": "node_modules/match-all/lib/index.js"
       },
       {
@@ -726,7 +726,7 @@
       },
       {
         "name": "html-pdf",
-        "version": "2.1.0",
+        "version": "2.2.0",
         "path": "node_modules/mdpdf/node_modules/html-pdf/lib/index.js"
       },
       {
@@ -746,7 +746,7 @@
       },
       {
         "name": "mime",
-        "version": "1.4.0",
+        "version": "1.4.1",
         "path": "node_modules/mime/mime.js"
       },
       {
@@ -946,12 +946,12 @@
       },
       {
         "name": "regex-emoji",
-        "version": "2.0.5",
+        "version": "2.0.6",
         "path": "node_modules/regex-emoji/lib/index.js"
       },
       {
         "name": "regex-escape",
-        "version": "3.4.6",
+        "version": "3.4.7",
         "path": "node_modules/regex-escape/lib/index.js"
       },
       {
@@ -1016,7 +1016,7 @@
       },
       {
         "name": "showdown",
-        "version": "1.7.3",
+        "version": "1.7.4",
         "path": "node_modules/showdown/dist/showdown.js"
       },
       {
@@ -1176,7 +1176,7 @@
       },
       {
         "name": "tough-cookie",
-        "version": "2.3.2",
+        "version": "2.3.3",
         "path": "node_modules/tough-cookie/lib/cookie.js"
       },
       {
@@ -1944,6 +1944,7 @@
         "node_modules/mdpdf/examples/api/index.js",
         "node_modules/mdpdf/index.js",
         "node_modules/mdpdf/node_modules/html-pdf/bin/index.js",
+        "node_modules/mdpdf/node_modules/html-pdf/examples/serve-http/index.js",
         "node_modules/mdpdf/node_modules/html-pdf/lib/index.js",
         "node_modules/mdpdf/node_modules/html-pdf/lib/pdf.js",
         "node_modules/mdpdf/node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js",
@@ -3334,6 +3335,7 @@
       {
         "paths": [
           "node_modules/mdpdf/node_modules/html-pdf/bin",
+          "node_modules/mdpdf/node_modules/html-pdf/examples/serve-http",
           "node_modules/mdpdf/node_modules/html-pdf/lib",
           "node_modules/mdpdf/node_modules/html-pdf/lib/scripts",
           "node_modules/mdpdf/node_modules/html-pdf"

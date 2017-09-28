@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53277-blm5jg.cf7mi2uik9/package.tgz",
+        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42126-1tnc57a.53hl0daemi/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53277-blm5jg.cf7mi2uik9/package.tgz",
-        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53277-blm5jg.cf7mi2uik9/package.tgz",
+        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42126-1tnc57a.53hl0daemi/package.tgz",
+        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42126-1tnc57a.53hl0daemi/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-11781-53277-at78ev.x4fft21emi"
+      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117828-42126-8dzxd.8p2mfe0zfr"
     ]
   ],
-  "_from": "../d-11781-53277-blm5jg.cf7mi2uik9/package.tgz",
-  "_id": "autocomplete-python@1.10.2",
+  "_from": "../d-117828-42126-1tnc57a.53hl0daemi/package.tgz",
+  "_id": "autocomplete-python@1.10.3",
   "_inCache": true,
   "_location": "/autocomplete-python",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53277-blm5jg.cf7mi2uik9/package.tgz",
+    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42126-1tnc57a.53hl0daemi/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53277-blm5jg.cf7mi2uik9/package.tgz",
-    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53277-blm5jg.cf7mi2uik9/package.tgz",
+    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42126-1tnc57a.53hl0daemi/package.tgz",
+    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42126-1tnc57a.53hl0daemi/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-11781-53277-blm5jg.cf7mi2uik9/package.tgz",
-  "_shasum": "ce76f37d1aedb8a868bcef9ccb3518dcff35abd1",
+  "_resolved": "file:../d-117828-42126-1tnc57a.53hl0daemi/package.tgz",
+  "_shasum": "aa27016a3d2165de20ce27c5c523e155e5a7d4f0",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11781-53277-blm5jg.cf7mi2uik9/package.tgz",
-  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-11781-53277-at78ev.x4fft21emi",
+  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42126-1tnc57a.53hl0daemi/package.tgz",
+  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117828-42126-8dzxd.8p2mfe0zfr",
   "bugs": {
     "url": "https://github.com/autocomplete-python/autocomplete-python/issues"
   },
@@ -99,7 +99,7 @@
     "type": "git",
     "url": "git+https://github.com/autocomplete-python/autocomplete-python.git"
   },
-  "version": "1.10.2",
+  "version": "1.10.3",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [

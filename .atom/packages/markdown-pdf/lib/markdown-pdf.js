@@ -3,6 +3,7 @@ let fs;
 let fallback;
 let less;
 let mdpdf;
+let os;
 let path;
 let tmp;
 let util;
@@ -12,6 +13,7 @@ function loadDeps() {
   fallback = require('./fallback');
   less = require('less');
   mdpdf = require('mdpdf');
+  os = require('os');
   path = require('path');
   tmp = require('tmp');
   util = require('./util');
@@ -29,6 +31,18 @@ module.exports = {
       'title': 'Border Size',
       'type': 'string',
       'default': '20mm'
+    },
+    'emoji': {
+      'title': 'Enable Emojis',
+      'description': 'Convert :tagname: style tags to Emojis',
+      'type': 'boolean',
+      'default': true
+    },
+    'forceFallback': {
+      'title': 'Force Fallback Mode',
+      'description': 'Legacy code. Not all config options supported.',
+      'type': 'boolean',
+      'default': false
     }
   },
 
@@ -40,14 +54,20 @@ module.exports = {
   convert: async function() {
     try{
       const conf = atom.config.get('markdown-pdf');
+      if(conf.forceFallback) {
+        throw new Error('Forcing fallback mode');
+      }
       const activeEditor = atom.workspace.getActiveTextEditor();
       const inPath = activeEditor.getPath();
       const outPath = util.getOutputPath(inPath);
+      const debugPath = path.join(os.tmpdir(), 'debug.html');
       const options = {
+        debug: debugPath,
         source: inPath,
         destination: outPath,
         ghStyle: true,
         defaultStyle: true,
+        noEmoji: !conf.emoji,
         pdf: {
           format: conf.format,
           quality: 100,
@@ -62,13 +82,12 @@ module.exports = {
             left: conf.border,
             bottom: conf.border,
             right: conf.border
-          }
+          },
         }
       };
       let sheetPath = atom.styles.getUserStyleSheetPath();
       const pathObj = path.parse(sheetPath);
       if(pathObj.ext === '.less') {
-        const cssPath = path.join(pathObj.dir, pathObj.name + '.css');
         const lessData = fs.readFileSync(sheetPath, 'utf8');
         sheetPath = tmp.tmpNameSync();
         const rendered = await less.render(lessData);

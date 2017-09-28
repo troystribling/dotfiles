@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
+        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42409-3tf8n7.2uovpfogvi/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
-        "spec": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
+        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42409-3tf8n7.2uovpfogvi/package.tgz",
+        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42409-3tf8n7.2uovpfogvi/package.tgz",
         "type": "local"
       },
-      "/private/tmp/apm-install-dir-11783-59928-yqmfzf.djnstt9"
+      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117828-42409-1rtzklx.wxbv12lnmi"
     ]
   ],
-  "_from": "../d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
-  "_id": "Hydrogen@1.21.1",
+  "_from": "../d-117828-42409-3tf8n7.2uovpfogvi/package.tgz",
+  "_id": "Hydrogen@1.23.0",
   "_inCache": true,
   "_location": "/Hydrogen",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
+    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42409-3tf8n7.2uovpfogvi/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
-    "spec": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
+    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42409-3tf8n7.2uovpfogvi/package.tgz",
+    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42409-3tf8n7.2uovpfogvi/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
-  "_shasum": "babdb3888080aec7c69db091826ea70388058e58",
+  "_resolved": "file:../d-117828-42409-3tf8n7.2uovpfogvi/package.tgz",
+  "_shasum": "96697dc7eb2673c8eb3ec39804ef1a43e9e91be9",
   "_shrinkwrap": null,
-  "_spec": "/private/tmp/d-11783-59928-agq635.jkkdvuc8fr/package.tgz",
-  "_where": "/private/tmp/apm-install-dir-11783-59928-yqmfzf.djnstt9",
+  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117828-42409-3tf8n7.2uovpfogvi/package.tgz",
+  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117828-42409-1rtzklx.wxbv12lnmi",
   "activationCommands": {
     "atom-text-editor": [
       "hydrogen:select-kernel",
@@ -51,8 +51,7 @@
   },
   "atomTestRunner": "atom-jasmine2-test-runner",
   "author": {
-    "name": "Will Whitney",
-    "email": "me@willwhitney.com"
+    "name": "nteract contributors"
   },
   "bugs": {
     "url": "https://github.com/nteract/hydrogen/issues"
@@ -68,13 +67,14 @@
     "@jupyterlab/services": "^0.42.0",
     "@nteract/display-area": "^2.4.0",
     "@nteract/transform-plotly": "^2.2.0",
+    "@nteract/transform-vega": "^2.2.0",
     "@nteract/transforms": "^2.4.0",
-    "atom-select-list": "^0.2.0",
+    "anser": "^1.4.3",
+    "atom-select-list": "^0.3.0",
     "escape-carriage": "^1.2.0",
     "escape-string-regexp": "^1.0.5",
     "jmp": "^0.7.5",
     "lodash": "^4.14.0",
-    "loophole": "^1.1.0",
     "mobx": "^3.1.11",
     "mobx-react": "^4.2.1",
     "react": "^15.5.4",
@@ -87,20 +87,20 @@
     "ws": "^2.0.0",
     "xmlhttprequest": "^1.8.0"
   },
-  "description": "Run code and get results inline using Jupyter kernels like IPython, IJulia, and iTorch",
+  "description": "Run code interactively, inspect data, and plot. All the power of Jupyter kernels, inside your favorite text editor.",
   "devDependencies": {
     "atom-jasmine2-test-runner": "^1.0.0",
     "enzyme": "^2.8.2",
-    "flow-bin": "^0.54.0",
+    "flow-bin": "^0.55.0",
     "husky": "^0.14.0",
     "lint-staged": "^4.0.0",
     "markdox": "^0.1.10",
     "mobx-react-devtools": "^4.2.11",
-    "prettier": "1.6.1",
+    "prettier": "1.7.0",
     "react-test-renderer": "^15.5.4"
   },
   "engines": {
-    "atom": ">=1.17.0 <2.0.0"
+    "atom": ">=1.20.0 <2.0.0"
   },
   "homepage": "https://github.com/nteract/hydrogen#readme",
   "keywords": [
@@ -112,6 +112,7 @@
     "python",
     "torch",
     "ijulia",
+    "irkernel",
     "itorch",
     "plot",
     "image"
@@ -150,13 +151,28 @@
     "precommit": "lint-staged",
     "prettier": "prettier --write 'lib/**/*.js' 'spec/**/*.js'"
   },
-  "version": "1.21.1",
+  "version": "1.23.0",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
       {
+        "name": "acorn",
+        "version": "5.1.2",
+        "path": "node_modules/acorn/dist/acorn.js"
+      },
+      {
+        "name": "ajv",
+        "version": "5.2.3",
+        "path": "node_modules/ajv/lib/ajv.js"
+      },
+      {
+        "name": "amdefine",
+        "version": "1.0.1",
+        "path": "node_modules/amdefine/amdefine.js"
+      },
+      {
         "name": "anser",
-        "version": "1.4.1",
+        "version": "1.4.3",
         "path": "node_modules/anser/lib/index.js"
       },
       {
@@ -166,12 +182,12 @@
       },
       {
         "name": "ansi-to-react",
-        "version": "1.6.0",
+        "version": "1.6.1",
         "path": "node_modules/ansi-to-react/lib/index.js"
       },
       {
         "name": "aproba",
-        "version": "1.1.2",
+        "version": "1.2.0",
         "path": "node_modules/aproba/index.js"
       },
       {
@@ -185,14 +201,39 @@
         "path": "node_modules/asap/asap.js"
       },
       {
+        "name": "asn1",
+        "version": "0.2.3",
+        "path": "node_modules/asn1/lib/index.js"
+      },
+      {
+        "name": "assert-plus",
+        "version": "1.0.0",
+        "path": "node_modules/assert-plus/assert.js"
+      },
+      {
         "name": "async",
         "version": "1.5.2",
         "path": "node_modules/async/lib/async.js"
       },
       {
+        "name": "asynckit",
+        "version": "0.4.0",
+        "path": "node_modules/asynckit/index.js"
+      },
+      {
         "name": "atom-select-list",
-        "version": "0.2.0",
+        "version": "0.3.0",
         "path": "node_modules/atom-select-list/src/select-list-view.js"
+      },
+      {
+        "name": "aws-sign2",
+        "version": "0.7.0",
+        "path": "node_modules/aws-sign2/index.js"
+      },
+      {
+        "name": "aws4",
+        "version": "1.6.0",
+        "path": "node_modules/aws4/aws4.js"
       },
       {
         "name": "base16",
@@ -200,9 +241,44 @@
         "path": "node_modules/base16/lib/index.js"
       },
       {
+        "name": "bcrypt-pbkdf",
+        "version": "1.0.1",
+        "path": "node_modules/bcrypt-pbkdf/index.js"
+      },
+      {
         "name": "bl",
         "version": "1.2.1",
         "path": "node_modules/bl/bl.js"
+      },
+      {
+        "name": "boom",
+        "version": "4.3.1",
+        "path": "node_modules/boom/lib/index.js"
+      },
+      {
+        "name": "brfs",
+        "version": "1.4.3",
+        "path": "node_modules/brfs/index.js"
+      },
+      {
+        "name": "buffer-equal",
+        "version": "0.0.1",
+        "path": "node_modules/buffer-equal/index.js"
+      },
+      {
+        "name": "builtin-modules",
+        "version": "1.1.1",
+        "path": "node_modules/builtin-modules/index.js"
+      },
+      {
+        "name": "camelcase",
+        "version": "2.1.1",
+        "path": "node_modules/camelcase/index.js"
+      },
+      {
+        "name": "caseless",
+        "version": "0.12.0",
+        "path": "node_modules/caseless/index.js"
       },
       {
         "name": "chownr",
@@ -215,9 +291,24 @@
         "path": "node_modules/classnames/index.js"
       },
       {
+        "name": "cliui",
+        "version": "3.2.0",
+        "path": "node_modules/cliui/index.js"
+      },
+      {
+        "name": "co",
+        "version": "4.6.0",
+        "path": "node_modules/co/index.js"
+      },
+      {
         "name": "code-point-at",
         "version": "1.1.0",
         "path": "node_modules/code-point-at/index.js"
+      },
+      {
+        "name": "combined-stream",
+        "version": "1.0.5",
+        "path": "node_modules/combined-stream/lib/combined_stream.js"
       },
       {
         "name": "commonmark",
@@ -228,6 +319,11 @@
         "name": "commonmark-react-renderer",
         "version": "4.3.3",
         "path": "node_modules/commonmark-react-renderer/src/commonmark-react-renderer.js"
+      },
+      {
+        "name": "concat-stream",
+        "version": "1.6.0",
+        "path": "node_modules/concat-stream/index.js"
       },
       {
         "name": "console-control-strings",
@@ -246,13 +342,83 @@
       },
       {
         "name": "create-react-class",
-        "version": "15.6.0",
+        "version": "15.6.2",
         "path": "node_modules/create-react-class/index.js"
       },
       {
+        "name": "cryptiles",
+        "version": "3.1.2",
+        "path": "node_modules/cryptiles/lib/index.js"
+      },
+      {
+        "name": "boom",
+        "version": "5.2.0",
+        "path": "node_modules/cryptiles/node_modules/boom/lib/index.js"
+      },
+      {
+        "name": "d3",
+        "version": "3.5.17",
+        "path": "node_modules/d3/d3.js"
+      },
+      {
+        "name": "d3-cloud",
+        "version": "1.2.4",
+        "path": "node_modules/d3-cloud/index.js"
+      },
+      {
+        "name": "d3-dispatch",
+        "version": "1.0.3",
+        "path": "node_modules/d3-dispatch/build/d3-dispatch.js"
+      },
+      {
+        "name": "d3-dsv",
+        "version": "0.1.14",
+        "path": "node_modules/d3-dsv/build/d3-dsv.js"
+      },
+      {
+        "name": "d3-format",
+        "version": "0.4.2",
+        "path": "node_modules/d3-format/build/d3-format.js"
+      },
+      {
+        "name": "d3-geo-projection",
+        "version": "0.2.16",
+        "path": "node_modules/d3-geo-projection/index.js"
+      },
+      {
+        "name": "d3-queue",
+        "version": "2.0.3",
+        "path": "node_modules/d3-queue/build/d3-queue.js"
+      },
+      {
+        "name": "d3-time",
+        "version": "0.1.1",
+        "path": "node_modules/d3-time/build/d3-time.js"
+      },
+      {
+        "name": "d3-time-format",
+        "version": "0.2.1",
+        "path": "node_modules/d3-time-format/build/d3-time-format.js"
+      },
+      {
+        "name": "dashdash",
+        "version": "1.14.1",
+        "path": "node_modules/dashdash/lib/dashdash.js"
+      },
+      {
+        "name": "datalib",
+        "version": "1.8.0",
+        "path": "node_modules/datalib/src/index.js"
+      },
+      {
         "name": "debug",
-        "version": "2.6.8",
+        "version": "2.6.9",
         "path": "node_modules/debug/src/index.js"
+      },
+      {
+        "name": "decamelize",
+        "version": "1.2.0",
+        "path": "node_modules/decamelize/index.js"
       },
       {
         "name": "deep-extend",
@@ -260,9 +426,39 @@
         "path": "node_modules/deep-extend/lib/deep-extend.js"
       },
       {
+        "name": "delayed-stream",
+        "version": "1.0.0",
+        "path": "node_modules/delayed-stream/lib/delayed_stream.js"
+      },
+      {
         "name": "delegates",
         "version": "1.0.0",
         "path": "node_modules/delegates/index.js"
+      },
+      {
+        "name": "duplexer2",
+        "version": "0.0.2",
+        "path": "node_modules/duplexer2/index.js"
+      },
+      {
+        "name": "isarray",
+        "version": "0.0.1",
+        "path": "node_modules/duplexer2/node_modules/isarray/index.js"
+      },
+      {
+        "name": "readable-stream",
+        "version": "1.1.14",
+        "path": "node_modules/duplexer2/node_modules/readable-stream/readable.js"
+      },
+      {
+        "name": "string_decoder",
+        "version": "0.10.31",
+        "path": "node_modules/duplexer2/node_modules/string_decoder/index.js"
+      },
+      {
+        "name": "ecc-jsbn",
+        "version": "0.1.1",
+        "path": "node_modules/ecc-jsbn/index.js"
       },
       {
         "name": "encoding",
@@ -280,6 +476,11 @@
         "path": "node_modules/entities/index.js"
       },
       {
+        "name": "error-ex",
+        "version": "1.3.1",
+        "path": "node_modules/error-ex/index.js"
+      },
+      {
         "name": "escape-carriage",
         "version": "1.2.0",
         "path": "node_modules/escape-carriage/index.js"
@@ -288,6 +489,26 @@
         "name": "escape-string-regexp",
         "version": "1.0.5",
         "path": "node_modules/escape-string-regexp/index.js"
+      },
+      {
+        "name": "escodegen",
+        "version": "1.3.3",
+        "path": "node_modules/escodegen/escodegen.js"
+      },
+      {
+        "name": "esprima",
+        "version": "1.1.1",
+        "path": "node_modules/esprima/esprima.js"
+      },
+      {
+        "name": "estraverse",
+        "version": "1.5.1",
+        "path": "node_modules/estraverse/estraverse.js"
+      },
+      {
+        "name": "esutils",
+        "version": "1.0.0",
+        "path": "node_modules/esutils/lib/utils.js"
       },
       {
         "name": "etch",
@@ -300,14 +521,64 @@
         "path": "node_modules/expand-template/index.js"
       },
       {
+        "name": "extend",
+        "version": "3.0.1",
+        "path": "node_modules/extend/index.js"
+      },
+      {
+        "name": "extsprintf",
+        "version": "1.3.0",
+        "path": "node_modules/extsprintf/lib/extsprintf.js"
+      },
+      {
+        "name": "falafel",
+        "version": "2.1.0",
+        "path": "node_modules/falafel/index.js"
+      },
+      {
+        "name": "isarray",
+        "version": "0.0.1",
+        "path": "node_modules/falafel/node_modules/isarray/index.js"
+      },
+      {
+        "name": "fast-deep-equal",
+        "version": "1.0.0",
+        "path": "node_modules/fast-deep-equal/index.js"
+      },
+      {
         "name": "fbjs",
-        "version": "0.8.14",
+        "version": "0.8.16",
         "path": "node_modules/fbjs/index.js"
       },
       {
         "name": "core-js",
         "version": "1.2.7",
         "path": "node_modules/fbjs/node_modules/core-js/index.js"
+      },
+      {
+        "name": "find-up",
+        "version": "1.1.2",
+        "path": "node_modules/find-up/index.js"
+      },
+      {
+        "name": "foreach",
+        "version": "2.0.5",
+        "path": "node_modules/foreach/index.js"
+      },
+      {
+        "name": "forever-agent",
+        "version": "0.6.1",
+        "path": "node_modules/forever-agent/index.js"
+      },
+      {
+        "name": "form-data",
+        "version": "2.3.1",
+        "path": "node_modules/form-data/lib/form_data.js"
+      },
+      {
+        "name": "function-bind",
+        "version": "1.1.1",
+        "path": "node_modules/function-bind/index.js"
       },
       {
         "name": "fuzzaldrin",
@@ -320,6 +591,16 @@
         "path": "node_modules/gauge/index.js"
       },
       {
+        "name": "get-caller-file",
+        "version": "1.0.2",
+        "path": "node_modules/get-caller-file/index.js"
+      },
+      {
+        "name": "getpass",
+        "version": "0.1.7",
+        "path": "node_modules/getpass/lib/index.js"
+      },
+      {
         "name": "github-from-package",
         "version": "0.0.0",
         "path": "node_modules/github-from-package/index.js"
@@ -330,13 +611,38 @@
         "path": "node_modules/graceful-fs/graceful-fs.js"
       },
       {
+        "name": "har-schema",
+        "version": "2.0.0",
+        "path": "node_modules/har-schema/lib/index.js"
+      },
+      {
+        "name": "har-validator",
+        "version": "5.0.3",
+        "path": "node_modules/har-validator/lib/promise.js"
+      },
+      {
+        "name": "has",
+        "version": "1.0.1",
+        "path": "node_modules/has/src/index.js"
+      },
+      {
         "name": "has-unicode",
         "version": "2.0.1",
         "path": "node_modules/has-unicode/index.js"
       },
       {
+        "name": "hawk",
+        "version": "6.0.2",
+        "path": "node_modules/hawk/lib/index.js"
+      },
+      {
+        "name": "hoek",
+        "version": "4.2.0",
+        "path": "node_modules/hoek/lib/index.js"
+      },
+      {
         "name": "hoist-non-react-statics",
-        "version": "1.2.0",
+        "version": "2.3.1",
         "path": "node_modules/hoist-non-react-statics/index.js"
       },
       {
@@ -345,8 +651,33 @@
         "path": "node_modules/home-dir/index.js"
       },
       {
+        "name": "hosted-git-info",
+        "version": "2.5.0",
+        "path": "node_modules/hosted-git-info/index.js"
+      },
+      {
+        "name": "http-basic",
+        "version": "2.5.1",
+        "path": "node_modules/http-basic/index.js"
+      },
+      {
+        "name": "caseless",
+        "version": "0.11.0",
+        "path": "node_modules/http-basic/node_modules/caseless/index.js"
+      },
+      {
+        "name": "http-response-object",
+        "version": "1.1.0",
+        "path": "node_modules/http-response-object/index.js"
+      },
+      {
+        "name": "http-signature",
+        "version": "1.2.0",
+        "path": "node_modules/http-signature/lib/index.js"
+      },
+      {
         "name": "iconv-lite",
-        "version": "0.4.18",
+        "version": "0.4.19",
         "path": "node_modules/iconv-lite/lib/index.js"
       },
       {
@@ -365,6 +696,21 @@
         "path": "node_modules/ini/ini.js"
       },
       {
+        "name": "invert-kv",
+        "version": "1.0.0",
+        "path": "node_modules/invert-kv/index.js"
+      },
+      {
+        "name": "is-arrayish",
+        "version": "0.2.1",
+        "path": "node_modules/is-arrayish/index.js"
+      },
+      {
+        "name": "is-builtin-module",
+        "version": "1.0.0",
+        "path": "node_modules/is-builtin-module/index.js"
+      },
+      {
         "name": "is-fullwidth-code-point",
         "version": "1.0.0",
         "path": "node_modules/is-fullwidth-code-point/index.js"
@@ -373,6 +719,16 @@
         "name": "is-stream",
         "version": "1.1.0",
         "path": "node_modules/is-stream/index.js"
+      },
+      {
+        "name": "is-typedarray",
+        "version": "1.0.0",
+        "path": "node_modules/is-typedarray/index.js"
+      },
+      {
+        "name": "is-utf8",
+        "version": "0.2.1",
+        "path": "node_modules/is-utf8/is-utf8.js"
       },
       {
         "name": "isarray",
@@ -385,6 +741,11 @@
         "path": "node_modules/isomorphic-fetch/fetch-npm-node.js"
       },
       {
+        "name": "isstream",
+        "version": "0.1.2",
+        "path": "node_modules/isstream/isstream.js"
+      },
+      {
         "name": "jmp",
         "version": "0.7.5",
         "path": "node_modules/jmp/index.js"
@@ -395,9 +756,44 @@
         "path": "node_modules/js-tokens/index.js"
       },
       {
+        "name": "jsbn",
+        "version": "0.1.1",
+        "path": "node_modules/jsbn/index.js"
+      },
+      {
+        "name": "json-schema",
+        "version": "0.2.3",
+        "path": "node_modules/json-schema/lib/validate.js"
+      },
+      {
+        "name": "json-schema-traverse",
+        "version": "0.3.1",
+        "path": "node_modules/json-schema-traverse/index.js"
+      },
+      {
+        "name": "json-stable-stringify",
+        "version": "1.0.1",
+        "path": "node_modules/json-stable-stringify/index.js"
+      },
+      {
+        "name": "json-stringify-safe",
+        "version": "5.0.1",
+        "path": "node_modules/json-stringify-safe/stringify.js"
+      },
+      {
         "name": "jsonfile",
         "version": "3.0.1",
         "path": "node_modules/jsonfile/index.js"
+      },
+      {
+        "name": "jsonify",
+        "version": "0.0.0",
+        "path": "node_modules/jsonify/index.js"
+      },
+      {
+        "name": "jsprim",
+        "version": "1.4.1",
+        "path": "node_modules/jsprim/lib/jsprim.js"
       },
       {
         "name": "jupyter-paths",
@@ -408,6 +804,16 @@
         "name": "kernelspecs",
         "version": "2.0.0",
         "path": "node_modules/kernelspecs/index.js"
+      },
+      {
+        "name": "lcid",
+        "version": "1.0.0",
+        "path": "node_modules/lcid/index.js"
+      },
+      {
+        "name": "load-json-file",
+        "version": "1.1.0",
+        "path": "node_modules/load-json-file/index.js"
       },
       {
         "name": "lodash",
@@ -435,11 +841,6 @@
         "path": "node_modules/lodash.isplainobject/index.js"
       },
       {
-        "name": "loophole",
-        "version": "1.1.0",
-        "path": "node_modules/loophole/lib/loophole.js"
-      },
-      {
         "name": "loose-envify",
         "version": "1.3.1",
         "path": "node_modules/loose-envify/index.js"
@@ -453,6 +854,16 @@
         "name": "mdurl",
         "version": "1.0.1",
         "path": "node_modules/mdurl/index.js"
+      },
+      {
+        "name": "mime-db",
+        "version": "1.30.0",
+        "path": "node_modules/mime-db/index.js"
+      },
+      {
+        "name": "mime-types",
+        "version": "2.1.17",
+        "path": "node_modules/mime-types/index.js"
       },
       {
         "name": "minimist",
@@ -471,12 +882,12 @@
       },
       {
         "name": "mobx",
-        "version": "3.2.2",
+        "version": "3.3.0",
         "path": "node_modules/mobx/lib/mobx.js"
       },
       {
         "name": "mobx-react",
-        "version": "4.2.2",
+        "version": "4.3.3",
         "path": "node_modules/mobx-react/index.js"
       },
       {
@@ -501,13 +912,18 @@
       },
       {
         "name": "node-fetch",
-        "version": "1.7.2",
+        "version": "1.7.3",
         "path": "node_modules/node-fetch/index.js"
       },
       {
         "name": "noop-logger",
         "version": "0.1.1",
         "path": "node_modules/noop-logger/lib/index.js"
+      },
+      {
+        "name": "normalize-package-data",
+        "version": "2.4.0",
+        "path": "node_modules/normalize-package-data/lib/normalize.js"
       },
       {
         "name": "npmlog",
@@ -520,9 +936,24 @@
         "path": "node_modules/number-is-nan/index.js"
       },
       {
+        "name": "oauth-sign",
+        "version": "0.8.2",
+        "path": "node_modules/oauth-sign/index.js"
+      },
+      {
         "name": "object-assign",
         "version": "4.1.1",
         "path": "node_modules/object-assign/index.js"
+      },
+      {
+        "name": "object-inspect",
+        "version": "0.4.0",
+        "path": "node_modules/object-inspect/index.js"
+      },
+      {
+        "name": "object-keys",
+        "version": "1.0.11",
+        "path": "node_modules/object-keys/index.js"
       },
       {
         "name": "once",
@@ -530,9 +961,29 @@
         "path": "node_modules/once/once.js"
       },
       {
+        "name": "optimist",
+        "version": "0.3.7",
+        "path": "node_modules/optimist/index.js"
+      },
+      {
         "name": "os-homedir",
         "version": "1.0.2",
         "path": "node_modules/os-homedir/index.js"
+      },
+      {
+        "name": "os-locale",
+        "version": "1.4.0",
+        "path": "node_modules/os-locale/index.js"
+      },
+      {
+        "name": "os-shim",
+        "version": "0.1.3",
+        "path": "node_modules/os-shim/lib/os.js"
+      },
+      {
+        "name": "parse-json",
+        "version": "2.2.0",
+        "path": "node_modules/parse-json/index.js"
       },
       {
         "name": "pascalcase",
@@ -540,9 +991,44 @@
         "path": "node_modules/pascalcase/index.js"
       },
       {
+        "name": "path-exists",
+        "version": "2.1.0",
+        "path": "node_modules/path-exists/index.js"
+      },
+      {
+        "name": "path-parse",
+        "version": "1.0.5",
+        "path": "node_modules/path-parse/index.js"
+      },
+      {
         "name": "path-posix",
         "version": "1.0.0",
         "path": "node_modules/path-posix/index.js"
+      },
+      {
+        "name": "path-type",
+        "version": "1.1.0",
+        "path": "node_modules/path-type/index.js"
+      },
+      {
+        "name": "performance-now",
+        "version": "2.1.0",
+        "path": "node_modules/performance-now/lib/performance-now.js"
+      },
+      {
+        "name": "pify",
+        "version": "2.3.0",
+        "path": "node_modules/pify/index.js"
+      },
+      {
+        "name": "pinkie",
+        "version": "2.0.4",
+        "path": "node_modules/pinkie/index.js"
+      },
+      {
+        "name": "pinkie-promise",
+        "version": "2.0.1",
+        "path": "node_modules/pinkie-promise/index.js"
       },
       {
         "name": "portfinder",
@@ -566,7 +1052,7 @@
       },
       {
         "name": "prop-types",
-        "version": "15.5.10",
+        "version": "15.6.0",
         "path": "node_modules/prop-types/index.js"
       },
       {
@@ -575,14 +1061,29 @@
         "path": "node_modules/pump/index.js"
       },
       {
+        "name": "punycode",
+        "version": "1.4.1",
+        "path": "node_modules/punycode/punycode.js"
+      },
+      {
         "name": "pure-color",
         "version": "1.3.0",
         "path": "node_modules/pure-color/index.js"
       },
       {
+        "name": "qs",
+        "version": "6.5.1",
+        "path": "node_modules/qs/lib/index.js"
+      },
+      {
         "name": "querystringify",
         "version": "1.0.0",
         "path": "node_modules/querystringify/index.js"
+      },
+      {
+        "name": "quote-stream",
+        "version": "1.0.2",
+        "path": "node_modules/quote-stream/index.js"
       },
       {
         "name": "rc",
@@ -591,7 +1092,7 @@
       },
       {
         "name": "react",
-        "version": "15.6.1",
+        "version": "15.6.2",
         "path": "node_modules/react/react.js"
       },
       {
@@ -601,7 +1102,7 @@
       },
       {
         "name": "react-dom",
-        "version": "15.6.1",
+        "version": "15.6.2",
         "path": "node_modules/react-dom/index.js"
       },
       {
@@ -611,8 +1112,18 @@
       },
       {
         "name": "react-rangeslider",
-        "version": "2.1.0",
+        "version": "2.2.0",
         "path": "node_modules/react-rangeslider/lib/index.js"
+      },
+      {
+        "name": "read-pkg",
+        "version": "1.1.0",
+        "path": "node_modules/read-pkg/index.js"
+      },
+      {
+        "name": "read-pkg-up",
+        "version": "1.0.1",
+        "path": "node_modules/read-pkg-up/index.js"
       },
       {
         "name": "readable-stream",
@@ -623,6 +1134,21 @@
         "name": "regenerator-runtime",
         "version": "0.11.0",
         "path": "node_modules/regenerator-runtime/runtime-module.js"
+      },
+      {
+        "name": "request",
+        "version": "2.83.0",
+        "path": "node_modules/request/index.js"
+      },
+      {
+        "name": "require-directory",
+        "version": "2.1.1",
+        "path": "node_modules/require-directory/index.js"
+      },
+      {
+        "name": "require-main-filename",
+        "version": "1.0.1",
+        "path": "node_modules/require-main-filename/index.js"
       },
       {
         "name": "requirejs",
@@ -640,9 +1166,24 @@
         "path": "node_modules/resize-observer-polyfill/dist/ResizeObserver.js"
       },
       {
+        "name": "resolve",
+        "version": "1.4.0",
+        "path": "node_modules/resolve/index.js"
+      },
+      {
+        "name": "rw",
+        "version": "1.3.3",
+        "path": "node_modules/rw/index.js"
+      },
+      {
         "name": "safe-buffer",
         "version": "5.1.1",
         "path": "node_modules/safe-buffer/index.js"
+      },
+      {
+        "name": "semver",
+        "version": "5.4.1",
+        "path": "node_modules/semver/semver.js"
       },
       {
         "name": "set-blocking",
@@ -655,6 +1196,26 @@
         "path": "node_modules/setimmediate/setImmediate.js"
       },
       {
+        "name": "shallow-copy",
+        "version": "0.0.1",
+        "path": "node_modules/shallow-copy/index.js"
+      },
+      {
+        "name": "shapefile",
+        "version": "0.3.1",
+        "path": "node_modules/shapefile/index.js"
+      },
+      {
+        "name": "d3-queue",
+        "version": "1.2.3",
+        "path": "node_modules/shapefile/node_modules/d3-queue/build/queue.js"
+      },
+      {
+        "name": "iconv-lite",
+        "version": "0.2.11",
+        "path": "node_modules/shapefile/node_modules/iconv-lite/index.js"
+      },
+      {
         "name": "signal-exit",
         "version": "3.0.2",
         "path": "node_modules/signal-exit/index.js"
@@ -665,9 +1226,109 @@
         "path": "node_modules/simple-get/index.js"
       },
       {
+        "name": "sntp",
+        "version": "2.0.2",
+        "path": "node_modules/sntp/lib/index.js"
+      },
+      {
+        "name": "source-map",
+        "version": "0.1.43",
+        "path": "node_modules/source-map/lib/source-map.js"
+      },
+      {
+        "name": "spawn-sync",
+        "version": "1.0.15",
+        "path": "node_modules/spawn-sync/index.js"
+      },
+      {
         "name": "spawnteract",
         "version": "4.0.0",
         "path": "node_modules/spawnteract/index.js"
+      },
+      {
+        "name": "spdx-correct",
+        "version": "1.0.2",
+        "path": "node_modules/spdx-correct/index.js"
+      },
+      {
+        "name": "spdx-expression-parse",
+        "version": "1.0.4",
+        "path": "node_modules/spdx-expression-parse/index.js"
+      },
+      {
+        "name": "spdx-license-ids",
+        "version": "1.2.2",
+        "path": "node_modules/spdx-license-ids/spdx-license-ids.json"
+      },
+      {
+        "name": "sshpk",
+        "version": "1.13.1",
+        "path": "node_modules/sshpk/lib/index.js"
+      },
+      {
+        "name": "static-eval",
+        "version": "0.2.4",
+        "path": "node_modules/static-eval/index.js"
+      },
+      {
+        "name": "escodegen",
+        "version": "0.0.28",
+        "path": "node_modules/static-eval/node_modules/escodegen/escodegen.js"
+      },
+      {
+        "name": "esprima",
+        "version": "1.0.4",
+        "path": "node_modules/static-eval/node_modules/esprima/esprima.js"
+      },
+      {
+        "name": "estraverse",
+        "version": "1.3.2",
+        "path": "node_modules/static-eval/node_modules/estraverse/estraverse.js"
+      },
+      {
+        "name": "static-module",
+        "version": "1.5.0",
+        "path": "node_modules/static-module/index.js"
+      },
+      {
+        "name": "isarray",
+        "version": "0.0.1",
+        "path": "node_modules/static-module/node_modules/isarray/index.js"
+      },
+      {
+        "name": "minimist",
+        "version": "0.0.8",
+        "path": "node_modules/static-module/node_modules/minimist/index.js"
+      },
+      {
+        "name": "object-keys",
+        "version": "0.4.0",
+        "path": "node_modules/static-module/node_modules/object-keys/index.js"
+      },
+      {
+        "name": "quote-stream",
+        "version": "0.0.0",
+        "path": "node_modules/static-module/node_modules/quote-stream/index.js"
+      },
+      {
+        "name": "readable-stream",
+        "version": "1.0.34",
+        "path": "node_modules/static-module/node_modules/readable-stream/readable.js"
+      },
+      {
+        "name": "string_decoder",
+        "version": "0.10.31",
+        "path": "node_modules/static-module/node_modules/string_decoder/index.js"
+      },
+      {
+        "name": "through2",
+        "version": "0.4.2",
+        "path": "node_modules/static-module/node_modules/through2/through2.js"
+      },
+      {
+        "name": "xtend",
+        "version": "2.1.2",
+        "path": "node_modules/static-module/node_modules/xtend/index.js"
       },
       {
         "name": "string_decoder",
@@ -685,14 +1346,29 @@
         "path": "node_modules/string.prototype.repeat/repeat.js"
       },
       {
+        "name": "stringstream",
+        "version": "0.0.5",
+        "path": "node_modules/stringstream/stringstream.js"
+      },
+      {
         "name": "strip-ansi",
         "version": "3.0.1",
         "path": "node_modules/strip-ansi/index.js"
       },
       {
+        "name": "strip-bom",
+        "version": "2.0.0",
+        "path": "node_modules/strip-bom/index.js"
+      },
+      {
         "name": "strip-json-comments",
         "version": "2.0.1",
         "path": "node_modules/strip-json-comments/index.js"
+      },
+      {
+        "name": "sync-request",
+        "version": "2.2.0",
+        "path": "node_modules/sync-request/index.js"
       },
       {
         "name": "tar-fs",
@@ -705,14 +1381,49 @@
         "path": "node_modules/tar-stream/index.js"
       },
       {
+        "name": "then-request",
+        "version": "2.2.0",
+        "path": "node_modules/then-request/index.js"
+      },
+      {
+        "name": "caseless",
+        "version": "0.11.0",
+        "path": "node_modules/then-request/node_modules/caseless/index.js"
+      },
+      {
+        "name": "through2",
+        "version": "2.0.3",
+        "path": "node_modules/through2/through2.js"
+      },
+      {
         "name": "tildify",
         "version": "1.2.0",
         "path": "node_modules/tildify/index.js"
       },
       {
+        "name": "topojson",
+        "version": "1.6.27",
+        "path": "node_modules/topojson/server.js"
+      },
+      {
+        "name": "tough-cookie",
+        "version": "2.3.3",
+        "path": "node_modules/tough-cookie/lib/cookie.js"
+      },
+      {
         "name": "tunnel-agent",
         "version": "0.6.0",
         "path": "node_modules/tunnel-agent/index.js"
+      },
+      {
+        "name": "tweetnacl",
+        "version": "0.14.5",
+        "path": "node_modules/tweetnacl/nacl-fast.js"
+      },
+      {
+        "name": "typedarray",
+        "version": "0.0.6",
+        "path": "node_modules/typedarray/index.js"
       },
       {
         "name": "ua-parser-js",
@@ -745,14 +1456,104 @@
         "path": "node_modules/uuid/index.js"
       },
       {
+        "name": "validate-npm-package-license",
+        "version": "3.0.1",
+        "path": "node_modules/validate-npm-package-license/index.js"
+      },
+      {
+        "name": "vega",
+        "version": "2.6.5",
+        "path": "node_modules/vega/index.js"
+      },
+      {
+        "name": "vega-dataflow",
+        "version": "1.4.3",
+        "path": "node_modules/vega-dataflow/src/index.js"
+      },
+      {
+        "name": "vega-embed",
+        "version": "2.2.0",
+        "path": "node_modules/vega-embed/src/embed.js"
+      },
+      {
+        "name": "vega-event-selector",
+        "version": "1.1.0",
+        "path": "node_modules/vega-event-selector/index.js"
+      },
+      {
+        "name": "vega-expression",
+        "version": "1.2.1",
+        "path": "node_modules/vega-expression/src/index.js"
+      },
+      {
+        "name": "vega-lite",
+        "version": "1.3.1",
+        "path": "node_modules/vega-lite/src/vl.js"
+      },
+      {
+        "name": "camelcase",
+        "version": "3.0.0",
+        "path": "node_modules/vega-lite/node_modules/camelcase/index.js"
+      },
+      {
+        "name": "datalib",
+        "version": "1.7.3",
+        "path": "node_modules/vega-lite/node_modules/datalib/src/index.js"
+      },
+      {
+        "name": "window-size",
+        "version": "0.2.0",
+        "path": "node_modules/vega-lite/node_modules/window-size/index.js"
+      },
+      {
+        "name": "yargs",
+        "version": "6.3.0",
+        "path": "node_modules/vega-lite/node_modules/yargs/index.js"
+      },
+      {
+        "name": "vega-logging",
+        "version": "1.0.2",
+        "path": "node_modules/vega-logging/index.js"
+      },
+      {
+        "name": "vega-scenegraph",
+        "version": "1.1.0",
+        "path": "node_modules/vega-scenegraph/src/index.js"
+      },
+      {
+        "name": "verror",
+        "version": "1.10.0",
+        "path": "node_modules/verror/lib/verror.js"
+      },
+      {
         "name": "whatwg-fetch",
         "version": "2.0.3",
         "path": "node_modules/whatwg-fetch/fetch.js"
       },
       {
+        "name": "which-module",
+        "version": "1.0.0",
+        "path": "node_modules/which-module/index.js"
+      },
+      {
         "name": "wide-align",
         "version": "1.1.2",
         "path": "node_modules/wide-align/align.js"
+      },
+      {
+        "name": "window-size",
+        "version": "0.1.4",
+        "path": "node_modules/window-size/index.js"
+      },
+      {
+        "name": "wordwrap",
+        "version": "0.0.3",
+        "path": "node_modules/wordwrap/index.js"
+      },
+      {
+        "name": "wrap-ansi",
+        "version": "2.1.0",
+        "path": "node_modules/wrap-ansi/index.js"
       },
       {
         "name": "wrappy",
@@ -785,8 +1586,28 @@
         "path": "node_modules/xtend/immutable.js"
       },
       {
+        "name": "y18n",
+        "version": "3.2.1",
+        "path": "node_modules/y18n/index.js"
+      },
+      {
+        "name": "yargs",
+        "version": "3.32.0",
+        "path": "node_modules/yargs/index.js"
+      },
+      {
+        "name": "yargs-parser",
+        "version": "4.2.1",
+        "path": "node_modules/yargs-parser/index.js"
+      },
+      {
+        "name": "camelcase",
+        "version": "3.0.0",
+        "path": "node_modules/yargs-parser/node_modules/camelcase/index.js"
+      },
+      {
         "name": "zeromq",
-        "version": "4.5.0",
+        "version": "4.6.0",
         "path": "node_modules/zeromq/index.js"
       }
     ],
@@ -799,6 +1620,7 @@
         "node_modules/@nteract/plotly/package.json",
         "node_modules/@nteract/transform-plotly/package.json",
         "node_modules/@nteract/transform-vdom/package.json",
+        "node_modules/@nteract/transform-vega/package.json",
         "node_modules/@nteract/transforms/package.json",
         "node_modules/@phosphor/algorithm/package.json",
         "node_modules/@phosphor/collections/package.json",
@@ -810,33 +1632,82 @@
         "node_modules/@types/minimist/types-metadata.json",
         "node_modules/@types/text-encoding/package.json",
         "node_modules/@types/text-encoding/types-metadata.json",
+        "node_modules/acorn/package.json",
+        "node_modules/ajv/lib/refs/$data.json",
+        "node_modules/ajv/lib/refs/json-schema-draft-04.json",
+        "node_modules/ajv/lib/refs/json-schema-draft-06.json",
+        "node_modules/ajv/lib/refs/json-schema-v5.json",
+        "node_modules/ajv/package.json",
+        "node_modules/amdefine/package.json",
         "node_modules/anser/package.json",
         "node_modules/ansi-regex/package.json",
         "node_modules/ansi-to-react/package.json",
         "node_modules/aproba/package.json",
         "node_modules/are-we-there-yet/package.json",
         "node_modules/asap/package.json",
+        "node_modules/asn1/package.json",
+        "node_modules/assert-plus/package.json",
         "node_modules/async/package.json",
+        "node_modules/asynckit/package.json",
         "node_modules/atom-select-list/package.json",
+        "node_modules/aws-sign2/package.json",
+        "node_modules/aws4/package.json",
         "node_modules/babel-runtime/package-lock.json",
         "node_modules/babel-runtime/package.json",
         "node_modules/base16/package.json",
+        "node_modules/bcrypt-pbkdf/package.json",
         "node_modules/bl/package.json",
+        "node_modules/boom/package.json",
+        "node_modules/brfs/package.json",
+        "node_modules/buffer-equal/package.json",
+        "node_modules/builtin-modules/builtin-modules.json",
+        "node_modules/builtin-modules/package.json",
+        "node_modules/camelcase/package.json",
+        "node_modules/caseless/package.json",
         "node_modules/chownr/package.json",
         "node_modules/classnames/bower.json",
         "node_modules/classnames/package.json",
+        "node_modules/cliui/package.json",
+        "node_modules/co/package.json",
         "node_modules/code-point-at/package.json",
+        "node_modules/combined-stream/package.json",
         "node_modules/commonmark/package.json",
         "node_modules/commonmark-react-renderer/package.json",
+        "node_modules/concat-stream/package.json",
         "node_modules/console-control-strings/package.json",
         "node_modules/core-js/bower.json",
         "node_modules/core-js/package.json",
         "node_modules/core-util-is/package.json",
         "node_modules/create-react-class/package.json",
+        "node_modules/cryptiles/node_modules/boom/package.json",
+        "node_modules/cryptiles/package.json",
+        "node_modules/d3/composer.json",
+        "node_modules/d3/package.json",
+        "node_modules/d3-cloud/bower.json",
+        "node_modules/d3-cloud/package.json",
+        "node_modules/d3-dispatch/package.json",
+        "node_modules/d3-dsv/package.json",
+        "node_modules/d3-format/package.json",
+        "node_modules/d3-geo-projection/bower.json",
+        "node_modules/d3-geo-projection/package.json",
+        "node_modules/d3-queue/package.json",
+        "node_modules/d3-time/package.json",
+        "node_modules/d3-time-format/package.json",
+        "node_modules/dashdash/package.json",
+        "node_modules/datalib/bower.json",
+        "node_modules/datalib/package.json",
         "node_modules/debug/component.json",
         "node_modules/debug/package.json",
+        "node_modules/decamelize/package.json",
         "node_modules/deep-extend/package.json",
+        "node_modules/delayed-stream/package.json",
         "node_modules/delegates/package.json",
+        "node_modules/duplexer2/node_modules/isarray/component.json",
+        "node_modules/duplexer2/node_modules/isarray/package.json",
+        "node_modules/duplexer2/node_modules/readable-stream/package.json",
+        "node_modules/duplexer2/node_modules/string_decoder/package.json",
+        "node_modules/duplexer2/package.json",
+        "node_modules/ecc-jsbn/package.json",
         "node_modules/encoding/package.json",
         "node_modules/end-of-stream/package.json",
         "node_modules/entities/maps/decode.json",
@@ -844,22 +1715,73 @@
         "node_modules/entities/maps/legacy.json",
         "node_modules/entities/maps/xml.json",
         "node_modules/entities/package.json",
+        "node_modules/error-ex/package.json",
         "node_modules/escape-carriage/package.json",
         "node_modules/escape-string-regexp/package.json",
+        "node_modules/escodegen/component.json",
+        "node_modules/escodegen/package.json",
+        "node_modules/esprima/package.json",
+        "node_modules/estraverse/package.json",
+        "node_modules/esutils/package.json",
         "node_modules/etch/package.json",
         "node_modules/expand-template/package.json",
+        "node_modules/extend/.jscs.json",
+        "node_modules/extend/component.json",
+        "node_modules/extend/package.json",
+        "node_modules/extsprintf/package.json",
+        "node_modules/falafel/node_modules/isarray/component.json",
+        "node_modules/falafel/node_modules/isarray/package.json",
+        "node_modules/falafel/package.json",
+        "node_modules/fast-deep-equal/package.json",
         "node_modules/fbjs/module-map.json",
         "node_modules/fbjs/node_modules/core-js/bower.json",
         "node_modules/fbjs/node_modules/core-js/package.json",
         "node_modules/fbjs/package.json",
+        "node_modules/find-up/package.json",
+        "node_modules/foreach/component.json",
+        "node_modules/foreach/package.json",
+        "node_modules/forever-agent/package.json",
+        "node_modules/form-data/package.json",
+        "node_modules/function-bind/.jscs.json",
+        "node_modules/function-bind/package.json",
         "node_modules/fuzzaldrin/package.json",
         "node_modules/gauge/package.json",
+        "node_modules/get-caller-file/package.json",
+        "node_modules/getpass/package.json",
         "node_modules/github-from-package/example/package.json",
         "node_modules/github-from-package/package.json",
         "node_modules/graceful-fs/package.json",
+        "node_modules/har-schema/lib/afterRequest.json",
+        "node_modules/har-schema/lib/beforeRequest.json",
+        "node_modules/har-schema/lib/browser.json",
+        "node_modules/har-schema/lib/cache.json",
+        "node_modules/har-schema/lib/content.json",
+        "node_modules/har-schema/lib/cookie.json",
+        "node_modules/har-schema/lib/creator.json",
+        "node_modules/har-schema/lib/entry.json",
+        "node_modules/har-schema/lib/har.json",
+        "node_modules/har-schema/lib/header.json",
+        "node_modules/har-schema/lib/log.json",
+        "node_modules/har-schema/lib/page.json",
+        "node_modules/har-schema/lib/pageTimings.json",
+        "node_modules/har-schema/lib/postData.json",
+        "node_modules/har-schema/lib/query.json",
+        "node_modules/har-schema/lib/request.json",
+        "node_modules/har-schema/lib/response.json",
+        "node_modules/har-schema/lib/timings.json",
+        "node_modules/har-schema/package.json",
+        "node_modules/har-validator/package.json",
+        "node_modules/has/package.json",
         "node_modules/has-unicode/package.json",
+        "node_modules/hawk/package.json",
+        "node_modules/hoek/package.json",
         "node_modules/hoist-non-react-statics/package.json",
         "node_modules/home-dir/package.json",
+        "node_modules/hosted-git-info/package.json",
+        "node_modules/http-basic/node_modules/caseless/package.json",
+        "node_modules/http-basic/package.json",
+        "node_modules/http-response-object/package.json",
+        "node_modules/http-signature/package.json",
         "node_modules/iconv-lite/encodings/tables/big5-added.json",
         "node_modules/iconv-lite/encodings/tables/cp936.json",
         "node_modules/iconv-lite/encodings/tables/cp949.json",
@@ -872,32 +1794,49 @@
         "node_modules/in-publish/package.json",
         "node_modules/inherits/package.json",
         "node_modules/ini/package.json",
+        "node_modules/invert-kv/package.json",
+        "node_modules/is-arrayish/package.json",
+        "node_modules/is-builtin-module/package.json",
         "node_modules/is-fullwidth-code-point/package.json",
         "node_modules/is-stream/package.json",
+        "node_modules/is-typedarray/package.json",
+        "node_modules/is-utf8/package.json",
         "node_modules/isarray/component.json",
         "node_modules/isarray/package.json",
         "node_modules/isomorphic-fetch/bower.json",
         "node_modules/isomorphic-fetch/package.json",
+        "node_modules/isstream/package.json",
         "node_modules/jmp/package.json",
         "node_modules/js-tokens/package.json",
+        "node_modules/jsbn/package.json",
+        "node_modules/json-schema/package.json",
+        "node_modules/json-schema-traverse/package.json",
+        "node_modules/json-stable-stringify/package.json",
+        "node_modules/json-stringify-safe/package.json",
         "node_modules/jsonfile/package.json",
+        "node_modules/jsonify/package.json",
+        "node_modules/jsprim/package.json",
         "node_modules/jupyter-paths/package.json",
         "node_modules/kernelspecs/package.json",
+        "node_modules/lcid/lcid.json",
+        "node_modules/lcid/package.json",
+        "node_modules/load-json-file/package.json",
         "node_modules/lodash/package.json",
         "node_modules/lodash.assign/package.json",
         "node_modules/lodash.curry/package.json",
         "node_modules/lodash.flow/package.json",
         "node_modules/lodash.isplainobject/package.json",
-        "node_modules/loophole/package.json",
         "node_modules/loose-envify/package.json",
         "node_modules/mathjax-electron/package.json",
         "node_modules/mdurl/package.json",
+        "node_modules/mime-db/db.json",
+        "node_modules/mime-db/package.json",
+        "node_modules/mime-types/package.json",
         "node_modules/minimist/package.json",
         "node_modules/mkdirp/node_modules/minimist/package.json",
         "node_modules/mkdirp/package.json",
         "node_modules/mobx/bower.json",
         "node_modules/mobx/package.json",
-        "node_modules/mobx-react/.vscode/settings.json",
         "node_modules/mobx-react/package.json",
         "node_modules/moment/package.json",
         "node_modules/ms/package.json",
@@ -906,47 +1845,113 @@
         "node_modules/node-abi/package.json",
         "node_modules/node-fetch/package.json",
         "node_modules/noop-logger/package.json",
+        "node_modules/normalize-package-data/lib/typos.json",
+        "node_modules/normalize-package-data/lib/warning_messages.json",
+        "node_modules/normalize-package-data/package.json",
         "node_modules/npmlog/package.json",
         "node_modules/number-is-nan/package.json",
+        "node_modules/oauth-sign/package.json",
         "node_modules/object-assign/package.json",
+        "node_modules/object-inspect/package.json",
+        "node_modules/object-keys/.jscs.json",
+        "node_modules/object-keys/package.json",
         "node_modules/once/package.json",
+        "node_modules/optimist/package.json",
         "node_modules/os-homedir/package.json",
+        "node_modules/os-locale/package.json",
+        "node_modules/os-shim/package.json",
+        "node_modules/parse-json/package.json",
         "node_modules/pascalcase/package.json",
+        "node_modules/path-exists/package.json",
+        "node_modules/path-parse/package.json",
         "node_modules/path-posix/package.json",
+        "node_modules/path-type/package.json",
+        "node_modules/performance-now/package.json",
+        "node_modules/pify/package.json",
+        "node_modules/pinkie/package.json",
+        "node_modules/pinkie-promise/package.json",
         "node_modules/portfinder/package.json",
         "node_modules/prebuild-install/package.json",
         "node_modules/process-nextick-args/package.json",
         "node_modules/promise/package.json",
         "node_modules/prop-types/package.json",
         "node_modules/pump/package.json",
+        "node_modules/punycode/package.json",
         "node_modules/pure-color/package.json",
+        "node_modules/qs/package.json",
         "node_modules/querystringify/package.json",
+        "node_modules/quote-stream/package.json",
         "node_modules/rc/package.json",
         "node_modules/react/package.json",
         "node_modules/react-base16-styling/package.json",
         "node_modules/react-dom/package.json",
         "node_modules/react-json-tree/package.json",
         "node_modules/react-rangeslider/package.json",
+        "node_modules/read-pkg/package.json",
+        "node_modules/read-pkg-up/package.json",
         "node_modules/readable-stream/package.json",
         "node_modules/regenerator-runtime/package.json",
+        "node_modules/request/package.json",
+        "node_modules/require-directory/package.json",
+        "node_modules/require-main-filename/package.json",
         "node_modules/requirejs/package.json",
         "node_modules/requires-port/package.json",
         "node_modules/resize-observer-polyfill/package.json",
+        "node_modules/resolve/lib/core.json",
+        "node_modules/resolve/package.json",
+        "node_modules/rw/package.json",
         "node_modules/safe-buffer/package.json",
+        "node_modules/semver/package.json",
         "node_modules/set-blocking/package.json",
         "node_modules/setimmediate/package.json",
+        "node_modules/shallow-copy/package.json",
+        "node_modules/shapefile/node_modules/d3-queue/package.json",
+        "node_modules/shapefile/node_modules/iconv-lite/package.json",
+        "node_modules/shapefile/package.json",
         "node_modules/signal-exit/package.json",
         "node_modules/simple-get/package.json",
+        "node_modules/sntp/package.json",
+        "node_modules/source-map/package.json",
+        "node_modules/spawn-sync/package.json",
         "node_modules/spawnteract/package.json",
+        "node_modules/spdx-correct/package.json",
+        "node_modules/spdx-expression-parse/package.json",
+        "node_modules/spdx-license-ids/package.json",
+        "node_modules/spdx-license-ids/spdx-license-ids.json",
+        "node_modules/sshpk/package.json",
+        "node_modules/static-eval/node_modules/escodegen/package.json",
+        "node_modules/static-eval/node_modules/esprima/package.json",
+        "node_modules/static-eval/node_modules/estraverse/package.json",
+        "node_modules/static-eval/package.json",
+        "node_modules/static-module/node_modules/isarray/component.json",
+        "node_modules/static-module/node_modules/isarray/package.json",
+        "node_modules/static-module/node_modules/minimist/package.json",
+        "node_modules/static-module/node_modules/object-keys/package.json",
+        "node_modules/static-module/node_modules/quote-stream/package.json",
+        "node_modules/static-module/node_modules/readable-stream/package.json",
+        "node_modules/static-module/node_modules/string_decoder/package.json",
+        "node_modules/static-module/node_modules/through2/package.json",
+        "node_modules/static-module/node_modules/xtend/package.json",
+        "node_modules/static-module/package.json",
         "node_modules/string-width/package.json",
         "node_modules/string.prototype.repeat/package.json",
         "node_modules/string_decoder/package.json",
+        "node_modules/stringstream/package.json",
         "node_modules/strip-ansi/package.json",
+        "node_modules/strip-bom/package.json",
         "node_modules/strip-json-comments/package.json",
+        "node_modules/sync-request/package.json",
         "node_modules/tar-fs/package.json",
         "node_modules/tar-stream/package.json",
+        "node_modules/then-request/node_modules/caseless/package.json",
+        "node_modules/then-request/package.json",
+        "node_modules/through2/package.json",
         "node_modules/tildify/package.json",
+        "node_modules/topojson/package.json",
+        "node_modules/tough-cookie/package.json",
         "node_modules/tunnel-agent/package.json",
+        "node_modules/tweetnacl/package.json",
+        "node_modules/typedarray/package.json",
         "node_modules/ua-parser-js/bower.json",
         "node_modules/ua-parser-js/package.json",
         "node_modules/ultron/package.json",
@@ -955,8 +1960,138 @@
         "node_modules/util-deprecate/package.json",
         "node_modules/uuid/.eslintrc.json",
         "node_modules/uuid/package.json",
+        "node_modules/validate-npm-package-license/package.json",
+        "node_modules/vega/bower.json",
+        "node_modules/vega/examples/airports-params.json",
+        "node_modules/vega/examples/airports.json",
+        "node_modules/vega/examples/arc.json",
+        "node_modules/vega/examples/area.json",
+        "node_modules/vega/examples/bar.json",
+        "node_modules/vega/examples/barley.json",
+        "node_modules/vega/examples/brush.json",
+        "node_modules/vega/examples/budget_forecasts.json",
+        "node_modules/vega/examples/choropleth.json",
+        "node_modules/vega/examples/crossfilter.json",
+        "node_modules/vega/examples/dimpvis.json",
+        "node_modules/vega/examples/driving.json",
+        "node_modules/vega/examples/error.json",
+        "node_modules/vega/examples/falkensee.json",
+        "node_modules/vega/examples/force-params.json",
+        "node_modules/vega/examples/force.json",
+        "node_modules/vega/examples/force_drag.json",
+        "node_modules/vega/examples/grouped_bar.json",
+        "node_modules/vega/examples/heatmap.json",
+        "node_modules/vega/examples/horizon.json",
+        "node_modules/vega/examples/image.json",
+        "node_modules/vega/examples/index_chart.json",
+        "node_modules/vega/examples/jobs-params.json",
+        "node_modules/vega/examples/jobs.json",
+        "node_modules/vega/examples/lifelines.json",
+        "node_modules/vega/examples/linking.json",
+        "node_modules/vega/examples/map-params.json",
+        "node_modules/vega/examples/map.json",
+        "node_modules/vega/examples/overview+detail.json",
+        "node_modules/vega/examples/panzoom_points.json",
+        "node_modules/vega/examples/parallel_coords.json",
+        "node_modules/vega/examples/playfair.json",
+        "node_modules/vega/examples/population.json",
+        "node_modules/vega/examples/reorder_matrix.json",
+        "node_modules/vega/examples/scatter_matrix.json",
+        "node_modules/vega/examples/shiftclick_select.json",
+        "node_modules/vega/examples/stacked_area.json",
+        "node_modules/vega/examples/stacked_bar.json",
+        "node_modules/vega/examples/stocks.json",
+        "node_modules/vega/examples/themes/excel.json",
+        "node_modules/vega/examples/themes/ggplot2.json",
+        "node_modules/vega/examples/themes/quartz.json",
+        "node_modules/vega/examples/themes/vox.json",
+        "node_modules/vega/examples/tooltip.json",
+        "node_modules/vega/examples/treemap.json",
+        "node_modules/vega/examples/weather.json",
+        "node_modules/vega/examples/wordcloud.json",
+        "node_modules/vega/package.json",
+        "node_modules/vega/vega-schema.json",
+        "node_modules/vega-dataflow/package.json",
+        "node_modules/vega-embed/bower.json",
+        "node_modules/vega-embed/package.json",
+        "node_modules/vega-embed/vega-embed-schema.json",
+        "node_modules/vega-event-selector/package.json",
+        "node_modules/vega-expression/package.json",
+        "node_modules/vega-lite/.vscode/launch.json",
+        "node_modules/vega-lite/.vscode/settings.json",
+        "node_modules/vega-lite/.vscode/tasks.json",
+        "node_modules/vega-lite/_site/examples/all-examples.json",
+        "node_modules/vega-lite/_site/examples/vl-examples.json",
+        "node_modules/vega-lite/data/anscombe.json",
+        "node_modules/vega-lite/data/barley.json",
+        "node_modules/vega-lite/data/birdstrikes.json",
+        "node_modules/vega-lite/data/budget.json",
+        "node_modules/vega-lite/data/budgets.json",
+        "node_modules/vega-lite/data/burtin.json",
+        "node_modules/vega-lite/data/cars.json",
+        "node_modules/vega-lite/data/climate.json",
+        "node_modules/vega-lite/data/countries.json",
+        "node_modules/vega-lite/data/crimea.json",
+        "node_modules/vega-lite/data/driving.json",
+        "node_modules/vega-lite/data/flare.json",
+        "node_modules/vega-lite/data/flights-10k.json",
+        "node_modules/vega-lite/data/flights-20k.json",
+        "node_modules/vega-lite/data/flights-2k.json",
+        "node_modules/vega-lite/data/flights-5k.json",
+        "node_modules/vega-lite/data/gapminder.json",
+        "node_modules/vega-lite/data/iris.json",
+        "node_modules/vega-lite/data/jobs.json",
+        "node_modules/vega-lite/data/miserables.json",
+        "node_modules/vega-lite/data/monarchs.json",
+        "node_modules/vega-lite/data/movies.json",
+        "node_modules/vega-lite/data/points.json",
+        "node_modules/vega-lite/data/population.json",
+        "node_modules/vega-lite/data/unemployment-across-industries.json",
+        "node_modules/vega-lite/data/us-10m.json",
+        "node_modules/vega-lite/data/weather.json",
+        "node_modules/vega-lite/data/weball26.json",
+        "node_modules/vega-lite/data/wheat.json",
+        "node_modules/vega-lite/data/world-110m.json",
+        "node_modules/vega-lite/examples/all-examples.json",
+        "node_modules/vega-lite/examples/vl-examples.json",
+        "node_modules/vega-lite/lib/schema.json",
+        "node_modules/vega-lite/node_modules/camelcase/package.json",
+        "node_modules/vega-lite/node_modules/datalib/bower.json",
+        "node_modules/vega-lite/node_modules/datalib/package.json",
+        "node_modules/vega-lite/node_modules/window-size/package.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/de.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/en.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/es.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/fr.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/hi.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/hu.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/id.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/it.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/ja.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/ko.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/nb.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/pirate.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/pl.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/pt.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/pt_BR.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/ru.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/th.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/tr.json",
+        "node_modules/vega-lite/node_modules/yargs/locales/zh_CN.json",
+        "node_modules/vega-lite/node_modules/yargs/package.json",
+        "node_modules/vega-lite/package.json",
+        "node_modules/vega-lite/tsconfig.json",
+        "node_modules/vega-lite/vega-lite-schema.json",
+        "node_modules/vega-logging/package.json",
+        "node_modules/vega-scenegraph/package.json",
+        "node_modules/vega-scenegraph/vega-scenegraph-schema.json",
+        "node_modules/verror/package.json",
         "node_modules/whatwg-fetch/package.json",
+        "node_modules/which-module/package.json",
         "node_modules/wide-align/package.json",
+        "node_modules/window-size/package.json",
+        "node_modules/wordwrap/package.json",
+        "node_modules/wrap-ansi/package.json",
         "node_modules/wrappy/package.json",
         "node_modules/ws/node_modules/safe-buffer/package.json",
         "node_modules/ws/package.json",
@@ -964,6 +2099,24 @@
         "node_modules/xss-filters/bower.json",
         "node_modules/xss-filters/package.json",
         "node_modules/xtend/package.json",
+        "node_modules/y18n/package.json",
+        "node_modules/yargs/locales/de.json",
+        "node_modules/yargs/locales/en.json",
+        "node_modules/yargs/locales/es.json",
+        "node_modules/yargs/locales/fr.json",
+        "node_modules/yargs/locales/id.json",
+        "node_modules/yargs/locales/ja.json",
+        "node_modules/yargs/locales/ko.json",
+        "node_modules/yargs/locales/nb.json",
+        "node_modules/yargs/locales/pirate.json",
+        "node_modules/yargs/locales/pl.json",
+        "node_modules/yargs/locales/pt.json",
+        "node_modules/yargs/locales/pt_BR.json",
+        "node_modules/yargs/locales/tr.json",
+        "node_modules/yargs/locales/zh.json",
+        "node_modules/yargs/package.json",
+        "node_modules/yargs-parser/node_modules/camelcase/package.json",
+        "node_modules/yargs-parser/package.json",
         "node_modules/zeromq/package.json",
         "package.json"
       ],
@@ -975,6 +2128,7 @@
         "lib/components/output-area.js",
         "lib/components/result-view/history.js",
         "lib/components/result-view/index.js",
+        "lib/components/result-view/list.js",
         "lib/components/result-view/result-view.js",
         "lib/components/result-view/status.js",
         "lib/components/result-view/transforms.js",
@@ -1064,6 +2218,9 @@
         "node_modules/@nteract/transform-vdom/lib/object-to-react.js",
         "node_modules/@nteract/transform-vdom/src/index.js",
         "node_modules/@nteract/transform-vdom/src/object-to-react.js",
+        "node_modules/@nteract/transform-vega/__tests__/vega.test.js",
+        "node_modules/@nteract/transform-vega/lib/index.js",
+        "node_modules/@nteract/transform-vega/src/index.js",
         "node_modules/@nteract/transforms/__tests__/html.test.js",
         "node_modules/@nteract/transforms/__tests__/image-spec.js",
         "node_modules/@nteract/transforms/__tests__/index-spec.js",
@@ -1119,6 +2276,60 @@
         "node_modules/@phosphor/disposable/lib/index.js",
         "node_modules/@phosphor/messaging/lib/index.js",
         "node_modules/@phosphor/signaling/lib/index.js",
+        "node_modules/acorn/dist/acorn.es.js",
+        "node_modules/acorn/dist/acorn.js",
+        "node_modules/acorn/dist/acorn_loose.es.js",
+        "node_modules/acorn/dist/acorn_loose.js",
+        "node_modules/acorn/dist/walk.es.js",
+        "node_modules/acorn/dist/walk.js",
+        "node_modules/ajv/.tonic_example.js",
+        "node_modules/ajv/dist/ajv.bundle.js",
+        "node_modules/ajv/dist/ajv.min.js",
+        "node_modules/ajv/dist/nodent.min.js",
+        "node_modules/ajv/dist/regenerator.min.js",
+        "node_modules/ajv/lib/$data.js",
+        "node_modules/ajv/lib/ajv.js",
+        "node_modules/ajv/lib/cache.js",
+        "node_modules/ajv/lib/compile/_rules.js",
+        "node_modules/ajv/lib/compile/async.js",
+        "node_modules/ajv/lib/compile/equal.js",
+        "node_modules/ajv/lib/compile/error_classes.js",
+        "node_modules/ajv/lib/compile/formats.js",
+        "node_modules/ajv/lib/compile/index.js",
+        "node_modules/ajv/lib/compile/resolve.js",
+        "node_modules/ajv/lib/compile/rules.js",
+        "node_modules/ajv/lib/compile/schema_obj.js",
+        "node_modules/ajv/lib/compile/ucs2length.js",
+        "node_modules/ajv/lib/compile/util.js",
+        "node_modules/ajv/lib/dotjs/_limit.js",
+        "node_modules/ajv/lib/dotjs/_limitItems.js",
+        "node_modules/ajv/lib/dotjs/_limitLength.js",
+        "node_modules/ajv/lib/dotjs/_limitProperties.js",
+        "node_modules/ajv/lib/dotjs/allOf.js",
+        "node_modules/ajv/lib/dotjs/anyOf.js",
+        "node_modules/ajv/lib/dotjs/const.js",
+        "node_modules/ajv/lib/dotjs/contains.js",
+        "node_modules/ajv/lib/dotjs/custom.js",
+        "node_modules/ajv/lib/dotjs/dependencies.js",
+        "node_modules/ajv/lib/dotjs/enum.js",
+        "node_modules/ajv/lib/dotjs/format.js",
+        "node_modules/ajv/lib/dotjs/items.js",
+        "node_modules/ajv/lib/dotjs/multipleOf.js",
+        "node_modules/ajv/lib/dotjs/not.js",
+        "node_modules/ajv/lib/dotjs/oneOf.js",
+        "node_modules/ajv/lib/dotjs/pattern.js",
+        "node_modules/ajv/lib/dotjs/properties.js",
+        "node_modules/ajv/lib/dotjs/propertyNames.js",
+        "node_modules/ajv/lib/dotjs/ref.js",
+        "node_modules/ajv/lib/dotjs/required.js",
+        "node_modules/ajv/lib/dotjs/uniqueItems.js",
+        "node_modules/ajv/lib/dotjs/validate.js",
+        "node_modules/ajv/lib/keyword.js",
+        "node_modules/ajv/lib/patternGroups.js",
+        "node_modules/ajv/scripts/bundle.js",
+        "node_modules/ajv/scripts/compile-dots.js",
+        "node_modules/amdefine/amdefine.js",
+        "node_modules/amdefine/intercept.js",
         "node_modules/anser/lib/index.js",
         "node_modules/ansi-regex/index.js",
         "node_modules/ansi-to-react/lib/index.js",
@@ -1133,10 +2344,39 @@
         "node_modules/asap/browser-asap.js",
         "node_modules/asap/browser-raw.js",
         "node_modules/asap/raw.js",
+        "node_modules/asn1/lib/ber/errors.js",
+        "node_modules/asn1/lib/ber/index.js",
+        "node_modules/asn1/lib/ber/reader.js",
+        "node_modules/asn1/lib/ber/types.js",
+        "node_modules/asn1/lib/ber/writer.js",
+        "node_modules/asn1/lib/index.js",
+        "node_modules/asn1/tst/ber/reader.test.js",
+        "node_modules/asn1/tst/ber/writer.test.js",
+        "node_modules/assert-plus/assert.js",
         "node_modules/async/dist/async.js",
         "node_modules/async/dist/async.min.js",
         "node_modules/async/lib/async.js",
+        "node_modules/asynckit/bench.js",
+        "node_modules/asynckit/index.js",
+        "node_modules/asynckit/lib/abort.js",
+        "node_modules/asynckit/lib/async.js",
+        "node_modules/asynckit/lib/defer.js",
+        "node_modules/asynckit/lib/iterate.js",
+        "node_modules/asynckit/lib/readable_asynckit.js",
+        "node_modules/asynckit/lib/readable_parallel.js",
+        "node_modules/asynckit/lib/readable_serial.js",
+        "node_modules/asynckit/lib/readable_serial_ordered.js",
+        "node_modules/asynckit/lib/state.js",
+        "node_modules/asynckit/lib/streamify.js",
+        "node_modules/asynckit/lib/terminator.js",
+        "node_modules/asynckit/parallel.js",
+        "node_modules/asynckit/serial.js",
+        "node_modules/asynckit/serialOrdered.js",
+        "node_modules/asynckit/stream.js",
         "node_modules/atom-select-list/src/select-list-view.js",
+        "node_modules/aws-sign2/index.js",
+        "node_modules/aws4/aws4.js",
+        "node_modules/aws4/lru.js",
         "node_modules/babel-runtime/core-js/array/concat.js",
         "node_modules/babel-runtime/core-js/array/copy-within.js",
         "node_modules/babel-runtime/core-js/array/entries.js",
@@ -1451,12 +2691,28 @@
         "node_modules/base16/src/tomorrow.js",
         "node_modules/base16/src/tube.js",
         "node_modules/base16/src/twilight.js",
+        "node_modules/bcrypt-pbkdf/index.js",
         "node_modules/bl/bl.js",
+        "node_modules/boom/lib/index.js",
+        "node_modules/brfs/bin/cmd.js",
+        "node_modules/brfs/example/async.js",
+        "node_modules/brfs/example/main.js",
+        "node_modules/brfs/index.js",
+        "node_modules/buffer-equal/example/eq.js",
+        "node_modules/buffer-equal/index.js",
+        "node_modules/builtin-modules/index.js",
+        "node_modules/builtin-modules/static.js",
+        "node_modules/camelcase/index.js",
+        "node_modules/caseless/index.js",
+        "node_modules/caseless/test.js",
         "node_modules/chownr/chownr.js",
         "node_modules/classnames/bind.js",
         "node_modules/classnames/dedupe.js",
         "node_modules/classnames/index.js",
+        "node_modules/cliui/index.js",
+        "node_modules/co/index.js",
         "node_modules/code-point-at/index.js",
+        "node_modules/combined-stream/lib/combined_stream.js",
         "node_modules/commonmark/dist/commonmark.js",
         "node_modules/commonmark/dist/commonmark.min.js",
         "node_modules/commonmark/lib/blocks.js",
@@ -1471,6 +2727,7 @@
         "node_modules/commonmark/lib/render/xml.js",
         "node_modules/commonmark-react-renderer/examples/usage.js",
         "node_modules/commonmark-react-renderer/src/commonmark-react-renderer.js",
+        "node_modules/concat-stream/index.js",
         "node_modules/console-control-strings/index.js",
         "node_modules/core-js/Gruntfile.js",
         "node_modules/core-js/build/config.js",
@@ -2939,15 +4196,562 @@
         "node_modules/create-react-class/create-react-class.min.js",
         "node_modules/create-react-class/factory.js",
         "node_modules/create-react-class/index.js",
+        "node_modules/cryptiles/lib/index.js",
+        "node_modules/cryptiles/node_modules/boom/lib/index.js",
+        "node_modules/d3/d3.js",
+        "node_modules/d3/d3.min.js",
+        "node_modules/d3/package.js",
+        "node_modules/d3/src/arrays/ascending.js",
+        "node_modules/d3/src/arrays/bisect.js",
+        "node_modules/d3/src/arrays/descending.js",
+        "node_modules/d3/src/arrays/deviation.js",
+        "node_modules/d3/src/arrays/entries.js",
+        "node_modules/d3/src/arrays/extent.js",
+        "node_modules/d3/src/arrays/index.js",
+        "node_modules/d3/src/arrays/keys.js",
+        "node_modules/d3/src/arrays/map.js",
+        "node_modules/d3/src/arrays/max.js",
+        "node_modules/d3/src/arrays/mean.js",
+        "node_modules/d3/src/arrays/median.js",
+        "node_modules/d3/src/arrays/merge.js",
+        "node_modules/d3/src/arrays/min.js",
+        "node_modules/d3/src/arrays/nest.js",
+        "node_modules/d3/src/arrays/pairs.js",
+        "node_modules/d3/src/arrays/permute.js",
+        "node_modules/d3/src/arrays/quantile.js",
+        "node_modules/d3/src/arrays/range.js",
+        "node_modules/d3/src/arrays/set.js",
+        "node_modules/d3/src/arrays/shuffle.js",
+        "node_modules/d3/src/arrays/sum.js",
+        "node_modules/d3/src/arrays/transpose.js",
+        "node_modules/d3/src/arrays/values.js",
+        "node_modules/d3/src/arrays/variance.js",
+        "node_modules/d3/src/arrays/zip.js",
+        "node_modules/d3/src/behavior/behavior.js",
+        "node_modules/d3/src/behavior/drag.js",
+        "node_modules/d3/src/behavior/index.js",
+        "node_modules/d3/src/behavior/zoom.js",
+        "node_modules/d3/src/color/color.js",
+        "node_modules/d3/src/color/hcl.js",
+        "node_modules/d3/src/color/hsl.js",
+        "node_modules/d3/src/color/index.js",
+        "node_modules/d3/src/color/lab.js",
+        "node_modules/d3/src/color/rgb.js",
+        "node_modules/d3/src/color/xyz.js",
+        "node_modules/d3/src/compat/array.js",
+        "node_modules/d3/src/compat/date.js",
+        "node_modules/d3/src/compat/index.js",
+        "node_modules/d3/src/compat/style.js",
+        "node_modules/d3/src/core/array.js",
+        "node_modules/d3/src/core/class.js",
+        "node_modules/d3/src/core/document.js",
+        "node_modules/d3/src/core/functor.js",
+        "node_modules/d3/src/core/identity.js",
+        "node_modules/d3/src/core/index.js",
+        "node_modules/d3/src/core/noop.js",
+        "node_modules/d3/src/core/ns.js",
+        "node_modules/d3/src/core/rebind.js",
+        "node_modules/d3/src/core/source.js",
+        "node_modules/d3/src/core/subclass.js",
+        "node_modules/d3/src/core/target.js",
+        "node_modules/d3/src/core/true.js",
+        "node_modules/d3/src/core/vendor.js",
+        "node_modules/d3/src/core/zero.js",
+        "node_modules/d3/src/d3.js",
+        "node_modules/d3/src/dsv/csv.js",
+        "node_modules/d3/src/dsv/dsv.js",
+        "node_modules/d3/src/dsv/index.js",
+        "node_modules/d3/src/dsv/tsv.js",
+        "node_modules/d3/src/end.js",
+        "node_modules/d3/src/event/dispatch.js",
+        "node_modules/d3/src/event/drag.js",
+        "node_modules/d3/src/event/event.js",
+        "node_modules/d3/src/event/index.js",
+        "node_modules/d3/src/event/mouse.js",
+        "node_modules/d3/src/event/timer.js",
+        "node_modules/d3/src/event/touch.js",
+        "node_modules/d3/src/event/touches.js",
+        "node_modules/d3/src/format/collapse.js",
+        "node_modules/d3/src/format/format.js",
+        "node_modules/d3/src/format/formatPrefix.js",
+        "node_modules/d3/src/format/index.js",
+        "node_modules/d3/src/format/precision.js",
+        "node_modules/d3/src/format/requote.js",
+        "node_modules/d3/src/format/round.js",
+        "node_modules/d3/src/geo/albers-usa.js",
+        "node_modules/d3/src/geo/albers.js",
+        "node_modules/d3/src/geo/area.js",
+        "node_modules/d3/src/geo/azimuthal-equal-area.js",
+        "node_modules/d3/src/geo/azimuthal-equidistant.js",
+        "node_modules/d3/src/geo/azimuthal.js",
+        "node_modules/d3/src/geo/bounds.js",
+        "node_modules/d3/src/geo/cartesian.js",
+        "node_modules/d3/src/geo/centroid.js",
+        "node_modules/d3/src/geo/circle.js",
+        "node_modules/d3/src/geo/clip-antimeridian.js",
+        "node_modules/d3/src/geo/clip-circle.js",
+        "node_modules/d3/src/geo/clip-extent.js",
+        "node_modules/d3/src/geo/clip-polygon.js",
+        "node_modules/d3/src/geo/clip.js",
+        "node_modules/d3/src/geo/compose.js",
+        "node_modules/d3/src/geo/conic-conformal.js",
+        "node_modules/d3/src/geo/conic-equal-area.js",
+        "node_modules/d3/src/geo/conic-equidistant.js",
+        "node_modules/d3/src/geo/conic.js",
+        "node_modules/d3/src/geo/distance.js",
+        "node_modules/d3/src/geo/equirectangular.js",
+        "node_modules/d3/src/geo/geo.js",
+        "node_modules/d3/src/geo/gnomonic.js",
+        "node_modules/d3/src/geo/graticule.js",
+        "node_modules/d3/src/geo/greatArc.js",
+        "node_modules/d3/src/geo/index.js",
+        "node_modules/d3/src/geo/interpolate.js",
+        "node_modules/d3/src/geo/length.js",
+        "node_modules/d3/src/geo/mercator.js",
+        "node_modules/d3/src/geo/orthographic.js",
+        "node_modules/d3/src/geo/path-area.js",
+        "node_modules/d3/src/geo/path-bounds.js",
+        "node_modules/d3/src/geo/path-buffer.js",
+        "node_modules/d3/src/geo/path-centroid.js",
+        "node_modules/d3/src/geo/path-context.js",
+        "node_modules/d3/src/geo/path.js",
+        "node_modules/d3/src/geo/point-in-polygon.js",
+        "node_modules/d3/src/geo/projection.js",
+        "node_modules/d3/src/geo/resample.js",
+        "node_modules/d3/src/geo/rotation.js",
+        "node_modules/d3/src/geo/spherical.js",
+        "node_modules/d3/src/geo/stereographic.js",
+        "node_modules/d3/src/geo/stream.js",
+        "node_modules/d3/src/geo/transform.js",
+        "node_modules/d3/src/geo/transverse-mercator.js",
+        "node_modules/d3/src/geom/clip-line.js",
+        "node_modules/d3/src/geom/delaunay.js",
+        "node_modules/d3/src/geom/geom.js",
+        "node_modules/d3/src/geom/hull.js",
+        "node_modules/d3/src/geom/index.js",
+        "node_modules/d3/src/geom/point.js",
+        "node_modules/d3/src/geom/polygon.js",
+        "node_modules/d3/src/geom/quadtree.js",
+        "node_modules/d3/src/geom/voronoi/beach.js",
+        "node_modules/d3/src/geom/voronoi/cell.js",
+        "node_modules/d3/src/geom/voronoi/circle.js",
+        "node_modules/d3/src/geom/voronoi/clip.js",
+        "node_modules/d3/src/geom/voronoi/edge.js",
+        "node_modules/d3/src/geom/voronoi/index.js",
+        "node_modules/d3/src/geom/voronoi/red-black.js",
+        "node_modules/d3/src/geom/voronoi.js",
+        "node_modules/d3/src/interpolate/array.js",
+        "node_modules/d3/src/interpolate/ease.js",
+        "node_modules/d3/src/interpolate/hcl.js",
+        "node_modules/d3/src/interpolate/hsl.js",
+        "node_modules/d3/src/interpolate/index.js",
+        "node_modules/d3/src/interpolate/interpolate.js",
+        "node_modules/d3/src/interpolate/lab.js",
+        "node_modules/d3/src/interpolate/number.js",
+        "node_modules/d3/src/interpolate/object.js",
+        "node_modules/d3/src/interpolate/rgb.js",
+        "node_modules/d3/src/interpolate/round.js",
+        "node_modules/d3/src/interpolate/string.js",
+        "node_modules/d3/src/interpolate/transform.js",
+        "node_modules/d3/src/interpolate/uninterpolate.js",
+        "node_modules/d3/src/interpolate/zoom.js",
+        "node_modules/d3/src/layout/bundle.js",
+        "node_modules/d3/src/layout/chord.js",
+        "node_modules/d3/src/layout/cluster.js",
+        "node_modules/d3/src/layout/force.js",
+        "node_modules/d3/src/layout/hierarchy.js",
+        "node_modules/d3/src/layout/histogram.js",
+        "node_modules/d3/src/layout/index.js",
+        "node_modules/d3/src/layout/layout.js",
+        "node_modules/d3/src/layout/pack.js",
+        "node_modules/d3/src/layout/partition.js",
+        "node_modules/d3/src/layout/pie.js",
+        "node_modules/d3/src/layout/stack.js",
+        "node_modules/d3/src/layout/tree.js",
+        "node_modules/d3/src/layout/treemap.js",
+        "node_modules/d3/src/locale/ca-ES.js",
+        "node_modules/d3/src/locale/de-CH.js",
+        "node_modules/d3/src/locale/de-DE.js",
+        "node_modules/d3/src/locale/en-CA.js",
+        "node_modules/d3/src/locale/en-GB.js",
+        "node_modules/d3/src/locale/en-US.js",
+        "node_modules/d3/src/locale/es-ES.js",
+        "node_modules/d3/src/locale/fi-FI.js",
+        "node_modules/d3/src/locale/fr-CA.js",
+        "node_modules/d3/src/locale/fr-FR.js",
+        "node_modules/d3/src/locale/he-IL.js",
+        "node_modules/d3/src/locale/hu-HU.js",
+        "node_modules/d3/src/locale/it-IT.js",
+        "node_modules/d3/src/locale/ja-JP.js",
+        "node_modules/d3/src/locale/ko-KR.js",
+        "node_modules/d3/src/locale/locale.js",
+        "node_modules/d3/src/locale/mk-MK.js",
+        "node_modules/d3/src/locale/nl-NL.js",
+        "node_modules/d3/src/locale/number-format.js",
+        "node_modules/d3/src/locale/pl-PL.js",
+        "node_modules/d3/src/locale/pt-BR.js",
+        "node_modules/d3/src/locale/ru-RU.js",
+        "node_modules/d3/src/locale/sv-SE.js",
+        "node_modules/d3/src/locale/time-format.js",
+        "node_modules/d3/src/locale/time-scale.js",
+        "node_modules/d3/src/locale/zh-CN.js",
+        "node_modules/d3/src/math/abs.js",
+        "node_modules/d3/src/math/adder.js",
+        "node_modules/d3/src/math/index.js",
+        "node_modules/d3/src/math/number.js",
+        "node_modules/d3/src/math/random.js",
+        "node_modules/d3/src/math/transform.js",
+        "node_modules/d3/src/math/trigonometry.js",
+        "node_modules/d3/src/scale/bilinear.js",
+        "node_modules/d3/src/scale/category.js",
+        "node_modules/d3/src/scale/identity.js",
+        "node_modules/d3/src/scale/index.js",
+        "node_modules/d3/src/scale/linear.js",
+        "node_modules/d3/src/scale/log.js",
+        "node_modules/d3/src/scale/nice.js",
+        "node_modules/d3/src/scale/ordinal.js",
+        "node_modules/d3/src/scale/polylinear.js",
+        "node_modules/d3/src/scale/pow.js",
+        "node_modules/d3/src/scale/quantile.js",
+        "node_modules/d3/src/scale/quantize.js",
+        "node_modules/d3/src/scale/scale.js",
+        "node_modules/d3/src/scale/sqrt.js",
+        "node_modules/d3/src/scale/threshold.js",
+        "node_modules/d3/src/selection/append.js",
+        "node_modules/d3/src/selection/attr.js",
+        "node_modules/d3/src/selection/call.js",
+        "node_modules/d3/src/selection/classed.js",
+        "node_modules/d3/src/selection/data.js",
+        "node_modules/d3/src/selection/datum.js",
+        "node_modules/d3/src/selection/each.js",
+        "node_modules/d3/src/selection/empty.js",
+        "node_modules/d3/src/selection/enter-insert.js",
+        "node_modules/d3/src/selection/enter-select.js",
+        "node_modules/d3/src/selection/enter.js",
+        "node_modules/d3/src/selection/filter.js",
+        "node_modules/d3/src/selection/html.js",
+        "node_modules/d3/src/selection/index.js",
+        "node_modules/d3/src/selection/insert.js",
+        "node_modules/d3/src/selection/interrupt.js",
+        "node_modules/d3/src/selection/node.js",
+        "node_modules/d3/src/selection/on.js",
+        "node_modules/d3/src/selection/order.js",
+        "node_modules/d3/src/selection/property.js",
+        "node_modules/d3/src/selection/remove.js",
+        "node_modules/d3/src/selection/select.js",
+        "node_modules/d3/src/selection/selectAll.js",
+        "node_modules/d3/src/selection/selection.js",
+        "node_modules/d3/src/selection/size.js",
+        "node_modules/d3/src/selection/sort.js",
+        "node_modules/d3/src/selection/style.js",
+        "node_modules/d3/src/selection/text.js",
+        "node_modules/d3/src/selection/transition.js",
+        "node_modules/d3/src/start.js",
+        "node_modules/d3/src/svg/arc.js",
+        "node_modules/d3/src/svg/area-radial.js",
+        "node_modules/d3/src/svg/area.js",
+        "node_modules/d3/src/svg/axis.js",
+        "node_modules/d3/src/svg/brush.js",
+        "node_modules/d3/src/svg/chord.js",
+        "node_modules/d3/src/svg/diagonal-radial.js",
+        "node_modules/d3/src/svg/diagonal.js",
+        "node_modules/d3/src/svg/index.js",
+        "node_modules/d3/src/svg/line-radial.js",
+        "node_modules/d3/src/svg/line.js",
+        "node_modules/d3/src/svg/svg.js",
+        "node_modules/d3/src/svg/symbol.js",
+        "node_modules/d3/src/time/day.js",
+        "node_modules/d3/src/time/format-iso.js",
+        "node_modules/d3/src/time/format-utc.js",
+        "node_modules/d3/src/time/format.js",
+        "node_modules/d3/src/time/hour.js",
+        "node_modules/d3/src/time/index.js",
+        "node_modules/d3/src/time/interval.js",
+        "node_modules/d3/src/time/minute.js",
+        "node_modules/d3/src/time/month.js",
+        "node_modules/d3/src/time/scale-utc.js",
+        "node_modules/d3/src/time/scale.js",
+        "node_modules/d3/src/time/second.js",
+        "node_modules/d3/src/time/time.js",
+        "node_modules/d3/src/time/week.js",
+        "node_modules/d3/src/time/year.js",
+        "node_modules/d3/src/transition/attr.js",
+        "node_modules/d3/src/transition/delay.js",
+        "node_modules/d3/src/transition/duration.js",
+        "node_modules/d3/src/transition/each.js",
+        "node_modules/d3/src/transition/ease.js",
+        "node_modules/d3/src/transition/filter.js",
+        "node_modules/d3/src/transition/index.js",
+        "node_modules/d3/src/transition/remove.js",
+        "node_modules/d3/src/transition/select.js",
+        "node_modules/d3/src/transition/selectAll.js",
+        "node_modules/d3/src/transition/style.js",
+        "node_modules/d3/src/transition/subtransition.js",
+        "node_modules/d3/src/transition/text.js",
+        "node_modules/d3/src/transition/transition.js",
+        "node_modules/d3/src/transition/tween.js",
+        "node_modules/d3/src/xhr/html.js",
+        "node_modules/d3/src/xhr/index.js",
+        "node_modules/d3/src/xhr/json.js",
+        "node_modules/d3/src/xhr/text.js",
+        "node_modules/d3/src/xhr/xhr.js",
+        "node_modules/d3/src/xhr/xml.js",
+        "node_modules/d3-cloud/build/d3.layout.cloud.js",
+        "node_modules/d3-cloud/examples/browserify.js",
+        "node_modules/d3-cloud/examples/node.js",
+        "node_modules/d3-cloud/index.js",
+        "node_modules/d3-dispatch/build/d3-dispatch.js",
+        "node_modules/d3-dispatch/build/d3-dispatch.min.js",
+        "node_modules/d3-dispatch/index.js",
+        "node_modules/d3-dispatch/src/dispatch.js",
+        "node_modules/d3-dsv/build/bundle.js",
+        "node_modules/d3-dsv/build/d3-dsv.js",
+        "node_modules/d3-dsv/build/d3-dsv.min.js",
+        "node_modules/d3-dsv/index.js",
+        "node_modules/d3-dsv/lib/read.js",
+        "node_modules/d3-dsv/src/dsv.js",
+        "node_modules/d3-format/build/bundle.js",
+        "node_modules/d3-format/build/d3-format.js",
+        "node_modules/d3-format/build/d3-format.min.js",
+        "node_modules/d3-format/index.js",
+        "node_modules/d3-format/src/exponent.js",
+        "node_modules/d3-format/src/formatDecimal.js",
+        "node_modules/d3-format/src/formatDefault.js",
+        "node_modules/d3-format/src/formatGroup.js",
+        "node_modules/d3-format/src/formatPrefixAuto.js",
+        "node_modules/d3-format/src/formatRounded.js",
+        "node_modules/d3-format/src/formatSpecifier.js",
+        "node_modules/d3-format/src/formatTypes.js",
+        "node_modules/d3-format/src/locale/ca-ES.js",
+        "node_modules/d3-format/src/locale/cs-CZ.js",
+        "node_modules/d3-format/src/locale/de-CH.js",
+        "node_modules/d3-format/src/locale/de-DE.js",
+        "node_modules/d3-format/src/locale/en-CA.js",
+        "node_modules/d3-format/src/locale/en-GB.js",
+        "node_modules/d3-format/src/locale/en-US.js",
+        "node_modules/d3-format/src/locale/es-ES.js",
+        "node_modules/d3-format/src/locale/fi-FI.js",
+        "node_modules/d3-format/src/locale/fr-CA.js",
+        "node_modules/d3-format/src/locale/fr-FR.js",
+        "node_modules/d3-format/src/locale/he-IL.js",
+        "node_modules/d3-format/src/locale/hu-HU.js",
+        "node_modules/d3-format/src/locale/it-IT.js",
+        "node_modules/d3-format/src/locale/ja-JP.js",
+        "node_modules/d3-format/src/locale/ko-KR.js",
+        "node_modules/d3-format/src/locale/mk-MK.js",
+        "node_modules/d3-format/src/locale/nl-NL.js",
+        "node_modules/d3-format/src/locale/pl-PL.js",
+        "node_modules/d3-format/src/locale/pt-BR.js",
+        "node_modules/d3-format/src/locale/ru-RU.js",
+        "node_modules/d3-format/src/locale/sv-SE.js",
+        "node_modules/d3-format/src/locale/zh-CN.js",
+        "node_modules/d3-format/src/locale.js",
+        "node_modules/d3-format/src/precisionFixed.js",
+        "node_modules/d3-format/src/precisionPrefix.js",
+        "node_modules/d3-format/src/precisionRound.js",
+        "node_modules/d3-geo-projection/d3.geo.projection.js",
+        "node_modules/d3-geo-projection/d3.geo.projection.min.js",
+        "node_modules/d3-geo-projection/index.js",
+        "node_modules/d3-geo-projection/src/airy.js",
+        "node_modules/d3-geo-projection/src/aitoff.js",
+        "node_modules/d3-geo-projection/src/armadillo.js",
+        "node_modules/d3-geo-projection/src/august.js",
+        "node_modules/d3-geo-projection/src/baker.js",
+        "node_modules/d3-geo-projection/src/berghaus.js",
+        "node_modules/d3-geo-projection/src/boggs.js",
+        "node_modules/d3-geo-projection/src/bonne.js",
+        "node_modules/d3-geo-projection/src/bottomley.js",
+        "node_modules/d3-geo-projection/src/bromley.js",
+        "node_modules/d3-geo-projection/src/chamberlin.js",
+        "node_modules/d3-geo-projection/src/collignon.js",
+        "node_modules/d3-geo-projection/src/craig.js",
+        "node_modules/d3-geo-projection/src/craster.js",
+        "node_modules/d3-geo-projection/src/cylindrical-equal-area.js",
+        "node_modules/d3-geo-projection/src/cylindrical-stereographic.js",
+        "node_modules/d3-geo-projection/src/eckert1.js",
+        "node_modules/d3-geo-projection/src/eckert2.js",
+        "node_modules/d3-geo-projection/src/eckert3.js",
+        "node_modules/d3-geo-projection/src/eckert4.js",
+        "node_modules/d3-geo-projection/src/eckert5.js",
+        "node_modules/d3-geo-projection/src/eckert6.js",
+        "node_modules/d3-geo-projection/src/eisenlohr.js",
+        "node_modules/d3-geo-projection/src/elliptic.js",
+        "node_modules/d3-geo-projection/src/end.js",
+        "node_modules/d3-geo-projection/src/fahey.js",
+        "node_modules/d3-geo-projection/src/foucaut.js",
+        "node_modules/d3-geo-projection/src/gilbert.js",
+        "node_modules/d3-geo-projection/src/gingery.js",
+        "node_modules/d3-geo-projection/src/ginzburg-polyconic.js",
+        "node_modules/d3-geo-projection/src/ginzburg4.js",
+        "node_modules/d3-geo-projection/src/ginzburg5.js",
+        "node_modules/d3-geo-projection/src/ginzburg6.js",
+        "node_modules/d3-geo-projection/src/ginzburg8.js",
+        "node_modules/d3-geo-projection/src/ginzburg9.js",
+        "node_modules/d3-geo-projection/src/gringorten.js",
+        "node_modules/d3-geo-projection/src/guyou.js",
+        "node_modules/d3-geo-projection/src/hammer-retroazimuthal.js",
+        "node_modules/d3-geo-projection/src/hammer.js",
+        "node_modules/d3-geo-projection/src/hatano.js",
+        "node_modules/d3-geo-projection/src/healpix.js",
+        "node_modules/d3-geo-projection/src/hill.js",
+        "node_modules/d3-geo-projection/src/homolosine.js",
+        "node_modules/d3-geo-projection/src/hyperbolic.js",
+        "node_modules/d3-geo-projection/src/index.js",
+        "node_modules/d3-geo-projection/src/interrupt.js",
+        "node_modules/d3-geo-projection/src/kavrayskiy7.js",
+        "node_modules/d3-geo-projection/src/lagrange.js",
+        "node_modules/d3-geo-projection/src/larrivee.js",
+        "node_modules/d3-geo-projection/src/laskowski.js",
+        "node_modules/d3-geo-projection/src/littrow.js",
+        "node_modules/d3-geo-projection/src/loximuthal.js",
+        "node_modules/d3-geo-projection/src/math.js",
+        "node_modules/d3-geo-projection/src/miller.js",
+        "node_modules/d3-geo-projection/src/modified-stereographic.js",
+        "node_modules/d3-geo-projection/src/mollweide.js",
+        "node_modules/d3-geo-projection/src/mt-flat-polar-parabolic.js",
+        "node_modules/d3-geo-projection/src/mt-flat-polar-quartic.js",
+        "node_modules/d3-geo-projection/src/mt-flat-polar-sinusoidal.js",
+        "node_modules/d3-geo-projection/src/natural-earth.js",
+        "node_modules/d3-geo-projection/src/nell-hammer.js",
+        "node_modules/d3-geo-projection/src/parallel1.js",
+        "node_modules/d3-geo-projection/src/parallel2.js",
+        "node_modules/d3-geo-projection/src/patterson.js",
+        "node_modules/d3-geo-projection/src/peirce-quincuncial.js",
+        "node_modules/d3-geo-projection/src/polyconic.js",
+        "node_modules/d3-geo-projection/src/project.js",
+        "node_modules/d3-geo-projection/src/projection.js",
+        "node_modules/d3-geo-projection/src/quincuncial.js",
+        "node_modules/d3-geo-projection/src/rectangular-polyconic.js",
+        "node_modules/d3-geo-projection/src/robinson.js",
+        "node_modules/d3-geo-projection/src/satellite.js",
+        "node_modules/d3-geo-projection/src/sinu-mollweide.js",
+        "node_modules/d3-geo-projection/src/sinusoidal.js",
+        "node_modules/d3-geo-projection/src/start.js",
+        "node_modules/d3-geo-projection/src/times.js",
+        "node_modules/d3-geo-projection/src/two-point-azimuthal.js",
+        "node_modules/d3-geo-projection/src/two-point-equidistant.js",
+        "node_modules/d3-geo-projection/src/van-der-grinten.js",
+        "node_modules/d3-geo-projection/src/van-der-grinten2.js",
+        "node_modules/d3-geo-projection/src/van-der-grinten3.js",
+        "node_modules/d3-geo-projection/src/van-der-grinten4.js",
+        "node_modules/d3-geo-projection/src/wagner4.js",
+        "node_modules/d3-geo-projection/src/wagner6.js",
+        "node_modules/d3-geo-projection/src/wagner7.js",
+        "node_modules/d3-geo-projection/src/wiechel.js",
+        "node_modules/d3-geo-projection/src/winkel3.js",
+        "node_modules/d3-queue/build/d3-queue.js",
+        "node_modules/d3-queue/build/d3-queue.min.js",
+        "node_modules/d3-queue/build/version.js",
+        "node_modules/d3-queue/index.js",
+        "node_modules/d3-queue/src/array.js",
+        "node_modules/d3-queue/src/queue.js",
+        "node_modules/d3-time/build/bundle.js",
+        "node_modules/d3-time/build/d3-time.js",
+        "node_modules/d3-time/build/d3-time.min.js",
+        "node_modules/d3-time/index.js",
+        "node_modules/d3-time/src/day.js",
+        "node_modules/d3-time/src/hour.js",
+        "node_modules/d3-time/src/interval.js",
+        "node_modules/d3-time/src/millisecond.js",
+        "node_modules/d3-time/src/minute.js",
+        "node_modules/d3-time/src/month.js",
+        "node_modules/d3-time/src/second.js",
+        "node_modules/d3-time/src/utcDay.js",
+        "node_modules/d3-time/src/utcHour.js",
+        "node_modules/d3-time/src/utcMinute.js",
+        "node_modules/d3-time/src/utcMonth.js",
+        "node_modules/d3-time/src/utcSecond.js",
+        "node_modules/d3-time/src/utcWeek.js",
+        "node_modules/d3-time/src/utcYear.js",
+        "node_modules/d3-time/src/week.js",
+        "node_modules/d3-time/src/year.js",
+        "node_modules/d3-time-format/build/bundle.js",
+        "node_modules/d3-time-format/build/d3-time-format.js",
+        "node_modules/d3-time-format/build/d3-time-format.min.js",
+        "node_modules/d3-time-format/index.js",
+        "node_modules/d3-time-format/src/isoFormat.js",
+        "node_modules/d3-time-format/src/locale/ca-ES.js",
+        "node_modules/d3-time-format/src/locale/de-CH.js",
+        "node_modules/d3-time-format/src/locale/de-DE.js",
+        "node_modules/d3-time-format/src/locale/en-CA.js",
+        "node_modules/d3-time-format/src/locale/en-GB.js",
+        "node_modules/d3-time-format/src/locale/en-US.js",
+        "node_modules/d3-time-format/src/locale/es-ES.js",
+        "node_modules/d3-time-format/src/locale/fi-FI.js",
+        "node_modules/d3-time-format/src/locale/fr-CA.js",
+        "node_modules/d3-time-format/src/locale/fr-FR.js",
+        "node_modules/d3-time-format/src/locale/he-IL.js",
+        "node_modules/d3-time-format/src/locale/hu-HU.js",
+        "node_modules/d3-time-format/src/locale/it-IT.js",
+        "node_modules/d3-time-format/src/locale/ja-JP.js",
+        "node_modules/d3-time-format/src/locale/ko-KR.js",
+        "node_modules/d3-time-format/src/locale/mk-MK.js",
+        "node_modules/d3-time-format/src/locale/nl-NL.js",
+        "node_modules/d3-time-format/src/locale/pl-PL.js",
+        "node_modules/d3-time-format/src/locale/pt-BR.js",
+        "node_modules/d3-time-format/src/locale/ru-RU.js",
+        "node_modules/d3-time-format/src/locale/sv-SE.js",
+        "node_modules/d3-time-format/src/locale/zh-CN.js",
+        "node_modules/d3-time-format/src/locale.js",
+        "node_modules/dashdash/lib/dashdash.js",
+        "node_modules/datalib/datalib.js",
+        "node_modules/datalib/datalib.min.js",
+        "node_modules/datalib/src/accessor.js",
+        "node_modules/datalib/src/aggregate/aggregator.js",
+        "node_modules/datalib/src/aggregate/collector.js",
+        "node_modules/datalib/src/aggregate/groupby.js",
+        "node_modules/datalib/src/aggregate/measures.js",
+        "node_modules/datalib/src/bins/bins.js",
+        "node_modules/datalib/src/bins/histogram.js",
+        "node_modules/datalib/src/distribution.js",
+        "node_modules/datalib/src/format-tables.js",
+        "node_modules/datalib/src/format.js",
+        "node_modules/datalib/src/generate.js",
+        "node_modules/datalib/src/import/formats/dsv.js",
+        "node_modules/datalib/src/import/formats/index.js",
+        "node_modules/datalib/src/import/formats/json.js",
+        "node_modules/datalib/src/import/formats/topojson.js",
+        "node_modules/datalib/src/import/formats/treejson.js",
+        "node_modules/datalib/src/import/load.js",
+        "node_modules/datalib/src/import/read.js",
+        "node_modules/datalib/src/import/readers.js",
+        "node_modules/datalib/src/import/type.js",
+        "node_modules/datalib/src/index.js",
+        "node_modules/datalib/src/stats.js",
+        "node_modules/datalib/src/template.js",
+        "node_modules/datalib/src/time.js",
+        "node_modules/datalib/src/util.js",
         "node_modules/debug/karma.conf.js",
         "node_modules/debug/node.js",
         "node_modules/debug/src/browser.js",
         "node_modules/debug/src/debug.js",
         "node_modules/debug/src/index.js",
+        "node_modules/debug/src/inspector-log.js",
         "node_modules/debug/src/node.js",
+        "node_modules/decamelize/index.js",
         "node_modules/deep-extend/index.js",
         "node_modules/deep-extend/lib/deep-extend.js",
+        "node_modules/delayed-stream/lib/delayed_stream.js",
         "node_modules/delegates/index.js",
+        "node_modules/duplexer2/example.js",
+        "node_modules/duplexer2/index.js",
+        "node_modules/duplexer2/node_modules/isarray/build/build.js",
+        "node_modules/duplexer2/node_modules/isarray/index.js",
+        "node_modules/duplexer2/node_modules/readable-stream/duplex.js",
+        "node_modules/duplexer2/node_modules/readable-stream/lib/_stream_duplex.js",
+        "node_modules/duplexer2/node_modules/readable-stream/lib/_stream_passthrough.js",
+        "node_modules/duplexer2/node_modules/readable-stream/lib/_stream_readable.js",
+        "node_modules/duplexer2/node_modules/readable-stream/lib/_stream_transform.js",
+        "node_modules/duplexer2/node_modules/readable-stream/lib/_stream_writable.js",
+        "node_modules/duplexer2/node_modules/readable-stream/passthrough.js",
+        "node_modules/duplexer2/node_modules/readable-stream/readable.js",
+        "node_modules/duplexer2/node_modules/readable-stream/transform.js",
+        "node_modules/duplexer2/node_modules/readable-stream/writable.js",
+        "node_modules/duplexer2/node_modules/string_decoder/index.js",
+        "node_modules/ecc-jsbn/index.js",
+        "node_modules/ecc-jsbn/lib/ec.js",
+        "node_modules/ecc-jsbn/lib/sec.js",
+        "node_modules/ecc-jsbn/test.js",
         "node_modules/encoding/lib/encoding.js",
         "node_modules/encoding/lib/iconv-loader.js",
         "node_modules/end-of-stream/index.js",
@@ -2955,8 +4759,21 @@
         "node_modules/entities/lib/decode.js",
         "node_modules/entities/lib/decode_codepoint.js",
         "node_modules/entities/lib/encode.js",
+        "node_modules/error-ex/index.js",
         "node_modules/escape-carriage/index.js",
         "node_modules/escape-string-regexp/index.js",
+        "node_modules/escodegen/bin/escodegen.js",
+        "node_modules/escodegen/bin/esgenerate.js",
+        "node_modules/escodegen/escodegen.browser.min.js",
+        "node_modules/escodegen/escodegen.js",
+        "node_modules/escodegen/gulpfile.js",
+        "node_modules/esprima/bin/esparse.js",
+        "node_modules/esprima/bin/esvalidate.js",
+        "node_modules/esprima/esprima.js",
+        "node_modules/estraverse/estraverse.js",
+        "node_modules/esutils/lib/code.js",
+        "node_modules/esutils/lib/keyword.js",
+        "node_modules/esutils/lib/utils.js",
         "node_modules/etch/dist/component-helpers.js",
         "node_modules/etch/dist/default-scheduler.js",
         "node_modules/etch/dist/dom.js",
@@ -2981,6 +4798,16 @@
         "node_modules/etch/lib/update-props.js",
         "node_modules/expand-template/index.js",
         "node_modules/expand-template/test.js",
+        "node_modules/extend/index.js",
+        "node_modules/extsprintf/lib/extsprintf.js",
+        "node_modules/falafel/example/array.js",
+        "node_modules/falafel/example/keyword.js",
+        "node_modules/falafel/example/prompt.js",
+        "node_modules/falafel/index.js",
+        "node_modules/falafel/node_modules/isarray/build/build.js",
+        "node_modules/falafel/node_modules/isarray/index.js",
+        "node_modules/fast-deep-equal/benchmark/index.js",
+        "node_modules/fast-deep-equal/index.js",
         "node_modules/fbjs/flow/lib/dev.js",
         "node_modules/fbjs/index.js",
         "node_modules/fbjs/lib/CSSCore.js",
@@ -3940,6 +5767,15 @@
         "node_modules/fbjs/node_modules/core-js/web/immediate.js",
         "node_modules/fbjs/node_modules/core-js/web/index.js",
         "node_modules/fbjs/node_modules/core-js/web/timers.js",
+        "node_modules/find-up/index.js",
+        "node_modules/foreach/index.js",
+        "node_modules/foreach/test.js",
+        "node_modules/forever-agent/index.js",
+        "node_modules/form-data/lib/browser.js",
+        "node_modules/form-data/lib/form_data.js",
+        "node_modules/form-data/lib/populate.js",
+        "node_modules/function-bind/implementation.js",
+        "node_modules/function-bind/index.js",
         "node_modules/fuzzaldrin/lib/filter.js",
         "node_modules/fuzzaldrin/lib/fuzzaldrin.js",
         "node_modules/fuzzaldrin/lib/matcher.js",
@@ -3959,15 +5795,47 @@
         "node_modules/gauge/theme-set.js",
         "node_modules/gauge/themes.js",
         "node_modules/gauge/wide-truncate.js",
+        "node_modules/get-caller-file/index.js",
+        "node_modules/getpass/lib/index.js",
         "node_modules/github-from-package/example/url.js",
         "node_modules/github-from-package/index.js",
         "node_modules/graceful-fs/fs.js",
         "node_modules/graceful-fs/graceful-fs.js",
         "node_modules/graceful-fs/legacy-streams.js",
         "node_modules/graceful-fs/polyfills.js",
+        "node_modules/har-schema/lib/index.js",
+        "node_modules/har-validator/lib/async.js",
+        "node_modules/har-validator/lib/error.js",
+        "node_modules/har-validator/lib/promise.js",
+        "node_modules/has/src/index.js",
         "node_modules/has-unicode/index.js",
+        "node_modules/hawk/client.js",
+        "node_modules/hawk/dist/browser.js",
+        "node_modules/hawk/lib/browser.js",
+        "node_modules/hawk/lib/client.js",
+        "node_modules/hawk/lib/crypto.js",
+        "node_modules/hawk/lib/index.js",
+        "node_modules/hawk/lib/server.js",
+        "node_modules/hawk/lib/utils.js",
+        "node_modules/hoek/lib/escape.js",
+        "node_modules/hoek/lib/index.js",
         "node_modules/hoist-non-react-statics/index.js",
         "node_modules/home-dir/index.js",
+        "node_modules/hosted-git-info/git-host-info.js",
+        "node_modules/hosted-git-info/git-host.js",
+        "node_modules/hosted-git-info/index.js",
+        "node_modules/http-basic/index.js",
+        "node_modules/http-basic/lib/cache-utils.js",
+        "node_modules/http-basic/lib/file-cache.js",
+        "node_modules/http-basic/lib/memory-cache.js",
+        "node_modules/http-basic/node_modules/caseless/index.js",
+        "node_modules/http-basic/node_modules/caseless/test.js",
+        "node_modules/http-response-object/index.js",
+        "node_modules/http-signature/lib/index.js",
+        "node_modules/http-signature/lib/parser.js",
+        "node_modules/http-signature/lib/signer.js",
+        "node_modules/http-signature/lib/utils.js",
+        "node_modules/http-signature/lib/verify.js",
         "node_modules/iconv-lite/encodings/dbcs-codec.js",
         "node_modules/iconv-lite/encodings/dbcs-data.js",
         "node_modules/iconv-lite/encodings/index.js",
@@ -3989,20 +5857,45 @@
         "node_modules/inherits/inherits.js",
         "node_modules/inherits/inherits_browser.js",
         "node_modules/ini/ini.js",
+        "node_modules/invert-kv/index.js",
+        "node_modules/is-arrayish/index.js",
+        "node_modules/is-builtin-module/index.js",
         "node_modules/is-fullwidth-code-point/index.js",
         "node_modules/is-stream/index.js",
+        "node_modules/is-typedarray/index.js",
+        "node_modules/is-typedarray/test.js",
+        "node_modules/is-utf8/is-utf8.js",
         "node_modules/isarray/index.js",
         "node_modules/isarray/test.js",
         "node_modules/isomorphic-fetch/fetch-bower.js",
         "node_modules/isomorphic-fetch/fetch-npm-browserify.js",
         "node_modules/isomorphic-fetch/fetch-npm-node.js",
+        "node_modules/isstream/isstream.js",
+        "node_modules/isstream/test.js",
         "node_modules/jmp/index.js",
         "node_modules/jmp/scripts/doc-publish.js",
         "node_modules/js-tokens/index.js",
+        "node_modules/jsbn/example.js",
+        "node_modules/jsbn/index.js",
+        "node_modules/json-schema/lib/links.js",
+        "node_modules/json-schema/lib/validate.js",
+        "node_modules/json-schema-traverse/index.js",
+        "node_modules/json-stable-stringify/example/key_cmp.js",
+        "node_modules/json-stable-stringify/example/nested.js",
+        "node_modules/json-stable-stringify/example/str.js",
+        "node_modules/json-stable-stringify/example/value_cmp.js",
+        "node_modules/json-stable-stringify/index.js",
+        "node_modules/json-stringify-safe/stringify.js",
         "node_modules/jsonfile/index.js",
+        "node_modules/jsonify/index.js",
+        "node_modules/jsonify/lib/parse.js",
+        "node_modules/jsonify/lib/stringify.js",
+        "node_modules/jsprim/lib/jsprim.js",
         "node_modules/jupyter-paths/index.js",
         "node_modules/kernelspecs/index.js",
         "node_modules/kernelspecs/lib/traverse.js",
+        "node_modules/lcid/index.js",
+        "node_modules/load-json-file/index.js",
         "node_modules/lodash/_DataView.js",
         "node_modules/lodash/_Hash.js",
         "node_modules/lodash/_LazyWrapper.js",
@@ -5056,7 +6949,6 @@
         "node_modules/lodash.curry/index.js",
         "node_modules/lodash.flow/index.js",
         "node_modules/lodash.isplainobject/index.js",
-        "node_modules/loophole/lib/loophole.js",
         "node_modules/loose-envify/cli.js",
         "node_modules/loose-envify/custom.js",
         "node_modules/loose-envify/index.js",
@@ -5172,6 +7064,8 @@
         "node_modules/mdurl/format.js",
         "node_modules/mdurl/index.js",
         "node_modules/mdurl/parse.js",
+        "node_modules/mime-db/index.js",
+        "node_modules/mime-types/index.js",
         "node_modules/minimist/example/parse.js",
         "node_modules/minimist/index.js",
         "node_modules/mkdirp/bin/cmd.js",
@@ -5184,11 +7078,12 @@
         "node_modules/mobx/lib/mobx.module.js",
         "node_modules/mobx/lib/mobx.umd.js",
         "node_modules/mobx/lib/mobx.umd.min.js",
-        "node_modules/mobx-react/build-rollup.js",
         "node_modules/mobx-react/custom.js",
+        "node_modules/mobx-react/custom.module.js",
         "node_modules/mobx-react/empty.js",
         "node_modules/mobx-react/index.js",
         "node_modules/mobx-react/index.min.js",
+        "node_modules/mobx-react/index.module.js",
         "node_modules/mobx-react/native.js",
         "node_modules/moment/ender.js",
         "node_modules/moment/locale/af.js",
@@ -5543,13 +7438,57 @@
         "node_modules/node-fetch/lib/request.js",
         "node_modules/node-fetch/lib/response.js",
         "node_modules/noop-logger/lib/index.js",
+        "node_modules/normalize-package-data/lib/extract_description.js",
+        "node_modules/normalize-package-data/lib/fixer.js",
+        "node_modules/normalize-package-data/lib/make_warning.js",
+        "node_modules/normalize-package-data/lib/normalize.js",
+        "node_modules/normalize-package-data/lib/safe_format.js",
         "node_modules/npmlog/log.js",
         "node_modules/number-is-nan/index.js",
+        "node_modules/oauth-sign/index.js",
         "node_modules/object-assign/index.js",
+        "node_modules/object-inspect/example/all.js",
+        "node_modules/object-inspect/example/circular.js",
+        "node_modules/object-inspect/example/fn.js",
+        "node_modules/object-inspect/example/inspect.js",
+        "node_modules/object-inspect/index.js",
+        "node_modules/object-keys/index.js",
+        "node_modules/object-keys/isArguments.js",
         "node_modules/once/once.js",
+        "node_modules/optimist/example/bool.js",
+        "node_modules/optimist/example/boolean_double.js",
+        "node_modules/optimist/example/boolean_single.js",
+        "node_modules/optimist/example/default_hash.js",
+        "node_modules/optimist/example/default_singles.js",
+        "node_modules/optimist/example/divide.js",
+        "node_modules/optimist/example/line_count.js",
+        "node_modules/optimist/example/line_count_options.js",
+        "node_modules/optimist/example/line_count_wrap.js",
+        "node_modules/optimist/example/nonopt.js",
+        "node_modules/optimist/example/reflect.js",
+        "node_modules/optimist/example/short.js",
+        "node_modules/optimist/example/string.js",
+        "node_modules/optimist/example/usage-options.js",
+        "node_modules/optimist/example/xup.js",
+        "node_modules/optimist/index.js",
         "node_modules/os-homedir/index.js",
+        "node_modules/os-locale/index.js",
+        "node_modules/os-shim/lib/os.js",
+        "node_modules/parse-json/index.js",
+        "node_modules/parse-json/vendor/parse.js",
+        "node_modules/parse-json/vendor/unicode.js",
         "node_modules/pascalcase/index.js",
+        "node_modules/path-exists/index.js",
+        "node_modules/path-parse/index.js",
+        "node_modules/path-parse/index.min.js",
+        "node_modules/path-parse/test.js",
+        "node_modules/path-parse/test.min.js",
         "node_modules/path-posix/index.js",
+        "node_modules/path-type/index.js",
+        "node_modules/performance-now/lib/performance-now.js",
+        "node_modules/pify/index.js",
+        "node_modules/pinkie/index.js",
+        "node_modules/pinkie-promise/index.js",
         "node_modules/portfinder/lib/portfinder.js",
         "node_modules/prebuild-install/bin.js",
         "node_modules/prebuild-install/download.js",
@@ -5607,6 +7546,7 @@
         "node_modules/pump/index.js",
         "node_modules/pump/test-browser.js",
         "node_modules/pump/test.js",
+        "node_modules/punycode/punycode.js",
         "node_modules/pure-color/convert/cmyk2rgb.js",
         "node_modules/pure-color/convert/hsl2hsv.js",
         "node_modules/pure-color/convert/hsl2rgb.js",
@@ -5637,7 +7577,16 @@
         "node_modules/pure-color/parse/rgb.js",
         "node_modules/pure-color/util/clamp.js",
         "node_modules/pure-color/util/compose.js",
+        "node_modules/qs/dist/qs.js",
+        "node_modules/qs/lib/formats.js",
+        "node_modules/qs/lib/index.js",
+        "node_modules/qs/lib/parse.js",
+        "node_modules/qs/lib/stringify.js",
+        "node_modules/qs/lib/utils.js",
         "node_modules/querystringify/index.js",
+        "node_modules/quote-stream/bin/cmd.js",
+        "node_modules/quote-stream/example/stream.js",
+        "node_modules/quote-stream/index.js",
         "node_modules/rc/browser.js",
         "node_modules/rc/index.js",
         "node_modules/rc/lib/utils.js",
@@ -5895,6 +7844,8 @@
         "node_modules/react-rangeslider/lib/utils.js",
         "node_modules/react-rangeslider/umd/rangeslider.js",
         "node_modules/react-rangeslider/umd/rangeslider.min.js",
+        "node_modules/read-pkg/index.js",
+        "node_modules/read-pkg-up/index.js",
         "node_modules/readable-stream/duplex-browser.js",
         "node_modules/readable-stream/duplex.js",
         "node_modules/readable-stream/lib/_stream_duplex.js",
@@ -5915,6 +7866,21 @@
         "node_modules/regenerator-runtime/path.js",
         "node_modules/regenerator-runtime/runtime-module.js",
         "node_modules/regenerator-runtime/runtime.js",
+        "node_modules/request/index.js",
+        "node_modules/request/lib/auth.js",
+        "node_modules/request/lib/cookies.js",
+        "node_modules/request/lib/getProxyFromURI.js",
+        "node_modules/request/lib/har.js",
+        "node_modules/request/lib/helpers.js",
+        "node_modules/request/lib/multipart.js",
+        "node_modules/request/lib/oauth.js",
+        "node_modules/request/lib/querystring.js",
+        "node_modules/request/lib/redirect.js",
+        "node_modules/request/lib/tunnel.js",
+        "node_modules/request/request.js",
+        "node_modules/require-directory/index.js",
+        "node_modules/require-main-filename/index.js",
+        "node_modules/require-main-filename/test.js",
         "node_modules/requirejs/bin/r.js",
         "node_modules/requirejs/require.js",
         "node_modules/requires-port/index.js",
@@ -5934,26 +7900,232 @@
         "node_modules/resize-observer-polyfill/src/utils/geometry.js",
         "node_modules/resize-observer-polyfill/src/utils/isBrowser.js",
         "node_modules/resize-observer-polyfill/src/utils/throttle.js",
+        "node_modules/resolve/example/async.js",
+        "node_modules/resolve/example/sync.js",
+        "node_modules/resolve/index.js",
+        "node_modules/resolve/lib/async.js",
+        "node_modules/resolve/lib/caller.js",
+        "node_modules/resolve/lib/core.js",
+        "node_modules/resolve/lib/node-modules-paths.js",
+        "node_modules/resolve/lib/sync.js",
+        "node_modules/rw/index.js",
+        "node_modules/rw/lib/rw/dash.js",
+        "node_modules/rw/lib/rw/decode.js",
+        "node_modules/rw/lib/rw/encode.js",
+        "node_modules/rw/lib/rw/read-file-sync.js",
+        "node_modules/rw/lib/rw/read-file.js",
+        "node_modules/rw/lib/rw/write-file-sync.js",
+        "node_modules/rw/lib/rw/write-file.js",
         "node_modules/safe-buffer/index.js",
         "node_modules/safe-buffer/test.js",
+        "node_modules/semver/semver.js",
         "node_modules/set-blocking/index.js",
         "node_modules/setimmediate/setImmediate.js",
+        "node_modules/shallow-copy/example/array.js",
+        "node_modules/shallow-copy/example/object.js",
+        "node_modules/shallow-copy/index.js",
+        "node_modules/shapefile/dbf.js",
+        "node_modules/shapefile/file.js",
+        "node_modules/shapefile/index.js",
+        "node_modules/shapefile/list.js",
+        "node_modules/shapefile/node_modules/d3-queue/build/bundle.js",
+        "node_modules/shapefile/node_modules/d3-queue/build/d3-queue.js",
+        "node_modules/shapefile/node_modules/d3-queue/build/d3-queue.min.js",
+        "node_modules/shapefile/node_modules/d3-queue/build/queue.js",
+        "node_modules/shapefile/node_modules/d3-queue/build/queue.min.js",
+        "node_modules/shapefile/node_modules/d3-queue/index.js",
+        "node_modules/shapefile/node_modules/d3-queue/src/array.js",
+        "node_modules/shapefile/node_modules/d3-queue/src/noop.js",
+        "node_modules/shapefile/node_modules/d3-queue/src/queue.js",
+        "node_modules/shapefile/node_modules/iconv-lite/encodings/big5.js",
+        "node_modules/shapefile/node_modules/iconv-lite/encodings/gbk.js",
+        "node_modules/shapefile/node_modules/iconv-lite/encodings/singlebyte.js",
+        "node_modules/shapefile/node_modules/iconv-lite/encodings/table/big5.js",
+        "node_modules/shapefile/node_modules/iconv-lite/encodings/table/gbk.js",
+        "node_modules/shapefile/node_modules/iconv-lite/generation/generate-big5-table.js",
+        "node_modules/shapefile/node_modules/iconv-lite/generation/generate-singlebyte.js",
+        "node_modules/shapefile/node_modules/iconv-lite/index.js",
+        "node_modules/shapefile/read.js",
+        "node_modules/shapefile/shp.js",
         "node_modules/signal-exit/index.js",
         "node_modules/signal-exit/signals.js",
         "node_modules/simple-get/index.js",
+        "node_modules/sntp/lib/index.js",
+        "node_modules/source-map/Makefile.dryice.js",
+        "node_modules/source-map/build/assert-shim.js",
+        "node_modules/source-map/build/mini-require.js",
+        "node_modules/source-map/build/suffix-browser.js",
+        "node_modules/source-map/build/test-prefix.js",
+        "node_modules/source-map/build/test-suffix.js",
+        "node_modules/source-map/lib/source-map/array-set.js",
+        "node_modules/source-map/lib/source-map/base64-vlq.js",
+        "node_modules/source-map/lib/source-map/base64.js",
+        "node_modules/source-map/lib/source-map/binary-search.js",
+        "node_modules/source-map/lib/source-map/mapping-list.js",
+        "node_modules/source-map/lib/source-map/source-map-consumer.js",
+        "node_modules/source-map/lib/source-map/source-map-generator.js",
+        "node_modules/source-map/lib/source-map/source-node.js",
+        "node_modules/source-map/lib/source-map/util.js",
+        "node_modules/source-map/lib/source-map.js",
+        "node_modules/spawn-sync/index.js",
+        "node_modules/spawn-sync/lib/json-buffer/index.js",
+        "node_modules/spawn-sync/lib/spawn-sync.js",
+        "node_modules/spawn-sync/lib/worker.js",
+        "node_modules/spawn-sync/postinstall.js",
         "node_modules/spawnteract/index.js",
+        "node_modules/spdx-correct/index.js",
+        "node_modules/spdx-expression-parse/index.js",
+        "node_modules/spdx-expression-parse/parser.js",
+        "node_modules/sshpk/lib/algs.js",
+        "node_modules/sshpk/lib/certificate.js",
+        "node_modules/sshpk/lib/dhe.js",
+        "node_modules/sshpk/lib/ed-compat.js",
+        "node_modules/sshpk/lib/errors.js",
+        "node_modules/sshpk/lib/fingerprint.js",
+        "node_modules/sshpk/lib/formats/auto.js",
+        "node_modules/sshpk/lib/formats/openssh-cert.js",
+        "node_modules/sshpk/lib/formats/pem.js",
+        "node_modules/sshpk/lib/formats/pkcs1.js",
+        "node_modules/sshpk/lib/formats/pkcs8.js",
+        "node_modules/sshpk/lib/formats/rfc4253.js",
+        "node_modules/sshpk/lib/formats/ssh-private.js",
+        "node_modules/sshpk/lib/formats/ssh.js",
+        "node_modules/sshpk/lib/formats/x509-pem.js",
+        "node_modules/sshpk/lib/formats/x509.js",
+        "node_modules/sshpk/lib/identity.js",
+        "node_modules/sshpk/lib/index.js",
+        "node_modules/sshpk/lib/key.js",
+        "node_modules/sshpk/lib/private-key.js",
+        "node_modules/sshpk/lib/signature.js",
+        "node_modules/sshpk/lib/ssh-buffer.js",
+        "node_modules/sshpk/lib/utils.js",
+        "node_modules/static-eval/example/eval.js",
+        "node_modules/static-eval/example/vars.js",
+        "node_modules/static-eval/index.js",
+        "node_modules/static-eval/node_modules/escodegen/Gruntfile.js",
+        "node_modules/static-eval/node_modules/escodegen/bin/escodegen.js",
+        "node_modules/static-eval/node_modules/escodegen/bin/esgenerate.js",
+        "node_modules/static-eval/node_modules/escodegen/escodegen.js",
+        "node_modules/static-eval/node_modules/esprima/bin/esparse.js",
+        "node_modules/static-eval/node_modules/esprima/bin/esvalidate.js",
+        "node_modules/static-eval/node_modules/esprima/esprima.js",
+        "node_modules/static-eval/node_modules/estraverse/estraverse.js",
+        "node_modules/static-module/example/brfs/source.js",
+        "node_modules/static-module/example/brfs.js",
+        "node_modules/static-module/example/fs/source.js",
+        "node_modules/static-module/example/fs.js",
+        "node_modules/static-module/index.js",
+        "node_modules/static-module/node_modules/isarray/build/build.js",
+        "node_modules/static-module/node_modules/isarray/index.js",
+        "node_modules/static-module/node_modules/minimist/example/parse.js",
+        "node_modules/static-module/node_modules/minimist/index.js",
+        "node_modules/static-module/node_modules/object-keys/foreach.js",
+        "node_modules/static-module/node_modules/object-keys/index.js",
+        "node_modules/static-module/node_modules/object-keys/isArguments.js",
+        "node_modules/static-module/node_modules/object-keys/shim.js",
+        "node_modules/static-module/node_modules/quote-stream/bin/cmd.js",
+        "node_modules/static-module/node_modules/quote-stream/example/stream.js",
+        "node_modules/static-module/node_modules/quote-stream/index.js",
+        "node_modules/static-module/node_modules/readable-stream/duplex.js",
+        "node_modules/static-module/node_modules/readable-stream/lib/_stream_duplex.js",
+        "node_modules/static-module/node_modules/readable-stream/lib/_stream_passthrough.js",
+        "node_modules/static-module/node_modules/readable-stream/lib/_stream_readable.js",
+        "node_modules/static-module/node_modules/readable-stream/lib/_stream_transform.js",
+        "node_modules/static-module/node_modules/readable-stream/lib/_stream_writable.js",
+        "node_modules/static-module/node_modules/readable-stream/passthrough.js",
+        "node_modules/static-module/node_modules/readable-stream/readable.js",
+        "node_modules/static-module/node_modules/readable-stream/transform.js",
+        "node_modules/static-module/node_modules/readable-stream/writable.js",
+        "node_modules/static-module/node_modules/string_decoder/index.js",
+        "node_modules/static-module/node_modules/through2/through2.js",
+        "node_modules/static-module/node_modules/xtend/has-keys.js",
+        "node_modules/static-module/node_modules/xtend/index.js",
+        "node_modules/static-module/node_modules/xtend/mutable.js",
+        "node_modules/static-module/node_modules/xtend/test.js",
         "node_modules/string-width/index.js",
         "node_modules/string.prototype.repeat/repeat.js",
         "node_modules/string_decoder/lib/string_decoder.js",
+        "node_modules/stringstream/example.js",
+        "node_modules/stringstream/stringstream.js",
         "node_modules/strip-ansi/index.js",
+        "node_modules/strip-bom/index.js",
         "node_modules/strip-json-comments/index.js",
+        "node_modules/sync-request/browser.js",
+        "node_modules/sync-request/index.js",
+        "node_modules/sync-request/lib/json-buffer/index.js",
+        "node_modules/sync-request/lib/worker.js",
         "node_modules/tar-fs/index.js",
         "node_modules/tar-stream/extract.js",
         "node_modules/tar-stream/headers.js",
         "node_modules/tar-stream/index.js",
         "node_modules/tar-stream/pack.js",
+        "node_modules/then-request/browser.js",
+        "node_modules/then-request/dist/request.js",
+        "node_modules/then-request/dist/request.min.js",
+        "node_modules/then-request/index.js",
+        "node_modules/then-request/lib/handle-qs.js",
+        "node_modules/then-request/node_modules/caseless/index.js",
+        "node_modules/then-request/node_modules/caseless/test.js",
+        "node_modules/through2/through2.js",
         "node_modules/tildify/index.js",
+        "node_modules/topojson/build/bundle.js",
+        "node_modules/topojson/build/topojson.js",
+        "node_modules/topojson/build/topojson.min.js",
+        "node_modules/topojson/client.js",
+        "node_modules/topojson/lib/topojson/bounds.js",
+        "node_modules/topojson/lib/topojson/cartesian.js",
+        "node_modules/topojson/lib/topojson/clockwise.js",
+        "node_modules/topojson/lib/topojson/compute-id.js",
+        "node_modules/topojson/lib/topojson/coordinate-systems.js",
+        "node_modules/topojson/lib/topojson/delta.js",
+        "node_modules/topojson/lib/topojson/filter.js",
+        "node_modules/topojson/lib/topojson/geomify.js",
+        "node_modules/topojson/lib/topojson/merge-properties.js",
+        "node_modules/topojson/lib/topojson/post-quantize.js",
+        "node_modules/topojson/lib/topojson/pre-quantize.js",
+        "node_modules/topojson/lib/topojson/prune.js",
+        "node_modules/topojson/lib/topojson/quantize.js",
+        "node_modules/topojson/lib/topojson/scale.js",
+        "node_modules/topojson/lib/topojson/simplify.js",
+        "node_modules/topojson/lib/topojson/spherical.js",
+        "node_modules/topojson/lib/topojson/stitch.js",
+        "node_modules/topojson/lib/topojson/topology/cut.js",
+        "node_modules/topojson/lib/topojson/topology/dedup.js",
+        "node_modules/topojson/lib/topojson/topology/extract.js",
+        "node_modules/topojson/lib/topojson/topology/hashmap.js",
+        "node_modules/topojson/lib/topojson/topology/hashset.js",
+        "node_modules/topojson/lib/topojson/topology/index.js",
+        "node_modules/topojson/lib/topojson/topology/join.js",
+        "node_modules/topojson/lib/topojson/topology/point-equal.js",
+        "node_modules/topojson/lib/topojson/topology/point-hash.js",
+        "node_modules/topojson/lib/topojson/topology.js",
+        "node_modules/topojson/lib/topojson/transform-properties.js",
+        "node_modules/topojson/lib/topojson/type.js",
+        "node_modules/topojson/server.js",
+        "node_modules/topojson/src/area.js",
+        "node_modules/topojson/src/array.js",
+        "node_modules/topojson/src/feature.js",
+        "node_modules/topojson/src/merge.js",
+        "node_modules/topojson/src/mesh.js",
+        "node_modules/topojson/src/minAreaHeap.js",
+        "node_modules/topojson/src/neighbors.js",
+        "node_modules/topojson/src/noop.js",
+        "node_modules/topojson/src/presimplify.js",
+        "node_modules/topojson/src/stitchArcs.js",
+        "node_modules/topojson/src/transform.js",
+        "node_modules/tough-cookie/lib/cookie.js",
+        "node_modules/tough-cookie/lib/memstore.js",
+        "node_modules/tough-cookie/lib/pathMatch.js",
+        "node_modules/tough-cookie/lib/permuteDomain.js",
+        "node_modules/tough-cookie/lib/pubsuffix.js",
+        "node_modules/tough-cookie/lib/store.js",
         "node_modules/tunnel-agent/index.js",
+        "node_modules/tweetnacl/nacl-fast.js",
+        "node_modules/tweetnacl/nacl-fast.min.js",
+        "node_modules/tweetnacl/nacl.js",
+        "node_modules/tweetnacl/nacl.min.js",
+        "node_modules/typedarray/example/tarray.js",
+        "node_modules/typedarray/index.js",
         "node_modules/ua-parser-js/dist/ua-parser.min.js",
         "node_modules/ua-parser-js/dist/ua-parser.pack.js",
         "node_modules/ua-parser-js/package.js",
@@ -5972,8 +8144,256 @@
         "node_modules/uuid/v1.js",
         "node_modules/uuid/v4.js",
         "node_modules/uuid/v5.js",
+        "node_modules/validate-npm-package-license/index.js",
+        "node_modules/vega/index.js",
+        "node_modules/vega/scripts/schema.js",
+        "node_modules/vega/scripts/strip-schema.js",
+        "node_modules/vega/src/core/HeadlessView.js",
+        "node_modules/vega/src/core/Model.js",
+        "node_modules/vega/src/core/View.js",
+        "node_modules/vega/src/core/config.js",
+        "node_modules/vega/src/core/schema.js",
+        "node_modules/vega/src/parse/axes.js",
+        "node_modules/vega/src/parse/background.js",
+        "node_modules/vega/src/parse/data.js",
+        "node_modules/vega/src/parse/expr.js",
+        "node_modules/vega/src/parse/index.js",
+        "node_modules/vega/src/parse/interactors.js",
+        "node_modules/vega/src/parse/legends.js",
+        "node_modules/vega/src/parse/mark.js",
+        "node_modules/vega/src/parse/marks.js",
+        "node_modules/vega/src/parse/modify.js",
+        "node_modules/vega/src/parse/padding.js",
+        "node_modules/vega/src/parse/predicates.js",
+        "node_modules/vega/src/parse/properties.js",
+        "node_modules/vega/src/parse/signals.js",
+        "node_modules/vega/src/parse/spec.js",
+        "node_modules/vega/src/parse/streams.js",
+        "node_modules/vega/src/parse/transforms.js",
+        "node_modules/vega/src/scene/Bounder.js",
+        "node_modules/vega/src/scene/Builder.js",
+        "node_modules/vega/src/scene/Encoder.js",
+        "node_modules/vega/src/scene/GroupBuilder.js",
+        "node_modules/vega/src/scene/Scale.js",
+        "node_modules/vega/src/scene/Transition.js",
+        "node_modules/vega/src/scene/axis.js",
+        "node_modules/vega/src/scene/legend.js",
+        "node_modules/vega/src/scene/visit.js",
+        "node_modules/vega/src/transforms/Aggregate.js",
+        "node_modules/vega/src/transforms/BatchTransform.js",
+        "node_modules/vega/src/transforms/Bin.js",
+        "node_modules/vega/src/transforms/CountPattern.js",
+        "node_modules/vega/src/transforms/Cross.js",
+        "node_modules/vega/src/transforms/Facet.js",
+        "node_modules/vega/src/transforms/Facetor.js",
+        "node_modules/vega/src/transforms/Filter.js",
+        "node_modules/vega/src/transforms/Fold.js",
+        "node_modules/vega/src/transforms/Force.js",
+        "node_modules/vega/src/transforms/Formula.js",
+        "node_modules/vega/src/transforms/Geo.js",
+        "node_modules/vega/src/transforms/GeoPath.js",
+        "node_modules/vega/src/transforms/Hierarchy.js",
+        "node_modules/vega/src/transforms/Impute.js",
+        "node_modules/vega/src/transforms/LinkPath.js",
+        "node_modules/vega/src/transforms/Lookup.js",
+        "node_modules/vega/src/transforms/Parameter.js",
+        "node_modules/vega/src/transforms/Pie.js",
+        "node_modules/vega/src/transforms/Rank.js",
+        "node_modules/vega/src/transforms/Sort.js",
+        "node_modules/vega/src/transforms/Stack.js",
+        "node_modules/vega/src/transforms/Transform.js",
+        "node_modules/vega/src/transforms/Treeify.js",
+        "node_modules/vega/src/transforms/Treemap.js",
+        "node_modules/vega/src/transforms/Voronoi.js",
+        "node_modules/vega/src/transforms/Wordcloud.js",
+        "node_modules/vega/src/transforms/index.js",
+        "node_modules/vega/src/transforms/screen.js",
+        "node_modules/vega/src/util/format.js",
+        "node_modules/vega/src/util/index.js",
+        "node_modules/vega/src/util/theme-val.js",
+        "node_modules/vega/vega.js",
+        "node_modules/vega/vega.min.js",
+        "node_modules/vega-dataflow/src/ChangeSet.js",
+        "node_modules/vega-dataflow/src/Collector.js",
+        "node_modules/vega-dataflow/src/DataSource.js",
+        "node_modules/vega-dataflow/src/Dependencies.js",
+        "node_modules/vega-dataflow/src/Graph.js",
+        "node_modules/vega-dataflow/src/Heap.js",
+        "node_modules/vega-dataflow/src/Node.js",
+        "node_modules/vega-dataflow/src/Signal.js",
+        "node_modules/vega-dataflow/src/Tuple.js",
+        "node_modules/vega-dataflow/src/index.js",
+        "node_modules/vega-dataflow/vega-dataflow.js",
+        "node_modules/vega-dataflow/vega-dataflow.min.js",
+        "node_modules/vega-embed/scripts/schema.js",
+        "node_modules/vega-embed/src/embed.js",
+        "node_modules/vega-embed/src/parameter.js",
+        "node_modules/vega-embed/src/post.js",
+        "node_modules/vega-embed/vega-embed.js",
+        "node_modules/vega-embed/vega-embed.min.js",
+        "node_modules/vega-event-selector/index.js",
+        "node_modules/vega-expression/src/codegen.js",
+        "node_modules/vega-expression/src/constants.js",
+        "node_modules/vega-expression/src/functions.js",
+        "node_modules/vega-expression/src/index.js",
+        "node_modules/vega-expression/src/parser.js",
+        "node_modules/vega-expression/vega-expression.js",
+        "node_modules/vega-expression/vega-expression.min.js",
+        "node_modules/vega-lite/_site/examples/examples.test.js",
+        "node_modules/vega-lite/examples/examples.test.js",
+        "node_modules/vega-lite/node_modules/camelcase/index.js",
+        "node_modules/vega-lite/node_modules/datalib/datalib.js",
+        "node_modules/vega-lite/node_modules/datalib/datalib.min.js",
+        "node_modules/vega-lite/node_modules/datalib/src/accessor.js",
+        "node_modules/vega-lite/node_modules/datalib/src/aggregate/aggregator.js",
+        "node_modules/vega-lite/node_modules/datalib/src/aggregate/collector.js",
+        "node_modules/vega-lite/node_modules/datalib/src/aggregate/groupby.js",
+        "node_modules/vega-lite/node_modules/datalib/src/aggregate/measures.js",
+        "node_modules/vega-lite/node_modules/datalib/src/bins/bins.js",
+        "node_modules/vega-lite/node_modules/datalib/src/bins/histogram.js",
+        "node_modules/vega-lite/node_modules/datalib/src/distribution.js",
+        "node_modules/vega-lite/node_modules/datalib/src/format-tables.js",
+        "node_modules/vega-lite/node_modules/datalib/src/format.js",
+        "node_modules/vega-lite/node_modules/datalib/src/generate.js",
+        "node_modules/vega-lite/node_modules/datalib/src/import/formats/dsv.js",
+        "node_modules/vega-lite/node_modules/datalib/src/import/formats/index.js",
+        "node_modules/vega-lite/node_modules/datalib/src/import/formats/json.js",
+        "node_modules/vega-lite/node_modules/datalib/src/import/formats/topojson.js",
+        "node_modules/vega-lite/node_modules/datalib/src/import/formats/treejson.js",
+        "node_modules/vega-lite/node_modules/datalib/src/import/load.js",
+        "node_modules/vega-lite/node_modules/datalib/src/import/read.js",
+        "node_modules/vega-lite/node_modules/datalib/src/import/readers.js",
+        "node_modules/vega-lite/node_modules/datalib/src/import/type.js",
+        "node_modules/vega-lite/node_modules/datalib/src/index.js",
+        "node_modules/vega-lite/node_modules/datalib/src/stats.js",
+        "node_modules/vega-lite/node_modules/datalib/src/template.js",
+        "node_modules/vega-lite/node_modules/datalib/src/time.js",
+        "node_modules/vega-lite/node_modules/datalib/src/util.js",
+        "node_modules/vega-lite/node_modules/window-size/cli.js",
+        "node_modules/vega-lite/node_modules/window-size/index.js",
+        "node_modules/vega-lite/node_modules/yargs/index.js",
+        "node_modules/vega-lite/node_modules/yargs/lib/assign.js",
+        "node_modules/vega-lite/node_modules/yargs/lib/command.js",
+        "node_modules/vega-lite/node_modules/yargs/lib/completion.js",
+        "node_modules/vega-lite/node_modules/yargs/lib/levenshtein.js",
+        "node_modules/vega-lite/node_modules/yargs/lib/obj-filter.js",
+        "node_modules/vega-lite/node_modules/yargs/lib/usage.js",
+        "node_modules/vega-lite/node_modules/yargs/lib/validation.js",
+        "node_modules/vega-lite/node_modules/yargs/yargs.js",
+        "node_modules/vega-lite/site/static/main.js",
+        "node_modules/vega-lite/site/static/test-gallery.js",
+        "node_modules/vega-lite/src/aggregate.js",
+        "node_modules/vega-lite/src/axis.js",
+        "node_modules/vega-lite/src/bin.js",
+        "node_modules/vega-lite/src/channel.js",
+        "node_modules/vega-lite/src/compile/axis.js",
+        "node_modules/vega-lite/src/compile/common.js",
+        "node_modules/vega-lite/src/compile/compile.js",
+        "node_modules/vega-lite/src/compile/config.js",
+        "node_modules/vega-lite/src/compile/data/bin.js",
+        "node_modules/vega-lite/src/compile/data/colorrank.js",
+        "node_modules/vega-lite/src/compile/data/data.js",
+        "node_modules/vega-lite/src/compile/data/filter.js",
+        "node_modules/vega-lite/src/compile/data/formatparse.js",
+        "node_modules/vega-lite/src/compile/data/formula.js",
+        "node_modules/vega-lite/src/compile/data/nonpositivenullfilter.js",
+        "node_modules/vega-lite/src/compile/data/nullfilter.js",
+        "node_modules/vega-lite/src/compile/data/source.js",
+        "node_modules/vega-lite/src/compile/data/stackscale.js",
+        "node_modules/vega-lite/src/compile/data/summary.js",
+        "node_modules/vega-lite/src/compile/data/timeunit.js",
+        "node_modules/vega-lite/src/compile/data/timeunitdomain.js",
+        "node_modules/vega-lite/src/compile/facet.js",
+        "node_modules/vega-lite/src/compile/layer.js",
+        "node_modules/vega-lite/src/compile/layout.js",
+        "node_modules/vega-lite/src/compile/legend.js",
+        "node_modules/vega-lite/src/compile/mark/area.js",
+        "node_modules/vega-lite/src/compile/mark/bar.js",
+        "node_modules/vega-lite/src/compile/mark/line.js",
+        "node_modules/vega-lite/src/compile/mark/mark.js",
+        "node_modules/vega-lite/src/compile/mark/point.js",
+        "node_modules/vega-lite/src/compile/mark/rule.js",
+        "node_modules/vega-lite/src/compile/mark/text.js",
+        "node_modules/vega-lite/src/compile/mark/tick.js",
+        "node_modules/vega-lite/src/compile/model.js",
+        "node_modules/vega-lite/src/compile/scale.js",
+        "node_modules/vega-lite/src/compile/unit.js",
+        "node_modules/vega-lite/src/config.js",
+        "node_modules/vega-lite/src/data.js",
+        "node_modules/vega-lite/src/datetime.js",
+        "node_modules/vega-lite/src/encoding.js",
+        "node_modules/vega-lite/src/facet.js",
+        "node_modules/vega-lite/src/fielddef.js",
+        "node_modules/vega-lite/src/filter.js",
+        "node_modules/vega-lite/src/legend.js",
+        "node_modules/vega-lite/src/mark.js",
+        "node_modules/vega-lite/src/scale.js",
+        "node_modules/vega-lite/src/shorthand.js",
+        "node_modules/vega-lite/src/sort.js",
+        "node_modules/vega-lite/src/spec.js",
+        "node_modules/vega-lite/src/stack.js",
+        "node_modules/vega-lite/src/timeunit.js",
+        "node_modules/vega-lite/src/transform.js",
+        "node_modules/vega-lite/src/type.js",
+        "node_modules/vega-lite/src/util.js",
+        "node_modules/vega-lite/src/validate.js",
+        "node_modules/vega-lite/src/vega.schema.js",
+        "node_modules/vega-lite/src/vl.js",
+        "node_modules/vega-lite/vega-lite.js",
+        "node_modules/vega-lite/vega-lite.min.js",
+        "node_modules/vega-logging/index.js",
+        "node_modules/vega-scenegraph/scripts/schema.js",
+        "node_modules/vega-scenegraph/src/index.js",
+        "node_modules/vega-scenegraph/src/path/arc.js",
+        "node_modules/vega-scenegraph/src/path/index.js",
+        "node_modules/vega-scenegraph/src/path/parse.js",
+        "node_modules/vega-scenegraph/src/path/render.js",
+        "node_modules/vega-scenegraph/src/render/Handler.js",
+        "node_modules/vega-scenegraph/src/render/Renderer.js",
+        "node_modules/vega-scenegraph/src/render/canvas/CanvasHandler.js",
+        "node_modules/vega-scenegraph/src/render/canvas/CanvasRenderer.js",
+        "node_modules/vega-scenegraph/src/render/canvas/index.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/arc.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/area.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/group.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/image.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/index.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/line.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/path.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/rect.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/rule.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/symbol.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/text.js",
+        "node_modules/vega-scenegraph/src/render/canvas/marks/util.js",
+        "node_modules/vega-scenegraph/src/render/index.js",
+        "node_modules/vega-scenegraph/src/render/svg/SVGHandler.js",
+        "node_modules/vega-scenegraph/src/render/svg/SVGRenderer.js",
+        "node_modules/vega-scenegraph/src/render/svg/SVGStringRenderer.js",
+        "node_modules/vega-scenegraph/src/render/svg/index.js",
+        "node_modules/vega-scenegraph/src/render/svg/marks.js",
+        "node_modules/vega-scenegraph/src/util/Bounds.js",
+        "node_modules/vega-scenegraph/src/util/BoundsContext.js",
+        "node_modules/vega-scenegraph/src/util/Gradient.js",
+        "node_modules/vega-scenegraph/src/util/ImageLoader.js",
+        "node_modules/vega-scenegraph/src/util/Item.js",
+        "node_modules/vega-scenegraph/src/util/bound.js",
+        "node_modules/vega-scenegraph/src/util/canvas.js",
+        "node_modules/vega-scenegraph/src/util/dom.js",
+        "node_modules/vega-scenegraph/src/util/scene.js",
+        "node_modules/vega-scenegraph/src/util/svg.js",
+        "node_modules/vega-scenegraph/src/util/text.js",
+        "node_modules/vega-scenegraph/vega-scenegraph.js",
+        "node_modules/vega-scenegraph/vega-scenegraph.min.js",
+        "node_modules/verror/lib/verror.js",
         "node_modules/whatwg-fetch/fetch.js",
+        "node_modules/which-module/index.js",
         "node_modules/wide-align/align.js",
+        "node_modules/window-size/cli.js",
+        "node_modules/window-size/index.js",
+        "node_modules/wordwrap/example/center.js",
+        "node_modules/wordwrap/example/meat.js",
+        "node_modules/wordwrap/index.js",
+        "node_modules/wrap-ansi/index.js",
         "node_modules/wrappy/wrappy.js",
         "node_modules/ws/index.js",
         "node_modules/ws/lib/BufferUtil.js",
@@ -6007,6 +8427,16 @@
         "node_modules/xtend/immutable.js",
         "node_modules/xtend/mutable.js",
         "node_modules/xtend/test.js",
+        "node_modules/y18n/index.js",
+        "node_modules/yargs/index.js",
+        "node_modules/yargs/lib/completion.js",
+        "node_modules/yargs/lib/parser.js",
+        "node_modules/yargs/lib/tokenize-arg-string.js",
+        "node_modules/yargs/lib/usage.js",
+        "node_modules/yargs/lib/validation.js",
+        "node_modules/yargs-parser/index.js",
+        "node_modules/yargs-parser/lib/tokenize-arg-string.js",
+        "node_modules/yargs-parser/node_modules/camelcase/index.js",
         "node_modules/zeromq/examples/producer.js",
         "node_modules/zeromq/examples/pubber.js",
         "node_modules/zeromq/examples/smoketest.js",
@@ -6017,6 +8447,9 @@
         "node_modules/zeromq/scripts/download.js",
         "node_modules/zeromq/scripts/prebuild-install.js",
         "node_modules/zeromq/scripts/preinstall.js"
+      ],
+      ".coffee": [
+        "node_modules/performance-now/src/performance-now.coffee"
       ],
       ".node": [
         "node_modules/zeromq/build/Release/zmq.node"
@@ -6043,13 +8476,14 @@
           "@jupyterlab/services": "^0.42.0",
           "@nteract/display-area": "^2.4.0",
           "@nteract/transform-plotly": "^2.2.0",
+          "@nteract/transform-vega": "^2.2.0",
           "@nteract/transforms": "^2.4.0",
-          "atom-select-list": "^0.2.0",
+          "anser": "^1.4.3",
+          "atom-select-list": "^0.3.0",
           "escape-carriage": "^1.2.0",
           "escape-string-regexp": "^1.0.5",
           "jmp": "^0.7.5",
           "lodash": "^4.14.0",
-          "loophole": "^1.1.0",
           "mobx": "^3.1.11",
           "mobx-react": "^4.2.1",
           "react": "^15.5.4",
@@ -6061,6 +8495,23 @@
           "uuid": "^3.0.1",
           "ws": "^2.0.0",
           "xmlhttprequest": "^1.8.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/ajv",
+          "node_modules/ajv/dist",
+          "node_modules/ajv/lib",
+          "node_modules/ajv/lib/compile",
+          "node_modules/ajv/lib/dotjs",
+          "node_modules/ajv/lib/refs",
+          "node_modules/ajv/scripts"
+        ],
+        "dependencies": {
+          "co": "^4.6.0",
+          "fast-deep-equal": "^1.0.0",
+          "json-schema-traverse": "^0.3.0",
+          "json-stable-stringify": "^1.0.1"
         }
       },
       {
@@ -6120,11 +8571,63 @@
       },
       {
         "paths": [
+          "node_modules/bcrypt-pbkdf"
+        ],
+        "dependencies": {
+          "tweetnacl": "^0.14.3"
+        }
+      },
+      {
+        "paths": [
           "node_modules/bl",
           "node_modules/bl/test"
         ],
         "dependencies": {
           "readable-stream": "^2.0.5"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/boom/lib",
+          "node_modules/boom"
+        ],
+        "dependencies": {
+          "hoek": "4.x.x"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/brfs/bin",
+          "node_modules/brfs/example",
+          "node_modules/brfs",
+          "node_modules/brfs/test",
+          "node_modules/brfs/test/files",
+          "node_modules/brfs/test/require_resolve"
+        ],
+        "dependencies": {
+          "quote-stream": "^1.0.1",
+          "resolve": "^1.1.5",
+          "static-module": "^1.1.0",
+          "through2": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/cliui"
+        ],
+        "dependencies": {
+          "string-width": "^1.0.1",
+          "strip-ansi": "^3.0.1",
+          "wrap-ansi": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/combined-stream/lib",
+          "node_modules/combined-stream"
+        ],
+        "dependencies": {
+          "delayed-stream": "~1.0.0"
         }
       },
       {
@@ -6157,6 +8660,16 @@
       },
       {
         "paths": [
+          "node_modules/concat-stream"
+        ],
+        "dependencies": {
+          "inherits": "^2.0.3",
+          "readable-stream": "^2.2.2",
+          "typedarray": "^0.0.6"
+        }
+      },
+      {
+        "paths": [
           "node_modules/create-react-class"
         ],
         "dependencies": {
@@ -6167,11 +8680,118 @@
       },
       {
         "paths": [
+          "node_modules/cryptiles/lib",
+          "node_modules/cryptiles"
+        ],
+        "dependencies": {
+          "boom": "5.x.x"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/cryptiles/node_modules/boom/lib",
+          "node_modules/cryptiles/node_modules/boom"
+        ],
+        "dependencies": {
+          "hoek": "4.x.x"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/d3-cloud",
+          "node_modules/d3-cloud/build",
+          "node_modules/d3-cloud/examples"
+        ],
+        "dependencies": {
+          "d3-dispatch": "1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/d3-geo-projection",
+          "node_modules/d3-geo-projection/src",
+          "node_modules/d3-geo-projection/test"
+        ],
+        "dependencies": {
+          "brfs": "^1.3.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/d3-time-format/build",
+          "node_modules/d3-time-format",
+          "node_modules/d3-time-format/src",
+          "node_modules/d3-time-format/src/locale"
+        ],
+        "dependencies": {
+          "d3-time": "~0.1.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/dashdash/lib",
+          "node_modules/dashdash"
+        ],
+        "dependencies": {
+          "assert-plus": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/datalib",
+          "node_modules/datalib/src",
+          "node_modules/datalib/src/aggregate",
+          "node_modules/datalib/src/bins",
+          "node_modules/datalib/src/import/formats",
+          "node_modules/datalib/src/import"
+        ],
+        "dependencies": {
+          "d3-dsv": "0.1",
+          "d3-format": "0.4",
+          "d3-time": "0.1",
+          "d3-time-format": "0.2",
+          "request": "^2.67.0",
+          "sync-request": "^2.1.0",
+          "topojson": "^1.6.19"
+        }
+      },
+      {
+        "paths": [
           "node_modules/debug",
           "node_modules/debug/src"
         ],
         "dependencies": {
           "ms": "2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/duplexer2",
+          "node_modules/duplexer2/test"
+        ],
+        "dependencies": {
+          "readable-stream": "~1.1.9"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/duplexer2/node_modules/readable-stream",
+          "node_modules/duplexer2/node_modules/readable-stream/lib"
+        ],
+        "dependencies": {
+          "core-util-is": "~1.0.0",
+          "inherits": "~2.0.1",
+          "isarray": "0.0.1",
+          "string_decoder": "~0.10.x"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/ecc-jsbn",
+          "node_modules/ecc-jsbn/lib"
+        ],
+        "dependencies": {
+          "jsbn": "~0.1.0"
         }
       },
       {
@@ -6194,6 +8814,40 @@
       },
       {
         "paths": [
+          "node_modules/error-ex"
+        ],
+        "dependencies": {
+          "is-arrayish": "^0.2.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/escodegen/bin",
+          "node_modules/escodegen"
+        ],
+        "dependencies": {
+          "esprima": "~1.1.1",
+          "estraverse": "~1.5.0",
+          "esutils": "~1.0.0",
+          "source-map": "~0.1.33"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/falafel/example",
+          "node_modules/falafel",
+          "node_modules/falafel/test",
+          "node_modules/falafel/test/bin"
+        ],
+        "dependencies": {
+          "acorn": "^5.0.0",
+          "foreach": "^2.0.5",
+          "isarray": "0.0.1",
+          "object-keys": "^1.0.6"
+        }
+      },
+      {
+        "paths": [
           "node_modules/fbjs/flow/lib",
           "node_modules/fbjs",
           "node_modules/fbjs/lib",
@@ -6211,6 +8865,26 @@
       },
       {
         "paths": [
+          "node_modules/find-up"
+        ],
+        "dependencies": {
+          "path-exists": "^2.0.0",
+          "pinkie-promise": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/form-data/lib",
+          "node_modules/form-data"
+        ],
+        "dependencies": {
+          "asynckit": "^0.4.0",
+          "combined-stream": "^1.0.5",
+          "mime-types": "^2.1.12"
+        }
+      },
+      {
+        "paths": [
           "node_modules/gauge"
         ],
         "dependencies": {
@@ -6222,6 +8896,79 @@
           "string-width": "^1.0.1",
           "strip-ansi": "^3.0.1",
           "wide-align": "^1.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/getpass/lib",
+          "node_modules/getpass"
+        ],
+        "dependencies": {
+          "assert-plus": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/har-validator/lib",
+          "node_modules/har-validator"
+        ],
+        "dependencies": {
+          "ajv": "^5.1.0",
+          "har-schema": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/has",
+          "node_modules/has/src",
+          "node_modules/has/test"
+        ],
+        "dependencies": {
+          "function-bind": "^1.0.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/hawk",
+          "node_modules/hawk/dist",
+          "node_modules/hawk/lib"
+        ],
+        "dependencies": {
+          "boom": "4.x.x",
+          "cryptiles": "3.x.x",
+          "hoek": "4.x.x",
+          "sntp": "2.x.x"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/http-basic",
+          "node_modules/http-basic/lib",
+          "node_modules/http-basic/test"
+        ],
+        "dependencies": {
+          "caseless": "~0.11.0",
+          "concat-stream": "^1.4.6",
+          "http-response-object": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/http-signature/lib",
+          "node_modules/http-signature"
+        ],
+        "dependencies": {
+          "assert-plus": "^1.0.0",
+          "jsprim": "^1.2.2",
+          "sshpk": "^1.7.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/is-builtin-module"
+        ],
+        "dependencies": {
+          "builtin-modules": "^1.0.0"
         }
       },
       {
@@ -6255,10 +9002,32 @@
       },
       {
         "paths": [
+          "node_modules/json-stable-stringify/example",
+          "node_modules/json-stable-stringify",
+          "node_modules/json-stable-stringify/test"
+        ],
+        "dependencies": {
+          "jsonify": "~0.0.0"
+        }
+      },
+      {
+        "paths": [
           "node_modules/jsonfile"
         ],
         "dependencies": {
           "graceful-fs": "^4.1.6"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/jsprim/lib",
+          "node_modules/jsprim"
+        ],
+        "dependencies": {
+          "assert-plus": "1.0.0",
+          "extsprintf": "1.3.0",
+          "json-schema": "0.2.3",
+          "verror": "1.10.0"
         }
       },
       {
@@ -6283,10 +9052,38 @@
       },
       {
         "paths": [
+          "node_modules/lcid"
+        ],
+        "dependencies": {
+          "invert-kv": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/load-json-file"
+        ],
+        "dependencies": {
+          "graceful-fs": "^4.1.2",
+          "parse-json": "^2.2.0",
+          "pify": "^2.0.0",
+          "pinkie-promise": "^2.0.0",
+          "strip-bom": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
           "node_modules/loose-envify"
         ],
         "dependencies": {
           "js-tokens": "^3.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/mime-types"
+        ],
+        "dependencies": {
+          "mime-db": "~1.30.0"
         }
       },
       {
@@ -6302,11 +9099,10 @@
       },
       {
         "paths": [
-          "node_modules/mobx-react/.vscode",
           "node_modules/mobx-react"
         ],
         "dependencies": {
-          "hoist-non-react-statics": "^1.2.0"
+          "hoist-non-react-statics": "^2.3.1"
         }
       },
       {
@@ -6318,6 +9114,18 @@
         "dependencies": {
           "encoding": "^0.1.11",
           "is-stream": "^1.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/normalize-package-data/lib",
+          "node_modules/normalize-package-data"
+        ],
+        "dependencies": {
+          "hosted-git-info": "^2.1.4",
+          "is-builtin-module": "^1.0.0",
+          "semver": "2 || 3 || 4 || 5",
+          "validate-npm-package-license": "^3.0.1"
         }
       },
       {
@@ -6337,6 +9145,60 @@
         ],
         "dependencies": {
           "wrappy": "1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/optimist/example",
+          "node_modules/optimist",
+          "node_modules/optimist/test/_",
+          "node_modules/optimist/test"
+        ],
+        "dependencies": {
+          "wordwrap": "~0.0.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/os-locale"
+        ],
+        "dependencies": {
+          "lcid": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/parse-json",
+          "node_modules/parse-json/vendor"
+        ],
+        "dependencies": {
+          "error-ex": "^1.2.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/path-exists"
+        ],
+        "dependencies": {
+          "pinkie-promise": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/path-type"
+        ],
+        "dependencies": {
+          "graceful-fs": "^4.1.2",
+          "pify": "^2.0.0",
+          "pinkie-promise": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/pinkie-promise"
+        ],
+        "dependencies": {
+          "pinkie": "^2.0.0"
         }
       },
       {
@@ -6389,8 +9251,9 @@
           "node_modules/prop-types/lib"
         ],
         "dependencies": {
-          "fbjs": "^0.8.9",
-          "loose-envify": "^1.3.1"
+          "fbjs": "^0.8.16",
+          "loose-envify": "^1.3.1",
+          "object-assign": "^4.1.1"
         }
       },
       {
@@ -6400,6 +9263,19 @@
         "dependencies": {
           "end-of-stream": "^1.1.0",
           "once": "^1.3.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/quote-stream/bin",
+          "node_modules/quote-stream/example",
+          "node_modules/quote-stream",
+          "node_modules/quote-stream/test"
+        ],
+        "dependencies": {
+          "buffer-equal": "0.0.1",
+          "minimist": "^1.1.3",
+          "through2": "^2.0.0"
         }
       },
       {
@@ -6480,6 +9356,25 @@
       },
       {
         "paths": [
+          "node_modules/read-pkg"
+        ],
+        "dependencies": {
+          "load-json-file": "^1.0.0",
+          "normalize-package-data": "^2.3.2",
+          "path-type": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/read-pkg-up"
+        ],
+        "dependencies": {
+          "find-up": "^1.0.0",
+          "read-pkg": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
           "node_modules/readable-stream",
           "node_modules/readable-stream/lib",
           "node_modules/readable-stream/lib/internal/streams"
@@ -6496,6 +9391,82 @@
       },
       {
         "paths": [
+          "node_modules/request",
+          "node_modules/request/lib"
+        ],
+        "dependencies": {
+          "aws-sign2": "~0.7.0",
+          "aws4": "^1.6.0",
+          "caseless": "~0.12.0",
+          "combined-stream": "~1.0.5",
+          "extend": "~3.0.1",
+          "forever-agent": "~0.6.1",
+          "form-data": "~2.3.1",
+          "har-validator": "~5.0.3",
+          "hawk": "~6.0.2",
+          "http-signature": "~1.2.0",
+          "is-typedarray": "~1.0.0",
+          "isstream": "~0.1.2",
+          "json-stringify-safe": "~5.0.1",
+          "mime-types": "~2.1.17",
+          "oauth-sign": "~0.8.2",
+          "performance-now": "^2.1.0",
+          "qs": "~6.5.1",
+          "safe-buffer": "^5.1.1",
+          "stringstream": "~0.0.5",
+          "tough-cookie": "~2.3.3",
+          "tunnel-agent": "^0.6.0",
+          "uuid": "^3.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/resolve/example",
+          "node_modules/resolve",
+          "node_modules/resolve/lib",
+          "node_modules/resolve/test",
+          "node_modules/resolve/test/dotdot/abc",
+          "node_modules/resolve/test/dotdot",
+          "node_modules/resolve/test/module_dir/xmodules/aaa",
+          "node_modules/resolve/test/module_dir/ymodules/aaa",
+          "node_modules/resolve/test/module_dir/zmodules/bbb",
+          "node_modules/resolve/test/node_path/x/aaa",
+          "node_modules/resolve/test/node_path/x/ccc",
+          "node_modules/resolve/test/node_path/y/bbb",
+          "node_modules/resolve/test/node_path/y/ccc",
+          "node_modules/resolve/test/pathfilter/deep_ref",
+          "node_modules/resolve/test/precedence/aaa",
+          "node_modules/resolve/test/precedence",
+          "node_modules/resolve/test/precedence/bbb",
+          "node_modules/resolve/test/resolver/baz",
+          "node_modules/resolve/test/resolver",
+          "node_modules/resolve/test/resolver/dot_main",
+          "node_modules/resolve/test/resolver/dot_slash_main",
+          "node_modules/resolve/test/resolver/incorrect_main",
+          "node_modules/resolve/test/resolver/other_path/lib",
+          "node_modules/resolve/test/resolver/other_path",
+          "node_modules/resolve/test/resolver/quux/foo",
+          "node_modules/resolve/test/resolver/same_names/foo",
+          "node_modules/resolve/test/resolver/same_names",
+          "node_modules/resolve/test/resolver/without_basedir"
+        ],
+        "dependencies": {
+          "path-parse": "^1.0.5"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/shapefile",
+          "node_modules/shapefile/test"
+        ],
+        "dependencies": {
+          "d3-queue": "1",
+          "iconv-lite": "0.2",
+          "optimist": "0.3"
+        }
+      },
+      {
+        "paths": [
           "node_modules/simple-get",
           "node_modules/simple-get/test"
         ],
@@ -6503,6 +9474,40 @@
           "once": "^1.3.1",
           "unzip-response": "^1.0.0",
           "xtend": "^4.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/sntp/lib",
+          "node_modules/sntp"
+        ],
+        "dependencies": {
+          "hoek": "4.x.x"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/source-map",
+          "node_modules/source-map/build",
+          "node_modules/source-map/lib/source-map",
+          "node_modules/source-map/lib",
+          "node_modules/source-map/test",
+          "node_modules/source-map/test/source-map"
+        ],
+        "dependencies": {
+          "amdefine": ">=0.0.4"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/spawn-sync",
+          "node_modules/spawn-sync/lib/json-buffer",
+          "node_modules/spawn-sync/lib",
+          "node_modules/spawn-sync/test"
+        ],
+        "dependencies": {
+          "concat-stream": "^1.4.7",
+          "os-shim": "^0.1.2"
         }
       },
       {
@@ -6517,6 +9522,132 @@
           "mkdirp": "^0.5.1",
           "portfinder": "^1.0.13",
           "uuid": "^3.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/spdx-correct"
+        ],
+        "dependencies": {
+          "spdx-license-ids": "^1.0.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/sshpk/lib",
+          "node_modules/sshpk/lib/formats",
+          "node_modules/sshpk"
+        ],
+        "dependencies": {
+          "asn1": "~0.2.3",
+          "assert-plus": "^1.0.0",
+          "bcrypt-pbkdf": "^1.0.0",
+          "dashdash": "^1.12.0",
+          "ecc-jsbn": "~0.1.1",
+          "getpass": "^0.1.1",
+          "jsbn": "~0.1.0",
+          "tweetnacl": "~0.14.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/static-eval/example",
+          "node_modules/static-eval",
+          "node_modules/static-eval/test"
+        ],
+        "dependencies": {
+          "escodegen": "~0.0.24"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/static-eval/node_modules/escodegen",
+          "node_modules/static-eval/node_modules/escodegen/bin"
+        ],
+        "dependencies": {
+          "esprima": "~1.0.2",
+          "estraverse": "~1.3.0",
+          "source-map": ">= 0.1.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/static-module/example/brfs",
+          "node_modules/static-module/example",
+          "node_modules/static-module/example/fs",
+          "node_modules/static-module",
+          "node_modules/static-module/test/assign",
+          "node_modules/static-module/test",
+          "node_modules/static-module/test/brfs",
+          "node_modules/static-module/test/fn",
+          "node_modules/static-module/test/fs",
+          "node_modules/static-module/test/fs_twice",
+          "node_modules/static-module/test/inline",
+          "node_modules/static-module/test/log",
+          "node_modules/static-module/test/many",
+          "node_modules/static-module/test/mixed",
+          "node_modules/static-module/test/nested",
+          "node_modules/static-module/test/obj",
+          "node_modules/static-module/test/prop",
+          "node_modules/static-module/test/readfile_resolve",
+          "node_modules/static-module/test/shebang",
+          "node_modules/static-module/test/unary",
+          "node_modules/static-module/test/varmod",
+          "node_modules/static-module/test/vars"
+        ],
+        "dependencies": {
+          "concat-stream": "~1.6.0",
+          "duplexer2": "~0.0.2",
+          "escodegen": "~1.3.2",
+          "falafel": "^2.1.0",
+          "has": "^1.0.0",
+          "object-inspect": "~0.4.0",
+          "quote-stream": "~0.0.0",
+          "readable-stream": "~1.0.27-1",
+          "shallow-copy": "~0.0.1",
+          "static-eval": "~0.2.0",
+          "through2": "~0.4.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/static-module/node_modules/quote-stream/bin",
+          "node_modules/static-module/node_modules/quote-stream/example",
+          "node_modules/static-module/node_modules/quote-stream",
+          "node_modules/static-module/node_modules/quote-stream/test"
+        ],
+        "dependencies": {
+          "minimist": "0.0.8",
+          "through2": "~0.4.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/static-module/node_modules/readable-stream",
+          "node_modules/static-module/node_modules/readable-stream/lib"
+        ],
+        "dependencies": {
+          "core-util-is": "~1.0.0",
+          "inherits": "~2.0.1",
+          "isarray": "0.0.1",
+          "string_decoder": "~0.10.x"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/static-module/node_modules/through2"
+        ],
+        "dependencies": {
+          "readable-stream": "~1.0.17",
+          "xtend": "~2.1.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/static-module/node_modules/xtend"
+        ],
+        "dependencies": {
+          "object-keys": "~0.4.0"
         }
       },
       {
@@ -6548,6 +9679,28 @@
       },
       {
         "paths": [
+          "node_modules/strip-bom"
+        ],
+        "dependencies": {
+          "is-utf8": "^0.2.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/sync-request",
+          "node_modules/sync-request/lib/json-buffer",
+          "node_modules/sync-request/lib",
+          "node_modules/sync-request/test"
+        ],
+        "dependencies": {
+          "concat-stream": "^1.4.7",
+          "http-response-object": "^1.0.1",
+          "spawn-sync": "^1.0.1",
+          "then-request": "^2.0.1"
+        }
+      },
+      {
+        "paths": [
           "node_modules/tar-fs",
           "node_modules/tar-fs/test"
         ],
@@ -6571,10 +9724,61 @@
       },
       {
         "paths": [
+          "node_modules/then-request",
+          "node_modules/then-request/dist",
+          "node_modules/then-request/lib",
+          "node_modules/then-request/test"
+        ],
+        "dependencies": {
+          "caseless": "~0.11.0",
+          "concat-stream": "^1.4.7",
+          "http-basic": "^2.5.1",
+          "http-response-object": "^1.1.0",
+          "promise": "^7.1.1",
+          "qs": "^6.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/through2"
+        ],
+        "dependencies": {
+          "readable-stream": "^2.1.5",
+          "xtend": "~4.0.1"
+        }
+      },
+      {
+        "paths": [
           "node_modules/tildify"
         ],
         "dependencies": {
           "os-homedir": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/topojson/build",
+          "node_modules/topojson",
+          "node_modules/topojson/lib/topojson",
+          "node_modules/topojson/lib/topojson/topology",
+          "node_modules/topojson/src"
+        ],
+        "dependencies": {
+          "d3": "3",
+          "d3-geo-projection": "0.2",
+          "d3-queue": "2",
+          "optimist": "0.3",
+          "rw": "1",
+          "shapefile": "0.3"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/tough-cookie/lib",
+          "node_modules/tough-cookie"
+        ],
+        "dependencies": {
+          "punycode": "^1.4.1"
         }
       },
       {
@@ -6596,10 +9800,162 @@
       },
       {
         "paths": [
+          "node_modules/validate-npm-package-license"
+        ],
+        "dependencies": {
+          "spdx-correct": "~1.0.0",
+          "spdx-expression-parse": "~1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/vega",
+          "node_modules/vega/examples",
+          "node_modules/vega/examples/themes",
+          "node_modules/vega/scripts",
+          "node_modules/vega/src/core",
+          "node_modules/vega/src/parse",
+          "node_modules/vega/src/scene",
+          "node_modules/vega/src/transforms",
+          "node_modules/vega/src/util"
+        ],
+        "dependencies": {
+          "canvas": "^1.3.4",
+          "d3": "^3.5.9",
+          "d3-cloud": "^1.2.1",
+          "d3-geo-projection": "^0.2.15",
+          "datalib": "^1.7.1",
+          "topojson": "^1.6.19",
+          "vega-dataflow": "^1.4.0",
+          "vega-event-selector": "^1.0.0",
+          "vega-expression": "^1.2.0",
+          "vega-logging": "^1.0.1",
+          "vega-scenegraph": "^1.0.16",
+          "yargs": "^3.30.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/vega-dataflow",
+          "node_modules/vega-dataflow/src"
+        ],
+        "dependencies": {
+          "datalib": "^1.4.5",
+          "vega-logging": "^1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/vega-lite/.vscode",
+          "node_modules/vega-lite/_site/examples",
+          "node_modules/vega-lite/_site/examples/specs",
+          "node_modules/vega-lite/data",
+          "node_modules/vega-lite/examples",
+          "node_modules/vega-lite/examples/specs",
+          "node_modules/vega-lite/lib",
+          "node_modules/vega-lite",
+          "node_modules/vega-lite/site/static",
+          "node_modules/vega-lite/src",
+          "node_modules/vega-lite/src/compile",
+          "node_modules/vega-lite/src/compile/data",
+          "node_modules/vega-lite/src/compile/mark",
+          "node_modules/vega-lite/test/compile",
+          "node_modules/vega-lite/test/compile/data",
+          "node_modules/vega-lite/test/compile/mark",
+          "node_modules/vega-lite/test"
+        ],
+        "dependencies": {
+          "datalib": "~1.7.2",
+          "json-stable-stringify": "~1.0.1",
+          "yargs": "~6.3.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/vega-lite/node_modules/datalib",
+          "node_modules/vega-lite/node_modules/datalib/src",
+          "node_modules/vega-lite/node_modules/datalib/src/aggregate",
+          "node_modules/vega-lite/node_modules/datalib/src/bins",
+          "node_modules/vega-lite/node_modules/datalib/src/import/formats",
+          "node_modules/vega-lite/node_modules/datalib/src/import"
+        ],
+        "dependencies": {
+          "d3-dsv": "0.1",
+          "d3-format": "0.4",
+          "d3-time": "0.1",
+          "d3-time-format": "0.2",
+          "request": "^2.67.0",
+          "sync-request": "^2.1.0",
+          "topojson": "^1.6.19"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/vega-lite/node_modules/yargs",
+          "node_modules/vega-lite/node_modules/yargs/lib",
+          "node_modules/vega-lite/node_modules/yargs/locales"
+        ],
+        "dependencies": {
+          "camelcase": "^3.0.0",
+          "cliui": "^3.2.0",
+          "decamelize": "^1.1.1",
+          "get-caller-file": "^1.0.1",
+          "os-locale": "^1.4.0",
+          "read-pkg-up": "^1.0.1",
+          "require-directory": "^2.1.1",
+          "require-main-filename": "^1.0.1",
+          "set-blocking": "^2.0.0",
+          "string-width": "^1.0.2",
+          "which-module": "^1.0.0",
+          "window-size": "^0.2.0",
+          "y18n": "^3.2.1",
+          "yargs-parser": "^4.0.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/vega-scenegraph",
+          "node_modules/vega-scenegraph/scripts",
+          "node_modules/vega-scenegraph/src",
+          "node_modules/vega-scenegraph/src/path",
+          "node_modules/vega-scenegraph/src/render",
+          "node_modules/vega-scenegraph/src/render/canvas",
+          "node_modules/vega-scenegraph/src/render/canvas/marks",
+          "node_modules/vega-scenegraph/src/render/svg",
+          "node_modules/vega-scenegraph/src/util"
+        ],
+        "dependencies": {
+          "canvas": "^1.2.9",
+          "d3": "^3.5.6",
+          "datalib": "^1.4.6"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/verror/lib",
+          "node_modules/verror"
+        ],
+        "dependencies": {
+          "assert-plus": "^1.0.0",
+          "core-util-is": "1.0.2",
+          "extsprintf": "^1.2.0"
+        }
+      },
+      {
+        "paths": [
           "node_modules/wide-align"
         ],
         "dependencies": {
           "string-width": "^1.0.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/wrap-ansi"
+        ],
+        "dependencies": {
+          "string-width": "^1.0.1",
+          "strip-ansi": "^3.0.1"
         }
       },
       {
@@ -6614,16 +9970,40 @@
       },
       {
         "paths": [
+          "node_modules/yargs",
+          "node_modules/yargs/lib",
+          "node_modules/yargs/locales"
+        ],
+        "dependencies": {
+          "camelcase": "^2.0.1",
+          "cliui": "^3.0.3",
+          "decamelize": "^1.1.1",
+          "os-locale": "^1.4.0",
+          "string-width": "^1.0.1",
+          "window-size": "^0.1.4",
+          "y18n": "^3.2.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/yargs-parser",
+          "node_modules/yargs-parser/lib"
+        ],
+        "dependencies": {
+          "camelcase": "^3.0.0"
+        }
+      },
+      {
+        "paths": [
           "node_modules/zeromq/build/Release",
           "node_modules/zeromq/examples",
           "node_modules/zeromq",
           "node_modules/zeromq/lib",
-          "node_modules/zeromq/scripts",
-          "node_modules/zeromq/test"
+          "node_modules/zeromq/scripts"
         ],
         "dependencies": {
-          "nan": "^2.4.0",
-          "prebuild-install": "^2.1.1"
+          "nan": "^2.6.2",
+          "prebuild-install": "^2.2.2"
         }
       }
     ]

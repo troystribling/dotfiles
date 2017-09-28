@@ -139,17 +139,16 @@ export function log(...message: Array<any>) {
   }
 }
 
-export function renderDevTools(enableLogging: boolean = true) {
-  if (atom.config.get("Hydrogen.debug")) {
-    try {
-      const devTools = require("mobx-react-devtools");
-      const div = document.createElement("div");
-      document.getElementsByTagName("body")[0].appendChild(div);
-      devTools.setLogEnabled(enableLogging);
-      ReactDOM.render(<devTools.default noPanel />, div);
-    } catch (e) {
-      log("Could not enable dev tools", e);
-    }
+export function renderDevTools(enableLogging: boolean) {
+  if (!atom.devMode) return;
+  try {
+    const devTools = require("mobx-react-devtools");
+    const div = document.createElement("div");
+    document.getElementsByTagName("body")[0].appendChild(div);
+    devTools.setLogEnabled(enableLogging);
+    ReactDOM.render(<devTools.default noPanel />, div);
+  } catch (e) {
+    log("Could not enable dev tools", e);
   }
 }
 

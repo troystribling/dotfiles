@@ -143,8 +143,8 @@ const Hydrogen = {
     }
 
     store.subscriptions.add(
-      atom.workspace.getCenter().observeActivePaneItem(item => {
-        store.updateEditor(item instanceof TextEditor ? item : null);
+      atom.workspace.observeActiveTextEditor(editor => {
+        store.updateEditor(editor);
       })
     );
 
@@ -207,7 +207,7 @@ const Hydrogen = {
       })
     );
 
-    renderDevTools();
+    renderDevTools(atom.config.get("Hydrogen.debug") === true);
 
     autorun(() => {
       this.emitter.emit("did-change-kernel", store.kernel);
