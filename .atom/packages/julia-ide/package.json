@@ -1,0 +1,77 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/tmp/d-117830-38989-1q952ln.4n185pcik9/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/tmp/d-117830-38989-1q952ln.4n185pcik9/package.tgz",
+        "spec": "/private/tmp/d-117830-38989-1q952ln.4n185pcik9/package.tgz",
+        "type": "local"
+      },
+      "/private/tmp/apm-install-dir-117830-38989-1cxm8ma.55t0ebfbt9"
+    ]
+  ],
+  "_from": "../d-117830-38989-1q952ln.4n185pcik9/package.tgz",
+  "_id": "julia-ide@0.3.0",
+  "_inCache": true,
+  "_location": "/julia-ide",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/tmp/d-117830-38989-1q952ln.4n185pcik9/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/tmp/d-117830-38989-1q952ln.4n185pcik9/package.tgz",
+    "spec": "/private/tmp/d-117830-38989-1q952ln.4n185pcik9/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117830-38989-1q952ln.4n185pcik9/package.tgz",
+  "_shasum": "73534cf3be77235ef4ef6960a31d0ca0294b81fe",
+  "_shrinkwrap": null,
+  "_spec": "/private/tmp/d-117830-38989-1q952ln.4n185pcik9/package.tgz",
+  "_where": "/private/tmp/apm-install-dir-117830-38989-1cxm8ma.55t0ebfbt9",
+  "activationCommands": {
+    "atom-workspace": "julia-ide:toggle"
+  },
+  "bugs": {
+    "url": "https://github.com/malmaud/julia-ide/issues"
+  },
+  "dependencies": {},
+  "description": "IDE for Julia (Work in progress)",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=1.0.0"
+  },
+  "homepage": "https://github.com/malmaud/julia-ide#readme",
+  "keywords": [],
+  "license": "MIT",
+  "main": "./lib/julia-ide",
+  "name": "julia-ide",
+  "optionalDependencies": {},
+  "readme": "# julia-ide package\n\nA short description of your package.\n\n![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malmaud/julia-ide.git"
+  },
+  "version": "0.3.0",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".coffee": [
+        "lib/julia-ide-view.coffee",
+        "lib/julia-ide.coffee"
+      ],
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}
