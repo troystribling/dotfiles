@@ -1,8 +1,8 @@
 PROMPT=$'
 %{$fg[yellow]%}%/%{$reset_color%} $(git_prompt_info)$(bzr_prompt_info)%{$fg_bold[cyan]%}%n@%m%{$reset_color%}
-%{$fg_bold[black]%}>%{$reset_color%} '
+%{$fg_bold[yellow]%}>%{$reset_color%} '
 
-PROMPT2="%{$fg_bold[black]%}%_> %{$reset_color%}"
+PROMPT2="%{$fg[yellow]%}%_> %{$reset_color%}"
 
 GIT_CB="git::"
 ZSH_THEME_SCM_PROMPT_PREFIX="%{$fg[green]%}["
