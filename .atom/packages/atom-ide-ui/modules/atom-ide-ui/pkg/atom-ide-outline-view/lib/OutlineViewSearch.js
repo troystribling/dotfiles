@@ -8,6 +8,12 @@ exports.updateSearchSet = updateSearchSet;
 
 var _react = _interopRequireWildcard(require('react'));
 
+var _UniversalDisposable;
+
+function _load_UniversalDisposable() {
+  return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));
+}
+
 var _AtomInput;
 
 function _load_AtomInput() {
@@ -48,17 +54,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-const SCORE_THRESHOLD = 0.1; /**
-                              * Copyright (c) 2017-present, Facebook, Inc.
-                              * All rights reserved.
-                              *
-                              * This source code is licensed under the BSD-style license found in the
-                              * LICENSE file in the root directory of this source tree. An additional grant
-                              * of patent rights can be found in the PATENTS file in the same directory.
-                              *
-                              * 
-                              * @format
-                              */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
+const SCORE_THRESHOLD = 0.1;
 
 class OutlineViewSearchComponent extends _react.Component {
 
@@ -67,7 +75,7 @@ class OutlineViewSearchComponent extends _react.Component {
     // An element is considered visible if it is not in the Map or if it has a
     // Search result that has the visible property set to true. Therefore, all
     // elements are visible when the Map is empty.
-    this.SEARCH_PLACEHOLDER = 'Search Outline View';
+    this.SEARCH_PLACEHOLDER = 'Search Outline';
     this.DEBOUNCE_TIME = 100;
 
     this._onConfirm = () => {
@@ -82,9 +90,10 @@ class OutlineViewSearchComponent extends _react.Component {
       (_analytics || _load_analytics()).default.track('outline-view:search-enter');
       pane.activate();
       pane.activateItem(this.props.editor);
+      const landingPosition = firstElement.landingPosition != null ? firstElement.landingPosition : firstElement.startPosition;
       (0, (_goToLocation || _load_goToLocation()).goToLocationInEditor)(this.props.editor, {
-        line: firstElement.startPosition.row,
-        column: firstElement.startPosition.column
+        line: landingPosition.row,
+        column: landingPosition.column
       });
       this.setState({ currentQuery: '' });
     };
@@ -101,6 +110,33 @@ class OutlineViewSearchComponent extends _react.Component {
     this.state = {
       currentQuery: ''
     };
+    this._handleInputRef = this._handleInputRef.bind(this);
+  }
+
+  componentDidMount() {
+    if (!(this.subscription == null)) {
+      throw new Error('Invariant violation: "this.subscription == null"');
+    }
+
+    this.subscription = new (_UniversalDisposable || _load_UniversalDisposable()).default(this.props.visibility.filter(visible => visible).subscribe(_ => {
+      if (this._inputRef == null) {
+        return;
+      }
+      this._inputRef.focus();
+    }));
+  }
+
+  componentWillUnmount() {
+    if (!(this.subscription != null)) {
+      throw new Error('Invariant violation: "this.subscription != null"');
+    }
+
+    this.subscription.unsubscribe();
+    this.subscription = null;
+  }
+
+  _handleInputRef(element) {
+    this._inputRef = element;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -147,6 +183,7 @@ class OutlineViewSearchComponent extends _react.Component {
         onCancel: this._onDidClear,
         onDidChange: this._onDidChange,
         placeholderText: this.state.currentQuery || this.SEARCH_PLACEHOLDER,
+        ref: this._handleInputRef,
         value: this.state.currentQuery,
         size: 'sm'
       }),

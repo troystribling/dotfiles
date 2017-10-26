@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/tmp/d-11783-59959-17lpbav.0dqk2wqaor/package.tgz",
+        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-11898-n57ikc.m8g0fkzkt9/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/tmp/d-11783-59959-17lpbav.0dqk2wqaor/package.tgz",
-        "spec": "/private/tmp/d-11783-59959-17lpbav.0dqk2wqaor/package.tgz",
+        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-11898-n57ikc.m8g0fkzkt9/package.tgz",
+        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-11898-n57ikc.m8g0fkzkt9/package.tgz",
         "type": "local"
       },
-      "/private/tmp/apm-install-dir-11783-59959-1nea1fu.clw5va38fr"
+      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117926-11898-15v4bbe.8iooagu8fr"
     ]
   ],
-  "_from": "../d-11783-59959-17lpbav.0dqk2wqaor/package.tgz",
-  "_id": "markdown-writer@2.7.2",
+  "_from": "../d-117926-11898-n57ikc.m8g0fkzkt9/package.tgz",
+  "_id": "markdown-writer@2.7.3",
   "_inCache": true,
   "_location": "/markdown-writer",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/tmp/d-11783-59959-17lpbav.0dqk2wqaor/package.tgz",
+    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-11898-n57ikc.m8g0fkzkt9/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/tmp/d-11783-59959-17lpbav.0dqk2wqaor/package.tgz",
-    "spec": "/private/tmp/d-11783-59959-17lpbav.0dqk2wqaor/package.tgz",
+    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-11898-n57ikc.m8g0fkzkt9/package.tgz",
+    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-11898-n57ikc.m8g0fkzkt9/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-11783-59959-17lpbav.0dqk2wqaor/package.tgz",
-  "_shasum": "685112fc484fec822556f3803951eaa6c2e67d25",
+  "_resolved": "file:../d-117926-11898-n57ikc.m8g0fkzkt9/package.tgz",
+  "_shasum": "1a319cbdfa3106a4f49bc6a7df7e17113e9a3127",
   "_shrinkwrap": null,
-  "_spec": "/private/tmp/d-11783-59959-17lpbav.0dqk2wqaor/package.tgz",
-  "_where": "/private/tmp/apm-install-dir-11783-59959-1nea1fu.clw5va38fr",
+  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-11898-n57ikc.m8g0fkzkt9/package.tgz",
+  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117926-11898-15v4bbe.8iooagu8fr",
   "activationCommands": {
     "atom-workspace": [
       "markdown-writer:new-post",
@@ -124,7 +124,7 @@
     "type": "git",
     "url": "git+https://github.com/zhuochun/md-writer.git"
   },
-  "version": "2.7.2",
+  "version": "2.7.3",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -190,7 +190,7 @@
       },
       {
         "name": "es5-ext",
-        "version": "0.10.30",
+        "version": "0.10.35",
         "path": "node_modules/es5-ext/index.js"
       },
       {
@@ -200,7 +200,7 @@
       },
       {
         "name": "es6-iterator",
-        "version": "2.0.1",
+        "version": "2.0.3",
         "path": "node_modules/es5-ext/node_modules/es6-iterator/index.js"
       },
       {
@@ -275,7 +275,7 @@
       },
       {
         "name": "js-yaml",
-        "version": "3.9.1",
+        "version": "3.10.0",
         "path": "node_modules/js-yaml/index.js"
       },
       {
@@ -320,7 +320,7 @@
       },
       {
         "name": "rimraf",
-        "version": "2.6.1",
+        "version": "2.6.2",
         "path": "node_modules/rimraf/rimraf.js"
       },
       {
@@ -789,6 +789,7 @@
         "node_modules/es5-ext/object/assign/index.js",
         "node_modules/es5-ext/object/assign/is-implemented.js",
         "node_modules/es5-ext/object/assign/shim.js",
+        "node_modules/es5-ext/object/assign-deep.js",
         "node_modules/es5-ext/object/clear.js",
         "node_modules/es5-ext/object/compact.js",
         "node_modules/es5-ext/object/compare.js",
@@ -819,6 +820,7 @@
         "node_modules/es5-ext/object/is-finite-number.js",
         "node_modules/es5-ext/object/is-number-value.js",
         "node_modules/es5-ext/object/is-object.js",
+        "node_modules/es5-ext/object/is-plain-function.js",
         "node_modules/es5-ext/object/is-plain-object.js",
         "node_modules/es5-ext/object/is-promise.js",
         "node_modules/es5-ext/object/is-value.js",
@@ -1392,8 +1394,8 @@
           "node_modules/es5-ext/test/string/raw"
         ],
         "dependencies": {
-          "es6-iterator": "2",
-          "es6-symbol": "~3.1"
+          "es6-iterator": "~2.0.1",
+          "es6-symbol": "~3.1.1"
         }
       },
       {
@@ -1414,8 +1416,8 @@
         ],
         "dependencies": {
           "d": "1",
-          "es5-ext": "^0.10.14",
-          "es6-symbol": "^3.1"
+          "es5-ext": "^0.10.35",
+          "es6-symbol": "^3.1.1"
         }
       },
       {

@@ -75,7 +75,7 @@ function createStore(messageRangeTracker, initialState = INITIAL_STATE) {
 
   // When we get new messages with fixes, track them.
   const messagesWithFixes = getFileMessages(store).map(messageSet => (0, (_collection || _load_collection()).setFilter)(messageSet, message => message.fix != null)).filter(messageSet => messageSet.size > 0);
-  (0, (_observable || _load_observable()).diffSets)(messagesWithFixes).subscribe(({ added, removed }) => {
+  messagesWithFixes.let((0, (_observable || _load_observable()).diffSets)()).subscribe(({ added, removed }) => {
     if (added.size > 0) {
       messageRangeTracker.addFileMessages(added);
     }
@@ -89,7 +89,6 @@ function createStore(messageRangeTracker, initialState = INITIAL_STATE) {
 
 const INITIAL_STATE = {
   messages: new Map(),
-  projectMessages: new Map(),
   codeActionFetcher: null,
   codeActionsForMessage: new Map(),
   providers: new Set()

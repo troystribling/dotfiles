@@ -22,6 +22,12 @@ function _load_classnames() {
   return _classnames = _interopRequireDefault(require('classnames'));
 }
 
+var _observable;
+
+function _load_observable() {
+  return _observable = require('nuclide-commons/observable');
+}
+
 var _react = _interopRequireWildcard(require('react'));
 
 var _reactDom = _interopRequireDefault(require('react-dom'));
@@ -42,6 +48,12 @@ var _event;
 
 function _load_event() {
   return _event = require('nuclide-commons/event');
+}
+
+var _featureConfig;
+
+function _load_featureConfig() {
+  return _featureConfig = _interopRequireDefault(require('nuclide-commons-atom/feature-config'));
 }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -84,7 +96,7 @@ class StatusBarTile {
       warningCount: 0
     };
     this._diagnosticUpdaters.set(diagnosticUpdater, diagnosticCount);
-    this._subscriptions.add((0, (_event || _load_event()).observableFromSubscribeFunction)(diagnosticUpdater.observeMessages).debounceTime(RENDER_DEBOUNCE_TIME).subscribe(this._onAllMessagesDidUpdate.bind(this, diagnosticUpdater), null, this._onAllMessagesDidUpdate.bind(this, diagnosticUpdater, [])));
+    this._subscriptions.add((0, (_event || _load_event()).observableFromSubscribeFunction)(diagnosticUpdater.observeMessages).let((0, (_observable || _load_observable()).fastDebounce)(RENDER_DEBOUNCE_TIME)).subscribe(this._onAllMessagesDidUpdate.bind(this, diagnosticUpdater), null, this._onAllMessagesDidUpdate.bind(this, diagnosticUpdater, [])));
   }
 
   consumeStatusBar(statusBar) {
@@ -97,9 +109,14 @@ class StatusBarTile {
     const item = this._item = document.createElement('div');
     item.className = 'inline-block';
     this._render();
-    this._tile = statusBar.addLeftTile({
+
+    const statusBarPosition = (_featureConfig || _load_featureConfig()).default.get('atom-ide-diagnostics-ui.statusBarPosition');
+    const statusBarPositionMethod = statusBarPosition === 'left' ? statusBar.addLeftTile : statusBar.addRightTile;
+    // negate the priority for better visibility on the right side
+    const statusBarPriority = statusBarPosition === 'left' ? STATUS_BAR_PRIORITY : -STATUS_BAR_PRIORITY;
+    this._tile = statusBarPositionMethod({
       item,
-      priority: STATUS_BAR_PRIORITY
+      priority: statusBarPriority
     });
   }
 
@@ -192,7 +209,7 @@ class StatusBarTileComponent extends _react.Component {
             title: `${errorLabel} error${errorSuffix}`,
             placement: 'top'
           }) },
-        _react.createElement((_Icon || _load_Icon()).Icon, { icon: 'stop' }),
+        _react.createElement((_Icon || _load_Icon()).Icon, { icon: 'nuclicon-error' }),
         errorCount
       ),
       _react.createElement(
@@ -204,7 +221,7 @@ class StatusBarTileComponent extends _react.Component {
             title: `${warningLabel} warning${warningSuffix}`,
             placement: 'top'
           }) },
-        _react.createElement((_Icon || _load_Icon()).Icon, { icon: 'alert' }),
+        _react.createElement((_Icon || _load_Icon()).Icon, { icon: 'nuclicon-warning' }),
         warningCount
       )
     );

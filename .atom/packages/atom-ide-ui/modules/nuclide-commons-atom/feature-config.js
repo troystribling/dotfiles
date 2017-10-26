@@ -143,6 +143,7 @@ function isFeatureDisabled(name) {
 }
 
 exports.default = {
+  formatKeyPath,
   setPackageName,
   getPackageName,
   get,

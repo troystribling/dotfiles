@@ -7,8 +7,6 @@ exports.Checkbox = undefined;
 
 var _react = _interopRequireWildcard(require('react'));
 
-var _reactDom = _interopRequireDefault(require('react-dom'));
-
 var _classnames;
 
 function _load_classnames() {
@@ -35,6 +33,18 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * A checkbox component with an input checkbox and a label. We restrict the label to a string
  * to ensure this component is pure.
  */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
 class Checkbox extends _react.PureComponent {
 
   constructor(props) {
@@ -62,8 +72,7 @@ class Checkbox extends _react.PureComponent {
    * @see https://www.w3.org/TR/html5/forms.html#the-input-element
    */
   _setIndeterminate() {
-    // $FlowFixMe
-    _reactDom.default.findDOMNode(this.refs.input).indeterminate = this.props.indeterminate;
+    this.refs.input.indeterminate = this.props.indeterminate;
   }
 
   render() {
@@ -109,18 +118,7 @@ class Checkbox extends _react.PureComponent {
     );
   }
 }
-exports.Checkbox = Checkbox; /**
-                              * Copyright (c) 2017-present, Facebook, Inc.
-                              * All rights reserved.
-                              *
-                              * This source code is licensed under the BSD-style license found in the
-                              * LICENSE file in the root directory of this source tree. An additional grant
-                              * of patent rights can be found in the PATENTS file in the same directory.
-                              *
-                              * 
-                              * @format
-                              */
-
+exports.Checkbox = Checkbox;
 Checkbox.defaultProps = {
   disabled: false,
   indeterminate: false,

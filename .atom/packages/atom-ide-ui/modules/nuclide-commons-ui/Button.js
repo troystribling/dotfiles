@@ -99,7 +99,8 @@ class Button extends _react.Component {
           remainingProps = _objectWithoutProperties(_props, ['icon', 'buttonType', 'selected', 'size', 'children', 'className', 'wrapperElement', 'tooltip']);
     const sizeClassname = size == null ? '' : ButtonSizeClassnames[size] || '';
     const buttonTypeClassname = buttonType == null ? '' : ButtonTypeClassnames[buttonType] || '';
-    const ref = tooltip ? (0, (_addTooltip || _load_addTooltip()).default)(tooltip) : null;
+    const ref = tooltip && !this.props.disabled ? (0, (_addTooltip || _load_addTooltip()).default)(tooltip) : null;
+    const titleToolTip = tooltip && this.props.disabled ? tooltip.title : null;
     const newClassName = (0, (_classnames || _load_classnames()).default)(className, 'btn', {
       [`icon icon-${(0, (_string || _load_string()).maybeToString)(icon)}`]: icon != null,
       [sizeClassname]: size != null,
@@ -111,7 +112,11 @@ class Button extends _react.Component {
       // $FlowFixMe(>=0.53.0) Flow suppress
       _react.createElement(
         Wrapper,
-        Object.assign({ className: newClassName, ref: ref }, remainingProps),
+        Object.assign({
+          className: newClassName,
+          ref: ref
+        }, remainingProps, {
+          title: titleToolTip }),
         children
       )
     );

@@ -26,6 +26,12 @@ function _load_range2() {
   return _range2 = require('nuclide-commons/range');
 }
 
+var _UniversalDisposable;
+
+function _load_UniversalDisposable() {
+  return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));
+}
+
 var _showTriggerConflictWarning;
 
 function _load_showTriggerConflictWarning() {
@@ -40,6 +46,12 @@ function _load_log4js() {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const WARN_ABOUT_TRIGGER_CONFLICT_KEY = 'hyperclick.warnAboutTriggerConflict';
+
+/**
+ * Construct this object to enable Hyperclick in a text editor.
+ * Call `dispose` to disable the feature.
+ */
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -54,12 +66,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* global localStorage */
 
-const WARN_ABOUT_TRIGGER_CONFLICT_KEY = 'hyperclick.warnAboutTriggerConflict';
-
-/**
- * Construct this object to enable Hyperclick in a text editor.
- * Call `dispose` to disable the feature.
- */
 class HyperclickForTextEditor {
 
   constructor(textEditor, hyperclick) {
@@ -78,7 +84,7 @@ class HyperclickForTextEditor {
     this._navigationMarkers = null;
 
     this._lastWordRange = null;
-    this._subscriptions = new _atom.CompositeDisposable();
+    this._subscriptions = new (_UniversalDisposable || _load_UniversalDisposable()).default();
 
     this._onMouseMove = this._onMouseMove.bind(this);
     this._onMouseDown = this._onMouseDown.bind(this);

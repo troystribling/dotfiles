@@ -65,6 +65,6 @@ function humanizePath(path, options) {
    */
 
 function normalizePath(path, isDirectory_) {
-  const isDirectory = isDirectory_ == null ? path.endsWith('/') : isDirectory_;
+  const isDirectory = isDirectory_ == null ? (_nuclideUri || _load_nuclideUri()).default.endsWithSeparator(path) : isDirectory_;
   return isDirectory ? (_nuclideUri || _load_nuclideUri()).default.normalizeDir(path) : (_nuclideUri || _load_nuclideUri()).default.normalize(path);
 }

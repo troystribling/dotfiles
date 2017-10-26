@@ -39,6 +39,7 @@ class IndieLinterDelegate {
   constructor(config) {
     this._name = config.name;
     this._supportedMessageKinds = config.supportedMessageKinds || ['lint'];
+    this._uiSettings = Object.freeze(config.uiSettings ? config.uiSettings.slice() : []);
     this._messages = [];
     this._updates = new _rxjsBundlesRxMinJs.Subject();
     this._invalidations = new _rxjsBundlesRxMinJs.Subject();
@@ -55,6 +56,10 @@ class IndieLinterDelegate {
   get supportedMessageKinds() {
     // We'll count on ourselves not to mutate this.
     return this._supportedMessageKinds;
+  }
+
+  get uiSettings() {
+    return this._uiSettings;
   }
 
   getMessages() {

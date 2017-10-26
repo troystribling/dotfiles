@@ -108,29 +108,56 @@ let mkdirp = (() => {
  */
 
 
-/** @return true only if we are sure directoryPath is on NFS. */
-let isNfs = (() => {
+let getFileSystemType = (() => {
   var _ref4 = (0, _asyncToGenerator.default)(function* (entityPath) {
     if (process.platform === 'linux' || process.platform === 'darwin') {
       try {
         const stdout = yield (0, (_process || _load_process()).runCommand)('stat', ['-f', '-L', '-c', '%T', entityPath]).toPromise();
-        return stdout.trim() === 'nfs';
+        return stdout.trim();
       } catch (err) {
-        return false;
+        return null;
       }
     } else {
-      // TODO Handle other platforms (windows?): t9917576.
-      return false;
+      // TODO Handle other platforms (windows?)
+      return null;
     }
   });
 
-  return function isNfs(_x6) {
+  return function getFileSystemType(_x6) {
     return _ref4.apply(this, arguments);
   };
 })();
 
+/** @return true only if we are sure entityPath is on NFS. */
+
+
+let isNfs = (() => {
+  var _ref5 = (0, _asyncToGenerator.default)(function* (entityPath) {
+    return (yield getFileSystemType(entityPath)) === 'nfs';
+  });
+
+  return function isNfs(_x7) {
+    return _ref5.apply(this, arguments);
+  };
+})();
+
+/** @return true only if we are sure entityPath is on a Fuse filesystem like
+            dewey or gvfs.
+*/
+
+
+let isFuse = (() => {
+  var _ref6 = (0, _asyncToGenerator.default)(function* (entityPath) {
+    return (yield getFileSystemType(entityPath)) === 'fuseblk';
+  });
+
+  return function isFuse(_x8) {
+    return _ref6.apply(this, arguments);
+  };
+})();
+
 let isNonNfsDirectory = (() => {
-  var _ref5 = (0, _asyncToGenerator.default)(function* (directoryPath) {
+  var _ref7 = (0, _asyncToGenerator.default)(function* (directoryPath) {
     try {
       const stats = yield stat(directoryPath);
       if (stats.isDirectory()) {
@@ -146,8 +173,8 @@ let isNonNfsDirectory = (() => {
     }
   });
 
-  return function isNonNfsDirectory(_x7) {
-    return _ref5.apply(this, arguments);
+  return function isNonNfsDirectory(_x9) {
+    return _ref7.apply(this, arguments);
   };
 })();
 
@@ -173,6 +200,12 @@ var _mkdirp;
 
 function _load_mkdirp() {
   return _mkdirp = _interopRequireDefault(require('mkdirp'));
+}
+
+var _mv;
+
+function _load_mv() {
+  return _mv = _interopRequireDefault(require('mv'));
 }
 
 var _rimraf;
@@ -207,18 +240,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param prefix optinal prefix for the temp directory name.
  * @return path to a temporary directory.
  */
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
 function tempdir(prefix = '') {
   return new Promise((resolve, reject) => {
     (_temp || _load_temp()).default.mkdir(prefix, (err, result) => {
@@ -235,6 +256,18 @@ function tempdir(prefix = '') {
  * @return path to a temporary file. The caller is responsible for cleaning up
  *     the file.
  */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
 function tempfile(options) {
   return new Promise((resolve, reject) => {
     (_temp || _load_temp()).default.open(options, (err, info) => {
@@ -292,18 +325,6 @@ function glob(pattern, options) {
 function copy(source, dest) {
   return new Promise((resolve, reject) => {
     (_fsPlus || _load_fsPlus()).default.copy(source, dest, (err, result) => {
-      if (err == null) {
-        resolve(result);
-      } else {
-        reject(err);
-      }
-    });
-  });
-}
-
-function move(source, dest) {
-  return new Promise((resolve, reject) => {
-    (_fsPlus || _load_fsPlus()).default.move(source, dest, (err, result) => {
       if (err == null) {
         resolve(result);
       } else {
@@ -381,6 +402,22 @@ function mkdir(path, mode) {
   });
 }
 
+/**
+ * The key difference between 'mv' and 'rename' is that 'mv' works across devices.
+ * It's not uncommon to have temporary files in a different disk, for instance.
+ */
+function mv(sourcePath, destinationPath, options = {}) {
+  return new Promise((resolve, reject) => {
+    (0, (_mv || _load_mv()).default)(sourcePath, destinationPath, options, error => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
 // `fs.readFile` returns a Buffer unless an encoding is specified.
 // This workaround is adapted from the Flow declarations.
 
@@ -434,18 +471,6 @@ function realpath(path, cache) {
   });
 }
 
-function rename(oldPath, newPath) {
-  return new Promise((resolve, reject) => {
-    _fs.default.rename(oldPath, newPath, (err, result) => {
-      if (err == null) {
-        resolve(result);
-      } else {
-        reject(err);
-      }
-    });
-  });
-}
-
 function stat(path) {
   return new Promise((resolve, reject) => {
     _fs.default.stat(path, (err, result) => {
@@ -482,6 +507,30 @@ function unlink(path) {
   });
 }
 
+function utimes(path, atime, mtime) {
+  return new Promise((resolve, reject) => {
+    _fs.default.utimes(path, atime, mtime, err => {
+      if (err == null) {
+        resolve();
+      } else {
+        reject(err);
+      }
+    });
+  });
+}
+
+function rmdir(path) {
+  return new Promise((resolve, reject) => {
+    _fs.default.rmdir(path, err => {
+      if (err == null) {
+        resolve();
+      } else {
+        reject(err);
+      }
+    });
+  });
+}
+
 exports.default = {
   tempdir,
   tempfile,
@@ -492,23 +541,25 @@ exports.default = {
   mkdirp,
   rimraf: rimrafWrapper,
   isNfs,
+  isFuse,
   glob,
   isNonNfsDirectory,
 
   copy,
-  move,
   writeFile,
 
   chmod,
   chown,
   lstat,
   mkdir,
+  mv,
   readFile,
   readdir,
   readlink,
   realpath,
-  rename,
   stat,
   symlink,
-  unlink
+  unlink,
+  utimes,
+  rmdir
 };

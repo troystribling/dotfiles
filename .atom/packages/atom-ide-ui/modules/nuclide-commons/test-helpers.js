@@ -134,6 +134,7 @@ exports.clearRequireCache = clearRequireCache;
 exports.uncachedRequire = uncachedRequire;
 exports.spyOnGetterValue = spyOnGetterValue;
 exports.arePropertiesEqual = arePropertiesEqual;
+exports.writeCoverage = writeCoverage;
 
 var _fs = _interopRequireDefault(require('fs'));
 
@@ -141,6 +142,12 @@ var _temp;
 
 function _load_temp() {
   return _temp = _interopRequireDefault(require('temp'));
+}
+
+var _uuid;
+
+function _load_uuid() {
+  return _uuid = _interopRequireDefault(require('uuid'));
 }
 
 var _fsPromise;
@@ -163,19 +170,21 @@ function _load_promise() {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
 if (!(typeof atom !== 'undefined' && atom.inSpecMode() || process.env.NODE_ENV === 'test')) {
   throw new Error('Test helpers should only be used in spec mode');
-} /**
-   * Copyright (c) 2017-present, Facebook, Inc.
-   * All rights reserved.
-   *
-   * This source code is licensed under the BSD-style license found in the
-   * LICENSE file in the root directory of this source tree. An additional grant
-   * of patent rights can be found in the PATENTS file in the same directory.
-   *
-   * 
-   * @format
-   */
+}
 
 function clearRequireCache(require, module) {
   delete require.cache[require.resolve(module)];
@@ -223,4 +232,12 @@ function arePropertiesEqual(obj1, obj2) {
     }
   }
   return true;
+}function writeCoverage() {
+  const { COVERAGE_DIR } = process.env;
+  if (COVERAGE_DIR != null) {
+    const coverage = global.__coverage__;
+    if (coverage != null) {
+      _fs.default.writeFileSync((_nuclideUri || _load_nuclideUri()).default.join(COVERAGE_DIR, (_uuid || _load_uuid()).default.v4() + '.json'), JSON.stringify(coverage));
+    }
+  }
 }

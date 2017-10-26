@@ -10,9 +10,9 @@ var _react = _interopRequireWildcard(require("react"));
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 /** A Block. */
-const Block = exports.Block = (props
+const Block = exports.Block = props =>
 // $FlowFixMe(>=0.53.0) Flow suppress
-) => _react.createElement(
+_react.createElement(
   "div",
   { className: "block" },
   props.children

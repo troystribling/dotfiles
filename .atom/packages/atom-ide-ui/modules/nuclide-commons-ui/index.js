@@ -1,6 +1,10 @@
 'use strict';
 
-var _atom = require('atom');
+var _UniversalDisposable;
+
+function _load_UniversalDisposable() {
+  return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));
+}
 
 var _fs = _interopRequireDefault(require('fs'));
 
@@ -25,6 +29,6 @@ const styleDir = _path.default.join(__dirname, 'styles');
 // Requiring this module will load all stylesheets in styles/.
 // The exported value can be disposed to remove the stylesheets.
 
-const styleDisposables = new _atom.CompositeDisposable(..._fs.default.readdirSync(styleDir).filter(file => _path.default.extname(file) === '.less').map(file => atom.themes.requireStylesheet(_path.default.join(styleDir, file))));
+const styleDisposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(..._fs.default.readdirSync(styleDir).filter(file => ['.less', '.css'].includes(_path.default.extname(file))).map(file => atom.themes.requireStylesheet(_path.default.join(styleDir, file))));
 
 module.exports = styleDisposables; // eslint-disable-line rulesdir/no-commonjs

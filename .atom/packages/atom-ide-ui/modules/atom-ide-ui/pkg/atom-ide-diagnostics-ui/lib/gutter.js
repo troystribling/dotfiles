@@ -53,10 +53,19 @@ function _load_DiagnosticsPopup() {
   return _DiagnosticsPopup = require('./ui/DiagnosticsPopup');
 }
 
+var _GroupUtils;
+
+function _load_GroupUtils() {
+  return _GroupUtils = _interopRequireWildcard(require('./GroupUtils'));
+}
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const GUTTER_ID = 'diagnostics-gutter';
+
+// Needs to be the same as glyph-height in gutter.atom-text-editor.less.
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -69,9 +78,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @format
  */
 
-const GUTTER_ID = 'diagnostics-gutter';
-
-// Needs to be the same as glyph-height in gutter.atom-text-editor.less.
 const GLYPH_HEIGHT = 15; // px
 
 const POPUP_DISPOSE_TIMEOUT = 100;
@@ -94,10 +100,11 @@ const HIGHLIGHT_CSS_LEVELS = {
   Info: 'diagnostics-gutter-ui-highlight-info'
 };
 
-const GUTTER_CSS_LEVELS = {
-  Error: 'diagnostics-gutter-ui-gutter-error',
-  Warning: 'diagnostics-gutter-ui-gutter-warning',
-  Info: 'diagnostics-gutter-ui-gutter-info'
+const GUTTER_CSS_GROUPS = {
+  review: 'diagnostics-gutter-ui-gutter-review',
+  errors: 'diagnostics-gutter-ui-gutter-error',
+  warnings: 'diagnostics-gutter-ui-gutter-warning',
+  info: 'diagnostics-gutter-ui-gutter-info'
 };
 
 const editorToMarkers = new WeakMap();
@@ -199,14 +206,8 @@ function applyUpdateToEditor(editor, update, diagnosticUpdater) {
 
   // Find all of the gutter markers for the same row and combine them into one marker/popup.
   for (const [row, messages] of rowToMessage.entries()) {
-    // Show the highest priority marker (note the ordering of GUTTER_CSS).
-    const messageTypes = new Set();
-    messages.forEach(msg => messageTypes.add(msg.type));
-    const firstType = Object.keys(GUTTER_CSS_LEVELS).find(type => messageTypes.has(type));
-    const gutterMarkerCssClass = GUTTER_CSS_LEVELS[firstType || 'Error'];
-
     // This marker adds some UI to the gutter.
-    const { item, dispose } = createGutterItem(messages, gutterMarkerCssClass, diagnosticUpdater);
+    const { item, dispose } = createGutterItem(messages, diagnosticUpdater);
     itemToEditor.set(item, editor);
     const gutterMarker = editor.markBufferPosition([row, 0]);
     gutter.decorateMarker(gutterMarker, { item });
@@ -223,9 +224,21 @@ function applyUpdateToEditor(editor, update, diagnosticUpdater) {
   }
 }
 
-function createGutterItem(messages, gutterMarkerCssClass, diagnosticUpdater) {
+function createGutterItem(messages, diagnosticUpdater) {
+  // Determine which group to display.
+  const messageGroups = new Set();
+  messages.forEach(msg => messageGroups.add((_GroupUtils || _load_GroupUtils()).getGroup(msg)));
+  const group = (_GroupUtils || _load_GroupUtils()).getHighestPriorityGroup(messageGroups);
+
   const item = document.createElement('a');
-  item.className = gutterMarkerCssClass;
+  const groupClassName = GUTTER_CSS_GROUPS[group];
+  item.className = `diagnostics-gutter-ui-item ${groupClassName || ''}`;
+
+  // Add the icon
+  const icon = document.createElement('span');
+  icon.className = `icon icon-${(_GroupUtils || _load_GroupUtils()).getIcon(group)}`;
+  item.appendChild(icon);
+
   let popupElement = null;
   let paneItemSubscription = null;
   let disposeTimeout = null;

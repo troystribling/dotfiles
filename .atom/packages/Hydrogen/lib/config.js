@@ -14,6 +14,7 @@ const Config = {
   },
 
   schema: {
+    kernelspec: {},
     autocomplete: {
       title: "Enable Autocomplete",
       includeTitle: false,
@@ -82,14 +83,6 @@ const Config = {
       type: "string",
       default: "[]"
     },
-    kernelspec: {
-      title: "Kernel Specs",
-      includeTitle: false,
-      description:
-        'This field is populated on every launch or by invoking the command `hydrogen:update-kernels`. It contains the JSON string resulting from running `jupyter kernelspec list --json` or `ipython kernelspec list --json`. You can also edit this field and specify custom kernel specs , like this: ``` { "kernelspecs": { "ijavascript": { "spec": { "display_name": "IJavascript", "env": {}, "argv": [ "node", "/home/user/node_modules/ijavascript/lib/kernel.js", "--protocol=5.0", "{connection_file}" ], "language": "javascript" }, "resources_dir": "/home/user/node_modules/ijavascript/images" } } } ```',
-      type: "string",
-      default: "{}"
-    },
     languageMappings: {
       title: "Language Mappings",
       includeTitle: false,
@@ -107,9 +100,16 @@ const Config = {
       default: "{}"
     },
     outputAreaDock: {
-      title: "Output Area Dock",
+      title: "Leave output dock open",
       description:
         "Do not close dock when switching to an editor without a running kernel",
+      type: "boolean",
+      default: false
+    },
+    outputAreaDefault: {
+      title: "View output in the dock by default",
+      description:
+        "If enabled, output will be displayed in the dock by default rather than inline",
       type: "boolean",
       default: false
     }

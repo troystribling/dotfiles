@@ -4,14 +4,21 @@ import Kernel from "./kernel";
 import InputView from "./input-view";
 import { log } from "./utils";
 
-import type { Session } from "./jupyter-js-services-shim";
+import type { Session } from "@jupyterlab/services";
 
 export default class WSKernel extends Kernel {
   session: Session;
+  gatewayName: string;
 
-  constructor(kernelSpec: Kernelspec, grammar: atom$Grammar, session: Session) {
+  constructor(
+    gatewayName: string,
+    kernelSpec: Kernelspec,
+    grammar: atom$Grammar,
+    session: Session
+  ) {
     super(kernelSpec, grammar);
     this.session = session;
+    this.gatewayName = gatewayName;
 
     this.session.statusChanged.connect(() =>
       this.setExecutionState(this.session.status)
@@ -115,7 +122,7 @@ export default class WSKernel extends Kernel {
         defaultText: this.session.path,
         allowCancel: true
       },
-      (input: string) => this.session.rename(input)
+      (input: string) => this.session.setPath(input)
     );
 
     view.attach();

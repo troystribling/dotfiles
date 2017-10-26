@@ -61,7 +61,7 @@ class OutlineViewPanelState {
   }
 
   getTitle() {
-    return 'Outline View';
+    return 'Outline';
   }
 
   getIconName() {
@@ -86,7 +86,10 @@ class OutlineViewPanelState {
 
   getElement() {
     const outlines = this._visibility.switchMap(visible => visible ? this._outlines : _rxjsBundlesRxMinJs.Observable.of({ kind: 'empty' }));
-    return (0, (_renderReactRoot || _load_renderReactRoot()).renderReactRoot)(_react.createElement((_OutlineView || _load_OutlineView()).OutlineView, { outlines: outlines }));
+    return (0, (_renderReactRoot || _load_renderReactRoot()).renderReactRoot)(_react.createElement((_OutlineView || _load_OutlineView()).OutlineView, {
+      outlines: outlines,
+      visibility: this._visibility.distinctUntilChanged()
+    }));
   }
 
   serialize() {

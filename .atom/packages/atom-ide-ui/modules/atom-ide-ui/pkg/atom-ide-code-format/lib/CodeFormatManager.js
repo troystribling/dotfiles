@@ -108,29 +108,16 @@ class CodeFormatManager {
 
     return _rxjsBundlesRxMinJs.Observable.merge(commandEvents, editorEvents)
     // Group events by buffer to prevent simultaneous formatting operations.
-    .groupBy(event => event.editor.getBuffer(), event => event, grouped =>
-    // $FlowFixMe: add durationSelector to groupBy
-    (0, (_event || _load_event()).observableFromSubscribeFunction)(callback =>
-    // $FlowFixMe: add key to GroupedObservable
-    grouped.key.onDidDestroy(callback))).mergeMap(events =>
-    // Concatenate a null event to ensure that buffer destruction
-    // interrupts any pending format operations.
-    events.concat(_rxjsBundlesRxMinJs.Observable.of(null)).switchMap(event => {
-      if (event == null) {
-        return _rxjsBundlesRxMinJs.Observable.empty();
-      }
-      return this._handleEvent(event);
-    })).subscribe();
+    .groupBy(event => event.editor.getBuffer(), event => event, grouped => (0, (_event || _load_event()).observableFromSubscribeFunction)(callback => grouped.key.onDidDestroy(callback))).mergeMap(events =>
+    // Make sure we halt everything when the editor gets destroyed.
+    events.let((0, (_observable || _load_observable()).completingSwitchMap)(event => this._handleEvent(event)))).subscribe();
   }
 
   /**
    * Returns a stream of all typing and saving operations from the editor.
    */
   _getEditorEventStream(editor) {
-    const changeEvents = (0, (_event || _load_event()).observableFromSubscribeFunction)(callback => editor.getBuffer().onDidChange(callback))
-    // Debounce to ensure that multiple cursors only trigger one format.
-    // TODO(hansonw): Use onDidChangeText with 1.17+.
-    .debounceTime(0);
+    const changeEvents = (0, (_event || _load_event()).observableFromSubscribeFunction)(callback => editor.getBuffer().onDidChangeText(callback));
 
     const saveEvents = _rxjsBundlesRxMinJs.Observable.create(observer => {
       const realSave = editor.save;
@@ -255,8 +242,13 @@ class CodeFormatManager {
     });
   }
 
-  _formatCodeOnTypeInTextEditor(editor, event) {
+  _formatCodeOnTypeInTextEditor(editor, aggregatedEvent) {
     return _rxjsBundlesRxMinJs.Observable.defer(() => {
+      // Don't try to format changes with multiple cursors.
+      if (aggregatedEvent.changes.length !== 1) {
+        return _rxjsBundlesRxMinJs.Observable.empty();
+      }
+      const event = aggregatedEvent.changes[0];
       // This also ensures the non-emptiness of event.newText for below.
       if (!shouldFormatOnType(event) || !(0, (_config || _load_config()).getFormatOnType)()) {
         return _rxjsBundlesRxMinJs.Observable.empty();

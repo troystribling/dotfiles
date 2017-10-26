@@ -36,9 +36,9 @@ class KeyboardShortcuts {
     const first = () => this.setIndex(0);
     const last = () => this.setIndex(this._diagnostics.length - 1);
     this._subscriptions.add((0, (_event || _load_event()).observableFromSubscribeFunction)(diagnosticUpdater.observeMessages).subscribe(diagnostics => {
-      this._diagnostics = diagnostics.filter(diagnostic => diagnostic.scope === 'file');
       this._index = null;
       this._traceIndex = null;
+      this._diagnostics = diagnostics;
     }), atom.commands.add('atom-workspace', 'diagnostics:go-to-first-diagnostic', first), atom.commands.add('atom-workspace', 'diagnostics:go-to-last-diagnostic', last), atom.commands.add('atom-workspace', 'diagnostics:go-to-next-diagnostic', () => {
       this._index == null ? first() : this.setIndex(this._index + 1);
     }), atom.commands.add('atom-workspace', 'diagnostics:go-to-previous-diagnostic', () => {

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getSupportedMessageKinds = exports.getMessages = exports.getProjectMessages = undefined;
+exports.getUiConfig = exports.getSupportedMessageKinds = exports.getMessages = undefined;
 exports.getFileMessages = getFileMessages;
 exports.getFileMessageUpdates = getFileMessageUpdates;
 
@@ -25,7 +25,6 @@ const getMessagesState = state => state.messages; /**
                                                    * @format
                                                    */
 
-const getProjectMessagesState = state => state.projectMessages;
 const getProviders = state => state.providers;
 
 /**
@@ -52,22 +51,10 @@ function getFileMessageUpdates(state, filePath) {
 }
 
 /**
-  * Gets the current project-scope diagnostic messages.
-  * Prefer to get updates via ::onProjectMessagesDidUpdate.
-  */
-const getProjectMessages = exports.getProjectMessages = (0, (_reselect || _load_reselect()).createSelector)([getProjectMessagesState], projectMessagesState => {
-  const messages = [];
-  for (const providerMessages of projectMessagesState.values()) {
-    messages.push(...providerMessages);
-  }
-  return messages;
-});
-
-/**
   * Gets all current diagnostic messages.
   * Prefer to get updates via ::onAllMessagesDidUpdate.
   */
-const getMessages = exports.getMessages = (0, (_reselect || _load_reselect()).createSelector)([getMessagesState, getProjectMessages], (messagesState, projectMessages) => {
+const getMessages = exports.getMessages = (0, (_reselect || _load_reselect()).createSelector)([getMessagesState], messagesState => {
   const messages = [];
 
   // Get all file messages.
@@ -76,9 +63,6 @@ const getMessages = exports.getMessages = (0, (_reselect || _load_reselect()).cr
       messages.push(...fileMessages);
     }
   }
-
-  // Get all project messages.
-  messages.push(...projectMessages);
 
   return messages;
 });
@@ -93,4 +77,17 @@ const getSupportedMessageKinds = exports.getSupportedMessageKinds = (0, (_resele
     }
   });
   return kinds;
+});
+
+const getUiConfig = exports.getUiConfig = (0, (_reselect || _load_reselect()).createSelector)([getProviders], providers => {
+  const config = [];
+  providers.forEach(provider => {
+    if (provider.name != null && provider.uiSettings != null && provider.uiSettings.length > 0) {
+      config.push({
+        providerName: provider.name,
+        settings: provider.uiSettings
+      });
+    }
+  });
+  return config;
 });

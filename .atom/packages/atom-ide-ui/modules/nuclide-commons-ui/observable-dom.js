@@ -75,6 +75,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *   mutations.subscribe(record => console.log(record));
  */
 
+// $FlowFixMe(>=0.55.0) Flow suppress
 class DOMObserverObservable extends _rxjsBundlesRxMinJs.Observable {
 
   constructor(DOMObserverCtor, ...observeArgs) {
@@ -195,6 +196,8 @@ class IntersectionObservable extends DOMObserverObservable {
     global.IntersectionObserver !== null)) {
       throw new Error('environment must contain IntersectionObserver');
     }
+    // $FlowFixMe(>=0.55.0) Flow suppress
+
 
     super(IntersectionObserver, target);
   }
@@ -211,6 +214,8 @@ class MutationObservable extends DOMObserverObservable {
     global.MutationObserver !== null)) {
       throw new Error('environment must contain MutationObserver');
     }
+    // $FlowFixMe(>=0.55.0) Flow suppress
+
 
     super(MutationObserver, target);
   }
@@ -227,6 +232,8 @@ class PerformanceObservable extends DOMObserverObservable {
     global.PerformanceObserver !== null)) {
       throw new Error('environment must contain PerformanceObserver');
     }
+    // $FlowFixMe(>=0.55.0) Flow suppress
+
 
     super(PerformanceObserver, options);
   }
@@ -243,6 +250,8 @@ class ResizeObservable extends DOMObserverObservable {
     global.ResizeObserver !== null)) {
       throw new Error('environment must contain ResizeObserver');
     }
+    // $FlowFixMe(>=0.55.0) Flow suppress
+
 
     super(ResizeObserver, target);
   }

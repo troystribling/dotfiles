@@ -55,20 +55,21 @@ function disableDiagnostics() {
 
 function showAtomLinterWarning() {
   const packageName = (_featureConfig || _load_featureConfig()).default.getPackageName();
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(observePackageIsEnabled().filter(Boolean).subscribe(() => {
+  return new (_UniversalDisposable || _load_UniversalDisposable()).default(observePackageIsEnabled().distinctUntilChanged().switchMap(enabled => {
+    if (!enabled) {
+      return _rxjsBundlesRxMinJs.Observable.empty();
+    }
     const notification = atom.notifications.addInfo('Choose a linter UI', {
       description: 'You have both `linter` and `atom-ide-diagnostics` enabled, which will both ' + 'display lint results for Linter-based packages.\n\n' + 'To avoid duplicate results, please disable one of the packages.' + (packageName === 'nuclide' ? '\n\nNote that Flow and Hack errors are not compatible with `linter`.' : ''),
       dismissable: true,
       buttons: [{
         text: 'Disable Linter',
         onDidClick() {
-          notification.dismiss();
           disableLinter();
         }
       }, {
         text: 'Disable Diagnostics',
         onDidClick() {
-          notification.dismiss();
           disableDiagnostics();
           atom.notifications.addInfo('Re-enabling Diagnostics', {
             description: 'To re-enable diagnostics, please enable "Diagnostics" under the "Enabled Features" ' + `section in \`${packageName}\` settings.`
@@ -76,5 +77,10 @@ function showAtomLinterWarning() {
         }
       }]
     });
-  }));
+    return _rxjsBundlesRxMinJs.Observable.create(() => ({
+      unsubscribe() {
+        notification.dismiss();
+      }
+    }));
+  }).subscribe());
 }

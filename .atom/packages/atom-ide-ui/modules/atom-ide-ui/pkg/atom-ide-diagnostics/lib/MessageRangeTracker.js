@@ -44,7 +44,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 class MessageRangeTracker {
 
   /**
-   * Stores all current markers, indexed by FileDiagnosticMessage.
+   * Stores all current markers, indexed by DiagnosticMessage.
    * invariant: No messages for closed files, no destroyed markers.
    */
   constructor() {
@@ -73,7 +73,7 @@ class MessageRangeTracker {
     });
   }
   /**
-   * Stores all current FileDiagnosticMessages, indexed by file. Includes those for files that are
+   * Stores all current DiagnosticMessages, indexed by file. Includes those for files that are
    * not open.
    */
 

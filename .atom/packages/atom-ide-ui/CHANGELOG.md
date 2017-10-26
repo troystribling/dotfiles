@@ -1,5 +1,59 @@
 # Changelog
 
+## v0.5.3
+
+### Datatips
+- Datatips now appear at the cursor rather than the beginning of the range (#19)
+- Scrollable datatips now always capture scroll events (#71)
+- Datatip highlights no longer obscure Hyperclick underlines.
+
+### Diagnostics
+- Restored colors to diagnostic icons.
+- The editor is now focused after double-clicking a diagnostic message.
+- Fixed handling of Linter traces (#102)
+- Fixed previous/next diagnostic keyboard shortcuts.
+- Fixed code action context menus throwing exceptions on Windows.
+
+### Outlines
+- Auto-focus is less aggressive now.
+
+## v0.5.2
+
+### Diagnostics
+- Gutter icons now match the table icons.
+- Added an "auto-visibility" setting to automatically show/hide the diagnostics panel when diagnostics are available (#88)
+- LinterV2 callback solutions are now supported.
+
+### Datatips
+- Added a max-height to prevent datatips from filling the screen.
+- Fixed forced editor re-rendering on keystrokes (#94)
+- Fixed flickering on Windows (#20)
+
+### Outlines
+- The search box now gets focus when the panel is toggled.
+- Added a `landingPosition` property to the outline API.
+
+### Other
+- Signature Help: Signatures no longer persist for a moment after deleting a line.
+- Improved performance of debounced events throughout the package (#93)
+
+## v0.5.1
+
+- Added config option for diagnostics status bar location (#84)
+- Reduced size of diagnostic table icons
+- Fixed EvalError while loading package (#86)
+
+## v0.5.0
+
+- New, revamped diagnostics experience! (#39)
+- Added experimental support for signature help.
+- Prevent improperly sized datatips from appearing. (#22)
+- Many improvements to the outline view, including:
+  - Outlines now respect the editor font, font size, and line height.
+  - Also, the "Outline View" panel is now titled as just "Outline".
+- Linter conflict notification now hides if linter is disabled externally. (#56)
+- Upgraded to React 16.
+
 ## v0.4.0
 
 - The minimum supported Atom version is now 1.19.

@@ -41,16 +41,8 @@ class DiagnosticUpdater {
       return (_Selectors || _load_Selectors()).getMessages(this._store.getState());
     };
 
-    this.getProjectMessages = () => {
-      return (_Selectors || _load_Selectors()).getProjectMessages(this._store.getState());
-    };
-
     this.getFileMessageUpdates = filePath => {
       return (_Selectors || _load_Selectors()).getFileMessageUpdates(this._store.getState(), filePath);
-    };
-
-    this.observeProjectMessages = callback => {
-      return new (_UniversalDisposable || _load_UniversalDisposable()).default(this._projectMessageUpdates.subscribe(callback));
     };
 
     this.observeMessages = callback => {
@@ -72,6 +64,10 @@ class DiagnosticUpdater {
       return new (_UniversalDisposable || _load_UniversalDisposable()).default(this._states.map((_Selectors || _load_Selectors()).getSupportedMessageKinds).subscribe(callback));
     };
 
+    this.observeUiConfig = callback => {
+      return new (_UniversalDisposable || _load_UniversalDisposable()).default(this._states.map((_Selectors || _load_Selectors()).getUiConfig).subscribe(callback));
+    };
+
     this.applyFix = message => {
       this._store.dispatch((_Actions || _load_Actions()).applyFix(message));
     };
@@ -87,8 +83,6 @@ class DiagnosticUpdater {
     this._store = store;
     // $FlowIgnore: Flow doesn't know about Symbol.observable
     this._states = _rxjsBundlesRxMinJs.Observable.from(store);
-
-    this._projectMessageUpdates = this._states.map((_Selectors || _load_Selectors()).getProjectMessages).distinctUntilChanged();
 
     this._allMessageUpdates = this._states.map((_Selectors || _load_Selectors()).getMessages).distinctUntilChanged();
   }

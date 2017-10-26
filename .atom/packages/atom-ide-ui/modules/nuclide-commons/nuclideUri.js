@@ -89,6 +89,15 @@ function isInArchive(uri) {
   return false;
 }
 
+function ancestorOutsideArchive(uri) {
+  for (let i = uri.indexOf(ARCHIVE_SEPARATOR); i >= 0; i = uri.indexOf(ARCHIVE_SEPARATOR, i + 1)) {
+    if (_isArchiveSeparator(uri, i)) {
+      return uri.substring(0, i);
+    }
+  }
+  return uri;
+}
+
 /**
  * Parses valid Nuclide URIs into the hostname and path components.
  * Throws an Error on invalid URIs. Invalid URIs are:
@@ -704,7 +713,7 @@ function _testForIllegalUri(uri) {
     if (isAtomUri(uri)) {
       throw new Error(`Path operation invoked on Atom URI ${uri}`);
     }
-    if (uri.endsWith(ARCHIVE_SEPARATOR)) {
+    if (_endsWithArchiveSeparator(uri)) {
       throw new Error(`Path operation invoked on URI ending with ${ARCHIVE_SEPARATOR}: ${uri}`);
     }
   }
@@ -751,6 +760,7 @@ exports.default = {
   isLocal,
   createRemoteUri,
   isInArchive,
+  ancestorOutsideArchive,
   parse,
   parseRemoteUri,
   validate,

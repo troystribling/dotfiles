@@ -13,6 +13,12 @@ function _load_Button() {
 
 var _react = _interopRequireWildcard(require('react'));
 
+var _GroupUtils;
+
+function _load_GroupUtils() {
+  return _GroupUtils = _interopRequireWildcard(require('../GroupUtils'));
+}
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 /**
@@ -28,42 +34,14 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  */
 
 function FilterButton(props) {
-  const { selected, type } = props;
-  const typeName = getFilterTypeDisplayName(type);
-  const title = props.selected ? `Hide ${typeName}` : `Show ${typeName}`;
+  const { selected, group } = props;
+  const displayName = (_GroupUtils || _load_GroupUtils()).getDisplayName(group);
+  const title = props.selected ? `Hide ${displayName}` : `Show ${displayName}`;
   return _react.createElement((_Button || _load_Button()).Button, {
-    icon: getIcon(type),
+    icon: (_GroupUtils || _load_GroupUtils()).getIcon(group),
     size: (_Button || _load_Button()).ButtonSizes.SMALL,
     selected: selected,
     onClick: props.onClick,
     tooltip: { title }
   });
-}
-
-function getFilterTypeDisplayName(type) {
-  switch (type) {
-    case 'errors':
-      return 'Errors';
-    case 'warnings':
-      return 'Warnings & Info';
-    case 'review':
-      return 'Review';
-    default:
-      type;
-      throw new Error(`Invalid filter type: ${type}`);
-  }
-}
-
-function getIcon(type) {
-  switch (type) {
-    case 'errors':
-      return 'nuclicon-stop';
-    case 'warnings':
-      return 'alert';
-    case 'review':
-      return 'nuclicon-comment-discussion';
-    default:
-      type;
-      throw new Error(`Invalid filter type: ${type}`);
-  }
 }

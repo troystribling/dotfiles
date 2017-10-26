@@ -28,9 +28,19 @@ function _load_textEditor() {
   return _textEditor = require('./text-editor');
 }
 
+var _UniversalDisposable;
+
+function _load_UniversalDisposable() {
+  return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));
+}
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // A reload changes the text in the buffer, so it should trigger a refresh.
+const FILE_CHANGE_EVENTS = ['did-change', 'did-reload', 'did-open'];
+
+// A reload basically indicates that an external program saved the file, so
+// it should trigger a refresh.
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -43,10 +53,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @format
  */
 
-const FILE_CHANGE_EVENTS = ['did-change', 'did-reload', 'did-open'];
-
-// A reload basically indicates that an external program saved the file, so
-// it should trigger a refresh.
 const FILE_SAVE_EVENTS = ['did-save', 'did-reload', 'did-open'];
 
 /**
@@ -216,7 +222,7 @@ class TextEventDispatcher {
 
   _registerEditorListeners() {
     if (!this._editorListenerDisposable) {
-      this._editorListenerDisposable = new _atom.CompositeDisposable();
+      this._editorListenerDisposable = new (_UniversalDisposable || _load_UniversalDisposable()).default();
     }
 
     // Whenever the active pane item changes, we check to see if there are any

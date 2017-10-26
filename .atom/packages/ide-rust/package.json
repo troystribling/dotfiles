@@ -1,0 +1,233 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-12436-1h2m4ue.3q5xpnl8fr/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-12436-1h2m4ue.3q5xpnl8fr/package.tgz",
+        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-12436-1h2m4ue.3q5xpnl8fr/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117926-12436-1gds2bp.44rbufpqfr"
+    ]
+  ],
+  "_from": "../d-117926-12436-1h2m4ue.3q5xpnl8fr/package.tgz",
+  "_id": "ide-rust@0.1.0",
+  "_inCache": true,
+  "_location": "/ide-rust",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-12436-1h2m4ue.3q5xpnl8fr/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-12436-1h2m4ue.3q5xpnl8fr/package.tgz",
+    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-12436-1h2m4ue.3q5xpnl8fr/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117926-12436-1h2m4ue.3q5xpnl8fr/package.tgz",
+  "_shasum": "1f605123a87e6c969e07bdb6e357e8de3a7236bb",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-117926-12436-1h2m4ue.3q5xpnl8fr/package.tgz",
+  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-117926-12436-1gds2bp.44rbufpqfr",
+  "bugs": {
+    "url": "https://github.com/mehcode/atom-ide-rust/issues"
+  },
+  "consumedServices": {
+    "linter-indie": {
+      "versions": {
+        "2.0.0": "consumeLinterV2"
+      }
+    },
+    "nuclide-datatip.provider": {
+      "versions": {
+        "0.0.0": "consumeDatatip"
+      }
+    }
+  },
+  "dependencies": {
+    "atom-languageclient": "^0.1.0"
+  },
+  "description": "Rust language support for Atom",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=1.17.0"
+  },
+  "homepage": "https://github.com/mehcode/atom-ide-rust#readme",
+  "keywords": [
+    "rust",
+    "rls",
+    "ide"
+  ],
+  "license": "MIT",
+  "main": "./lib/index",
+  "name": "ide-rust",
+  "optionalDependencies": {},
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "provideAutocomplete"
+      }
+    },
+    "nuclide-code-format.provider": {
+      "versions": {
+        "0.0.0": "provideCodeFormat"
+      }
+    },
+    "nuclide-definition-provider": {
+      "versions": {
+        "0.0.0": "provideDefinitions"
+      }
+    },
+    "nuclide-find-references.provider": {
+      "versions": {
+        "0.0.0": "provideFindReferences"
+      }
+    },
+    "nuclide-outline-view": {
+      "versions": {
+        "0.0.0": "provideOutlines"
+      }
+    }
+  },
+  "readme": "# IDE-Rust\n> Rust language support for Atom, powered by the [Rust Langauge Server](https://github.com/rust-lang-nursery/rls) (RLS)\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mehcode/atom-ide-rust.git"
+  },
+  "version": "0.1.0",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [
+      {
+        "name": "atom-languageclient",
+        "version": "0.1.4",
+        "path": "node_modules/atom-languageclient/build/lib/main.js"
+      },
+      {
+        "name": "postinstall-build",
+        "version": "3.0.1",
+        "path": "node_modules/postinstall-build/index.js"
+      },
+      {
+        "name": "vscode-jsonrpc",
+        "version": "3.4.1",
+        "path": "node_modules/vscode-jsonrpc/lib/main.js"
+      }
+    ],
+    "extensions": {
+      ".js": [
+        "lib/index.js",
+        "node_modules/atom-languageclient/.eslintrc.js",
+        "node_modules/atom-languageclient/build/lib/adapters/autocomplete-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/code-format-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/datatip-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/definition-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/document-sync-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/find-references-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/linter-push-v2-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/notifications-adapter.js",
+        "node_modules/atom-languageclient/build/lib/adapters/outline-view-adapter.js",
+        "node_modules/atom-languageclient/build/lib/auto-languageclient.js",
+        "node_modules/atom-languageclient/build/lib/convert.js",
+        "node_modules/atom-languageclient/build/lib/download-file.js",
+        "node_modules/atom-languageclient/build/lib/languageclient.js",
+        "node_modules/atom-languageclient/build/lib/logger.js",
+        "node_modules/atom-languageclient/build/lib/main.js",
+        "node_modules/atom-languageclient/build/lib/server-manager.js",
+        "node_modules/atom-languageclient/build/lib/utils.js",
+        "node_modules/atom-languageclient/flow-typed/npm/atom-babel6-transpiler_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/atom-mocha-test-runner_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-cli_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-core_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-plugin-add-module-exports_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-plugin-transform-async-to-generator_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-plugin-transform-class-properties_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-plugin-transform-decorators-legacy_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-plugin-transform-do-expressions_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-plugin-transform-es2015-modules-commonjs_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-plugin-transform-export-extensions_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-plugin-transform-flow-strip-types_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-plugin-transform-function-bind_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-plugin-transform-object-rest-spread_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/babel-plugin-transform-react-jsx_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/chai_v3.5.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/flow-bin_v0.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/mocha-appveyor-reporter_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/mocha_v3.1.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/sinon_vx.x.x.js",
+        "node_modules/atom-languageclient/flow-typed/npm/vscode-jsonrpc_vx.x.x.js",
+        "node_modules/atom-languageclient/lib/adapters/autocomplete-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/code-format-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/datatip-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/definition-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/document-sync-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/find-references-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/linter-push-v2-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/notifications-adapter.js",
+        "node_modules/atom-languageclient/lib/adapters/outline-view-adapter.js",
+        "node_modules/atom-languageclient/lib/auto-languageclient.js",
+        "node_modules/atom-languageclient/lib/convert.js",
+        "node_modules/atom-languageclient/lib/download-file.js",
+        "node_modules/atom-languageclient/lib/languageclient.js",
+        "node_modules/atom-languageclient/lib/logger.js",
+        "node_modules/atom-languageclient/lib/main.js",
+        "node_modules/atom-languageclient/lib/server-manager.js",
+        "node_modules/atom-languageclient/lib/utils.js",
+        "node_modules/postinstall-build/index.js",
+        "node_modules/vscode-jsonrpc/lib/cancellation.js",
+        "node_modules/vscode-jsonrpc/lib/events.js",
+        "node_modules/vscode-jsonrpc/lib/is.js",
+        "node_modules/vscode-jsonrpc/lib/linkedMap.js",
+        "node_modules/vscode-jsonrpc/lib/main.js",
+        "node_modules/vscode-jsonrpc/lib/messageReader.js",
+        "node_modules/vscode-jsonrpc/lib/messageWriter.js",
+        "node_modules/vscode-jsonrpc/lib/messages.js",
+        "node_modules/vscode-jsonrpc/lib/pipeSupport.js",
+        "node_modules/vscode-jsonrpc/lib/thenable.js"
+      ],
+      ".json": [
+        "node_modules/atom-languageclient/package.json",
+        "node_modules/postinstall-build/package.json",
+        "node_modules/vscode-jsonrpc/package.json",
+        "package-lock.json",
+        "package.json"
+      ]
+    },
+    "folders": [
+      {
+        "paths": [
+          "lib",
+          ""
+        ],
+        "dependencies": {
+          "atom-languageclient": "^0.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-languageclient",
+          "node_modules/atom-languageclient/build/lib/adapters",
+          "node_modules/atom-languageclient/build/lib",
+          "node_modules/atom-languageclient/build/test/adapters",
+          "node_modules/atom-languageclient/build/test",
+          "node_modules/atom-languageclient/flow-typed/npm",
+          "node_modules/atom-languageclient/lib/adapters",
+          "node_modules/atom-languageclient/lib",
+          "node_modules/atom-languageclient/test/adapters",
+          "node_modules/atom-languageclient/test"
+        ],
+        "dependencies": {
+          "postinstall-build": "^3.0.0",
+          "vscode-jsonrpc": "^3.2.0"
+        }
+      }
+    ]
+  }
+}

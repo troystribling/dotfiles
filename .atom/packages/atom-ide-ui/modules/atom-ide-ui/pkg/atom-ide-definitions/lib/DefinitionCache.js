@@ -67,7 +67,7 @@ class DefinitionCache {
         _this._disposables.remove(editorDisposables);
         editorDisposables.dispose();
       };
-      const editorDisposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(editor.onDidChange(invalidateAndStopListening), editor.onDidDestroy(invalidateAndStopListening));
+      const editorDisposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(editor.getBuffer().onDidChangeText(invalidateAndStopListening), editor.onDidDestroy(invalidateAndStopListening));
       _this._disposables.add(editorDisposables);
 
       const wordGuess = (0, (_range || _load_range()).wordAtPosition)(editor, position);

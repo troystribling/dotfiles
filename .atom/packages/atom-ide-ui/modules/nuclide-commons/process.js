@@ -161,6 +161,12 @@ function _load_idx() {
   return _idx = _interopRequireDefault(require('idx'));
 }
 
+var _log4js;
+
+function _load_log4js() {
+  return _log4js = require('log4js');
+}
+
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
 var _UniversalDisposable;
@@ -212,6 +218,58 @@ function _load_string() {
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
+//
+//                 __   __   __   __   ___  __   __         __
+//                |__) |__) /  \ /  ` |__  /__` /__`     | /__`
+//                |    |  \ \__/ \__, |___ .__/ .__/ .\__/ .__/
+//
+// This module contains utilities for spawning processes in Nuclide. In general:
+//
+// - They accept similar arguments.
+// - They return an observable.
+// - The process is spawned if/when you subscribe to the observable.
+// - If you unsubscribe before the observable completes, the process is killed.
+// - The observable errors if the process completes with a non-zero exit code (by default; this can
+//   be changed) or if the process can't be spawned.
+//
+// The most important functions in this module are `runCommand()`--for running a quick command and
+// getting its output--and `observeProcess()`--for streaming output from a process. They'll handle
+// the majority of use cases.
+//
+// ## Why observables?
+//
+// Unlike Promises, observables have a standardized, composable cancellation mechanism _today_.
+// Moreover, observables integrate nicely with Atom's callback + IDisposable formula for cancelable,
+// async APIs. Along with React, [RxJS] is one of the core libraries utilized by Nuclide.
+//
+// ## Why errors?
+//
+// In the past, we had some process APIs that used errors and some that used return values.
+// Consistency has obvious benefits; standardizing on errors makes sense because:
+//
+// - The error-throwing APIs were the most used, by a large margin.
+// - Unhandled errors can be caught and logged at the top level.
+// - Observables have a separate channel for errors which allows for cool, error-aware operators
+//   like `retry()` and caching.
+// - Errors in observables are stream-ending. This means you won't continue to do work in a chain of
+//   operators accidentally.
+//
+// [RxJS]: http://reactivex.io/rxjs/
+
+const logger = (0, (_log4js || _load_log4js()).getLogger)('nuclide-commons/process');
 
 /**
  * Run a command, accumulate the output. Errors are surfaced as stream errors and unsubscribing will
@@ -296,56 +354,6 @@ function runCommand(command, args = [], options = {}, rest) {
  *   });
  * ```
  */
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
-//
-//                 __   __   __   __   ___  __   __         __
-//                |__) |__) /  \ /  ` |__  /__` /__`     | /__`
-//                |    |  \ \__/ \__, |___ .__/ .__/ .\__/ .__/
-//
-// This module contains utilities for spawning processes in Nuclide. In general:
-//
-// - They accept similar arguments.
-// - They return an observable.
-// - The process is spawned if/when you subscribe to the observable.
-// - If you unsubscribe before the observable completes, the process is killed.
-// - The observable errors if the process completes with a non-zero exit code (by default; this can
-//   be changed) or if the process can't be spawned.
-//
-// The most important functions in this module are `runCommand()`--for running a quick command and
-// getting its output--and `observeProcess()`--for streaming output from a process. They'll handle
-// the majority of use cases.
-//
-// ## Why observables?
-//
-// Unlike Promises, observables have a standardized, composable cancellation mechanism _today_.
-// Moreover, observables integrate nicely with Atom's callback + IDisposable formula for cancelable,
-// async APIs. Along with React, [RxJS] is one of the core libraries utilized by Nuclide.
-//
-// ## Why errors?
-//
-// In the past, we had some process APIs that used errors and some that used return values.
-// Consistency has obvious benefits; standardizing on errors makes sense because:
-//
-// - The error-throwing APIs were the most used, by a large margin.
-// - Unhandled errors can be caught and logged at the top level.
-// - Observables have a separate channel for errors which allows for cool, error-aware operators
-//   like `retry()` and caching.
-// - Errors in observables are stream-ending. This means you won't continue to do work in a chain of
-//   operators accidentally.
-//
-// [RxJS]: http://reactivex.io/rxjs/
-
 function observeProcess(command, args, options) {
   return spawn(command, args, options).flatMap(proc => getOutputStream(proc, options));
 }
@@ -461,7 +469,7 @@ function getOutputStream(proc, options, rest) {
 
     // Accumulate the first `exitErrorBufferSize` bytes of stderr so that we can give feedback about
     // about exit errors (then stop so we don't fill up memory with it).
-    const accumulatedStderr = (0, (_observable || _load_observable()).takeWhileInclusive)(stderrEvents.scan((acc, event) => (acc + event.data).slice(0, exitErrorBufferSize), '').startWith(''), acc => acc.length < exitErrorBufferSize);
+    const accumulatedStderr = stderrEvents.scan((acc, event) => (acc + event.data).slice(0, exitErrorBufferSize), '').startWith('').let((0, (_observable || _load_observable()).takeWhileInclusive)(acc => acc.length < exitErrorBufferSize));
 
     // We need to start listening for the exit event immediately, but defer emitting it until the
     // (buffered) output streams end.
@@ -480,7 +488,7 @@ function getOutputStream(proc, options, rest) {
     }).publishReplay();
     const exitSub = closeEvents.connect();
 
-    return (0, (_observable || _load_observable()).takeWhileInclusive)(_rxjsBundlesRxMinJs.Observable.merge(stdoutEvents, stderrEvents).concat(closeEvents), event => event.kind !== 'error' && event.kind !== 'exit').finally(() => {
+    return _rxjsBundlesRxMinJs.Observable.merge(stdoutEvents, stderrEvents).concat(closeEvents).let((0, (_observable || _load_observable()).takeWhileInclusive)(event => event.kind !== 'error' && event.kind !== 'exit')).finally(() => {
       exitSub.unsubscribe();
     });
   });
@@ -688,7 +696,7 @@ exports.ProcessTimeoutError = ProcessTimeoutError; //
 const DEFAULT_MAX_BUFFER = 100 * 1024 * 1024;
 
 const MAX_LOGGED_CALLS = 100;
-const PREVERVED_HISTORY_CALLS = 50;
+const NUM_PRESERVED_HISTORY_CALLS = 50;
 
 const noopDisposable = { dispose: () => {} };
 const whenShellEnvironmentLoaded = typeof atom !== 'undefined' && !atom.inSpecMode() ? atom.whenShellEnvironmentLoaded.bind(atom) : cb => {
@@ -701,17 +709,20 @@ function logCall(duration, command, args) {
   // Trim the history once in a while, to avoid doing expensive array
   // manipulation all the time after we reached the end of the history
   if (loggedCalls.length > MAX_LOGGED_CALLS) {
-    loggedCalls.splice(0, loggedCalls.length - PREVERVED_HISTORY_CALLS, {
-      time: new Date(),
+    loggedCalls.splice(0, loggedCalls.length - NUM_PRESERVED_HISTORY_CALLS, {
+      command: '... history stripped ...',
       duration: 0,
-      command: '... history stripped ...'
+      time: new Date()
     });
   }
+
+  const fullCommand = [command, ...args].join(' ');
   loggedCalls.push({
+    command: fullCommand,
     duration,
-    command: [command, ...args].join(' '),
     time: new Date()
   });
+  logger.info(`${duration}ms: ${fullCommand}`);
 }
 
 function logError(...args) {
@@ -742,9 +753,7 @@ function createProcessStream(type = 'spawn', commandOrModulePath, args = [], opt
   return (0, (_event || _load_event()).observableFromSubscribeFunction)(whenShellEnvironmentLoaded).take(1).switchMap(() => {
     const { dontLogInNuclide, killTreeWhenDone, timeout } = options;
     // flowlint-next-line sketchy-null-number:off
-    const enforceTimeout = timeout ? x =>
-    // TODO: Use `timeoutWith()` when we upgrade to an RxJS that has it.
-    timeoutWith(x, timeout, _rxjsBundlesRxMinJs.Observable.throw(new ProcessTimeoutError(timeout, proc))) : x => x;
+    const enforceTimeout = timeout ? x => x.timeoutWith(timeout, _rxjsBundlesRxMinJs.Observable.throw(new ProcessTimeoutError(timeout, proc))) : x => x;
     const proc = _child_process.default[type]((_nuclideUri || _load_nuclideUri()).default.expandHomeDir(commandOrModulePath), args,
     // $FlowFixMe: child_process$spawnOpts and child_process$forkOpts have incompatible stdio types.
     Object.assign({}, options));
@@ -789,7 +798,8 @@ function createProcessStream(type = 'spawn', commandOrModulePath, args = [], opt
     // that an error is forthcoming.
     //
     // [1]: https://github.com/nodejs/node/blob/v7.10.0/lib/internal/child_process.js#L301
-    proc.pid == null ? _rxjsBundlesRxMinJs.Observable.empty() : _rxjsBundlesRxMinJs.Observable.of(proc), _rxjsBundlesRxMinJs.Observable.never())).takeUntil(errors).takeUntil(exitEvents).merge(
+    proc.pid == null ? _rxjsBundlesRxMinJs.Observable.empty() : _rxjsBundlesRxMinJs.Observable.of(proc), _rxjsBundlesRxMinJs.Observable.never() // Don't complete until we say so!
+    )).takeUntil(errors).takeUntil(exitEvents).merge(
     // Write any input to stdin. This is just for the side-effect. We merge it here to
     // ensure that writing to the stdin stream happens after our event listeners are added.
     input == null ? _rxjsBundlesRxMinJs.Observable.empty() : input.do({
@@ -861,14 +871,6 @@ function limitBufferSize(stream, maxBuffer, streamName) {
       }
     });
   });
-}
-
-// TODO: Use `Observable::timeoutWith()` when we upgrade RxJS
-function timeoutWith(source, time, other) {
-  return source.timeout(time)
-  // Technically we could catch other TimeoutErrors here. `Observable::timeoutWith()` won't have
-  // this problem.
-  .catch(err => err instanceof _rxjsBundlesRxMinJs.TimeoutError ? other : _rxjsBundlesRxMinJs.Observable.throw(err));
 }
 
 /**

@@ -39,7 +39,8 @@ class ConfigCache {
     this._configFileNames = configFileNames;
     this._configCache = (0, (_lruCache || _load_lruCache()).default)({
       max: 200, // Want this to exceed the maximum expected number of open files + dirs.
-      maxAge: 1000 * 30 });
+      maxAge: 1000 * 30 // 30 seconds
+    });
   }
 
   getConfigDir(path) {

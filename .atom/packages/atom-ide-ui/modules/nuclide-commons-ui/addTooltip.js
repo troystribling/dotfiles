@@ -9,9 +9,32 @@ var _react = _interopRequireWildcard(require('react'));
 
 var _reactDom = _interopRequireDefault(require('react-dom'));
 
+var _shallowequal;
+
+function _load_shallowequal() {
+  return _shallowequal = _interopRequireDefault(require('shallowequal'));
+}
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+const REREGISTER_DELAY = 100; /**
+                               * Copyright (c) 2017-present, Facebook, Inc.
+                               * All rights reserved.
+                               *
+                               * This source code is licensed under the BSD-style license found in the
+                               * LICENSE file in the root directory of this source tree. An additional grant
+                               * of patent rights can be found in the PATENTS file in the same directory.
+                               *
+                               * 
+                               * @format
+                               */
+
+const _tooltipRequests = new Map();
+const _createdTooltips = new Map();
+const _toDispose = new Set();
+let _timeoutHandle;
 
 /**
 * Adds a self-disposing Atom's tooltip to a react element.
@@ -21,60 +44,75 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 * or, if the ref needs to be preserved:
 * <div ref={c => {
 *   addTooltip({title: 'My awesome tooltip', delay: 100, placement: 'top'})(c);
-*   this._myDiv = c;
+*   _myDiv = c;
 * }} />
 */
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
 function addTooltip(options) {
-  let prevRefDisposable;
+  let node;
 
-  let immediate = null;
   return elementRef => {
-    clearImmediate(immediate);
-    if (prevRefDisposable != null) {
-      prevRefDisposable.dispose();
-      prevRefDisposable = null;
-    }
+    _scheduleTooltipMaintenance();
 
-    if (elementRef != null) {
-      const node = _reactDom.default.findDOMNode(elementRef);
-
-      const initializeTooltip = () => {
-        prevRefDisposable = atom.tooltips.add(
-        // $FlowFixMe
-        node,
-        // $FlowFixMe
-        Object.assign({
-          keyBindingTarget: node
-        }, options));
-      };
-
-      if (options.keyBindingTarget) {
-        // If the user has supplied their own `keyBindingTarget`, we must ensure
-        // the CSS slectors are evaluated _before_ the next event loop, since
-        // the DOM state may change between now and then.
-        initializeTooltip();
-      } else {
-        // Sooooo... Atom tooltip does the keybinding lookup at creation time
-        // instead of display time. And, it uses a CSS selector to figure out
-        // if the current element matches the selector. The problem is that at
-        // this point, the element is created but not yet mounted in the DOM,
-        // so it's not going to match the selector and will not return a
-        // keybinding. By deferring it to the end of the event loop, it is now
-        // in the DOM and has the proper keybinding.
-        immediate = setImmediate(initializeTooltip);
+    if (elementRef == null) {
+      if (node != null) {
+        if (_tooltipRequests.has(node)) {
+          _tooltipRequests.delete(node);
+        } else {
+          _toDispose.add(node);
+        }
       }
+
+      return;
     }
+
+    node = _reactDom.default.findDOMNode(elementRef);
+    _tooltipRequests.set(node, options);
   };
+}
+
+function _registrationUndoesDisposal(node, options) {
+  const created = _createdTooltips.get(node);
+  if (created == null) {
+    return false;
+  }
+
+  return (0, (_shallowequal || _load_shallowequal()).default)(options, created.options);
+}
+
+function _scheduleTooltipMaintenance() {
+  if (_timeoutHandle != null) {
+    return;
+  }
+
+  _timeoutHandle = setTimeout(() => _performMaintenance(), REREGISTER_DELAY);
+}
+
+function _performMaintenance() {
+  _timeoutHandle = null;
+
+  for (const [node, options] of _tooltipRequests.entries()) {
+    if (_registrationUndoesDisposal(node, options)) {
+      _toDispose.delete(node);
+      _tooltipRequests.delete(node);
+    }
+  }
+
+  _toDispose.forEach(node => {
+    const created = _createdTooltips.get(node);
+    if (created != null) {
+      created.disposable.dispose();
+      _createdTooltips.delete(node);
+    }
+  });
+  _toDispose.clear();
+
+  for (const [node, options] of _tooltipRequests.entries()) {
+    // $FlowIgnore
+    const disposable = atom.tooltips.add(node, Object.assign({
+      keyBindingTarget: node
+    }, options));
+
+    _createdTooltips.set(node, { disposable, options });
+  }
+  _tooltipRequests.clear();
 }

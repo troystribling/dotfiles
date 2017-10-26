@@ -5,21 +5,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Table = undefined;
 
+var _nullthrows;
+
+function _load_nullthrows() {
+  return _nullthrows = _interopRequireDefault(require('nullthrows'));
+}
+
 var _classnames;
 
 function _load_classnames() {
   return _classnames = _interopRequireDefault(require('classnames'));
 }
 
-var _idx;
-
-function _load_idx() {
-  return _idx = _interopRequireDefault(require('idx'));
-}
-
 var _react = _interopRequireWildcard(require('react'));
-
-var _reactDom = _interopRequireDefault(require('react-dom'));
 
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
@@ -27,6 +25,12 @@ var _Icon;
 
 function _load_Icon() {
   return _Icon = require('./Icon');
+}
+
+var _collection;
+
+function _load_collection() {
+  return _collection = require('nuclide-commons/collection');
 }
 
 var _UniversalDisposable;
@@ -62,8 +66,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
-/* globals HTMLElement */
 
 const DEFAULT_MIN_COLUMN_WIDTH = 40;
 
@@ -101,54 +103,56 @@ const DefaultEmptyComponent = () => _react.createElement(
  * minimum widths of the columns. (Ideally, the table would scroll horizontally in this case.)
  */
 class Table extends _react.Component {
-
+  // Active while resizing.
   constructor(props) {
     super(props);
 
-    this._handleResizerGlobalMouseMove = (event, startX, startWidths, location, tableWidth) => {
+    this._handleResizerGlobalMouseMove = (event, startX, startWidths, resizerLocation, tableWidth) => {
       const pxToRatio = px => px / tableWidth;
+      const leftColumns = this.props.columns.slice(0, resizerLocation + 1);
+      const rightColumns = this.props.columns.slice(resizerLocation + 1);
 
       const delta = pxToRatio(event.pageX - startX);
-      const { leftColumnKey, rightColumnKey } = location;
+      const [shrinkingColumns, growingColumn] = delta < 0 ? [leftColumns.reverse(), rightColumns[0]] : [rightColumns, leftColumns[leftColumns.length - 1]];
+      const targetChange = Math.abs(delta);
+      let cumulativeChange = 0;
+      const newWidths = Object.assign({}, this.state.preferredColumnWidths);
 
-      // Determine which column is shrinking and which is growing. This will allow us to apply the min
-      // width limitations correctly.
-      let shrinkingColumnKey;
-      let growingColumnKey;
-      if (delta < 0) {
-        [shrinkingColumnKey, growingColumnKey] = [leftColumnKey, rightColumnKey];
-      } else {
-        [shrinkingColumnKey, growingColumnKey] = [rightColumnKey, leftColumnKey];
+      for (const column of shrinkingColumns) {
+        const { key } = column;
+        const startWidth = startWidths[key];
+        const minWidth = pxToRatio(column.minWidth == null ? DEFAULT_MIN_COLUMN_WIDTH : column.minWidth);
+        const remainingDistance = targetChange - cumulativeChange;
+        const newWidth = Math.max(minWidth, startWidth - remainingDistance);
+        const change = Math.abs(startWidth - newWidth);
+        cumulativeChange += change;
+        newWidths[key] = newWidth;
+        if (cumulativeChange >= targetChange) {
+          break;
+        }
       }
 
-      const prevShrinkingColumnWidth = startWidths[shrinkingColumnKey];
-      const prevGrowingColumnWidth = startWidths[growingColumnKey];
-      const shrinkingColumn = this.props.columns.find(column => column.key === shrinkingColumnKey);
+      // Determine the width of the growing column. Instead of adding `cumulativeChange` to its
+      // starting width, we figure out what percentage of the table's width is still unaccounted for.
+      // This ensures we avoid snowballing floating point errors.
+      newWidths[growingColumn.key] = Object.entries(newWidths).reduce((remaining, [key, width]) => {
+        if (!(typeof width === 'number')) {
+          throw new Error('Invariant violation: "typeof width === \'number\'"');
+        }
 
-      if (!(shrinkingColumn != null)) {
-        throw new Error('Invariant violation: "shrinkingColumn != null"');
-      }
+        return key === growingColumn.key ? remaining : remaining - width;
+      }, 1);
 
-      const shrinkingColumnMinWidth = pxToRatio(shrinkingColumn.minWidth == null ? DEFAULT_MIN_COLUMN_WIDTH : shrinkingColumn.minWidth);
-      const nextShrinkingColumnWidth = Math.max(shrinkingColumnMinWidth, prevShrinkingColumnWidth - Math.abs(delta));
-      const actualChange = nextShrinkingColumnWidth - prevShrinkingColumnWidth;
-      const nextGrowingColumnWidth = prevGrowingColumnWidth - actualChange;
-
-      this.setState({
-        columnWidths: Object.assign({}, this.state.columnWidths, {
-          [shrinkingColumnKey]: nextShrinkingColumnWidth,
-          [growingColumnKey]: nextGrowingColumnWidth
-        })
-      });
+      this.setState({ preferredColumnWidths: newWidths });
     };
 
     this._resizingDisposable = null;
     this.state = {
-      columnWidths: null,
+      preferredColumnWidths: getInitialPercentageWidths(props.columns),
+      tableWidth: 0,
       usingKeyboard: false
     };
-  } // Active while resizing.
-
+  }
 
   _handleResizerMouseDown(event, resizerLocation) {
     if (this._resizingDisposable != null) {
@@ -159,17 +163,13 @@ class Table extends _react.Component {
     if (selection != null) {
       selection.removeAllRanges();
     }
-    // $FlowFixMe
-    const tableWidth = _reactDom.default.findDOMNode(this.refs.table).getBoundingClientRect().width;
+    const tableWidth = this.refs.table.getBoundingClientRect().width;
     const startX = event.pageX;
-    const startWidths = this.state.columnWidths;
-
-    if (!(startWidths != null)) {
-      throw new Error('Invariant violation: "startWidths != null"');
-    }
-
+    const startWidths = this._getColumnWidths();
     this._resizingDisposable = new (_UniversalDisposable || _load_UniversalDisposable()).default(_rxjsBundlesRxMinJs.Observable.fromEvent(document, 'mousemove').subscribe(evt => {
-      this._handleResizerGlobalMouseMove(evt, startX, startWidths, resizerLocation, tableWidth);
+      this._handleResizerGlobalMouseMove(evt, startX,
+      // $FlowFixMe(>=0.55.0) Flow suppress
+      startWidths, resizerLocation, tableWidth);
     }), _rxjsBundlesRxMinJs.Observable.fromEvent(document, 'mouseup').subscribe(() => {
       this._stopResizing();
     }));
@@ -184,23 +184,12 @@ class Table extends _react.Component {
   }
 
   componentDidMount() {
-    const el = _reactDom.default.findDOMNode(this);
+    const el = (0, (_nullthrows || _load_nullthrows()).default)(this._rootNode);
 
-    if (!(el instanceof HTMLElement)) {
-      throw new Error('Invariant violation: "el instanceof HTMLElement"');
-    }
-
-    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(new (_observableDom || _load_observableDom()).ResizeObservable(el).startWith(null).map(() => el.offsetWidth).filter(tableWidth => tableWidth > 0).subscribe(tableWidth => {
-      // Update the column widths to account for minimum widths. This logic could definitely be
-      // improved. As it is now, if you resize the table to be very small and then make it large
-      // again, the proportions from when it was at its smallest will be preserved. If no
-      // columns have min widths, then this is what you want. But if a minimum width prevented
-      // one or more of the columns from shrinking, you'll probably consider them too wide when
-      // the table's expanded.
-      const preferredColumnWidths = this.state.columnWidths || getInitialPercentageWidths(this.props.columns);
-      this.setState({
-        columnWidths: ensureMinWidths(preferredColumnWidths, this._getMinWidths(), tableWidth, this.props.columns.map(c => c.key))
-      });
+    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(
+    // Update the column widths when the table is resized.
+    new (_observableDom || _load_observableDom()).ResizeObservable(el).startWith(null).map(() => el.offsetWidth).filter(tableWidth => tableWidth > 0).subscribe(tableWidth => {
+      this.setState({ tableWidth });
     }), () => {
       this._stopResizing();
     }, atom.commands.add(el, {
@@ -233,14 +222,6 @@ class Table extends _react.Component {
 
   componentWillUnmount() {
     this._disposables.dispose();
-  }
-
-  _getMinWidths() {
-    const minWidths = {};
-    this.props.columns.forEach(column => {
-      minWidths[column.key] = column.minWidth;
-    });
-    return minWidths;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -277,13 +258,26 @@ class Table extends _react.Component {
     this._tableBody.focus();
   }
 
+  componentWillReceiveProps(nextProps) {
+    // Did the columns change? If so, we need to recalculate the widths.
+    const currentColumns = this.props.columns;
+    const nextColumns = nextProps.columns;
+    if (nextColumns.length !== currentColumns.length ||
+    // If the columns just changed order, we want to keep their widths.
+    !(0, (_collection || _load_collection()).areSetsEqual)(new Set(currentColumns.map(column => column.key)), new Set(nextColumns.map(column => column.key)))) {
+      this.setState({
+        preferredColumnWidths: getInitialPercentageWidths(nextColumns)
+      });
+    }
+  }
+
   _moveSelection(offset, event) {
     const { selectedIndex } = this.props;
     if (selectedIndex == null) {
       return;
     }
-    const nextSelectedIndex = selectedIndex + offset;
-    if (nextSelectedIndex < 0 || nextSelectedIndex >= this.props.rows.length || nextSelectedIndex === selectedIndex) {
+    const nextSelectedIndex = Math.max(0, Math.min(this.props.rows.length - 1, selectedIndex + offset));
+    if (nextSelectedIndex === selectedIndex) {
       return;
     }
     this._selectRow({ index: nextSelectedIndex, event });
@@ -316,6 +310,10 @@ class Table extends _react.Component {
     onSort(sortedBy, sortDescending == null || sortedBy !== sortedColumn ? false : !sortDescending);
   }
 
+  _getColumnWidths() {
+    return ensureMinWidths(this.state.preferredColumnWidths, getMinWidths(this.props.columns), this.state.tableWidth, this.props.columns.map(column => column.key));
+  }
+
   _renderEmptyCellContent() {
     return _react.createElement('div', null);
   }
@@ -323,14 +321,15 @@ class Table extends _react.Component {
   render() {
     return _react.createElement(
       'div',
-      { className: this.props.className },
+      {
+        className: this.props.className,
+        ref: rootNode => this._rootNode = rootNode },
       this._renderContents()
     );
   }
 
   _renderContents() {
-    const { columnWidths } = this.state;
-    if (columnWidths == null) {
+    if (this.state.tableWidth === 0) {
       // We don't have the table width yet so we can't render the columns.
       return null;
     }
@@ -347,25 +346,21 @@ class Table extends _react.Component {
       sortedColumn,
       sortDescending
     } = this.props;
+
+    const columnWidths = this._getColumnWidths();
+
     const header = headerTitle != null ? _react.createElement(
       'div',
       { className: 'nuclide-ui-table-header-cell nuclide-ui-table-full-header' },
       headerTitle
     ) : columns.map((column, i) => {
-      var _ref;
-
       const { title, key, shouldRightAlign, cellClassName } = column;
-      const leftColumnKey = column.key;
-      const rightColumnKey = (_ref = columns[i + 1]) != null ? _ref.key : _ref;
       let resizer;
-      if (leftColumnKey != null && rightColumnKey != null) {
+      if (i < columns.length - 1) {
         resizer = _react.createElement('div', {
           className: 'nuclide-ui-table-header-resize-handle',
           onMouseDown: event => {
-            this._handleResizerMouseDown(event, {
-              leftColumnKey,
-              rightColumnKey
-            });
+            this._handleResizerMouseDown(event, i);
           },
           onClick: e => {
             // Prevent sortable column header click event from firing.
@@ -446,10 +441,22 @@ class Table extends _react.Component {
       });
       const rowProps = selectable ? {
         onClick: event => {
-          this._selectRow({ index: i, event });
-        },
-        onDoubleClick: event => {
-          this._selectRow({ index: i, event, confirm: true });
+          switch (event.detail) {
+            // This (`event.detail === 0`) shouldn't happen normally but does when the click is
+            // triggered by the integration test.
+            case 0:
+            case 1:
+              this._selectRow({ index: i, event });
+              return;
+            case 2:
+              // We need to check `event.detail` (instead of using `onDoubleClick`) because
+              // (for some reason) `onDoubleClick` is only firing sporadically.
+              // TODO: Figure out why. Repros in the diagnostic table with React 16.0.0 and
+              // Atom 1.22.0-beta1 (Chrome 56.0.2924.87). This may be because we're swapping out
+              // the component on the click so a different one is receiving the second?
+              this._selectRow({ index: i, event, confirm: true });
+              return;
+          }
         }
       } : {};
       const isSelectedRow = selectedIndex != null && i === selectedIndex;
@@ -464,6 +471,7 @@ class Table extends _react.Component {
             'nuclide-ui-table-row-alternate': alternateBackground !== false && i % 2 === 1,
             'nuclide-ui-table-collapsed-row': this.props.collapsable && !isSelectedRow
           }),
+          'data-row-index': i,
           key: i
         }, rowProps),
         renderedRow
@@ -478,9 +486,13 @@ class Table extends _react.Component {
       scrollableBodyStyle.maxHeight = maxBodyHeight;
       scrollableBodyStyle.overflowY = 'auto';
     }
-    const bodyClassNames = (0, (_classnames || _load_classnames()).default)('nuclide-ui-table', 'nuclide-ui-table-body',
-    // Using native-key-bindings prevents the up and down arrows from being captured.
-    { 'native-key-bindings': !this.props.enableKeyboardNavigation });
+    const bodyClassNames = (0, (_classnames || _load_classnames()).default)('nuclide-ui-table', 'nuclide-ui-table-body', {
+      // Using native-key-bindings prevents the up and down arrows from being captured.
+      'native-key-bindings': !this.props.enableKeyboardNavigation,
+      // Only enable text selection if the rows aren't selectable as these two things conflict.
+      // TODO: Add the ability to copy text that doesn't involve text selection within selections.
+      'nuclide-ui-table-body-selectable-text': !this.props.selectable
+    });
     return [_react.createElement(
       'div',
       { key: 'header', className: 'nuclide-ui-table', ref: 'table' },
@@ -491,7 +503,19 @@ class Table extends _react.Component {
       )
     ), _react.createElement(
       'div',
-      { key: 'body', style: scrollableBodyStyle },
+      {
+        key: 'body',
+        style: scrollableBodyStyle,
+        onFocus: event => {
+          if (this.props.onBodyFocus != null) {
+            this.props.onBodyFocus(event);
+          }
+        },
+        onBlur: event => {
+          if (this.props.onBodyBlur != null) {
+            this.props.onBodyBlur(event);
+          }
+        } },
       _react.createElement(
         'div',
         {
@@ -530,8 +554,16 @@ function getInitialPercentageWidths(columns) {
   return columnWidthRatios;
 }
 
+function getMinWidths(columns) {
+  const minWidths = {};
+  columns.forEach(column => {
+    minWidths[column.key] = column.minWidth;
+  });
+  return minWidths;
+}
+
 /**
- * Convert percentage widths into actual pixel widths, taking into account minimum widths.
+ * Calculate widths, taking into account the preferred and minimum widths.
  */
 function ensureMinWidths(preferredWidths, minWidths, tableWidth, columnOrder) {
   const adjusted = {};

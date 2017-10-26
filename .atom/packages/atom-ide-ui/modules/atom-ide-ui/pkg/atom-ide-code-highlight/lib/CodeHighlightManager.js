@@ -20,6 +20,12 @@ function _load_event() {
   return _event = require('nuclide-commons/event');
 }
 
+var _observable;
+
+function _load_observable() {
+  return _observable = require('nuclide-commons/observable');
+}
+
 var _UniversalDisposable;
 
 function _load_UniversalDisposable() {
@@ -40,17 +46,19 @@ function _load_debounced() {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const HIGHLIGHT_DELAY_MS = 250; /**
-                                 * Copyright (c) 2017-present, Facebook, Inc.
-                                 * All rights reserved.
-                                 *
-                                 * This source code is licensed under the BSD-style license found in the
-                                 * LICENSE file in the root directory of this source tree. An additional grant
-                                 * of patent rights can be found in the PATENTS file in the same directory.
-                                 *
-                                 * 
-                                 * @format
-                                 */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
+const HIGHLIGHT_DELAY_MS = 250;
 
 class CodeHighlightManager {
 
@@ -79,14 +87,18 @@ class CodeHighlightManager {
 
       return _rxjsBundlesRxMinJs.Observable.merge(changeCursorEvents, changeEvents)
       // Destroy old markers immediately - never show stale results.
-      .do(() => this._destroyMarkers()).switchMap(position => {
-        return _rxjsBundlesRxMinJs.Observable.timer(HIGHLIGHT_DELAY_MS).switchMap((0, _asyncToGenerator.default)(function* () {
+      .do(() => this._destroyMarkers()).let((0, (_observable || _load_observable()).fastDebounce)(HIGHLIGHT_DELAY_MS)).switchMap((() => {
+        var _ref = (0, _asyncToGenerator.default)(function* (position) {
           return {
             editor,
             ranges: yield _this._getHighlightedRanges(editor, position)
           };
-        }));
-      }).takeUntil(destroyEvents);
+        });
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      })()).takeUntil(destroyEvents);
     }).subscribe(({ editor, ranges }) => {
       if (ranges != null) {
         this._highlightRanges(editor, ranges);

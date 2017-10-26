@@ -1,6 +1,6 @@
 /* @flow */
 
-import { Disposable } from "atom";
+import { Disposable, Point } from "atom";
 import React from "react";
 import ReactDOM from "react-dom";
 import _ from "lodash";
@@ -13,6 +13,7 @@ import store from "./store";
 export const INSPECTOR_URI = "atom://hydrogen/inspector";
 export const WATCHES_URI = "atom://hydrogen/watch-sidebar";
 export const OUTPUT_AREA_URI = "atom://hydrogen/output-area";
+export const KERNEL_MONITOR_URI = "atom://hydrogen/kernel-monitor";
 
 export function reactFactory(
   reactElement: React$Element<any>,
@@ -37,19 +38,21 @@ export function focus(item: ?mixed) {
   }
 }
 
-export function openOrShowDock(URI: string) {
+export async function openOrShowDock(URI: string): Promise<?void> {
   // atom.workspace.open(URI) will activate/focus the dock by default
   // dock.toggle() or dock.show() will leave focus wherever it was
 
   // this function is basically workspace.open, except it
-  // will not focus the pane if there is an open instance of that view
+  // will not focus the newly opened pane
+  let dock = atom.workspace.paneContainerForURI(URI);
+  if (dock) return dock.show();
 
-  const dock = atom.workspace.paneContainerForURI(URI);
-  if (!dock) {
-    atom.workspace.open(URI, { searchAllPanes: true });
-  } else {
-    dock.show();
-  }
+  await atom.workspace.open(URI, {
+    searchAllPanes: true,
+    activatePane: false
+  });
+  dock = atom.workspace.paneContainerForURI(URI);
+  return dock ? dock.show() : null;
 }
 
 export function grammarToLanguage(grammar: ?atom$Grammar) {
@@ -117,6 +120,27 @@ export function isMultilanguageGrammar(grammar: atom$Grammar) {
   return markupGrammars.has(grammar.scopeName);
 }
 
+export function kernelSpecProvidesGrammar(
+  kernelSpec: Kernelspec,
+  grammar: ?atom$Grammar
+) {
+  if (!grammar || !grammar.name || !kernelSpec || !kernelSpec.language) {
+    return false;
+  }
+  const grammarLanguage = grammar.name.toLowerCase();
+  const kernelLanguage = kernelSpec.language.toLowerCase();
+  if (kernelLanguage === grammarLanguage) {
+    return true;
+  }
+
+  const mappedLanguage = Config.getJson("languageMappings")[kernelLanguage];
+  if (!mappedLanguage) {
+    return false;
+  }
+
+  return mappedLanguage.toLowerCase() === grammarLanguage;
+}
+
 export function getEmbeddedScope(
   editor: atom$TextEditor,
   position: atom$Point
@@ -178,3 +202,27 @@ export function hotReloadPackage() {
   atom.packages.activatePackage(packName);
   console.info(`activated ${packName}`);
 }
+
+export function rowRangeForCodeFoldAtBufferRow(
+  editor: atom$TextEditor,
+  row: number
+) {
+  if (parseFloat(atom.getVersion()) < 1.22) {
+    return editor.languageMode.rowRangeForCodeFoldAtBufferRow(row);
+  } else {
+    // $FlowFixMe
+    const range = editor.tokenizedBuffer.getFoldableRangeContainingPoint(
+      new Point(row, Infinity)
+    );
+
+    return range ? [range.start.row, range.end.row] : null;
+  }
+}
+
+export const EmptyMessage = () => {
+  return (
+    <ul className="background-message centered">
+      <li>No output to display</li>
+    </ul>
+  );
+};

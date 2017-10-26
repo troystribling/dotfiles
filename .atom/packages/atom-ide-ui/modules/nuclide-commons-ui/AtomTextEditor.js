@@ -55,7 +55,7 @@ function setupTextEditor(props) {
 
   const disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();
   if (props.onDidTextBufferChange != null) {
-    disposables.add(textBuffer.onDidChange(props.onDidTextBufferChange));
+    disposables.add(textBuffer.onDidChangeText(props.onDidTextBufferChange));
   }
 
   const textEditorParams = {
@@ -65,7 +65,6 @@ function setupTextEditor(props) {
   };
   const textEditor = atom.workspace.buildTextEditor(textEditorParams);
   disposables.add(() => textEditor.destroy());
-
   if (props.grammar != null) {
     textEditor.setGrammar(props.grammar);
   }
@@ -84,7 +83,6 @@ function setupTextEditor(props) {
       decoration.destroy();
     });
   }
-
   return {
     disposables,
     textEditor
@@ -148,6 +146,10 @@ class AtomTextEditor extends _react.Component {
           this.props.onConfirm();
         }
       }));
+    }
+
+    if (this.props.onInitialized != null) {
+      this._editorDisposables.add(this.props.onInitialized(textEditor));
     }
   }
 

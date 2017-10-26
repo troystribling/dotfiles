@@ -102,15 +102,17 @@ function setPositionAndScroll(editor, position, scrollTop) {
 }
 
 function getCursorPositions(editor) {
-  // This will behave strangely in the face of multiple cursors. Consider supporting multiple
-  // cursors in the future.
-  const cursor = editor.getCursors()[0];
+  return _rxjsBundlesRxMinJs.Observable.defer(() => {
+    // This will behave strangely in the face of multiple cursors. Consider supporting multiple
+    // cursors in the future.
+    const cursor = editor.getCursors()[0];
 
-  if (!(cursor != null)) {
-    throw new Error('Invariant violation: "cursor != null"');
-  }
+    if (!(cursor != null)) {
+      throw new Error('Invariant violation: "cursor != null"');
+    }
 
-  return _rxjsBundlesRxMinJs.Observable.merge(_rxjsBundlesRxMinJs.Observable.of(cursor.getBufferPosition()), (0, (_event || _load_event()).observableFromSubscribeFunction)(cursor.onDidChangePosition.bind(cursor)).map(event => event.newBufferPosition));
+    return _rxjsBundlesRxMinJs.Observable.merge(_rxjsBundlesRxMinJs.Observable.of(cursor.getBufferPosition()), (0, (_event || _load_event()).observableFromSubscribeFunction)(cursor.onDidChangePosition.bind(cursor)).map(event => event.newBufferPosition));
+  });
 }
 
 function observeEditorDestroy(editor) {

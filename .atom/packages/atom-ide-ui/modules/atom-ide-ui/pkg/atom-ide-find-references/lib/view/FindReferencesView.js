@@ -8,8 +8,6 @@ var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));
 
 var _react = _interopRequireWildcard(require('react'));
 
-var _reactDom = _interopRequireDefault(require('react-dom'));
-
 var _FileReferencesView;
 
 function _load_FileReferencesView() {
@@ -33,6 +31,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Number of files to show on every page.
+const PAGE_SIZE = 10;
+// Start loading more once the user scrolls within this many pixels of the bottom.
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -45,8 +45,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @format
  */
 
-const PAGE_SIZE = 10;
-// Start loading more once the user scrolls within this many pixels of the bottom.
 const SCROLL_LOAD_THRESHOLD = 250;
 
 class FindReferencesView extends _react.Component {
@@ -82,14 +80,11 @@ class FindReferencesView extends _react.Component {
   }
 
   _onScroll(evt) {
-    const root = _reactDom.default.findDOMNode(this.refs.root);
-    // $FlowFixMe
+    const root = this.refs.root;
     if (this.state.loading || root.clientHeight >= root.scrollHeight) {
       return;
     }
-    // $FlowFixMe
     const scrollBottom = root.scrollTop + root.clientHeight;
-    // $FlowFixMe
     if (root.scrollHeight - scrollBottom <= SCROLL_LOAD_THRESHOLD) {
       this.setState({ loading: true });
       this._fetchMore(PAGE_SIZE);

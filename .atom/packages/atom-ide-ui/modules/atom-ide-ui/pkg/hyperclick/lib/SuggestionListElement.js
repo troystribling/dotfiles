@@ -6,6 +6,12 @@ Object.defineProperty(exports, "__esModule", {
 
 var _atom = require('atom');
 
+var _UniversalDisposable;
+
+function _load_UniversalDisposable() {
+  return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));
+}
+
 var _react = _interopRequireWildcard(require('react'));
 
 var _reactDom = _interopRequireDefault(require('react-dom'));
@@ -16,14 +22,28 @@ function _load_scrollIntoView() {
   return _scrollIntoView = require('nuclide-commons-ui/scrollIntoView');
 }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * We need to create this custom HTML element so we can hook into the view
  * registry. The overlay decoration only works through the view registry.
  */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
+/* global HTMLElement */
+
 class SuggestionListElement extends HTMLElement {
 
   initialize(model) {
@@ -44,19 +64,7 @@ class SuggestionListElement extends HTMLElement {
       this.parentNode.removeChild(this);
     }
   }
-} /**
-   * Copyright (c) 2017-present, Facebook, Inc.
-   * All rights reserved.
-   *
-   * This source code is licensed under the BSD-style license found in the
-   * LICENSE file in the root directory of this source tree. An additional grant
-   * of patent rights can be found in the PATENTS file in the same directory.
-   *
-   * 
-   * @format
-   */
-
-/* global HTMLElement */
+}
 
 class SuggestionList extends _react.Component {
 
@@ -65,7 +73,7 @@ class SuggestionList extends _react.Component {
     this.state = {
       selectedIndex: 0
     };
-    this._subscriptions = new _atom.CompositeDisposable();
+    this._subscriptions = new (_UniversalDisposable || _load_UniversalDisposable()).default();
     this._boundConfirm = this._confirm.bind(this);
   }
 
@@ -101,16 +109,14 @@ class SuggestionList extends _react.Component {
       'editor:newline': this._boundConfirm
     }));
 
-    this._subscriptions.add(textEditor.onDidChange(boundClose));
+    this._subscriptions.add(textEditor.getBuffer().onDidChangeText(boundClose));
     this._subscriptions.add(textEditor.onDidChangeCursorPosition(boundClose));
 
     // Prevent scrolling the editor when scrolling the suggestion list.
     const stopPropagation = event => event.stopPropagation();
-    // $FlowFixMe
-    _reactDom.default.findDOMNode(this.refs.scroller).addEventListener('mousewheel', stopPropagation);
+    this.refs.scroller.addEventListener('mousewheel', stopPropagation);
     this._subscriptions.add(new _atom.Disposable(() => {
-      // $FlowFixMe
-      _reactDom.default.findDOMNode(this.refs.scroller).removeEventListener('mousewheel', stopPropagation);
+      this.refs.scroller.removeEventListener('mousewheel', stopPropagation);
     }));
 
     const keydown = event => {
@@ -223,8 +229,7 @@ class SuggestionList extends _react.Component {
   }
 
   _updateScrollPosition() {
-    const listNode = _reactDom.default.findDOMNode(this.refs.selectionList);
-    // $FlowFixMe
+    const listNode = this.refs.selectionList;
     const selectedNode = listNode.getElementsByClassName('selected')[0];
     (0, (_scrollIntoView || _load_scrollIntoView()).scrollIntoViewIfNeeded)(selectedNode, false);
   }

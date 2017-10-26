@@ -96,6 +96,7 @@ function treeToUiTree(outlineTree, nameOnly) {
     tokenizedText: shortName ? undefined : outlineTree.tokenizedText,
     startPosition: outlineTree.startPosition,
     endPosition: outlineTree.endPosition,
+    landingPosition: outlineTree.landingPosition,
     highlighted: false,
     children: outlineTree.children.map(tree => treeToUiTree(tree, nameOnly))
   };

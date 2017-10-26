@@ -10,12 +10,7 @@ describe("reduceOutputs", () => {
   it("puts new outputs at the end by default", () => {
     const outputs = [
       { output_type: "stream", name: "stdout", text: "Woo" },
-      {
-        output_type: "error",
-        ename: "well",
-        evalue: "actually",
-        traceback: []
-      }
+      { output_type: "error", ename: "well", evalue: "actually", traceback: [] }
     ];
     const newOutputs = reduceOutputs(outputs, {
       output_type: "display_data",
@@ -85,11 +80,7 @@ describe("reduceOutputs", () => {
   it("keeps respective streams together", () => {
     const outputs = [
       { name: "stdout", text: "hello", output_type: "stream" },
-      {
-        name: "stderr",
-        text: "errors are",
-        output_type: "stream"
-      }
+      { name: "stderr", text: "errors are", output_type: "stream" }
     ];
     const newOutputs = reduceOutputs(outputs, {
       name: "stdout",

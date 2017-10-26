@@ -98,6 +98,6 @@ function showActionsMenu(editor, position, messagesAtPosition, diagnosticUpdater
     }
 
     const boundingRect = scrollView.getBoundingClientRect();
-    menu.popup(currentWindow, boundingRect.left + pixelPosition.left - editorView.getScrollLeft(), boundingRect.top + pixelPosition.top - editorView.getScrollTop(), 0);
+    menu.popup(currentWindow, Math.round(boundingRect.left + pixelPosition.left - editorView.getScrollLeft()), Math.round(boundingRect.top + pixelPosition.top - editorView.getScrollTop()), 0);
   }));
 }

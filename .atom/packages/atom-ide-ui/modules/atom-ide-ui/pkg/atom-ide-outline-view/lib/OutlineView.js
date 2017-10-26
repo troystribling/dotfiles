@@ -43,10 +43,10 @@ function _load_EmptyState() {
   return _EmptyState = require('nuclide-commons-ui/EmptyState');
 }
 
-var _featureConfig;
+var _Tree;
 
-function _load_featureConfig() {
-  return _featureConfig = _interopRequireDefault(require('nuclide-commons-atom/feature-config'));
+function _load_Tree() {
+  return _Tree = require('nuclide-commons-ui/Tree');
 }
 
 var _OutlineViewSearch;
@@ -65,18 +65,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const SEARCH_ENABLED_DEFAULT = true; /**
-                                      * Copyright (c) 2017-present, Facebook, Inc.
-                                      * All rights reserved.
-                                      *
-                                      * This source code is licensed under the BSD-style license found in the
-                                      * LICENSE file in the root directory of this source tree. An additional grant
-                                      * of patent rights can be found in the PATENTS file in the same directory.
-                                      *
-                                      * 
-                                      * @format
-                                      */
-
 const TOKEN_KIND_TO_CLASS_NAME_MAP = {
   keyword: 'syntax--keyword',
   'class-name': 'syntax--entity syntax--name syntax--class',
@@ -87,17 +75,29 @@ const TOKEN_KIND_TO_CLASS_NAME_MAP = {
   whitespace: '',
   plain: '',
   type: 'syntax--support syntax--type'
-};
+}; /**
+    * Copyright (c) 2017-present, Facebook, Inc.
+    * All rights reserved.
+    *
+    * This source code is licensed under the BSD-style license found in the
+    * LICENSE file in the root directory of this source tree. An additional grant
+    * of patent rights can be found in the PATENTS file in the same directory.
+    *
+    * 
+    * @format
+    */
 
 class OutlineView extends _react.PureComponent {
 
   constructor(props) {
     super(props);
     this.state = {
+      fontFamily: atom.config.get('editor.fontFamily'),
+      fontSize: atom.config.get('editor.fontSize'),
+      lineHeight: atom.config.get('editor.lineHeight'),
       outline: {
         kind: 'empty'
-      },
-      searchEnabled: (_featureConfig || _load_featureConfig()).default.getWithDefaults('atom-ide-outline-view.searchEnabled', SEARCH_ENABLED_DEFAULT)
+      }
     };
   }
 
@@ -108,12 +108,12 @@ class OutlineView extends _react.PureComponent {
 
     this.subscription = new (_UniversalDisposable || _load_UniversalDisposable()).default(this.props.outlines.subscribe(outline => {
       this.setState({ outline });
-    }), (_featureConfig || _load_featureConfig()).default.observeAsStream('atom-ide-outline-view.searchEnabled').subscribe(searchEnabled => {
-      if (typeof searchEnabled === 'boolean') {
-        this.setState({ searchEnabled });
-      } else {
-        this.setState({ searchEnabled: SEARCH_ENABLED_DEFAULT });
-      }
+    }), atom.config.observe('editor.fontSize', size => {
+      this.setState({ fontSize: size });
+    }), atom.config.observe('editor.fontFamily', font => {
+      this.setState({ fontFamily: font });
+    }), atom.config.observe('editor.lineHeight', size => {
+      this.setState({ lineHeight: size });
     }));
   }
 
@@ -130,9 +130,20 @@ class OutlineView extends _react.PureComponent {
     return _react.createElement(
       'div',
       { className: 'outline-view' },
+      _react.createElement('style', {
+        dangerouslySetInnerHTML: {
+          __html: `
+              .outline-view-core {
+                line-height: ${this.state.lineHeight};
+                font-size: ${this.state.fontSize}px;
+                font-family: ${this.state.fontFamily};
+              }
+          `
+        }
+      }),
       _react.createElement(OutlineViewComponent, {
         outline: this.state.outline,
-        searchEnabled: this.state.searchEnabled
+        visibility: this.props.visibility
       })
     );
   }
@@ -147,14 +158,14 @@ class OutlineViewComponent extends _react.PureComponent {
   }
 
   render() {
-    const { outline, searchEnabled } = this.props;
+    const { outline } = this.props;
 
     switch (outline.kind) {
       case 'empty':
       case 'not-text-editor':
         return _react.createElement((_EmptyState || _load_EmptyState()).EmptyState, {
           title: 'No outline available',
-          message: 'You need to open a file to use outline view.'
+          message: 'Open a file to see its outline.'
         });
       case 'loading':
         return _react.createElement(
@@ -168,18 +179,34 @@ class OutlineViewComponent extends _react.PureComponent {
       case 'no-provider':
         return outline.grammar === 'Null Grammar' ? _react.createElement((_EmptyState || _load_EmptyState()).EmptyState, {
           title: 'No outline available',
-          message: 'The current file doesn\'t have an associated grammar. You may want to save it.'
+          message: 'Atom doesn\'t recognize this file\'s language. Make sure this file has an extension and has been saved.'
         }) : _react.createElement((_EmptyState || _load_EmptyState()).EmptyState, {
           title: 'No outline available',
-          message: 'Outline view does not currently support ' + outline.grammar + '.'
+          message: _react.createElement(
+            'div',
+            null,
+            outline.grammar,
+            ' files do not currently support outlines.',
+            ' ',
+            _react.createElement(
+              'a',
+              {
+                href: '#',
+                onClick: () => (0, (_goToLocation || _load_goToLocation()).goToLocation)(`atom://config/install/package:ide-${outline.grammar}`) },
+              'Install an IDE package first.'
+            )
+          )
         });
       case 'provider-no-outline':
         return _react.createElement((_EmptyState || _load_EmptyState()).EmptyState, {
           title: 'No outline available',
-          message: 'There are no outline providers registered.'
+          message: 'This is likely an error with the language package.'
         });
       case 'outline':
-        return _react.createElement(OutlineViewCore, { outline: outline, searchEnabled: searchEnabled });
+        return _react.createElement(OutlineViewCore, {
+          outline: outline,
+          visibility: this.props.visibility
+        });
       default:
         outline;
     }
@@ -199,7 +226,7 @@ class OutlineViewCore extends _react.PureComponent {
   }
 
   render() {
-    const { outline, searchEnabled } = this.props;
+    const { outline, visibility } = this.props;
 
     if (!(outline.kind === 'outline')) {
       throw new Error('Invariant violation: "outline.kind === \'outline\'"');
@@ -208,18 +235,19 @@ class OutlineViewCore extends _react.PureComponent {
     return _react.createElement(
       'div',
       { className: 'outline-view-core' },
-      searchEnabled ? _react.createElement((_OutlineViewSearch || _load_OutlineViewSearch()).OutlineViewSearchComponent, {
+      _react.createElement((_OutlineViewSearch || _load_OutlineViewSearch()).OutlineViewSearchComponent, {
         outlineTrees: outline.outlineTrees,
         editor: outline.editor,
         updateSearchResults: searchResults => {
           this.setState({ searchResults });
-        }
-      }) : null,
+        },
+        visibility: visibility
+      }),
       _react.createElement(
         'div',
         { className: 'outline-view-trees-scroller' },
         _react.createElement(
-          'div',
+          (_Tree || _load_Tree()).Tree,
           { className: 'outline-view-trees' },
           renderTrees(outline.editor, outline.outlineTrees, this.state.searchResults)
         )
@@ -232,59 +260,74 @@ class OutlineTree extends _react.PureComponent {
   constructor(...args) {
     var _temp2;
 
-    return _temp2 = super(...args), this.onClick = e => {
+    return _temp2 = super(...args), this._handleSelect = () => {
       const { editor, outline } = this.props;
-      const numberOfClicks = e.detail;
-
-      if (numberOfClicks === 1) {
-        // single click moves the cursor, but does not focus the editor
-        (_analytics || _load_analytics()).default.track('atom-ide-outline-view:go-to-location');
-        (0, (_goToLocation || _load_goToLocation()).goToLocationInEditor)(editor, {
-          line: outline.startPosition.row,
-          column: outline.startPosition.column
-        });
-      } else if (numberOfClicks === 3) {
-        // triple click selects the symbol's region
-        const endPosition = outline.endPosition;
-        if (endPosition != null) {
-          editor.selectToBufferPosition(endPosition);
-        }
+      // single click moves the cursor, but does not focus the editor
+      (_analytics || _load_analytics()).default.track('atom-ide-outline-view:go-to-location');
+      const landingPosition = outline.landingPosition != null ? outline.landingPosition : outline.startPosition;
+      (0, (_goToLocation || _load_goToLocation()).goToLocationInEditor)(editor, {
+        line: landingPosition.row,
+        column: landingPosition.column
+      });
+    }, this._handleConfirm = () => {
+      this._focusEditor();
+    }, this._handleTripleClick = () => {
+      const { editor, outline } = this.props;
+      // triple click selects the symbol's region
+      const endPosition = outline.endPosition;
+      if (endPosition != null) {
+        editor.selectToBufferPosition(endPosition);
+      }
+      this._focusEditor();
+    }, this._focusEditor = () => {
+      const { editor } = this.props;
+      // double and triple clicks focus the editor afterwards
+      const pane = atom.workspace.paneForItem(editor);
+      if (pane == null) {
+        return;
       }
 
-      if (numberOfClicks === 2 || numberOfClicks === 3) {
-        // double and triple clicks focus the editor afterwards
-        const pane = atom.workspace.paneForItem(editor);
-        if (pane == null) {
-          return;
-        }
-
-        // Assumes that the click handler has already run, which moves the
-        // cursor to the start of the symbol. Let's activate the pane now.
-        pane.activate();
-        pane.activateItem(editor);
-      }
+      // Assumes that the click handler has already run, which moves the
+      // cursor to the start of the symbol. Let's activate the pane now.
+      pane.activate();
+      pane.activateItem(editor);
     }, _temp2;
   }
 
   render() {
     const { editor, outline, searchResults } = this.props;
 
-    const classNames = ['list-nested-item'];
-    if (outline.kind) {
-      classNames.push(`kind-${outline.kind}`);
-    }
-    const classes = (0, (_classnames || _load_classnames()).default)(classNames, {
+    const classes = (0, (_classnames || _load_classnames()).default)('outline-view-item', outline.kind ? `kind-${outline.kind}` : null, {
       selected: outline.highlighted
     });
-    return _react.createElement(
-      'li',
-      { className: classes },
+
+    const childTrees = renderTrees(editor, outline.children, searchResults);
+    const itemContent = renderItem(outline, searchResults.get(outline));
+
+    if (childTrees.length === 0) {
+      return _react.createElement(
+        (_Tree || _load_Tree()).TreeItem,
+        {
+          className: classes,
+          onConfirm: this._handleConfirm,
+          onSelect: this._handleSelect,
+          onTripleClick: this._handleTripleClick },
+        itemContent
+      );
+    }
+    return (
+      // Set fontSize for the li to make the highlighted region of selected
+      // lines (set equal to 2em) look reasonable relative to size of the font.
       _react.createElement(
-        'div',
-        { className: 'list-item outline-view-item', onClick: this.onClick },
-        renderItem(outline, searchResults.get(outline))
-      ),
-      renderTrees(editor, outline.children, searchResults)
+        (_Tree || _load_Tree()).NestedTreeItem,
+        {
+          className: classes,
+          onConfirm: this._handleConfirm,
+          onSelect: this._handleSelect,
+          onTripleClick: this._handleTripleClick,
+          title: itemContent },
+        childTrees
+      )
     );
   }
 }
@@ -313,7 +356,12 @@ function renderItem(outline, searchResult) {
   } else {
     r.push('Missing text');
   }
-  return r;
+
+  return _react.createElement(
+    'span',
+    null,
+    r
+  );
 }
 
 function renderTextToken(token, index, searchResult, offset) {
@@ -345,30 +393,15 @@ function renderMatchedSubsequence(seq, key) {
 }
 
 function renderTrees(editor, outlines, searchResults) {
-  if (outlines.length === 0) {
-    return null;
-  }
-  return (
-    // Add `position: relative;` to let `li.selected` style position itself relative to the list
-    // tree rather than to its container.
-    _react.createElement(
-      'ul',
-      {
-        className: 'list-tree',
-        style: {
-          position: 'relative'
-        } },
-      outlines.map((outline, index) => {
-        const result = searchResults.get(outline);
-        return !result || result.visible ? _react.createElement(OutlineTree, {
-          editor: editor,
-          outline: outline,
-          key: index,
-          searchResults: searchResults
-        }) : null;
-      })
-    )
-  );
+  return outlines.map((outline, index) => {
+    const result = searchResults.get(outline);
+    return !result || result.visible ? _react.createElement(OutlineTree, {
+      editor: editor,
+      outline: outline,
+      key: index,
+      searchResults: searchResults
+    }) : null;
+  });
 }
 
 const OUTLINE_KIND_TO_ICON = {
