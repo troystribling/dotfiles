@@ -1,11 +1,10 @@
 const cp = require("child_process");
-const shellEnv = require("shell-env");
 const { shell } = require("electron");
 const { AutoLanguageClient } = require("atom-languageclient");
 
 // Ref: https://github.com/nteract/hydrogen/blob/master/lib/autocomplete-provider.js#L33
 // adapted from http://stackoverflow.com/q/5474008
-const PYTHON_REGEX = /([^\d\W]|[\u00A0-\uFFFF])[\w.\u00A0-\uFFFF]*$/;
+const PYTHON_REGEX = /(([^\d\W]|[\u00A0-\uFFFF])[\w.\u00A0-\uFFFF]*)|\.$/;
 
 class PythonLanguageClient extends AutoLanguageClient {
   getGrammarScopes() {
@@ -18,11 +17,21 @@ class PythonLanguageClient extends AutoLanguageClient {
     return "pyls";
   }
 
+  postInitialization({ connection }) {
+    this._disposable.add(
+      atom.config.observe("ide-python.pylsPlugins", params => {
+        connection.didChangeConfiguration({
+          settings: { pyls: { plugins: params } }
+        });
+      })
+    );
+  }
+
   async startServerProcess(projectPath) {
-    const env = await shellEnv();
+    await new Promise(resolve => atom.whenShellEnvironmentLoaded(resolve));
+
     const childProcess = cp.spawn(atom.config.get("ide-python.pylsPath"), {
-      cwd: projectPath,
-      env: env
+      cwd: projectPath
     });
     childProcess.on("error", err =>
       atom.notifications.addError(
