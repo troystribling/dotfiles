@@ -29,6 +29,10 @@
   editor: {}
   "exception-reporting":
     userId: "491ad535-da31-48a5-ae92-ebfdd48bacc8"
+  "ide-python":
+    pylsPlugins:
+      pycodestyle:
+        maxLineLength: 160
   "split-diff":
     diffWords: true
     ignoreWhitespace: true
