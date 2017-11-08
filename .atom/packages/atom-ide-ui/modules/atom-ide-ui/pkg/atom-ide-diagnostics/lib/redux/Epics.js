@@ -146,7 +146,14 @@ function fetchCodeActions(actions, store) {
       return _rxjsBundlesRxMinJs.Observable.empty();
     }
     const { messages, editor } = action.payload;
-    return forkJoinArray(messages.map(message => _rxjsBundlesRxMinJs.Observable.defer(() => codeActionFetcher.getCodeActionForDiagnostic(message, editor)).switchMap(codeActions => {
+    return forkJoinArray(messages.map(message => _rxjsBundlesRxMinJs.Observable.defer(() => {
+      // Skip fetching code actions if the diagnostic already includes them.
+      if (message.actions != null && message.actions.length > 0) {
+        return Promise.resolve([]);
+      } else {
+        return codeActionFetcher.getCodeActionForDiagnostic(message, editor);
+      }
+    }).switchMap(codeActions => {
       return codeActions.length === 0 ? // forkJoin emits nothing for empty arrays.
       _rxjsBundlesRxMinJs.Observable.of([]) : forkJoinArray(
       // Eagerly fetch the titles so that they're immediately usable in a UI.

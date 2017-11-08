@@ -25,6 +25,8 @@ exports.setFilter = setFilter;
 exports.isEmpty = isEmpty;
 exports.keyMirror = keyMirror;
 exports.collect = collect;
+exports.objectFromPairs = objectFromPairs;
+exports.objectMapValues = objectMapValues;
 exports.objectValues = objectValues;
 exports.objectEntries = objectEntries;
 exports.objectFromMap = objectFromMap;
@@ -40,6 +42,7 @@ exports.iterableContains = iterableContains;
 exports.count = count;
 exports.isIterable = isIterable;
 exports.insideOut = insideOut;
+exports.mapFromObject = mapFromObject;
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -64,6 +67,9 @@ function arrayRemove(array, element) {
 }
 
 function arrayEqual(array1, array2, equalComparator) {
+  if (array1 === array2) {
+    return true;
+  }
   if (array1.length !== array2.length) {
     return false;
   }
@@ -279,6 +285,22 @@ function collect(pairs) {
     }
     list.push(v);
   }
+  return result;
+}
+
+function objectFromPairs(iterable) {
+  const result = {};
+  for (const [key, value] of iterable) {
+    result[key] = value;
+  }
+  return result;
+}
+
+function objectMapValues(object, project) {
+  const result = {};
+  Object.keys(object).forEach(key => {
+    result[key] = project(object[key], key);
+  });
   return result;
 }
 
@@ -506,4 +528,8 @@ function* insideOut(arr, startingIndex) {
       j--;
     }
   }
+}
+
+function mapFromObject(obj) {
+  return new Map(objectEntries(obj));
 }

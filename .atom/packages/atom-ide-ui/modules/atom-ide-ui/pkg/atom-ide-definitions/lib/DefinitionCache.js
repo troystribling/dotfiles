@@ -72,6 +72,7 @@ class DefinitionCache {
 
       const wordGuess = (0, (_range || _load_range()).wordAtPosition)(editor, position);
       _this._cachedResultRange = wordGuess && wordGuess.range;
+      _this._cachedResultEditor = editor;
       _this._cachedResultPromise = getImpl();
 
       return _this._cachedResultPromise;

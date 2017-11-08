@@ -5,10 +5,22 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DiagnosticsViewModel = exports.WORKSPACE_VIEW_URI = undefined;
 
+var _dockForLocation;
+
+function _load_dockForLocation() {
+  return _dockForLocation = _interopRequireDefault(require('nuclide-commons-atom/dock-for-location'));
+}
+
 var _goToLocation;
 
 function _load_goToLocation() {
   return _goToLocation = require('nuclide-commons-atom/go-to-location');
+}
+
+var _memoizeUntilChanged;
+
+function _load_memoizeUntilChanged() {
+  return _memoizeUntilChanged = _interopRequireDefault(require('nuclide-commons/memoizeUntilChanged'));
 }
 
 var _nuclideUri;
@@ -110,6 +122,13 @@ class DiagnosticsViewModel {
   constructor(globalStates) {
     _initialiseProps.call(this);
 
+    // Memoize `_filterDiagnostics()`
+    this._filterDiagnostics = (0, (_memoizeUntilChanged || _load_memoizeUntilChanged()).default)(this._filterDiagnostics, (diagnostics, pattern, hiddenGroups) => ({
+      diagnostics,
+      pattern,
+      hiddenGroups
+    }), (a, b) => patternsAreEqual(a.pattern, b.pattern) && (0, (_collection || _load_collection()).areSetsEqual)(a.hiddenGroups, b.hiddenGroups) && (0, (_collection || _load_collection()).arrayEqual)(a.diagnostics, b.diagnostics));
+
     const { pattern, invalid } = (0, (_RegExpFilter || _load_RegExpFilter()).getFilterPattern)('', false);
     this._model = new (_Model || _load_Model()).default({
       // TODO: Get this from constructor/serialization.
@@ -143,21 +162,20 @@ class DiagnosticsViewModel {
     let lastDiagnostics = [];
     return props.do(newProps => {
       if (newProps.autoVisibility && !(0, (_collection || _load_collection()).arrayEqual)(newProps.diagnostics, lastDiagnostics, (a, b) => a.text === b.text)) {
-        if (newProps.diagnostics.length > 0) {
-          const activePane = atom.workspace.getActivePane();
-          // Do not use goToLocation because diagnostics item is not a file.
-          atom.workspace // eslint-disable-line
-          // $FlowFixMe: workspace.open accepts an item or URI
-          .open(this).then(() => {
-            // Since workspace.open focuses the pane containing the diagnostics,
-            // we manually return focus to the previously active pane.
-            if (activePane != null) {
-              // Somehow calling activate immediately does not return focus.
-              activePane.activate();
+        const pane = atom.workspace.paneForItem(this);
+        if (newProps.diagnostics.length > 0 && !newProps.isVisible) {
+          // We want to call workspace.open but it has no option to
+          // show the new pane without activating it.
+          // So instead we find the dock for the pane and show() it directly.
+          // https://github.com/atom/atom/issues/16007
+          if (pane != null) {
+            pane.activateItem(this);
+            const dock = (0, (_dockForLocation || _load_dockForLocation()).default)(pane.getContainer().getLocation());
+            if (dock != null) {
+              dock.show();
             }
-          });
-        } else {
-          const pane = atom.workspace.paneForItem(this);
+          }
+        } else if (newProps.diagnostics.length === 0 && newProps.isVisible) {
           // Only hide the diagnostics if it's the only item in its pane.
           if (pane != null) {
             const items = pane.getItems();
@@ -216,7 +234,6 @@ class DiagnosticsViewModel {
    */
 
 
-  // TODO: Memoize this.
   _filterDiagnostics(diagnostics, pattern, hiddenGroups) {
     return diagnostics.filter(message => {
       if (hiddenGroups.has((_GroupUtils || _load_GroupUtils()).getGroup(message))) {
@@ -279,4 +296,17 @@ function goToDiagnosticLocation(message, options) {
     activatePane: options.focusEditor,
     pending: true
   });
+}
+
+function patternsAreEqual(a, b) {
+  if (a === b) {
+    return true;
+  }
+  if (a == null && b == null) {
+    return true;
+  }
+  if (a == null || b == null) {
+    return false;
+  }
+  return a.source === b.source && a.global === b.global && a.multiline === b.multiline && a.ignoreCase === b.ignoreCase;
 }

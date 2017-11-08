@@ -208,6 +208,7 @@ class TextEventDispatcher {
   onFileChange(grammarScopes, callback) {
     return this._onEvents(grammarScopes, FILE_CHANGE_EVENTS, callback);
   }
+
   onAnyFileChange(callback) {
     return this._onEvents('all', FILE_CHANGE_EVENTS, callback);
   }

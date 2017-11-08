@@ -121,14 +121,14 @@ class AtomInput extends _react.Component {
     }
 
     disposables.add(atom.commands.add(textEditorElement, {
-      'core:confirm': () => {
+      'core:confirm': event => {
         if (this.props.onConfirm != null) {
-          this.props.onConfirm();
+          this.props.onConfirm(event);
         }
       },
-      'core:cancel': () => {
+      'core:cancel': event => {
         if (this.props.onCancel != null) {
-          this.props.onCancel();
+          this.props.onCancel(event);
         }
       }
     }));

@@ -90,12 +90,6 @@ function _load_getDiagnosticDatatip() {
   return _getDiagnosticDatatip = _interopRequireDefault(require('./getDiagnosticDatatip'));
 }
 
-var _paneUtils;
-
-function _load_paneUtils() {
-  return _paneUtils = require('./paneUtils');
-}
-
 var _goToLocation;
 
 function _load_goToLocation() {
@@ -130,19 +124,18 @@ function _load_showAtomLinterWarning() {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
+const MAX_OPEN_ALL_FILES = 20; /**
+                                * Copyright (c) 2017-present, Facebook, Inc.
+                                * All rights reserved.
+                                *
+                                * This source code is licensed under the BSD-style license found in the
+                                * LICENSE file in the root directory of this source tree. An additional grant
+                                * of patent rights can be found in the PATENTS file in the same directory.
+                                *
+                                * 
+                                * @format
+                                */
 
-const MAX_OPEN_ALL_FILES = 20;
 const SHOW_TRACES_SETTING = 'atom-ide-diagnostics-ui.showDiagnosticTraces';
 
 class Activation {
@@ -251,11 +244,7 @@ class Activation {
       const packageStates = this._model.toObservable();
       const updaters = packageStates.map(state => state.diagnosticUpdater).distinctUntilChanged();
 
-      const diagnosticsStream = updaters.switchMap(updater => updater == null ? _rxjsBundlesRxMinJs.Observable.of([]) : (0, (_event || _load_event()).observableFromSubscribeFunction)(updater.observeMessages)).let((0, (_observable || _load_observable()).fastDebounce)(100))
-      // FIXME: It's not good for UX or perf that we're providing a default sort here (that users
-      // can't return to). We should remove this and have the table sorting be more intelligent.
-      // For example, sorting by type means sorting by [type, filename, description].
-      .map(diagnostics => diagnostics.slice().sort((_paneUtils || _load_paneUtils()).compareMessagesByFile)).startWith([]);
+      const diagnosticsStream = updaters.switchMap(updater => updater == null ? _rxjsBundlesRxMinJs.Observable.of([]) : (0, (_event || _load_event()).observableFromSubscribeFunction)(updater.observeMessages)).let((0, (_observable || _load_observable()).fastDebounce)(100)).startWith([]);
 
       const showTracesStream = (_featureConfig || _load_featureConfig()).default.observeAsStream(SHOW_TRACES_SETTING);
       const setShowTraces = showTraces => {

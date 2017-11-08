@@ -10,6 +10,18 @@ function _load_classnames() {
   return _classnames = _interopRequireDefault(require('classnames'));
 }
 
+var _idx;
+
+function _load_idx() {
+  return _idx = _interopRequireDefault(require('idx'));
+}
+
+var _memoizeUntilChanged;
+
+function _load_memoizeUntilChanged() {
+  return _memoizeUntilChanged = _interopRequireDefault(require('nuclide-commons/memoizeUntilChanged'));
+}
+
 var _UniversalDisposable;
 
 function _load_UniversalDisposable() {
@@ -78,57 +90,37 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Maximum number of results to render in the table before truncating and displaying a "Max results
-// reached" message.
+const DIAGNOSTICS_TO_ROWS_TRACES_MAP = new WeakMap(); /**
+                                                       * Copyright (c) 2017-present, Facebook, Inc.
+                                                       * All rights reserved.
+                                                       *
+                                                       * This source code is licensed under the BSD-style license found in the
+                                                       * LICENSE file in the root directory of this source tree. An additional grant
+                                                       * of patent rights can be found in the PATENTS file in the same directory.
+                                                       *
+                                                       * 
+                                                       * @format
+                                                       */
 
+const DIAGNOSTICS_TO_ROWS_NO_TRACES_MAP = new WeakMap();
 
 // text is always used for sorting, while we render the element.
-const MAX_RESULTS_COUNT = 1000; /**
-                                 * Copyright (c) 2017-present, Facebook, Inc.
-                                 * All rights reserved.
-                                 *
-                                 * This source code is licensed under the BSD-style license found in the
-                                 * LICENSE file in the root directory of this source tree. An additional grant
-                                 * of patent rights can be found in the PATENTS file in the same directory.
-                                 *
-                                 * 
-                                 * @format
-                                 */
+
+
+// Maximum number of results to render in the table before truncating and displaying a "Max results
+// reached" message.
+const MAX_RESULTS_COUNT = 1000;
 
 class DiagnosticsTable extends _react.PureComponent {
 
   constructor(props) {
     super(props);
-    this._previousSelectedIndex = -1;
-    this._focusChangeEvents = new _rxjsBundlesRxMinJs.Subject();
-    this._selectedMessages = new _rxjsBundlesRxMinJs.BehaviorSubject();
 
-    this._handleSort = (sortedColumn, sortDescending) => {
-      this.setState({
-        sortedColumn,
-        sortDescending
-      });
-    };
+    // Memoize `_getRows()`
 
-    this._handleSelectTableRow = (item, index, event) => {
-      this.props.selectMessage(item.diagnostic);
-      // Users navigating with the keyboard may just be moving through items on their way to another.
-      // If they have pending pane items enabled, it's not a big deal if we open the editor anyway.
-      // But if they don't, we could wind up opening a ton of files they didn't even care about so,
-      // to be safe, we won't do anything in that case.
-      if (event.type !== 'click' && !atom.config.get('core.allowPendingPaneItems')) {
-        return;
-      }
-      this.props.gotoMessageLocation(item.diagnostic, { focusEditor: false });
-    };
+    _initialiseProps.call(this);
 
-    this._handleConfirmTableRow = item => {
-      this.props.gotoMessageLocation(item.diagnostic, { focusEditor: true });
-    };
-
-    this._handleFocusChangeEvent = event => {
-      this._focusChangeEvents.next(event);
-    };
+    this._getRows = (0, (_memoizeUntilChanged || _load_memoizeUntilChanged()).default)(this._getRows, (diagnostics, showTraces) => ({ diagnostics, showTraces }), (a, b) => a.showTraces === b.showTraces && (0, (_collection || _load_collection()).arrayEqual)(a.diagnostics, b.diagnostics));
 
     this.state = {
       focused: false,
@@ -176,10 +168,11 @@ class DiagnosticsTable extends _react.PureComponent {
     // These need to add up to 1.
     // TODO: Update the Table component so that we can have more control over this (and provide
     //       explicit pixel widths)
-    const TYPE_WIDTH = 0.05;
-    const SOURCE_WIDTH = 0.1;
+    const TYPE_WIDTH = 0;
+    const SOURCE_WIDTH = 0;
     const FILENAME_WIDTH = 0.3;
     const DIR_WIDTH = 0.15;
+    const LINE_NUMBER_WIDTH = 0;
 
     const filePathColumns = [];
     let descriptionWidth = 1 - (TYPE_WIDTH + SOURCE_WIDTH);
@@ -205,22 +198,18 @@ class DiagnosticsTable extends _react.PureComponent {
         cellClassName: 'nuclide-diagnostics-ui-cell-filename'
       });
       descriptionWidth -= FILENAME_WIDTH;
-    }
-
-    // False positive for this lint rule?
-    // eslint-disable-next-line react/no-unused-prop-types
-    const DescriptionComponent = props => {
-      const { showTraces, diagnostic, text, isPlainText } = props.data;
-      const expanded = showTraces || this.state.focused && diagnostic === this.state.selectedMessage;
-      return expanded ? (0, (_DiagnosticsMessage || _load_DiagnosticsMessage()).DiagnosticsMessageNoHeader)({
-        message: diagnostic,
-        goToLocation: (file, line) => (0, (_goToLocation || _load_goToLocation()).goToLocation)(file, { line }),
-        fixer: () => {}
-      }) : (0, (_DiagnosticsMessageText || _load_DiagnosticsMessageText()).DiagnosticsMessageText)({
-        preserveNewlines: showTraces,
-        message: { text, html: isPlainText ? undefined : text }
+    } else {
+      // Not showing the filename? Then we need a separate column for the line number.
+      filePathColumns.push({
+        component: LineNumberComponent,
+        key: 'line',
+        title: 'Line',
+        shouldRightAlign: true,
+        width: LINE_NUMBER_WIDTH,
+        minWidth: 60
       });
-    };
+      descriptionWidth -= LINE_NUMBER_WIDTH;
+    }
 
     return [{
       component: TypeComponent,
@@ -233,9 +222,9 @@ class DiagnosticsTable extends _react.PureComponent {
       key: 'providerName',
       title: 'Source',
       width: SOURCE_WIDTH,
-      minWidth: 70
+      minWidth: 100
     }, {
-      component: DescriptionComponent,
+      component: this._renderDescription,
       key: 'description',
       title: 'Description',
       width: descriptionWidth,
@@ -243,9 +232,33 @@ class DiagnosticsTable extends _react.PureComponent {
     }, ...filePathColumns];
   }
 
+  // False positive for this lint rule?
+  // eslint-disable-next-line react/no-unused-prop-types
+
+
+  _getSortOptions(columns) {
+    // If the column the user sorted by has been removed, return the default sorting. We do this
+    // (instead of updating the state) so that if the column gets added back we can return to
+    // sorting by that.
+    const columnKeys = columns.map(column => column.key);
+    if (!columnKeys.includes(this.state.sortedColumn)) {
+      return {
+        sortedColumn: 'classification',
+        sortDescending: true
+      };
+    }
+    // Otherwise, return the sorting they've chosen.
+    return {
+      sortedColumn: this.state.sortedColumn,
+      sortDescending: this.state.sortDescending
+    };
+  }
+
   render() {
     const { diagnostics, showTraces } = this.props;
-    const { selectedMessage, sortedColumn, sortDescending } = this.state;
+    const { selectedMessage } = this.state;
+    const columns = this._getColumns();
+    const { sortedColumn, sortDescending } = this._getSortOptions(columns);
     const diagnosticRows = this._getRows(diagnostics, showTraces);
     let sortedRows = this._sortRows(diagnosticRows, sortedColumn, sortDescending);
     let maxResultsMessage;
@@ -274,7 +287,7 @@ class DiagnosticsTable extends _react.PureComponent {
         onBodyFocus: this._handleFocusChangeEvent,
         onBodyBlur: this._handleFocusChangeEvent,
         collapsable: true,
-        columns: this._getColumns(),
+        columns: columns,
         emptyComponent: EmptyComponent,
         fixedHeader: true,
         maxBodyHeight: '99999px',
@@ -329,26 +342,34 @@ class DiagnosticsTable extends _react.PureComponent {
     return bestRankedIndex;
   }
 
-  // TODO: Memoize this so we don't recompute unnecessarily.
   _getRows(diagnostics, showTraces) {
+    const diagnosticsToRows = showTraces ? DIAGNOSTICS_TO_ROWS_TRACES_MAP : DIAGNOSTICS_TO_ROWS_NO_TRACES_MAP;
     return diagnostics.map(diagnostic => {
-      const { dir, location } = getLocation(diagnostic);
-      return {
-        data: {
-          classification: {
-            kind: diagnostic.kind || 'lint',
-            severity: diagnostic.type
-          },
-          providerName: diagnostic.providerName,
-          description: Object.assign({
-            showTraces,
-            diagnostic
-          }, getMessageContent(diagnostic, showTraces)),
-          dir,
-          location,
-          diagnostic
-        }
-      };
+      let row = diagnosticsToRows.get(diagnostic);
+      if (row == null) {
+        var _ref, _ref2;
+
+        const { dir, location } = getLocation(diagnostic);
+        row = {
+          data: {
+            classification: {
+              kind: diagnostic.kind || 'lint',
+              severity: diagnostic.type
+            },
+            providerName: diagnostic.providerName,
+            description: Object.assign({
+              showTraces,
+              diagnostic
+            }, getMessageContent(diagnostic, showTraces)),
+            dir,
+            location,
+            diagnostic,
+            line: (_ref = location) != null ? (_ref2 = _ref.locationInFile) != null ? _ref2.line : _ref2 : _ref
+          }
+        };
+        diagnosticsToRows.set(diagnostic, row);
+      }
+      return row;
     });
   }
 
@@ -359,6 +380,53 @@ class DiagnosticsTable extends _react.PureComponent {
 }
 
 exports.default = DiagnosticsTable;
+
+var _initialiseProps = function () {
+  this._previousSelectedIndex = -1;
+  this._focusChangeEvents = new _rxjsBundlesRxMinJs.Subject();
+  this._selectedMessages = new _rxjsBundlesRxMinJs.BehaviorSubject();
+
+  this._handleSort = (sortedColumn, sortDescending) => {
+    this.setState({
+      sortedColumn,
+      sortDescending
+    });
+  };
+
+  this._handleSelectTableRow = (item, index, event) => {
+    this.props.selectMessage(item.diagnostic);
+    // Users navigating with the keyboard may just be moving through items on their way to another.
+    // If they have pending pane items enabled, it's not a big deal if we open the editor anyway.
+    // But if they don't, we could wind up opening a ton of files they didn't even care about so,
+    // to be safe, we won't do anything in that case.
+    if (event.type !== 'click' && !atom.config.get('core.allowPendingPaneItems')) {
+      return;
+    }
+    this.props.gotoMessageLocation(item.diagnostic, { focusEditor: false });
+  };
+
+  this._handleConfirmTableRow = item => {
+    this.props.gotoMessageLocation(item.diagnostic, { focusEditor: true });
+  };
+
+  this._renderDescription = props => {
+    const { showTraces, diagnostic, text, isPlainText } = props.data;
+    const expanded = showTraces || this.state.focused && diagnostic === this.state.selectedMessage;
+    return expanded ? (0, (_DiagnosticsMessage || _load_DiagnosticsMessage()).DiagnosticsMessageNoHeader)({
+      message: diagnostic,
+      goToLocation: (file, line) => (0, (_goToLocation || _load_goToLocation()).goToLocation)(file, { line }),
+      fixer: () => {}
+    }) : (0, (_DiagnosticsMessageText || _load_DiagnosticsMessageText()).DiagnosticsMessageText)({
+      preserveNewlines: showTraces,
+      message: { text, html: isPlainText ? undefined : text }
+    });
+  };
+
+  this._handleFocusChangeEvent = event => {
+    this._focusChangeEvents.next(event);
+  };
+};
+
 const EmptyComponent = () => _react.createElement(
   'div',
   { className: 'diagnostics-ui-empty-component' },
@@ -428,7 +496,7 @@ function FilenameComponent(props) {
     return _react.createElement(
       'span',
       null,
-      '\u2014'
+      DASH
     );
   }
   const { basename, line } = locationInFile;
@@ -442,6 +510,16 @@ function FilenameComponent(props) {
       ':',
       line
     )
+  );
+}
+
+function LineNumberComponent(props) {
+  const line = props.data;
+  // Show a dash if this is a project diagnostic.
+  return _react.createElement(
+    'span',
+    null,
+    line == null ? DASH : line
   );
 }
 
@@ -500,3 +578,5 @@ function compareMessages(a, b) {
   // row?)
   return Math.abs(aRange.start.row - bRange.start.row);
 }
+
+const DASH = '\u2014';

@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33660-l1j5hk.y2m7dp9zfr/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81562-1fus9q4.h44r0ms4i/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33660-l1j5hk.y2m7dp9zfr/package.tgz",
-        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33660-l1j5hk.y2m7dp9zfr/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81562-1fus9q4.h44r0ms4i/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81562-1fus9q4.h44r0ms4i/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-117929-33660-k2tqvl.21dlnpcik9"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-117108-81562-14tvj8h.bpfqfcrf6r"
     ]
   ],
-  "_from": "../d-117929-33660-l1j5hk.y2m7dp9zfr/package.tgz",
-  "_id": "ide-rust@0.4.1",
+  "_from": "../d-117108-81562-1fus9q4.h44r0ms4i/package.tgz",
+  "_id": "ide-rust@0.5.1",
   "_inCache": true,
   "_location": "/ide-rust",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33660-l1j5hk.y2m7dp9zfr/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81562-1fus9q4.h44r0ms4i/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33660-l1j5hk.y2m7dp9zfr/package.tgz",
-    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33660-l1j5hk.y2m7dp9zfr/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81562-1fus9q4.h44r0ms4i/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81562-1fus9q4.h44r0ms4i/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-117929-33660-l1j5hk.y2m7dp9zfr/package.tgz",
-  "_shasum": "5fd343ac93de7d60c44b5e256094ea4c5a7ffc24",
+  "_resolved": "file:../d-117108-81562-1fus9q4.h44r0ms4i/package.tgz",
+  "_shasum": "934c6cbb88630238d0049ac635f7a8563b976773",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33660-l1j5hk.y2m7dp9zfr/package.tgz",
-  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-117929-33660-k2tqvl.21dlnpcik9",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81562-1fus9q4.h44r0ms4i/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-117108-81562-14tvj8h.bpfqfcrf6r",
   "bugs": {
     "url": "https://github.com/mehcode/atom-ide-rust/issues"
   },
@@ -51,8 +51,10 @@
     }
   },
   "dependencies": {
-    "atom-languageclient": "^0.6.4",
-    "atom-package-deps": "^4.6.0"
+    "atom-languageclient": "^0.6.7",
+    "atom-package-deps": "^4.6.0",
+    "toml": "^2.3.3",
+    "underscore-plus": "^1.6.6"
   },
   "description": "Rust IDE support for Atom, powered by the Rust Langauge Server (RLS)",
   "devDependencies": {},
@@ -108,11 +110,11 @@
       }
     }
   },
-  "readme": "# IDE-Rust\n> Rust IDE support for Atom, powered by the Rust Language Server (RLS)\n\n## Features\n - Auto-completion\n - Format on save (disabled by default, see `atom-ide-ui` settings)\n - Diagnostics (errors and warnings from `rustc`, support for `clippy` is pending on https://github.com/rust-lang-nursery/rls/issues/149)\n - Document outline\n - Go to definition (`ctrl` or `cmd` click)\n - Type information and Documentation on hover (hold `ctrl` or `cmd` for more information)\n\n## Install\n\nYou can install from the command line with:\n\n```\n$ apm install ide-rust\n```\n\nOr you can install from Settings view by searching for `ide-rust`.\n\n## License\n\nMIT License. See the [license](LICENSE) for more details.\n",
+  "readme": "# IDE-Rust\n> Rust IDE support for Atom, powered by the Rust Language Server (RLS)\n\n## Features\n - Auto-completion\n - Format on save (disabled by default, see `atom-ide-ui` settings)\n - Diagnostics (errors and warnings from `rustc`, support for `clippy` is pending on https://github.com/rust-lang-nursery/rls/issues/149)\n - Document outline\n - Go to definition (`ctrl` or `cmd` click)\n - Type information and Documentation on hover (hold `ctrl` or `cmd` for more information)\n - Rls configuration using `rls.toml` file at project root, see [rls#configuration](https://github.com/rust-lang-nursery/rls#configuration)\n\n## Install\n\nYou can install from the command line with:\n\n```\n$ apm install ide-rust\n```\n\nOr you can install from Settings view by searching for `ide-rust`.\n\n## License\n\nMIT License. See the [license](LICENSE) for more details.\n",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mehcode/atom-ide-rust.git"
   },
-  "version": "0.4.1"
+  "version": "0.5.1"
 }

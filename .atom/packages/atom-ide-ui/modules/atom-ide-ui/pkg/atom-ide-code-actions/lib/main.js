@@ -43,6 +43,10 @@ class Activation {
   provideCodeActionFetcher() {
     return this._codeActionManager.createCodeActionFetcher();
   }
+
+  consumeIndie(register) {
+    return this._codeActionManager.consumeIndie(register);
+  }
 }
 
 (0, (_createPackage || _load_createPackage()).default)(module.exports, Activation);

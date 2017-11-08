@@ -9,17 +9,17 @@ exports.getIcon = getIcon;
 exports.getHighestPriorityGroup = getHighestPriorityGroup;
 
 
-const PRIORITIZED_GROUPS = ['review', 'errors', 'warnings', 'info']; /**
-                                                                      * Copyright (c) 2017-present, Facebook, Inc.
-                                                                      * All rights reserved.
-                                                                      *
-                                                                      * This source code is licensed under the BSD-style license found in the
-                                                                      * LICENSE file in the root directory of this source tree. An additional grant
-                                                                      * of patent rights can be found in the PATENTS file in the same directory.
-                                                                      *
-                                                                      * 
-                                                                      * @format
-                                                                      */
+const PRIORITIZED_GROUPS = ['review', 'errors', 'warnings', 'info', 'action']; /**
+                                                                                * Copyright (c) 2017-present, Facebook, Inc.
+                                                                                * All rights reserved.
+                                                                                *
+                                                                                * This source code is licensed under the BSD-style license found in the
+                                                                                * LICENSE file in the root directory of this source tree. An additional grant
+                                                                                * of patent rights can be found in the PATENTS file in the same directory.
+                                                                                *
+                                                                                * 
+                                                                                * @format
+                                                                                */
 
 function getGroup(message) {
   const { kind } = message;
@@ -41,6 +41,8 @@ function getGroup(message) {
       }
     case 'review':
       return 'review';
+    case 'action':
+      return 'action';
     default:
       kind;
       throw new Error(`Invalid message kind: ${kind}`);
@@ -57,6 +59,8 @@ function getDisplayName(group) {
       return 'Info';
     case 'review':
       return 'Review';
+    case 'action':
+      return 'Action';
     default:
       group;
       throw new Error(`Invalid group: ${group}`);
@@ -73,6 +77,8 @@ function getIcon(group) {
       return 'info';
     case 'review':
       return 'nuclicon-comment-discussion';
+    case 'action':
+      return 'light-bulb';
     default:
       group;
       throw new Error(`Invalid filter type: ${group}`);

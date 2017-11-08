@@ -39,7 +39,8 @@ const SORT_FUNCTIONS = {
   providerName: compose(compareSource, compareClassification, compareDescription, comparePath),
   description: compose(compareDescription, compareSource, compareClassification, comparePath),
   dir: compose(comparePath, compareSource, compareClassification, compareDescription),
-  location: compose(compareBasename, comparePath, compareClassification, compareSource, compareDescription)
+  location: compose(compareBasename, comparePath, compareClassification, compareSource, compareDescription),
+  line: compose(compareBasename, comparePath, compareClassification, compareSource, compareDescription)
 };
 
 /**

@@ -62,21 +62,6 @@ let nicifyCommand = (() => {
   };
 })();
 
-let hasCommand = (() => {
-  var _ref3 = (0, _asyncToGenerator.default)(function* (command) {
-    let result = commandAvailabilityCache.get(command);
-    if (result == null) {
-      result = (yield (0, (_which || _load_which()).default)(command)) != null;
-      commandAvailabilityCache.set(command, result);
-    }
-    return result;
-  });
-
-  return function hasCommand(_x7) {
-    return _ref3.apply(this, arguments);
-  };
-})();
-
 exports.niceObserveProcess = niceObserveProcess;
 
 var _lruCache;
@@ -130,6 +115,15 @@ function hasNiceCommand() {
 
 function hasIoniceCommand() {
   return hasCommand(IONICE_COMMAND);
+}
+
+function hasCommand(command) {
+  let result = commandAvailabilityCache.get(command);
+  if (result == null) {
+    result = (0, (_which || _load_which()).default)(command).then(x => x != null);
+    commandAvailabilityCache.set(command, result);
+  }
+  return result;
 }
 
 function niceObserveProcess(command, args, options) {

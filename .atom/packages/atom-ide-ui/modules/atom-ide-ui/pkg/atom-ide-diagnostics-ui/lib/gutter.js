@@ -104,7 +104,8 @@ const GUTTER_CSS_GROUPS = {
   review: 'diagnostics-gutter-ui-gutter-review',
   errors: 'diagnostics-gutter-ui-gutter-error',
   warnings: 'diagnostics-gutter-ui-gutter-warning',
-  info: 'diagnostics-gutter-ui-gutter-info'
+  info: 'diagnostics-gutter-ui-gutter-info',
+  action: 'diagnostics-gutter-ui-gutter-action'
 };
 
 const editorToMarkers = new WeakMap();

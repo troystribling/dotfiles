@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11782-88469-9g78mq.26ponoecdi/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81583-y0sg63.1jq9gm0a4i/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11782-88469-9g78mq.26ponoecdi/package.tgz",
-        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11782-88469-9g78mq.26ponoecdi/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81583-y0sg63.1jq9gm0a4i/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81583-y0sg63.1jq9gm0a4i/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-11782-88469-65s2q9.ogdh9nqaor"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-117108-81583-vgjgq3.dcfv2njyvi"
     ]
   ],
-  "_from": "../d-11782-88469-9g78mq.26ponoecdi/package.tgz",
-  "_id": "language-julia@0.12.0",
+  "_from": "../d-117108-81583-y0sg63.1jq9gm0a4i/package.tgz",
+  "_id": "language-julia@0.13.0",
   "_inCache": true,
   "_location": "/language-julia",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11782-88469-9g78mq.26ponoecdi/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81583-y0sg63.1jq9gm0a4i/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11782-88469-9g78mq.26ponoecdi/package.tgz",
-    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11782-88469-9g78mq.26ponoecdi/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81583-y0sg63.1jq9gm0a4i/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81583-y0sg63.1jq9gm0a4i/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-11782-88469-9g78mq.26ponoecdi/package.tgz",
-  "_shasum": "d10ec271571d716e071b0c25024670877e90c06c",
+  "_resolved": "file:../d-117108-81583-y0sg63.1jq9gm0a4i/package.tgz",
+  "_shasum": "75e0a2fbe18b0b836cd7c2abb2cc221397054672",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-11782-88469-9g78mq.26ponoecdi/package.tgz",
-  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-11782-88469-65s2q9.ogdh9nqaor",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-117108-81583-y0sg63.1jq9gm0a4i/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-117108-81583-vgjgq3.dcfv2njyvi",
   "bugs": {
     "url": "https://github.com/JuliaEditorSupport/atom-language-julia/issues"
   },
@@ -56,18 +56,5 @@
     "type": "git",
     "url": "git+https://github.com/JuliaEditorSupport/atom-language-julia.git"
   },
-  "version": "0.12.0",
-  "_atomModuleCache": {
-    "version": 1,
-    "dependencies": [],
-    "extensions": {
-      ".coffee": [
-        "lib/julia.coffee"
-      ],
-      ".json": [
-        "package.json"
-      ]
-    },
-    "folders": []
-  }
+  "version": "0.13.0"
 }

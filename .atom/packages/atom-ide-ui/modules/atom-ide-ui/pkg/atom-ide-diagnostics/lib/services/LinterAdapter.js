@@ -179,6 +179,7 @@ function linterMessageV2ToDiagnosticMessage(msg, providerName) {
     type: convertLinterType(msg.severity),
     filePath: msg.location.file,
     text,
+    kind: msg.kind,
     range: _atom.Range.fromObject(msg.location.position),
     trace,
     fix,

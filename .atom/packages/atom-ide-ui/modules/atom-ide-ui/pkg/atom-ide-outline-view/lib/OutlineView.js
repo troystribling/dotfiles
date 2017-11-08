@@ -65,6 +65,18 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
 const TOKEN_KIND_TO_CLASS_NAME_MAP = {
   keyword: 'syntax--keyword',
   'class-name': 'syntax--entity syntax--name syntax--class',
@@ -75,22 +87,17 @@ const TOKEN_KIND_TO_CLASS_NAME_MAP = {
   whitespace: '',
   plain: '',
   type: 'syntax--support syntax--type'
-}; /**
-    * Copyright (c) 2017-present, Facebook, Inc.
-    * All rights reserved.
-    *
-    * This source code is licensed under the BSD-style license found in the
-    * LICENSE file in the root directory of this source tree. An additional grant
-    * of patent rights can be found in the PATENTS file in the same directory.
-    *
-    * 
-    * @format
-    */
+};
 
 class OutlineView extends _react.PureComponent {
 
   constructor(props) {
     super(props);
+
+    this._setOutlineViewRef = element => {
+      this._outlineViewRef = element;
+    };
+
     this.state = {
       fontFamily: atom.config.get('editor.fontFamily'),
       fontSize: atom.config.get('editor.fontSize'),
@@ -106,15 +113,18 @@ class OutlineView extends _react.PureComponent {
       throw new Error('Invariant violation: "this.subscription == null"');
     }
 
-    this.subscription = new (_UniversalDisposable || _load_UniversalDisposable()).default(this.props.outlines.subscribe(outline => {
-      this.setState({ outline });
-    }), atom.config.observe('editor.fontSize', size => {
+    this.subscription = new (_UniversalDisposable || _load_UniversalDisposable()).default(atom.config.observe('editor.fontSize', size => {
       this.setState({ fontSize: size });
     }), atom.config.observe('editor.fontFamily', font => {
       this.setState({ fontFamily: font });
     }), atom.config.observe('editor.lineHeight', size => {
       this.setState({ lineHeight: size });
     }));
+
+    // Ensure that focus() gets called during the initial mount.
+    if (this.props.visible) {
+      this.focus();
+    }
   }
 
   componentWillUnmount() {
@@ -124,6 +134,18 @@ class OutlineView extends _react.PureComponent {
 
     this.subscription.unsubscribe();
     this.subscription = null;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.visible && !prevProps.visible) {
+      this.focus();
+    }
+  }
+
+  focus() {
+    if (this._outlineViewRef != null) {
+      this._outlineViewRef.focus();
+    }
   }
 
   render() {
@@ -142,8 +164,8 @@ class OutlineView extends _react.PureComponent {
         }
       }),
       _react.createElement(OutlineViewComponent, {
-        outline: this.state.outline,
-        visibility: this.props.visibility
+        outline: this.props.outline,
+        ref: this._setOutlineViewRef
       })
     );
   }
@@ -153,8 +175,19 @@ exports.OutlineView = OutlineView;
 
 
 class OutlineViewComponent extends _react.PureComponent {
+
   constructor(props) {
     super(props);
+
+    this._setOutlineViewCoreRef = element => {
+      this._outlineViewCoreRef = element;
+    };
+  }
+
+  focus() {
+    if (this._outlineViewCoreRef != null) {
+      this._outlineViewCoreRef.focus();
+    }
   }
 
   render() {
@@ -205,7 +238,7 @@ class OutlineViewComponent extends _react.PureComponent {
       case 'outline':
         return _react.createElement(OutlineViewCore, {
           outline: outline,
-          visibility: this.props.visibility
+          ref: this._setOutlineViewCoreRef
         });
       default:
         outline;
@@ -222,11 +255,19 @@ class OutlineViewCore extends _react.PureComponent {
 
     return _temp = super(...args), this.state = {
       searchResults: new Map()
+    }, this._setSearchRef = element => {
+      this._searchRef = element;
     }, _temp;
   }
 
+  focus() {
+    if (this._searchRef != null) {
+      this._searchRef.focus();
+    }
+  }
+
   render() {
-    const { outline, visibility } = this.props;
+    const { outline } = this.props;
 
     if (!(outline.kind === 'outline')) {
       throw new Error('Invariant violation: "outline.kind === \'outline\'"');
@@ -241,7 +282,7 @@ class OutlineViewCore extends _react.PureComponent {
         updateSearchResults: searchResults => {
           this.setState({ searchResults });
         },
-        visibility: visibility
+        ref: this._setSearchRef
       }),
       _react.createElement(
         'div',
