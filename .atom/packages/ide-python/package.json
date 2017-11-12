@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33650-wd35o5.7kp10885mi/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1171012-56267-1hr462q.slty4uc8fr/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33650-wd35o5.7kp10885mi/package.tgz",
-        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33650-wd35o5.7kp10885mi/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1171012-56267-1hr462q.slty4uc8fr/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1171012-56267-1hr462q.slty4uc8fr/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-117929-33650-8c26sr.arnp1u4n29"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-1171012-56267-1txx4b8.gy08gp66r"
     ]
   ],
-  "_from": "../d-117929-33650-wd35o5.7kp10885mi/package.tgz",
-  "_id": "ide-python@0.2.3",
+  "_from": "../d-1171012-56267-1hr462q.slty4uc8fr/package.tgz",
+  "_id": "ide-python@0.3.0",
   "_inCache": true,
   "_location": "/ide-python",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33650-wd35o5.7kp10885mi/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1171012-56267-1hr462q.slty4uc8fr/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33650-wd35o5.7kp10885mi/package.tgz",
-    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33650-wd35o5.7kp10885mi/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1171012-56267-1hr462q.slty4uc8fr/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1171012-56267-1hr462q.slty4uc8fr/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-117929-33650-wd35o5.7kp10885mi/package.tgz",
-  "_shasum": "4a05b36274a613b2c2f89ba0e88144ebc68dedad",
+  "_resolved": "file:../d-1171012-56267-1hr462q.slty4uc8fr/package.tgz",
+  "_shasum": "cf687c2b773ade9aa9dc1ff97f6f1ea25db80fd5",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-117929-33650-wd35o5.7kp10885mi/package.tgz",
-  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-117929-33650-8c26sr.arnp1u4n29",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1171012-56267-1hr462q.slty4uc8fr/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-1171012-56267-1txx4b8.gy08gp66r",
   "bugs": {
     "url": "https://github.com/lgeiger/ide-python/issues"
   },
@@ -208,6 +208,11 @@
       "versions": {
         "0.1.0": "consumeDatatip"
       }
+    },
+    "signature-help": {
+      "versions": {
+        "0.1.0": "consumeSignatureHelp"
+      }
     }
   },
   "dependencies": {
@@ -272,5 +277,5 @@
     "type": "git",
     "url": "git+https://github.com/lgeiger/ide-python.git"
   },
-  "version": "0.2.3"
+  "version": "0.3.0"
 }

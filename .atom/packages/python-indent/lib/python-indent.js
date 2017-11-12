@@ -15,6 +15,15 @@ export default class PythonIndent {
             return;
         }
 
+        // Group operations together. Most noticeable for hanging
+        // indents. Note this still does not group the original
+        // newline call so there's two ctrl-z's needed.
+        this.editor.transact(() => {
+            this.indentNoTransaction();
+        });
+    }
+
+    indentNoTransaction() {
         // Get base variables
         const row = this.editor.getCursorBufferPosition().row;
         const col = this.editor.getCursorBufferPosition().column;
@@ -259,7 +268,7 @@ export default class PythonIndent {
                     break;
                 } else {
                     // We've already skipped if the character was white-space, an opening
-                    // bracket, or a new line, so that means the current character is not
+                    // bracket, or a comment, so that means the current character is not
                     // whitespace and not an opening bracket, so shouldHang needs to get set to
                     // false.
                     shouldHang = false;
@@ -275,9 +284,23 @@ export default class PythonIndent {
                     if (c === ":") {
                         lastColonRow = row;
                     } else if ("})]".includes(c) && openBracketStack.length) {
-                        // The .pop() will take the element off of the openBracketStack as it
-                        // adds it to the array for lastClosedRow.
-                        lastClosedRow = [openBracketStack.pop()[0], row];
+                        const openedRow = openBracketStack.pop()[0];
+                        // lastClosedRow is used to set the indentation back to what it was
+                        // on the line when the corresponding bracket was opened. However,
+                        // if the bracket was opened on this same line, then we do not need
+                        // or want to do that, and in fact, it can obscure other earlier
+                        // bracket pairs. E.g.:
+                        //   def f(api):
+                        //       (api
+                        //        .doSomething()
+                        //        .anotherThing()
+                        //        ).finish()
+                        //       print('Correctly indented!')
+                        // without the following check, the print statement would be indented
+                        // 5 spaces instead of 4.
+                        if (row !== openedRow) {
+                            lastClosedRow = [openedRow, row];
+                        }
                     } else if ("'\"".includes(c)) {
                         // Starting a string, keep track of what quote was used to start it.
                         stringDelimiter = c;
@@ -314,12 +337,14 @@ export default class PythonIndent {
                 }
             }
         // Atom >= 1.22
+        // Version 1.23 of language-python does not include the below regex.
+        // See https://github.com/atom/language-python/pull/212
         } else {
             const re = this.editor.tokenizedBuffer.decreaseNextIndentRegexForScopeDescriptor(
                 this.editor.getRootScopeDescriptor());
 
             // If this is a "decrease next indent" line, then indent more
-            if (re.testSync(this.editor.lineTextForBufferRow(row - 1))) {
+            if (re && re.testSync(this.editor.lineTextForBufferRow(row - 1))) {
                 indent += 1;
             }
         }
