@@ -206,7 +206,8 @@ class AtomInput extends _react.Component {
   render() {
     const className = (0, (_classnames || _load_classnames()).default)(this.props.className, {
       'atom-text-editor-unstyled': this.props.unstyled,
-      [`atom-text-editor-${(0, (_string || _load_string()).maybeToString)(this.props.size)}`]: this.props.size != null
+      [`atom-text-editor-${(0, (_string || _load_string()).maybeToString)(this.props.size)}`]: this.props.size != null,
+      'atom-text-editor-invalid': this.props.invalid
     });
 
     return (

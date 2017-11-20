@@ -5,7 +5,6 @@ import { Point, Range } from "atom";
 import escapeStringRegexp from "escape-string-regexp";
 import _ from "lodash";
 
-import store from "./store";
 import {
   log,
   isMultilanguageGrammar,
@@ -122,7 +121,10 @@ export function getCodeToInspect(editor: atom$TextEditor) {
 export function getRegexString(editor: atom$TextEditor) {
   const scope = editor.getRootScopeDescriptor();
 
-  const { commentStartString } = editor.getCommentStrings(scope);
+  const {
+    commentStartString
+    // $FlowFixMe: This is an unofficial API
+  } = editor.getScopedSettingsDelegate().getCommentStrings(scope);
 
   if (!commentStartString) {
     log("CellManager: No comment string defined in root scope");
@@ -133,7 +135,9 @@ export function getRegexString(editor: atom$TextEditor) {
     commentStartString.trimRight()
   );
 
-  const regexString = `${escapedCommentStartString}(%%| %%| <codecell>| In\[[0-9 ]*\]:?)`;
+  const regexString = `${
+    escapedCommentStartString
+  }(%%| %%| <codecell>| In\[[0-9 ]*\]:?)`;
 
   return regexString;
 }

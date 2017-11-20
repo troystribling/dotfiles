@@ -90,22 +90,16 @@ const TOKEN_KIND_TO_CLASS_NAME_MAP = {
 };
 
 class OutlineView extends _react.PureComponent {
+  constructor(...args) {
+    var _temp;
 
-  constructor(props) {
-    super(props);
-
-    this._setOutlineViewRef = element => {
-      this._outlineViewRef = element;
-    };
-
-    this.state = {
+    return _temp = super(...args), this.state = {
       fontFamily: atom.config.get('editor.fontFamily'),
       fontSize: atom.config.get('editor.fontSize'),
-      lineHeight: atom.config.get('editor.lineHeight'),
-      outline: {
-        kind: 'empty'
-      }
-    };
+      lineHeight: atom.config.get('editor.lineHeight')
+    }, this._setOutlineViewRef = element => {
+      this._outlineViewRef = element;
+    }, _temp;
   }
 
   componentDidMount() {
@@ -251,13 +245,13 @@ class OutlineViewComponent extends _react.PureComponent {
  */
 class OutlineViewCore extends _react.PureComponent {
   constructor(...args) {
-    var _temp;
+    var _temp2;
 
-    return _temp = super(...args), this.state = {
+    return _temp2 = super(...args), this.state = {
       searchResults: new Map()
     }, this._setSearchRef = element => {
       this._searchRef = element;
-    }, _temp;
+    }, _temp2;
   }
 
   focus() {
@@ -299,9 +293,9 @@ class OutlineViewCore extends _react.PureComponent {
 
 class OutlineTree extends _react.PureComponent {
   constructor(...args) {
-    var _temp2;
+    var _temp3;
 
-    return _temp2 = super(...args), this._handleSelect = () => {
+    return _temp3 = super(...args), this._handleSelect = () => {
       const { editor, outline } = this.props;
       // single click moves the cursor, but does not focus the editor
       (_analytics || _load_analytics()).default.track('atom-ide-outline-view:go-to-location');
@@ -332,7 +326,7 @@ class OutlineTree extends _react.PureComponent {
       // cursor to the start of the symbol. Let's activate the pane now.
       pane.activate();
       pane.activateItem(editor);
-    }, _temp2;
+    }, _temp3;
   }
 
   render() {

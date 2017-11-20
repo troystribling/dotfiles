@@ -41,29 +41,32 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  */
 
 class Example extends _react.Component {
-  constructor() {
-    super();
+  constructor(...args) {
+    var _temp;
 
-    this._handleChange = change => {
-      const { invalid } = (0, (_RegExpFilter2 || _load_RegExpFilter2()).getFilterPattern)(change.text, change.isRegExp);
-      this.setState(Object.assign({}, change, { invalid }));
-    };
-
-    this.state = {
+    return _temp = super(...args), this.state = {
       text: '',
       isRegExp: false,
       invalid: false
-    };
+    }, this._handleChange = change => {
+      const { invalid } = (0, (_RegExpFilter2 || _load_RegExpFilter2()).getFilterPattern)(change.text, change.isRegExp);
+      this.setState(Object.assign({}, change, { invalid }));
+    }, _temp;
   }
 
   render() {
+    const { text, isRegExp, invalid } = this.state;
+
     return _react.createElement(
       'div',
       null,
       _react.createElement(
         (_Block || _load_Block()).Block,
         null,
-        _react.createElement((_RegExpFilter || _load_RegExpFilter()).default, { value: this.state, onChange: this._handleChange })
+        _react.createElement((_RegExpFilter || _load_RegExpFilter()).default, {
+          value: { text, isRegExp, invalid },
+          onChange: this._handleChange
+        })
       )
     );
   }

@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = memoizeUntilChanged;
 
 var _collection;
 
@@ -60,7 +59,7 @@ function _load_collection() {
  * @format
  */
 
-function memoizeUntilChanged(func, keySelector_, compareKeys_) {
+exports.default = (func, keySelector_, compareKeys_) => {
   if (!!(keySelector_ == null && compareKeys_ != null)) {
     throw new Error("You can't provide a compare function without also providing a key selector.");
   }
@@ -85,6 +84,6 @@ function memoizeUntilChanged(func, keySelector_, compareKeys_) {
     }
     return prevResult;
   };
-}
+};
 
 const DEFAULT_KEY_SELECTOR = (...args) => args;

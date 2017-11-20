@@ -38,6 +38,7 @@ import ZMQKernel from "./zmq-kernel";
 import WSKernel from "./ws-kernel";
 import AutocompleteProvider from "./autocomplete-provider";
 import HydrogenProvider from "./plugin-api/hydrogen-provider";
+
 import {
   log,
   reactFactory,
@@ -53,6 +54,8 @@ import {
 } from "./utils";
 
 import type Kernel from "./kernel";
+
+import exportNotebook from "./export-notebook";
 
 const Hydrogen = {
   config: Config.schema,
@@ -90,6 +93,12 @@ const Hydrogen = {
       atom.config.onDidChange("Hydrogen.debug", ({ newValue }) =>
         renderDevTools(newValue)
       )
+    );
+
+    store.subscriptions.add(
+      atom.config.observe("Hydrogen.statusBarDisable", newValue => {
+        store.setConfigValue("Hydrogen.statusBarDisable", Boolean(newValue));
+      })
     );
 
     store.subscriptions.add(
@@ -131,13 +140,18 @@ const Hydrogen = {
           this.restartKernelAndReEvaluateBubbles(),
         "hydrogen:shutdown-kernel": () =>
           this.handleKernelCommand({ command: "shutdown-kernel" }),
-        "hydrogen:toggle-bubble": () => this.toggleBubble()
+        "hydrogen:toggle-bubble": () => this.toggleBubble(),
+        "hydrogen:export-notebook": () => exportNotebook()
       })
     );
 
     store.subscriptions.add(
       atom.commands.add("atom-workspace", {
-        "hydrogen:clear-results": () => store.markers.clear()
+        "hydrogen:clear-results": () => {
+          store.markers.clear();
+          if (!store.kernel) return;
+          store.kernel.outputStore.clear();
+        }
       })
     );
 
@@ -354,6 +368,8 @@ const Hydrogen = {
         ? kernel.outputStore
         : null;
 
+    if (globalOutputStore) openOrShowDock(OUTPUT_AREA_URI);
+
     const { outputStore } = new ResultView(
       store.markers,
       kernel,
@@ -362,12 +378,9 @@ const Hydrogen = {
       !globalOutputStore
     );
 
-    kernel.execute(code, async result => {
+    kernel.execute(code, result => {
       outputStore.appendOutput(result);
-      if (globalOutputStore) {
-        globalOutputStore.appendOutput(result);
-        openOrShowDock(OUTPUT_AREA_URI);
-      }
+      if (globalOutputStore) globalOutputStore.appendOutput(result);
     });
   },
 

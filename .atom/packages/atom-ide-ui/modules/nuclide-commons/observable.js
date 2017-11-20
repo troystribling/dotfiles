@@ -46,9 +46,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /**
  * Splits a stream of strings on newlines.
- * Includes the newlines in the resulting stream.
+ * Includes the newlines in the resulting stream (if includeNewlines is true).
  * Sends any non-newline terminated data before closing.
- * Never sends an empty string.
+ * Does not ensure a trailing newline.
  */
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -76,7 +76,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //       .let(makeExciting())
 //       .subscribe(x => console.log(x));
 
-function splitStream(input) {
+function splitStream(input, includeNewlines = true) {
   return _rxjsBundlesRxMinJs.Observable.create(observer => {
     let current = '';
 
@@ -91,7 +91,11 @@ function splitStream(input) {
       const lines = value.split('\n');
       lines[0] = current + lines[0];
       current = lines.pop();
-      lines.forEach(line => observer.next(line + '\n'));
+      if (includeNewlines) {
+        lines.forEach(line => observer.next(line + '\n'));
+      } else {
+        lines.forEach(line => observer.next(line));
+      }
     }, error => {
       onEnd();
       observer.error(error);

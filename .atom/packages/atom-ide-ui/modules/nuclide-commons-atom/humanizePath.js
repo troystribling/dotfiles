@@ -50,8 +50,9 @@ function humanizePath(path, options) {
     }
   }
 
-  // It's not in one of the project directories so return the full (normalized) path.
-  return normalized;
+  // It's not in one of the project directories so return the full (normalized)
+  // path run through nuclideUriToDisplayString to remove nuclide:// etc.
+  return (_nuclideUri || _load_nuclideUri()).default.nuclideUriToDisplayString(normalized);
 } /**
    * Copyright (c) 2017-present, Facebook, Inc.
    * All rights reserved.

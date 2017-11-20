@@ -17,6 +17,12 @@ exports.observeTextEditors = observeTextEditors;
 exports.isValidTextEditor = isValidTextEditor;
 exports.centerScrollToBufferLine = centerScrollToBufferLine;
 
+var _UniversalDisposable;
+
+function _load_UniversalDisposable() {
+  return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));
+}
+
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
 var _event;
@@ -37,6 +43,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Returns a text editor that has the given path open, or null if none exists. If there are multiple
  * text editors for this path, one is chosen arbitrarily.
  */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
 function existingEditorForUri(path) {
   // This isn't ideal but realistically iterating through even a few hundred editors shouldn't be a
   // real problem. And if you have more than a few hundred you probably have bigger problems.
@@ -53,18 +71,6 @@ function existingEditorForUri(path) {
  * Returns a text editor that has the given buffer open, or null if none exists. If there are
  * multiple text editors for this buffer, one is chosen arbitrarily.
  */
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
 function existingEditorForBuffer(buffer) {
   // This isn't ideal but realistically iterating through even a few hundred editors shouldn't be a
   // real problem. And if you have more than a few hundred you probably have bigger problems.
@@ -126,17 +132,20 @@ function observeEditorDestroy(editor) {
 // TODO: https://github.com/atom/atom/issues/9237.
 function enforceReadOnlyEditor(textEditor, readOnlyExceptions = ['append', 'setText']) {
   // Cancel insert events to prevent typing in the text editor and disallow editing (read-only).
-  textEditor.onWillInsertText(event => {
+  const willInsertTextDisposable = textEditor.onWillInsertText(event => {
     event.cancel();
   });
+
+  return new (_UniversalDisposable || _load_UniversalDisposable()).default(willInsertTextDisposable,
   // `setText` & `append` are the only exceptions that's used to set the read-only text.
-  enforceReadOnlyBuffer(textEditor.getBuffer(), readOnlyExceptions);
+  enforceReadOnlyBuffer(textEditor.getBuffer(), readOnlyExceptions));
 }
 
 function enforceReadOnlyBuffer(textBuffer, readOnlyExceptions = []) {
   const noop = () => {};
   // All user edits use `transact` - so, mocking this will effectively make the editor read-only.
   const originalApplyChange = textBuffer.applyChange;
+  const originalReadOnlyExceptionFunctions = {};
   textBuffer.applyChange = noop;
 
   readOnlyExceptions.forEach(passReadOnlyException);
@@ -144,6 +153,7 @@ function enforceReadOnlyBuffer(textBuffer, readOnlyExceptions = []) {
   function passReadOnlyException(functionName) {
     const buffer = textBuffer;
     const originalFunction = buffer[functionName];
+    originalReadOnlyExceptionFunctions[functionName] = originalFunction;
 
     buffer[functionName] = function () {
       textBuffer.applyChange = originalApplyChange;
@@ -152,6 +162,13 @@ function enforceReadOnlyBuffer(textBuffer, readOnlyExceptions = []) {
       return result;
     };
   }
+
+  return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+    textBuffer.applyChange = originalApplyChange;
+
+    const buffer = textBuffer;
+    readOnlyExceptions.forEach(functionName => buffer[functionName] = originalReadOnlyExceptionFunctions[functionName]);
+  });
 }
 
 // Turn off soft wrap setting for these editors so diffs properly align.

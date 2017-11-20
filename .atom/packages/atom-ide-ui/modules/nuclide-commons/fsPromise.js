@@ -182,6 +182,78 @@ let isNonNfsDirectory = (() => {
  * Promisified wrappers around fs-plus functions.
  */
 
+let copyFilePermissions = (() => {
+  var _ref8 = (0, _asyncToGenerator.default)(function* (sourcePath, destinationPath) {
+    try {
+      const { mode, uid, gid } = yield stat(sourcePath);
+      yield Promise.all([
+      // The user may not have permissions to use the uid/gid.
+      chown(destinationPath, uid, gid).catch(function () {}), chmod(destinationPath, mode)]);
+    } catch (e) {
+      // If the file does not exist, then ENOENT will be thrown.
+      if (e.code !== 'ENOENT') {
+        throw e;
+      }
+      // For new files, use the default process file creation mask.
+      yield chmod(destinationPath,
+      // $FlowIssue: umask argument is optional
+      0o666 & ~process.umask() // eslint-disable-line no-bitwise
+      );
+    }
+  });
+
+  return function copyFilePermissions(_x10, _x11) {
+    return _ref8.apply(this, arguments);
+  };
+})();
+
+/**
+ * TODO: the fs-plus `writeFile` implementation runs `mkdirp` first.
+ * We should use `fs.writeFile` and have callsites explicitly opt-in to this behaviour.
+ */
+
+
+let writeFileAtomic = (() => {
+  var _ref9 = (0, _asyncToGenerator.default)(function* (path, data, options) {
+    const tempFilePath = yield tempfile('nuclide');
+    try {
+      yield writeFile(tempFilePath, data, options);
+
+      // Expand the target path in case it contains symlinks.
+      let realPath = path;
+      try {
+        realPath = yield realpath(path);
+      } catch (e) {}
+      // Fallback to using the specified path if it cannot be expanded.
+      // Note: this is expected in cases where the remote file does not
+      // actually exist.
+
+
+      // Ensure file still has original permissions:
+      // https://github.com/facebook/nuclide/issues/157
+      // We update the mode of the temp file rather than the destination file because
+      // if we did the mv() then the chmod(), there would be a brief period between
+      // those two operations where the destination file might have the wrong permissions.
+      yield copyFilePermissions(realPath, tempFilePath);
+
+      // TODO: put renames into a queue so we don't write older save over new save.
+      // Use mv as fs.rename doesn't work across partitions.
+      yield mv(tempFilePath, realPath, { mkdirp: true });
+    } catch (err) {
+      yield unlink(tempFilePath);
+      throw err;
+    }
+  });
+
+  return function writeFileAtomic(_x12, _x13, _x14) {
+    return _ref9.apply(this, arguments);
+  };
+})();
+
+/**
+ * Promisified wrappers around fs functions.
+ */
+
 var _fs = _interopRequireDefault(require('fs'));
 
 var _fsPlus;
@@ -334,10 +406,6 @@ function copy(source, dest) {
   });
 }
 
-/**
- * TODO: the fs-plus `writeFile` implementation runs `mkdirp` first.
- * We should use `fs.writeFile` and have callsites explicitly opt-in to this behaviour.
- */
 function writeFile(filename, data, options) {
   return new Promise((resolve, reject) => {
     (_fsPlus || _load_fsPlus()).default.writeFile(filename, data, options, (err, result) => {
@@ -349,10 +417,6 @@ function writeFile(filename, data, options) {
     });
   });
 }
-
-/**
- * Promisified wrappers around fs functions.
- */
 
 function chmod(path, mode) {
   return new Promise((resolve, reject) => {
@@ -546,7 +610,9 @@ exports.default = {
   isNonNfsDirectory,
 
   copy,
+  copyFilePermissions,
   writeFile,
+  writeFileAtomic,
 
   chmod,
   chown,

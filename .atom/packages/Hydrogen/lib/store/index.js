@@ -6,13 +6,16 @@ import { isMultilanguageGrammar, getEmbeddedScope } from "./../utils";
 import _ from "lodash";
 
 import Config from "./../config";
+import * as codeManager from "./../code-manager";
 import MarkerStore from "./markers";
 import kernelManager from "./../kernel-manager";
 import Kernel from "./../kernel";
 
 import type { IObservableArray } from "mobx";
 
-class Store {
+const commutable = require("@nteract/commutable");
+
+export class Store {
   subscriptions = new CompositeDisposable();
   markers = new MarkerStore();
   runningKernels: IObservableArray<Kernel> = observable([]);
@@ -20,6 +23,7 @@ class Store {
   @observable startingKernels: Map<string, boolean> = new Map();
   @observable editor = atom.workspace.getActiveTextEditor();
   @observable grammar: ?atom$Grammar;
+  @observable configMapping: Map<string, ?mixed> = new Map();
 
   @computed
   get kernel(): ?Kernel {
@@ -32,6 +36,25 @@ class Store {
   @computed
   get filePath(): ?string {
     return this.editor ? this.editor.getPath() : null;
+  }
+
+  @computed
+  get notebook() {
+    const editor = this.editor;
+    if (!editor) {
+      return null;
+    }
+    // Should we consider starting off with a monocellNotebook ?
+    let notebook = commutable.emptyNotebook;
+    const cellRanges = codeManager.getCells(editor);
+    _.forEach(cellRanges, cell => {
+      const { start, end } = cell;
+      let source = codeManager.getTextInRange(editor, start, end);
+      source = source ? source : "";
+      const newCell = commutable.emptyCodeCell.set("source", source);
+      notebook = commutable.appendCellToNotebook(notebook, newCell);
+    });
+    return commutable.toJS(notebook);
   }
 
   @action
@@ -141,6 +164,14 @@ class Store {
     }
 
     this.grammar = grammar;
+  }
+
+  @action
+  setConfigValue(keyPath: string, newValue: ?mixed) {
+    if (!newValue) {
+      newValue = atom.config.get(keyPath);
+    }
+    this.configMapping.set(keyPath, newValue);
   }
 }
 

@@ -116,7 +116,7 @@ class CodeActionManager {
       for (const provider of _this._providerRegistry.getAllProvidersForEditor(editor)) {
         codeActionRequests.push(provider.getCodeActions(editor, range, diagnostics));
       }
-      return (0, (_collection || _load_collection()).arrayFlatten)((yield Promise.all(codeActionRequests)));
+      return (0, (_collection || _load_collection()).arrayFlatten)((0, (_collection || _load_collection()).arrayCompact)((yield Promise.all(codeActionRequests))));
     })();
   }
 

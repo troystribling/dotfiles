@@ -76,7 +76,7 @@ class RegExpFilter extends _react.Component {
     const size = this.props.size || 'sm';
     const buttonSize = getButtonSize(size);
     const inputWidth = this.props.inputWidth == null ? 200 : this.props.inputWidth;
-    const inputClassName = (0, (_classnames || _load_classnames()).default)('nuclide-ui-regexp-filter-input', this.props.inputClassName, { invalid });
+    const inputClassName = (0, (_classnames || _load_classnames()).default)('nuclide-ui-regexp-filter-input', this.props.inputClassName);
 
     return _react.createElement(
       (_ButtonGroup || _load_ButtonGroup()).ButtonGroup,
@@ -85,6 +85,7 @@ class RegExpFilter extends _react.Component {
         ref: el => {
           this._input = el;
         },
+        invalid: invalid,
         className: inputClassName,
         size: size,
         width: inputWidth,

@@ -909,6 +909,8 @@ var Observer = observer(function (_ref) {
     return children();
 });
 
+Observer.displayName = "Observer";
+
 Observer.propTypes = {
     children: function children(propValue, key, componentName, location, propFullName) {
         if (typeof propValue[key] !== "function") return new Error("Invalid prop `" + propFullName + "` of type `" + _typeof(propValue[key]) + "` supplied to" + " `" + componentName + "`, expected `function`.");
@@ -966,22 +968,22 @@ var Provider = (_temp = _class = function (_Component) {
     mobxStores: objectOrObservableObject.isRequired
 }, _temp);
 
-if (!react.Component) throw new Error('mobx-react requires React to be available');
-if (!mobx.extras) throw new Error('mobx-react requires mobx to be available');
+if (!react.Component) throw new Error("mobx-react requires React to be available");
+if (!mobx.extras) throw new Error("mobx-react requires mobx to be available");
 
 if (typeof reactDom.unstable_batchedUpdates === "function") mobx.extras.setReactionScheduler(reactDom.unstable_batchedUpdates);else if (typeof unstable_batchedUpdates$1 === "function") mobx.extras.setReactionScheduler(unstable_batchedUpdates$1);
 
 var onError = function onError(fn) {
-  return errorsReporter.on(fn);
+    return errorsReporter.on(fn);
 };
 
 /* DevTool support */
 // See: https://github.com/andykog/mobx-devtools/blob/d8976c24b8cb727ed59f9a0bc905a009df79e221/src/backend/installGlobalHook.js
 
-if ((typeof __MOBX_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ? 'undefined' : _typeof(__MOBX_DEVTOOLS_GLOBAL_HOOK__)) === 'object') {
-  var mobx$1 = { spy: mobx.spy, extras: mobx.extras };
-  var mobxReact = { renderReporter: renderReporter, componentByNodeRegistery: componentByNodeRegistery, trackComponents: trackComponents };
-  __MOBX_DEVTOOLS_GLOBAL_HOOK__.injectMobxReact(mobxReact, mobx$1);
+if ((typeof __MOBX_DEVTOOLS_GLOBAL_HOOK__ === "undefined" ? "undefined" : _typeof(__MOBX_DEVTOOLS_GLOBAL_HOOK__)) === "object") {
+    var mobx$1 = { spy: mobx.spy, extras: mobx.extras };
+    var mobxReact = { renderReporter: renderReporter, componentByNodeRegistery: componentByNodeRegistery, trackComponents: trackComponents };
+    __MOBX_DEVTOOLS_GLOBAL_HOOK__.injectMobxReact(mobxReact, mobx$1);
 }
 
 exports.propTypes = propTypes;

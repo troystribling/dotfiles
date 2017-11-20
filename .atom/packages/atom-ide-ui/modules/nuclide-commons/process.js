@@ -634,16 +634,19 @@ class ProcessExitError extends Error {
   constructor(exitCode, signal, proc, stderr, stdout) {
     // $FlowIssue: This isn't typed in the Flow node type defs
     const { spawnargs } = proc;
-    const commandName = spawnargs[0] === process.execPath ? spawnargs[1] : spawnargs[0];
-    super(`"${commandName}" failed with ${exitEventToMessage({
+    const argsAndCommand = spawnargs[0] === process.execPath ? spawnargs.slice(1) : spawnargs;
+    const [command, ...args] = argsAndCommand;
+    super(`"${command}" failed with ${exitEventToMessage({
       exitCode,
       signal
-    })}\n\n${stderr}`);
+    })}\n\n${stderr}\n\n${argsAndCommand.join(' ')}`);
     this.name = 'ProcessExitError';
     this.exitCode = exitCode;
     this.signal = signal;
     this.stderr = stderr;
     this.stdout = stdout;
+    this.command = command;
+    this.args = args;
     this.process = proc;
   }
 }

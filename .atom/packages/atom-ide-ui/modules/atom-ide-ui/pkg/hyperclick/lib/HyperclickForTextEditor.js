@@ -38,6 +38,8 @@ function _load_showTriggerConflictWarning() {
   return _showTriggerConflictWarning = _interopRequireDefault(require('./showTriggerConflictWarning'));
 }
 
+var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+
 var _log4js;
 
 function _load_log4js() {
@@ -46,20 +48,21 @@ function _load_log4js() {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const WARN_ABOUT_TRIGGER_CONFLICT_KEY = 'hyperclick.warnAboutTriggerConflict'; /**
-                                                                                * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                * All rights reserved.
-                                                                                *
-                                                                                * This source code is licensed under the BSD-style license found in the
-                                                                                * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                *
-                                                                                * 
-                                                                                * @format
-                                                                                */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 
 /* global localStorage */
 
+const WARN_ABOUT_TRIGGER_CONFLICT_KEY = 'hyperclick.warnAboutTriggerConflict';
 const LOADING_DELAY = 250;
 
 /**
@@ -68,6 +71,8 @@ const LOADING_DELAY = 250;
  */
 class HyperclickForTextEditor {
 
+  // A central "event bus" for all fetch events.
+  // TODO: Rx-ify all incoming events to avoid using a subject.
   constructor(textEditor, hyperclick) {
     this._textEditor = textEditor;
     this._textEditorView = atom.views.getView(textEditor);
@@ -75,11 +80,7 @@ class HyperclickForTextEditor {
     this._hyperclick = hyperclick;
 
     this._lastMouseEvent = null;
-    this._lastPosition = null;
-    // We store the original promise that we use to retrieve the last suggestion
-    // so callers can also await it to know when it's available.
-    this._lastSuggestionAtMousePromise = null;
-    // We store the last suggestion since we must await it immediately anyway.
+    // Cache the most recent suggestion so we can avoid unnecessary fetching.
     this._lastSuggestionAtMouse = null;
     this._navigationMarkers = null;
 
@@ -102,13 +103,17 @@ class HyperclickForTextEditor {
     }));
 
     this._isDestroyed = false;
+    this._fetchStream = new _rxjsBundlesRxMinJs.Subject();
+    this._suggestionStream = this._observeSuggestions().share();
 
     this._subscriptions.add((_featureConfig || _load_featureConfig()).default.observe(process.platform === 'darwin' ? 'hyperclick.darwinTriggerKeys' : process.platform === 'win32' ? 'hyperclick.win32TriggerKeys' : 'hyperclick.linuxTriggerKeys', newValue_ => {
       const newValue = newValue_;
       // For all Flow knows, newValue.split could return any old strings
       this._triggerKeys = new Set(newValue.split(','));
-    }));
+    }), this._suggestionStream.subscribe(suggestion => this._updateSuggestion(suggestion)));
   }
+  // Stored for testing.
+
 
   _setupMouseListeners() {
     const addMouseListeners = () => {
@@ -172,26 +177,8 @@ class HyperclickForTextEditor {
       clientY: mouseEvent.clientY
     };
 
-    // Don't fetch suggestions if the mouse is still in the same 'word', where
-    // 'word' is defined by the wordRegExp at the current position.
-    //
-    // If the last suggestion had multiple ranges, we have no choice but to
-    // fetch suggestions because the new word might be between those ranges.
-    // This should be ok because it will reuse that last suggestion until the
-    // mouse moves off of it.
-    const lastSuggestionIsNotMultiRange = !this._lastSuggestionAtMouse || !Array.isArray(this._lastSuggestionAtMouse.range);
-    if (this._isMouseAtLastWordRange() && lastSuggestionIsNotMultiRange) {
-      return;
-    }
-    const match = (0, (_range || _load_range()).wordAtPosition)(this._textEditor, this._getMousePositionAsBufferPosition());
-    this._lastWordRange = match != null ? match.range : null;
-
     if (this._isHyperclickEvent(mouseEvent)) {
-      // Clear the suggestion if the mouse moved out of the range.
-      if (!this._isMouseAtLastSuggestion()) {
-        this._clearSuggestion();
-      }
-      this._setSuggestionForLastMouseEvent();
+      this._fetchSuggestion(mouseEvent);
     } else {
       this._clearSuggestion();
     }
@@ -199,10 +186,12 @@ class HyperclickForTextEditor {
 
   _onMouseDown(event) {
     const mouseEvent = event;
-    const isHyperclickEvent = this._isHyperclickEvent(mouseEvent);
+    if (!this._isHyperclickEvent(mouseEvent)) {
+      return;
+    }
 
     // If hyperclick and multicursor are using the same trigger, prevent multicursor.
-    if (isHyperclickEvent && isMulticursorEvent(mouseEvent)) {
+    if (isMulticursorEvent(mouseEvent)) {
       mouseEvent.stopPropagation();
       if (localStorage.getItem(WARN_ABOUT_TRIGGER_CONFLICT_KEY) !== 'false') {
         localStorage.setItem(WARN_ABOUT_TRIGGER_CONFLICT_KEY, 'false');
@@ -210,15 +199,18 @@ class HyperclickForTextEditor {
       }
     }
 
-    if (!isHyperclickEvent || !this._isMouseAtLastSuggestion()) {
+    if (this._lastMouseEvent == null) {
+      return;
+    }
+    const lastPosition = this._getMousePositionAsBufferPosition(this._lastMouseEvent);
+    if (lastPosition == null || !this._isInLastSuggestion(lastPosition)) {
       return;
     }
 
     if (this._lastSuggestionAtMouse) {
       const lastSuggestionAtMouse = this._lastSuggestionAtMouse;
       // Move the cursor to the click location to force a navigation-stack push.
-      const newCursorPosition = this._getMousePositionAsBufferPosition();
-      this._textEditor.setCursorBufferPosition(newCursorPosition);
+      this._textEditor.setCursorBufferPosition(lastPosition);
 
       this._confirmSuggestion(lastSuggestionAtMouse);
       // Prevent the <meta-click> event from adding another cursor.
@@ -231,8 +223,8 @@ class HyperclickForTextEditor {
   _onKeyDown(event) {
     const mouseEvent = event;
     // Show the suggestion at the last known mouse position.
-    if (this._isHyperclickEvent(mouseEvent)) {
-      this._setSuggestionForLastMouseEvent();
+    if (this._isHyperclickEvent(mouseEvent) && this._lastMouseEvent != null) {
+      this._fetchSuggestion(this._lastMouseEvent);
     }
   }
 
@@ -245,81 +237,93 @@ class HyperclickForTextEditor {
 
   /**
    * Returns a `Promise` that's resolved when the latest suggestion's available.
+   * (Exposed for testing.)
    */
   getSuggestionAtMouse() {
-    return this._lastSuggestionAtMousePromise || Promise.resolve(null);
+    return this._suggestionStream.take(1).toPromise();
   }
 
-  _setSuggestionForLastMouseEvent() {
-    var _this = this;
+  _fetchSuggestion(mouseEvent) {
+    this._fetchStream.next(mouseEvent);
+  }
 
-    return (0, _asyncToGenerator.default)(function* () {
-      if (!_this._lastMouseEvent) {
-        return;
+  _observeSuggestions() {
+    return this._fetchStream.map(mouseEvent => {
+      if (mouseEvent == null) {
+        return null;
+      }
+      return this._getMousePositionAsBufferPosition(mouseEvent);
+    }).distinctUntilChanged((x, y) => {
+      if (x == null || y == null) {
+        return x == null === (y == null);
+      }
+      return x.compare(y) === 0;
+    }).filter(position => {
+      if (position == null) {
+        return true;
       }
 
-      const position = _this._getMousePositionAsBufferPosition();
-
-      if (_this._lastSuggestionAtMouse != null) {
-        const { range } = _this._lastSuggestionAtMouse;
-        if ((0, (_range2 || _load_range2()).isPositionInRange)(position, range)) {
-          return;
-        }
+      // Don't fetch suggestions if the mouse is still in the same 'word', where
+      // 'word' is defined by the wordRegExp at the current position.
+      //
+      // If the last suggestion had multiple ranges, we have no choice but to
+      // fetch suggestions because the new word might be between those ranges.
+      // This should be ok because it will reuse that last suggestion until the
+      // mouse moves off of it.
+      if ((this._lastSuggestionAtMouse == null || !Array.isArray(this._lastSuggestionAtMouse.range)) && this._isInLastWordRange(position)) {
+        return false;
       }
 
-      // if we don't have any prior hyperclick position data, or we don't
-      // have any prior suggestion data, or the cursor has moved since the
-      // last suggestion, then refetch hyperclick suggestions. Otherwise,
-      // we might be able to reuse it below.
-      if (!_this._lastPosition || !_this._lastSuggestionAtMousePromise || position.compare(_this._lastPosition) !== 0) {
-        _this._setLoading();
-        _this._lastPosition = position;
-
-        try {
-          _this._lastSuggestionAtMousePromise = _this._hyperclick.getSuggestion(_this._textEditor, position);
-          const promise = _this._lastSuggestionAtMousePromise;
-          const result = yield promise;
-          // Avoid race conditions where we start fetching for a different location.
-          if (_this._lastSuggestionAtMousePromise !== promise) {
-            return;
-          }
-          _this._lastSuggestionAtMouse = result;
-        } catch (e) {
-          (0, (_log4js || _load_log4js()).getLogger)('hyperclick').error('Error getting Hyperclick suggestion:', e);
-        } finally {
-          _this._doneLoading();
-        }
+      // Don't refetch if we're already inside the previously emitted suggestion.
+      if (this._isInLastSuggestion(position)) {
+        return false;
       }
 
-      // it's possible that the text editor buffer (and therefore this hyperclick
-      // provider for the editor) has been closed by the user since we
-      // asynchronously queried for suggestions.
-      if (_this._isDestroyed) {
-        return;
-      }
-
-      if (_this._lastSuggestionAtMouse && _this._isMouseAtLastSuggestion()) {
-        // Add the hyperclick markers if there's a new suggestion and it's under the mouse.
-        _this._updateNavigationMarkers(_this._lastSuggestionAtMouse.range);
+      return true;
+    }).do(position => {
+      if (position == null) {
+        this._lastWordRange = null;
       } else {
-        // Remove all the markers if we've finished loading and there's no suggestion.
-        _this._updateNavigationMarkers(null);
+        const match = (0, (_range || _load_range()).wordAtPosition)(this._textEditor, position);
+        this._lastWordRange = match != null ? match.range : null;
       }
-    })();
+    }).switchMap(position => {
+      if (position == null) {
+        return _rxjsBundlesRxMinJs.Observable.of(null);
+      }
+
+      return _rxjsBundlesRxMinJs.Observable.using(() => this._showLoading(), () => _rxjsBundlesRxMinJs.Observable.defer(() => this._hyperclick.getSuggestion(this._textEditor, position)).startWith(null) // Clear the previous suggestion immediately.
+      .catch(e => {
+        (0, (_log4js || _load_log4js()).getLogger)('hyperclick').error('Error getting Hyperclick suggestion:', e);
+        return _rxjsBundlesRxMinJs.Observable.of(null);
+      }));
+    }).distinctUntilChanged();
   }
 
-  _getMousePositionAsBufferPosition() {
+  _updateSuggestion(suggestion) {
+    this._lastSuggestionAtMouse = suggestion;
+    if (suggestion != null) {
+      // Add the hyperclick markers if there's a new suggestion and it's under the mouse.
+      this._updateNavigationMarkers(suggestion.range);
+    } else {
+      // Remove all the markers if we've finished loading and there's no suggestion.
+      this._updateNavigationMarkers(null);
+    }
+  }
+
+  _getMousePositionAsBufferPosition(mouseEvent) {
     const { component } = this._textEditorView;
 
     if (!component) {
       throw new Error('Invariant violation: "component"');
     }
 
-    if (!this._lastMouseEvent) {
-      throw new Error('Invariant violation: "this._lastMouseEvent"');
+    const screenPosition = component.screenPositionForMouseEvent(mouseEvent);
+    const screenLine = this._textEditor.lineTextForScreenRow(screenPosition.row);
+    if (screenPosition.column >= screenLine.length) {
+      // We shouldn't try to fetch suggestions for trailing whitespace.
+      return null;
     }
-
-    const screenPosition = component.screenPositionForMouseEvent(this._lastMouseEvent);
     try {
       return this._textEditor.bufferPositionForScreenPosition(screenPosition);
     } catch (error) {
@@ -332,36 +336,33 @@ class HyperclickForTextEditor {
     }
   }
 
-  _isMouseAtLastSuggestion() {
+  _isInLastSuggestion(position) {
     if (!this._lastSuggestionAtMouse) {
       return false;
     }
     const { range } = this._lastSuggestionAtMouse;
-    return (0, (_range2 || _load_range2()).isPositionInRange)(this._getMousePositionAsBufferPosition(), range);
+    return (0, (_range2 || _load_range2()).isPositionInRange)(position, range);
   }
 
-  _isMouseAtLastWordRange() {
+  _isInLastWordRange(position) {
     const lastWordRange = this._lastWordRange;
     if (lastWordRange == null) {
       return false;
     }
-    return (0, (_range2 || _load_range2()).isPositionInRange)(this._getMousePositionAsBufferPosition(), lastWordRange);
+    return (0, (_range2 || _load_range2()).isPositionInRange)(position, lastWordRange);
   }
 
   _clearSuggestion() {
-    this._doneLoading();
-    this._lastSuggestionAtMousePromise = null;
-    this._lastSuggestionAtMouse = null;
-    this._updateNavigationMarkers(null);
+    this._fetchStream.next(null);
   }
 
   _confirmSuggestionAtCursor() {
-    var _this2 = this;
+    var _this = this;
 
     return (0, _asyncToGenerator.default)(function* () {
-      const suggestion = yield _this2._hyperclick.getSuggestion(_this2._textEditor, _this2._textEditor.getCursorBufferPosition());
+      const suggestion = yield _this._hyperclick.getSuggestion(_this._textEditor, _this._textEditor.getCursorBufferPosition());
       if (suggestion) {
-        _this2._confirmSuggestion(suggestion);
+        _this._confirmSuggestion(suggestion);
       }
     })();
   }
@@ -402,21 +403,15 @@ class HyperclickForTextEditor {
     return event.shiftKey === this._triggerKeys.has('shiftKey') && event.ctrlKey === this._triggerKeys.has('ctrlKey') && event.altKey === this._triggerKeys.has('altKey') && event.metaKey === this._triggerKeys.has('metaKey');
   }
 
-  _setLoading() {
-    this._doneLoading();
-    this._loadingTimer = setTimeout(() => {
-      // Show the loading cursor.
+  // A subscription that encapsulates the cursor loading spinner.
+  // There should only be one subscription active at a given time!
+  _showLoading() {
+    return _rxjsBundlesRxMinJs.Observable.timer(LOADING_DELAY).switchMap(() => _rxjsBundlesRxMinJs.Observable.create(() => {
       this._textEditorView.classList.add('hyperclick-loading');
-      this._loadingTimer = null;
-    }, LOADING_DELAY);
-  }
-
-  _doneLoading() {
-    if (this._loadingTimer != null) {
-      clearTimeout(this._loadingTimer);
-      this._loadingTimer = null;
-    }
-    this._textEditorView.classList.remove('hyperclick-loading');
+      return () => {
+        this._textEditorView.classList.remove('hyperclick-loading');
+      };
+    })).subscribe();
   }
 
   dispose() {
