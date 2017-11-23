@@ -29,6 +29,7 @@ brewInstallIfNotInstalled pyenv
 brewInstallIfNotInstalled pyenv-virtualenv
 brewInstallIfNotInstalled wget
 brewInstallIfNotInstalled imagemagick
+brewInstallIfNotInstalled coreutils
 
 brew tap caskroom/cask
 
