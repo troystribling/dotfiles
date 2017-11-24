@@ -33,8 +33,7 @@
     pylsPlugins:
       pycodestyle:
         maxLineLength: 200
-      pyflakes:
-        enabled: false
+      pyflakes: {}
   "split-diff":
     diffWords: true
     ignoreWhitespace: true
