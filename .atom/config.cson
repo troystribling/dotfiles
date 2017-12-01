@@ -32,7 +32,7 @@
   "ide-python":
     pylsPlugins:
       pycodestyle:
-        maxLineLength: 200
+        maxLineLength: 220
       pyflakes: {}
   "split-diff":
     diffWords: true
