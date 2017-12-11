@@ -32,6 +32,7 @@ module.exports = function (pkg) {
     libc: env.LIBC,
     platform: env.npm_config_platform || process.platform,
     debug: false,
+    force: false,
     verbose: false,
     prebuild: true,
     compile: false,

@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-1171019-12256-88dhw8.l93ws46lxr/package.tgz",
+        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-1171019-12256-88dhw8.l93ws46lxr/package.tgz",
-        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-1171019-12256-88dhw8.l93ws46lxr/package.tgz",
+        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
+        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-1171019-12256-1v2vsvl.okqznwb3xr"
+      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-1171111-39196-180ogpx.21halwhfr"
     ]
   ],
-  "_from": "../d-1171019-12256-88dhw8.l93ws46lxr/package.tgz",
-  "_id": "Hydrogen@2.1.0",
+  "_from": "../d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
+  "_id": "Hydrogen@2.1.1",
   "_inCache": true,
   "_location": "/Hydrogen",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-1171019-12256-88dhw8.l93ws46lxr/package.tgz",
+    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-1171019-12256-88dhw8.l93ws46lxr/package.tgz",
-    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-1171019-12256-88dhw8.l93ws46lxr/package.tgz",
+    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
+    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-1171019-12256-88dhw8.l93ws46lxr/package.tgz",
-  "_shasum": "61fab373a8c0e29b2f0d300362971e370f0bd7e7",
+  "_resolved": "file:../d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
+  "_shasum": "b7ae8f3f74de58c6a05455cb33c34779d636307c",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-1171019-12256-88dhw8.l93ws46lxr/package.tgz",
-  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-1171019-12256-1v2vsvl.okqznwb3xr",
+  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
+  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-1171111-39196-180ogpx.21halwhfr",
   "activationCommands": {
     "atom-text-editor": [
       "hydrogen:start-local-kernel",
@@ -66,12 +66,12 @@
   "dependencies": {
     "@jupyterlab/services": "^0.51.0",
     "@nteract/commutable": "^2.1.2",
-    "@nteract/display-area": "^3.0.0",
+    "@nteract/display-area": "3.0.2",
     "@nteract/transform-plotly": "^3.0.0",
     "@nteract/transform-vega": "^3.0.0",
     "@nteract/transforms": "^3.0.0",
     "anser": "^1.4.4",
-    "atom-select-list": "^0.5.0",
+    "atom-select-list": "^0.6.0",
     "escape-carriage": "^1.2.0",
     "escape-string-regexp": "^1.0.5",
     "jmp": "^1.0.0",
@@ -153,5 +153,5 @@
     "precommit": "lint-staged",
     "prettier": "prettier --write 'lib/**/*.js' 'spec/**/*.js'"
   },
-  "version": "2.1.0"
+  "version": "2.1.1"
 }

@@ -98,6 +98,10 @@ export default class View {
 						this._handleAccChange = this._handleAccChange.bind(this);
 						this._handlePasswordChange = this._handlePasswordChange.bind(this);
 						this._handleUnlock = this._handleUnlock.bind(this);
+						this._linkClick = this._linkClick.bind(this);
+					}
+					_linkClick(event) {
+						atom.clipboard.write(this.state.account);
 					}
 					_handleAccChange(event) {
 						self.coinbase = event.target.value;
@@ -125,7 +129,11 @@ export default class View {
 							className: 'content'
 						}, React.createElement('div', {
 							className: 'row'
-						}, React.createElement('div', {className: 'icon icon-link'}), React.createElement('select', {
+						}, React.createElement('div', {
+							className: 'icon icon-link btn copy-btn btn-success',
+							onClick: this._linkClick
+						})
+						, React.createElement('select', {
 							onChange: this._handleAccChange,
 							value: this.state.account
 						}, accounts.map(function(account, i) {
@@ -168,7 +176,7 @@ export default class View {
 				}, React.createElement('input', {
 					type: 'submit',
 					value: 'Compile',
-					className: 'btn btn-success'
+					className: 'btn copy-btn btn-success'
 				}, null));
 			}
 		});

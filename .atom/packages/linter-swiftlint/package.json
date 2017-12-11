@@ -1,0 +1,92 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-40982-cbci7k.c78i1kyb9/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-40982-cbci7k.c78i1kyb9/package.tgz",
+        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-40982-cbci7k.c78i1kyb9/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-1171111-40982-148got0.bbvxtj4i"
+    ]
+  ],
+  "_from": "../d-1171111-40982-cbci7k.c78i1kyb9/package.tgz",
+  "_id": "linter-swiftlint@1.2.2",
+  "_inCache": true,
+  "_location": "/linter-swiftlint",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-40982-cbci7k.c78i1kyb9/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-40982-cbci7k.c78i1kyb9/package.tgz",
+    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-40982-cbci7k.c78i1kyb9/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-1171111-40982-cbci7k.c78i1kyb9/package.tgz",
+  "_shasum": "5a0449a6c2c6cf91834f6e92ef57a27fd0d90cce",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-40982-cbci7k.c78i1kyb9/package.tgz",
+  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-1171111-40982-148got0.bbvxtj4i",
+  "bugs": {
+    "url": "https://github.com/k2b6s9j/linter-swiftlint/issues"
+  },
+  "coffeelintConfig": {
+    "indentation": {
+      "level": "error",
+      "value": 2
+    },
+    "max_line_length": {
+      "value": 100,
+      "level": "error"
+    }
+  },
+  "dependencies": {
+    "atom-linter": "^9.0.0",
+    "atom-package-deps": "^4.0.1",
+    "fs-plus": "2.9.3"
+  },
+  "description": "Lint Swift files using swiftlint to offer style advice",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/k2b6s9j/linter-swiftlint#readme",
+  "keywords": [
+    "lint",
+    "swift",
+    "SwiftLint"
+  ],
+  "license": "MIT",
+  "main": "./lib/init",
+  "name": "linter-swiftlint",
+  "optionalDependencies": {},
+  "os": [
+    "darwin"
+  ],
+  "package-deps": [
+    "language-swift",
+    "linter"
+  ],
+  "providedServices": {
+    "linter": {
+      "versions": {
+        "1.0.0": "provideLinter"
+      }
+    }
+  },
+  "readme": "linter-swiftlint\n=========================\n\nThis linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to SwiftLint's styling advice. Used with files that have the `Swift` syntax.\n\n## Installation\n\nAs well, install [SwiftLint](https://github.com/realm/SwiftLint).\n\n### Plugin installation\n```\n$ apm install linter-swiftlint\n```\n\n## Settings\nYou can configure linter-swiftlint by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):\n```cson\n  \"linter-swiftlint\":\n    configurationPath: \".swiftlint.yml\"\n    swiftlintExecutablePath: \"/usr/local/bin/swiftlint\"\n```\n\n## Contributing\nIf you would like to contribute enhancements or fixes, please do the following:\n\n1. Fork the plugin repository.\n1. Hack on a separate topic branch created from the latest `master`.\n1. Commit and push the topic branch.\n1. Make a pull request.\n1. welcome to the club\n\nPlease note that modifications should follow these coding guidelines:\n\n- Indent is 2 spaces.\n- Code should pass coffeelint linter.\n- Vertical whitespace helps readability, don’t be afraid to use it.\n\nThank you for helping out!\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/k2b6s9j/linter-swiftlint.git"
+  },
+  "version": "1.2.2"
+}

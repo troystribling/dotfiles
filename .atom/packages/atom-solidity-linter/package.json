@@ -1,0 +1,85 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-1171111-41386-fvfyv2.wxkcz3erk9"
+    ]
+  ],
+  "_from": "../d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+  "_id": "atom-solidity-linter@0.0.8",
+  "_inCache": true,
+  "_location": "/atom-solidity-linter",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+  "_shasum": "033cdd1126ace520187e8d9a00eee6fba2df51a4",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-1171111-41386-fvfyv2.wxkcz3erk9",
+  "author": {
+    "name": "Ilya Drabenia"
+  },
+  "bugs": {
+    "url": "https://github.com/protofire/atom-solidity-linter/issues"
+  },
+  "dependencies": {
+    "atom-linter": "^10.0.0",
+    "atom-package-deps": "^4.6.0",
+    "solhint": "^1.1.8"
+  },
+  "description": "Integration of Solhint linter with Atom editor",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/protofire/atom-solidity-linter#readme",
+  "keywords": [
+    "solidity",
+    "solhint",
+    "ethereum",
+    "smart-contract"
+  ],
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "name": "atom-solidity-linter",
+  "optionalDependencies": {},
+  "package-deps": [
+    "linter:2.0.0"
+  ],
+  "providedServices": {
+    "linter": {
+      "versions": {
+        "2.0.0": "provideLinter"
+      }
+    }
+  },
+  "readme": "# Atom Solidity Linter\n\nThis is integration of [solhint](https://github.com/protofire/solhint) Solidity linter with Atom editor.\n\n### Configuration\n\nPlugin supports Solhint configuration files `.solhint.json`.\n\n### Installation\n\nOpen **Atom -> Preferences -> Install**. Type **solidity-linter**. You will see this package. Then press \"Install\".\n\n### Development Process\n\nFor run this plugin in development mode you need to execute next steps:\n\n  1. Clone this project from Github `git clone http://github.com/protofire/atom-solidity-linter` \n  2. Make `cd` to this directory\n  3. Link this project as dev package `apm link --dev`\n  4. Run atom in current directory `atom -d .`\n\n### License \n\nMIT\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/protofire/atom-solidity-linter.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.8"
+}

@@ -41,6 +41,9 @@ var execPath = process.env.npm_execpath || process.env.NPM_CLI_JS
 
 if (util.isYarnPath(execPath) && /node_modules/.test(process.cwd())) {
   // From yarn repository
+} else if (opts.force) {
+  log.warn('install', 'prebuilt binaries enforced with --force!')
+  log.warn('install', 'prebuilt binaries may be out of date!')
 } else if (!(typeof pkg._from === 'string')) {
   log.info('install', 'installing standalone, skipping download.')
   process.exit(1)

@@ -1177,16 +1177,10 @@ function identityComparer(a, b) {
     return a === b;
 }
 function structuralComparer(a, b) {
-    if (typeof a === "number" && typeof b === "number" && isNaN(a) && isNaN(b)) {
-        return true;
-    }
     return deepEqual(a, b);
 }
 function defaultComparer(a, b) {
-    if (typeof a === "number" && typeof b === "number" && isNaN(a) && isNaN(b)) {
-        return true;
-    }
-    return identityComparer(a, b);
+    return areBothNaN(a, b) || identityComparer(a, b);
 }
 var comparer = {
     identity: identityComparer,
@@ -1460,8 +1454,10 @@ var ComputedValue = (function () {
             });
         }
         var oldValue = this.value;
+        var wasSuspended = this.dependenciesState === exports.IDerivationState.NOT_TRACKING;
         var newValue = (this.value = this.computeValue(true));
-        return (isCaughtException(oldValue) ||
+        return (wasSuspended ||
+            isCaughtException(oldValue) ||
             isCaughtException(newValue) ||
             !this.equals(oldValue, newValue));
     };
@@ -1526,7 +1522,7 @@ var ComputedValue = (function () {
                 ? getMessage("m032")
                 : " * This computation will re-run if any of the following observables changes:\n    " + joinStrings(observing) + "\n    " + (this.isComputing && isTracking
                     ? " (... or any observable accessed during the remainder of the current run)"
-                    : "") + "\n\t" + getMessage("m038") + "\n\n  * If the outcome of this computation changes, the following observers will be re-run:\n    " + joinStrings(observers) + "\n"));
+                    : "") + "\n    " + getMessage("m038") + "\n\n  * If the outcome of this computation changes, the following observers will be re-run:\n    " + joinStrings(observers) + "\n"));
     };
     return ComputedValue;
 }());
@@ -1836,40 +1832,38 @@ function createObservable(v) {
     // otherwise, just box it
     return observable.box(v);
 }
-var IObservableFactories = (function () {
-    function IObservableFactories() {
-    }
-    IObservableFactories.prototype.box = function (value, name) {
+var observableFactories = {
+    box: function (value, name) {
         if (arguments.length > 2)
             incorrectlyUsedAsDecorator("box");
         return new ObservableValue(value, deepEnhancer, name);
-    };
-    IObservableFactories.prototype.shallowBox = function (value, name) {
+    },
+    shallowBox: function (value, name) {
         if (arguments.length > 2)
             incorrectlyUsedAsDecorator("shallowBox");
         return new ObservableValue(value, referenceEnhancer, name);
-    };
-    IObservableFactories.prototype.array = function (initialValues, name) {
+    },
+    array: function (initialValues, name) {
         if (arguments.length > 2)
             incorrectlyUsedAsDecorator("array");
         return new ObservableArray(initialValues, deepEnhancer, name);
-    };
-    IObservableFactories.prototype.shallowArray = function (initialValues, name) {
+    },
+    shallowArray: function (initialValues, name) {
         if (arguments.length > 2)
             incorrectlyUsedAsDecorator("shallowArray");
         return new ObservableArray(initialValues, referenceEnhancer, name);
-    };
-    IObservableFactories.prototype.map = function (initialValues, name) {
+    },
+    map: function (initialValues, name) {
         if (arguments.length > 2)
             incorrectlyUsedAsDecorator("map");
         return new ObservableMap(initialValues, deepEnhancer, name);
-    };
-    IObservableFactories.prototype.shallowMap = function (initialValues, name) {
+    },
+    shallowMap: function (initialValues, name) {
         if (arguments.length > 2)
             incorrectlyUsedAsDecorator("shallowMap");
         return new ObservableMap(initialValues, referenceEnhancer, name);
-    };
-    IObservableFactories.prototype.object = function (props, name) {
+    },
+    object: function (props, name) {
         if (arguments.length > 2)
             incorrectlyUsedAsDecorator("object");
         var res = {};
@@ -1878,16 +1872,16 @@ var IObservableFactories = (function () {
         // add properties
         extendObservable(res, props);
         return res;
-    };
-    IObservableFactories.prototype.shallowObject = function (props, name) {
+    },
+    shallowObject: function (props, name) {
         if (arguments.length > 2)
             incorrectlyUsedAsDecorator("shallowObject");
         var res = {};
         asObservableObject(res, name);
         extendShallowObservable(res, props);
         return res;
-    };
-    IObservableFactories.prototype.ref = function () {
+    },
+    ref: function () {
         if (arguments.length < 2) {
             // although ref creates actually a modifier descriptor, the type of the resultig properties
             // of the object is `T` in the end, when the descriptors are interpreted
@@ -1896,8 +1890,8 @@ var IObservableFactories = (function () {
         else {
             return refDecorator.apply(null, arguments);
         }
-    };
-    IObservableFactories.prototype.shallow = function () {
+    },
+    shallow: function () {
         if (arguments.length < 2) {
             // although ref creates actually a modifier descriptor, the type of the resultig properties
             // of the object is `T` in the end, when the descriptors are interpreted
@@ -1906,8 +1900,8 @@ var IObservableFactories = (function () {
         else {
             return shallowDecorator.apply(null, arguments);
         }
-    };
-    IObservableFactories.prototype.deep = function () {
+    },
+    deep: function () {
         if (arguments.length < 2) {
             // although ref creates actually a modifier descriptor, the type of the resultig properties
             // of the object is `T` in the end, when the descriptors are interpreted
@@ -1916,8 +1910,8 @@ var IObservableFactories = (function () {
         else {
             return deepDecorator.apply(null, arguments);
         }
-    };
-    IObservableFactories.prototype.struct = function () {
+    },
+    struct: function () {
         if (arguments.length < 2) {
             // although ref creates actually a modifier descriptor, the type of the resultig properties
             // of the object is `T` in the end, when the descriptors are interpreted
@@ -1926,15 +1920,11 @@ var IObservableFactories = (function () {
         else {
             return deepStructDecorator.apply(null, arguments);
         }
-    };
-    return IObservableFactories;
-}());
+    }
+};
 var observable = createObservable;
 // weird trick to keep our typings nicely with our funcs, and still extend the observable function
-// ES6 class methods aren't enumerable, can't use Object.keys
-Object.getOwnPropertyNames(IObservableFactories.prototype)
-    .filter(function (name) { return name !== "constructor"; })
-    .forEach(function (name) { return (observable[name] = IObservableFactories.prototype[name]); });
+Object.keys(observableFactories).forEach(function (name) { return (observable[name] = observableFactories[name]); });
 observable.deep.struct = observable.struct;
 observable.ref.struct = function () {
     if (arguments.length < 2) {
@@ -2247,7 +2237,13 @@ var ObservableMap = (function () {
     ObservableMap.prototype.replace = function (values) {
         var _this = this;
         transaction(function () {
-            _this.clear();
+            // grab all the keys that are present in the new map but not present in the current map
+            // and delete them from the map, then merge the new map
+            // this will cause reactions only on changed values
+            var newKeys = getMapLikeKeys(values);
+            var oldKeys = _this.keys();
+            var missingKeys = oldKeys.filter(function (k) { return newKeys.indexOf(k) === -1; });
+            missingKeys.forEach(function (k) { return _this.delete(k); });
             _this.merge(values);
         });
         return this;
@@ -2441,6 +2437,8 @@ function deepEqual(a, b) {
         return true;
     if (a === undefined && b === undefined)
         return true;
+    if (areBothNaN(a, b))
+        return true;
     if (typeof a !== "object")
         return a === b;
     var aIsArray = isArrayLike(a);
@@ -2496,6 +2494,9 @@ function createInstanceofPredicate(name, clazz) {
         return isObject(x) && x[propName] === true;
     };
 }
+function areBothNaN(a, b) {
+    return (typeof a === "number" && typeof b === "number" && isNaN(a) && isNaN(b));
+}
 /**
  * Returns whether the argument is an array, disregarding observability.
  */
@@ -2509,6 +2510,21 @@ function isES6Map(thing) {
     if (getGlobal().Map !== undefined && thing instanceof getGlobal().Map)
         return true;
     return false;
+}
+function getMapLikeKeys(map$$1) {
+    var keys;
+    if (isPlainObject(map$$1))
+        keys = Object.keys(map$$1);
+    else if (Array.isArray(map$$1))
+        keys = map$$1.map(function (_a) {
+            var key = _a[0];
+            return key;
+        });
+    else if (isMapLike(map$$1))
+        keys = Array.from(map$$1.keys());
+    else
+        fail("Cannot get keys from " + map$$1);
+    return keys;
 }
 function primitiveSymbol() {
     return (typeof Symbol === "function" && Symbol.toPrimitive) || "@@toPrimitive";
@@ -3662,7 +3678,6 @@ exports.isObservableMap = isObservableMap;
 exports.map = map;
 exports.transaction = transaction;
 exports.observable = observable;
-exports.IObservableFactories = IObservableFactories;
 exports.computed = computed;
 exports.isObservable = isObservable;
 exports.isComputed = isComputed;

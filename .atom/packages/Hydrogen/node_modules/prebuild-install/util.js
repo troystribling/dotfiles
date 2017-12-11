@@ -31,6 +31,12 @@ function urlTemplate (opts) {
   }
 
   var packageName = '{name}-v{version}-{runtime}-v{abi}-{platform}{libc}-{arch}.tar.gz'
+  var hostMirrorUrl = getHostMirrorUrl(opts)
+
+  if (hostMirrorUrl) {
+    return hostMirrorUrl + '/v{version}/' + packageName
+  }
+
   if (opts.pkg.binary) {
     return [
       opts.pkg.binary.host,
@@ -40,7 +46,13 @@ function urlTemplate (opts) {
       return trimSlashes(path)
     }).filter(Boolean).join('/')
   }
+
   return github(opts.pkg) + '/releases/download/v{version}/' + packageName
+}
+
+function getHostMirrorUrl (opts) {
+  var propName = 'npm_config_' + opts.pkg.name + '_binary_host'
+  return process.env[propName] || process.env[propName + '_mirror']
 }
 
 function trimSlashes (str) {
