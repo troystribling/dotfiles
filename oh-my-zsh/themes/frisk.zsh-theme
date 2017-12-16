@@ -1,5 +1,5 @@
 PROMPT=$'
-%{$fg_bold[cyan]%}%n@%m%{$reset_color%} $(git_prompt_info)$(bzr_prompt_info)%{$fg[yellow]%}%/%{$reset_color%}
+%{$fg_bold[cyan]%}%n@%M%{$reset_color%} $(git_prompt_info)$(bzr_prompt_info)%{$fg[yellow]%}%/%{$reset_color%}
 %{$fg_bold[green]%}➤ %{$reset_color%} '
 
 PROMPT2="%{$fg[yellow]%}%_> %{$reset_color%}"
