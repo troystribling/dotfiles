@@ -6,6 +6,7 @@
   core:
     disabledPackages: [
       "wrap-guide"
+      "linter"
     ]
     ignoredNames: [
       ".git"
@@ -32,7 +33,7 @@
   "ide-python":
     pylsPlugins:
       pycodestyle:
-        maxLineLength: 220
+        maxLineLength: 250
       pyflakes: {}
   "split-diff":
     diffWords: true
