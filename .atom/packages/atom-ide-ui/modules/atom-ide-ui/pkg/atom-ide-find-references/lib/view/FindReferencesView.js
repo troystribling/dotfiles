@@ -31,8 +31,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Number of files to show on every page.
-const PAGE_SIZE = 10;
-// Start loading more once the user scrolls within this many pixels of the bottom.
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -45,9 +43,12 @@ const PAGE_SIZE = 10;
  * @format
  */
 
+const PAGE_SIZE = 10;
+// Start loading more once the user scrolls within this many pixels of the bottom.
 const SCROLL_LOAD_THRESHOLD = 250;
 
 class FindReferencesView extends _react.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -80,7 +81,12 @@ class FindReferencesView extends _react.Component {
   }
 
   _onScroll(evt) {
-    const root = this.refs.root;
+    const root = this._root;
+
+    if (!(root != null)) {
+      throw new Error('Invariant violation: "root != null"');
+    }
+
     if (this.state.loading || root.clientHeight >= root.scrollHeight) {
       return;
     }
@@ -139,7 +145,9 @@ class FindReferencesView extends _react.Component {
         {
           className: 'find-references-files list-tree has-collapsable-children',
           onScroll: this._onScroll,
-          ref: 'root',
+          ref: el => {
+            this._root = el;
+          },
           tabIndex: '0' },
         children
       )

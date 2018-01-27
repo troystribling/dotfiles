@@ -28,8 +28,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  */
 
 class CodeSnippet extends _react.Component {
+
   componentDidMount() {
-    const editor = this.refs.editor.getTextEditor();
+    if (!(this._editor != null)) {
+      throw new Error('Invariant violation: "this._editor != null"');
+    }
+
+    const editor = this._editor.getTextEditor();
     const { grammar, highlights, startLine } = this.props;
 
     if (grammar) {
@@ -73,7 +78,9 @@ class CodeSnippet extends _react.Component {
         lineNumbers
       ),
       _react.createElement((_AtomInput || _load_AtomInput()).AtomInput, {
-        ref: 'editor',
+        ref: input => {
+          this._editor = input;
+        },
         initialValue: this.props.text,
         disabled: true,
         onClick: this.props.onClick

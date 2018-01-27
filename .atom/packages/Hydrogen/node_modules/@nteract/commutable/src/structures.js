@@ -110,8 +110,10 @@ function appendCellToNotebook(
   immCell: ImmutableCell
 ): ImmutableNotebook {
   return immnb.withMutations(nb => {
-    const cellStructure = {
+    // $FlowFixMe: Fixed by making ImmutableNotebook a typed Record.
+    const cellStructure: CellStructure = {
       cellOrder: nb.get("cellOrder"),
+      // $FlowFixMe: Fixed by making ImmutableNotebook a typed Record.
       cellMap: nb.get("cellMap")
     };
     const { cellOrder, cellMap } = appendCell(cellStructure, immCell);
@@ -128,6 +130,7 @@ function insertCellAt(
   return notebook.withMutations(nb =>
     nb
       .setIn(["cellMap", cellID], cell)
+      // $FlowFixMe: Fixed by making ImmutableNotebook a typed record.
       .set("cellOrder", nb.get("cellOrder").insert(index, cellID))
   );
 }
@@ -142,6 +145,7 @@ function insertCellAfter(
     notebook,
     cell,
     cellID,
+    // $FlowFixMe: Fixed by making ImmutableNotebook a typed record.
     notebook.get("cellOrder").indexOf(priorCellID) + 1
   );
 }

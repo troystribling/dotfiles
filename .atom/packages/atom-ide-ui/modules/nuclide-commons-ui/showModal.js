@@ -66,7 +66,9 @@ function showModal(contentFactory, options = defaults) {
     className: options.className
   });
   const shouldDismissOnClickOutsideModal = options.shouldDismissOnClickOutsideModal || (() => true);
+  const shouldDismissOnPressEscape = options.shouldDismissOnPressEscape || (() => true);
 
+  const element = atomPanel.getElement();
   const previouslyFocusedElement = document.activeElement;
   const disposable = new (_UniversalDisposable || _load_UniversalDisposable()).default(_rxjsBundlesRxMinJs.Observable.fromEvent(document, 'mousedown').subscribe(({ target }) => {
     if (!shouldDismissOnClickOutsideModal()) {
@@ -77,14 +79,20 @@ function showModal(contentFactory, options = defaults) {
       throw new Error('Invariant violation: "target instanceof Node"');
     }
 
-    if (!atomPanel.getItem().contains(target)) {
+    if (!atomPanel.getItem().contains(target) &&
+    // don't count clicks on notifications or tooltips as clicks 'outside'
+    target.closest('atom-notifications, .tooltip') == null) {
       atomPanel.hide();
     }
   }), atomPanel.onDidChangeVisible(visible => {
     if (!visible) {
       disposable.dispose();
     }
-  }), atom.commands.add('atom-workspace', 'core:cancel', () => disposable.dispose()), () => {
+  }), atom.commands.add('atom-workspace', 'core:cancel', () => {
+    if (shouldDismissOnPressEscape()) {
+      disposable.dispose();
+    }
+  }), () => {
     // Call onDismiss before unmounting the component and destroying the panel:
     if (options.onDismiss) {
       options.onDismiss();
@@ -99,8 +107,9 @@ function showModal(contentFactory, options = defaults) {
   _reactDom.default.render(_react.createElement(
     ModalContainer,
     null,
-    contentFactory(disposable.dispose.bind(disposable))
+    contentFactory({ dismiss: disposable.dispose.bind(disposable), element })
   ), hostElement);
+
   return disposable;
 }
 

@@ -36,14 +36,14 @@ let expectAsyncFailure = exports.expectAsyncFailure = (() => {
 })();
 
 /**
-  * This is useful for mocking a module that the module under test requires.
-  * After setting up the mocks, you must invalidate the require cache and then
-  * re-require the module under test so that it picks up the mocked
-  * dependencies.
-  *
-  * The require parameter is needed because require is bound differently in each
-  * file, and we need to execute this in the caller's context.
-  */
+ * This is useful for mocking a module that the module under test requires.
+ * After setting up the mocks, you must invalidate the require cache and then
+ * re-require the module under test so that it picks up the mocked
+ * dependencies.
+ *
+ * The require parameter is needed because require is bound differently in each
+ * file, and we need to execute this in the caller's context.
+ */
 
 
 /**

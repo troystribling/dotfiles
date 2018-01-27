@@ -114,9 +114,15 @@ class SuggestionList extends _react.Component {
 
     // Prevent scrolling the editor when scrolling the suggestion list.
     const stopPropagation = event => event.stopPropagation();
-    this.refs.scroller.addEventListener('mousewheel', stopPropagation);
+    const scroller = this._scroller;
+
+    if (!(scroller != null)) {
+      throw new Error('Invariant violation: "scroller != null"');
+    }
+
+    scroller.addEventListener('mousewheel', stopPropagation);
     this._subscriptions.add(new _atom.Disposable(() => {
-      this.refs.scroller.removeEventListener('mousewheel', stopPropagation);
+      scroller.removeEventListener('mousewheel', stopPropagation);
     }));
 
     const keydown = event => {
@@ -158,10 +164,16 @@ class SuggestionList extends _react.Component {
       'div',
       {
         className: 'popover-list select-list hyperclick-suggestion-list-scroller',
-        ref: 'scroller' },
+        ref: el => {
+          this._scroller = el;
+        } },
       _react.createElement(
         'ol',
-        { className: 'list-group', ref: 'selectionList' },
+        {
+          className: 'list-group',
+          ref: el => {
+            this._selectionList = el;
+          } },
         itemComponents
       )
     );
@@ -229,7 +241,12 @@ class SuggestionList extends _react.Component {
   }
 
   _updateScrollPosition() {
-    const listNode = this.refs.selectionList;
+    const listNode = this._selectionList;
+
+    if (!(listNode != null)) {
+      throw new Error('Invariant violation: "listNode != null"');
+    }
+
     const selectedNode = listNode.getElementsByClassName('selected')[0];
     (0, (_scrollIntoView || _load_scrollIntoView()).scrollIntoViewIfNeeded)(selectedNode, false);
   }

@@ -33,21 +33,29 @@ function _load_DatatipComponent() {
   return _DatatipComponent = require('./DatatipComponent');
 }
 
+var _isScrollable;
+
+function _load_isScrollable() {
+  return _isScrollable = _interopRequireDefault(require('./isScrollable'));
+}
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const LINE_END_MARGIN = 20; /**
-                             * Copyright (c) 2017-present, Facebook, Inc.
-                             * All rights reserved.
-                             *
-                             * This source code is licensed under the BSD-style license found in the
-                             * LICENSE file in the root directory of this source tree. An additional grant
-                             * of patent rights can be found in the PATENTS file in the same directory.
-                             *
-                             * 
-                             * @format
-                             */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
+const LINE_END_MARGIN = 20;
 
 let _mouseMove$;
 function documentMouseMove$() {
@@ -81,6 +89,18 @@ class PinnedDatatip {
     this._boundHandleMouseEnter = this.handleMouseEnter.bind(this);
     this._boundHandleMouseLeave = this.handleMouseLeave.bind(this);
     this._boundHandleCapturedClick = this.handleCapturedClick.bind(this);
+    this._checkedScrollable = false;
+    this._isScrollable = false;
+
+    this._subscriptions.add(_rxjsBundlesRxMinJs.Observable.fromEvent(this._hostElement, 'wheel').subscribe(e => {
+      if (!this._checkedScrollable) {
+        this._isScrollable = (0, (_isScrollable || _load_isScrollable()).default)(this._hostElement, e);
+        this._checkedScrollable = true;
+      }
+      if (this._isScrollable) {
+        e.stopPropagation();
+      }
+    }));
     this._hostElement.addEventListener('mouseenter', this._boundHandleMouseEnter);
     this._hostElement.addEventListener('mouseleave', this._boundHandleMouseLeave);
     this._subscriptions.add(new _atom.Disposable(() => {
@@ -163,6 +183,9 @@ class PinnedDatatip {
   handleCapturedClick(event) {
     if (this._isDragging) {
       event.stopPropagation();
+    } else {
+      // Have to re-check scrolling because the datatip size may have changed.
+      this._checkedScrollable = false;
     }
   }
 
@@ -179,7 +202,7 @@ class PinnedDatatip {
         _hostElement.style.left = (lineLength - range.end.column) * charWidth + LINE_END_MARGIN + _offset.x + 'px';
         break;
       case 'above-range':
-        _hostElement.style.bottom = _editor.getLineHeightInPixels() + _hostElement.clientHeight + _offset.y + 'px';
+        _hostElement.style.bottom = _editor.getLineHeightInPixels() + _hostElement.clientHeight - _offset.y + 'px';
         _hostElement.style.left = _offset.x + 'px';
         break;
       default:

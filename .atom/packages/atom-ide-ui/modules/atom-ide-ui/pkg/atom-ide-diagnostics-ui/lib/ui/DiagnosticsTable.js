@@ -444,6 +444,11 @@ function getIconName(classification) {
   if (kind === 'review') {
     return 'nuclicon-comment-discussion';
   }
+
+  if (!(severity !== 'Hint')) {
+    throw new Error('Invariant violation: "severity !== \'Hint\'"');
+  }
+
   switch (severity) {
     case 'Warning':
       return 'nuclicon-warning';

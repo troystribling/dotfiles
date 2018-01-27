@@ -5,6 +5,7 @@
   "main": "./lib/main.js",
   "version": "0.0.0",
   "description": "Provides code actions for diagnostics",
+  "author": "Nuclide : Diagnostics",
   "atomTestRunner": "../../../scripts/atom-test-runner.js",
   "consumedServices": {
     "code-actions": {
@@ -15,6 +16,11 @@
     "linter-indie": {
       "versions": {
         "2.0.0": "consumeIndie"
+      }
+    },
+    "diagnostics-store": {
+      "versions": {
+        "0.3.0": "consumeDiagnosticUpdates"
       }
     }
   },

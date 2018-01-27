@@ -5,9 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.__TEST__ = undefined;
 
-var _path = _interopRequireDefault(require('path'));
+var _vscodeUri;
 
-var _url = _interopRequireDefault(require('url'));
+function _load_vscodeUri() {
+  return _vscodeUri = _interopRequireDefault(require('vscode-uri'));
+}
+
+var _path = _interopRequireDefault(require('path'));
 
 var _os = _interopRequireDefault(require('os'));
 
@@ -19,23 +23,25 @@ function _load_string() {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// eslint-disable-next-line rulesdir/prefer-nuclide-uri
-const ARCHIVE_SEPARATOR = '!'; /**
-                                * Copyright (c) 2017-present, Facebook, Inc.
-                                * All rights reserved.
-                                *
-                                * This source code is licensed under the BSD-style license found in the
-                                * LICENSE file in the root directory of this source tree. An additional grant
-                                * of patent rights can be found in the PATENTS file in the same directory.
-                                *
-                                * 
-                                * @format
-                                */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 
 // NuclideUri's are either a local file path, or a URI
 // of the form nuclide://<host><path>
 //
 // This package creates, queries and decomposes NuclideUris.
+
+const ARCHIVE_SEPARATOR = '!';
+// eslint-disable-next-line rulesdir/prefer-nuclide-uri
 
 const KNOWN_ARCHIVE_EXTENSIONS = ['.jar', '.zip'];
 
@@ -303,11 +309,11 @@ function uriToNuclideUri(uri) {
     return windowsPathFromUri;
   }
 
-  const urlParts = _url.default.parse(_escapeSpecialCharacters(uri), false);
+  const lspUri = (_vscodeUri || _load_vscodeUri()).default.parse(uri);
   // flowlint-next-line sketchy-null-string:off
-  if (urlParts.protocol === 'file:' && urlParts.path) {
+  if (lspUri.scheme === 'file' && lspUri.path) {
     // only handle real files for now.
-    return urlParts.path;
+    return lspUri.path;
   } else if (isRemote(uri)) {
     return uri;
   } else {
@@ -323,7 +329,7 @@ function nuclideUriToUri(uri) {
   if (isRemote(uri)) {
     return uri;
   } else {
-    return 'file://' + uri;
+    return (_vscodeUri || _load_vscodeUri()).default.file(uri).toString();
   }
 }
 
@@ -697,15 +703,6 @@ function _isArchiveSeparator(path, index) {
     const extStart = index - ext.length;
     return path.indexOf(ext, extStart) === extStart;
   });
-}
-
-/**
- * The backslash and percent characters (\ %) are, unfortunately, valid symbols to be used in POSIX
- * paths. They, however, are being automatically "corrected" by node's `url.parse()` method if not
- * escaped properly.
- */
-function _escapeSpecialCharacters(uri) {
-  return uri.replace(/%/g, '%25').replace(/\\/g, '%5C');
 }
 
 function _testForIllegalUri(uri) {

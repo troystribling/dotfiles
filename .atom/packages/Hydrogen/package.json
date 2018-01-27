@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68827-t3rvar.bm5gtoi529/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
-        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68827-t3rvar.bm5gtoi529/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68827-t3rvar.bm5gtoi529/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-1171111-39196-180ogpx.21halwhfr"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118027-68827-1r1aya8.dzn2l3ow29"
     ]
   ],
-  "_from": "../d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
-  "_id": "Hydrogen@2.1.1",
+  "_from": "../d-118027-68827-t3rvar.bm5gtoi529/package.tgz",
+  "_id": "Hydrogen@2.2.2",
   "_inCache": true,
   "_location": "/Hydrogen",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68827-t3rvar.bm5gtoi529/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
-    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68827-t3rvar.bm5gtoi529/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68827-t3rvar.bm5gtoi529/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
-  "_shasum": "b7ae8f3f74de58c6a05455cb33c34779d636307c",
+  "_resolved": "file:../d-118027-68827-t3rvar.bm5gtoi529/package.tgz",
+  "_shasum": "87ef2f7dc2c0ecd3eec747466d168ba1d90d76ab",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-39196-5nm5jy.snvuqh0k9/package.tgz",
-  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-1171111-39196-180ogpx.21halwhfr",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68827-t3rvar.bm5gtoi529/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118027-68827-1r1aya8.dzn2l3ow29",
   "activationCommands": {
     "atom-text-editor": [
       "hydrogen:start-local-kernel",
@@ -64,23 +64,23 @@
     }
   },
   "dependencies": {
-    "@jupyterlab/services": "^0.51.0",
-    "@nteract/commutable": "^2.1.2",
-    "@nteract/display-area": "3.0.2",
-    "@nteract/transform-plotly": "^3.0.0",
-    "@nteract/transform-vega": "^3.0.0",
-    "@nteract/transforms": "^3.0.0",
+    "@jupyterlab/services": "^0.52.0",
+    "@nteract/commutable": "^3.0.4",
+    "@nteract/display-area": "^3.1.7",
+    "@nteract/transform-plotly": "^3.1.4",
+    "@nteract/transform-vega": "^3.0.5",
+    "@nteract/transforms": "^3.1.4",
     "anser": "^1.4.4",
-    "atom-select-list": "^0.6.0",
+    "atom-select-list": "^0.7.0",
     "escape-carriage": "^1.2.0",
     "escape-string-regexp": "^1.0.5",
     "jmp": "^1.0.0",
     "kernelspecs": "^2.0.0",
     "lodash": "^4.14.0",
     "mobx": "^3.3.0",
-    "mobx-react": "^4.3.4",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "mobx-react": "^4.3.5",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-rangeslider": "^2.1.0",
     "spawnteract": "^4.0.0",
     "tildify": "^1.2.0",
@@ -93,9 +93,9 @@
     "atom-jasmine2-test-runner": "^1.0.0",
     "enzyme": "^3.1.1",
     "enzyme-adapter-react-16": "^1.0.4",
-    "flow-bin": "^0.54.0",
+    "flow-bin": "^0.63.0",
     "husky": "^0.14.0",
-    "lint-staged": "^5.0.0",
+    "lint-staged": "^6.0.0",
     "markdox": "^0.1.10",
     "mobx-react-devtools": "^4.2.11",
     "prettier": "^1.8.2",
@@ -153,5 +153,5 @@
     "precommit": "lint-staged",
     "prettier": "prettier --write 'lib/**/*.js' 'spec/**/*.js'"
   },
-  "version": "2.1.1"
+  "version": "2.2.2"
 }

@@ -2,6 +2,7 @@
   "name": "nuclide-commons",
   "version": "0.4.0",
   "description": "Common Nuclide node modules.",
+  "author": "NEEDS OWNER",
   "license": "BSD-3-Clause",
   "homepage": "https://nuclide.io/",
   "repository": "https://github.com/facebook/nuclide/tree/master/modules/nuclide-commons",
@@ -22,9 +23,10 @@
     "mv": "2.1.1",
     "nullthrows": "1.0.0",
     "rimraf": "2.6.2",
-    "rxjs": "5.3.1",
+    "rxjs": "5.5.5",
     "shell-quote": "1.6.1",
     "temp": "0.8.3",
+    "vscode-uri": "1.0.1",
     "uuid": "3.0.1"
   },
   "devDependencies": {

@@ -254,6 +254,46 @@ let writeFileAtomic = (() => {
  * Promisified wrappers around fs functions.
  */
 
+/**
+ * A utility function to grab the last N bytes from a file. Attempts to do so
+ * without reading the entire file.
+ */
+let tailBytes = (() => {
+  var _ref10 = (0, _asyncToGenerator.default)(function* (file, maxBytes) {
+    if (maxBytes <= 0) {
+      throw new Error('tailbytes expects maxBytes > 0');
+    }
+
+    // Figure out the size so we know what strategy to use
+    const { size: file_size } = yield stat(file);
+
+    if (file_size > maxBytes) {
+      const fd = yield open(file, 'r');
+      const buffer = Buffer.alloc(maxBytes);
+      const bytesRead = yield read(fd, buffer, 0, // buffer offset
+      maxBytes, // length to read
+      file_size - maxBytes // file offset
+      );
+      yield close(fd);
+
+      /* If we meant to read the last 100 bytes but only read 50 bytes, then we've
+       * failed to read the last 100 bytes. So throw. In the future, someone
+       * could update this code to keep calling `read` until we read maxBytes.
+       */
+      if (bytesRead !== maxBytes) {
+        throw new Error(`Failed to tail file. Intended to read ${maxBytes} bytes but ` + `only read ${bytesRead} bytes`);
+      }
+      return buffer;
+    } else {
+      return readFile(file);
+    }
+  });
+
+  return function tailBytes(_x15, _x16) {
+    return _ref10.apply(this, arguments);
+  };
+})();
+
 var _fs = _interopRequireDefault(require('fs'));
 
 var _fsPlus;
@@ -442,6 +482,18 @@ function chown(path, uid, gid) {
   });
 }
 
+function close(fd) {
+  return new Promise((resolve, reject) => {
+    _fs.default.close(fd, err => {
+      if (err == null) {
+        resolve();
+      } else {
+        reject(err);
+      }
+    });
+  });
+}
+
 function lstat(path) {
   return new Promise((resolve, reject) => {
     _fs.default.lstat(path, (err, result) => {
@@ -477,6 +529,30 @@ function mv(sourcePath, destinationPath, options = {}) {
         reject(error);
       } else {
         resolve();
+      }
+    });
+  });
+}
+
+function open(path, flags, mode = 0o666) {
+  return new Promise((resolve, reject) => {
+    _fs.default.open(path, flags, mode, (err, fd) => {
+      if (err == null) {
+        resolve(fd);
+      } else {
+        reject(err);
+      }
+    });
+  });
+}
+
+function read(fd, buffer, offset, length, position) {
+  return new Promise((resolve, reject) => {
+    _fs.default.read(fd, buffer, offset, length, position, (err, bytesRead) => {
+      if (err == null) {
+        resolve(bytesRead);
+      } else {
+        reject(err);
       }
     });
   });
@@ -530,6 +606,18 @@ function realpath(path, cache) {
         resolve(result);
       } else {
         reject(err);
+      }
+    });
+  });
+}
+
+function access(path, mode) {
+  return new Promise((resolve, reject) => {
+    _fs.default.access(path, mode, err => {
+      if (err == null) {
+        resolve(true);
+      } else {
+        resolve(false);
       }
     });
   });
@@ -616,16 +704,21 @@ exports.default = {
 
   chmod,
   chown,
+  close,
   lstat,
   mkdir,
   mv,
+  open,
+  read,
   readFile,
   readdir,
   readlink,
   realpath,
   stat,
   symlink,
+  tailBytes,
   unlink,
   utimes,
-  rmdir
+  rmdir,
+  access
 };

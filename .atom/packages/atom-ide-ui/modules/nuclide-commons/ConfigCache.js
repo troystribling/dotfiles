@@ -35,8 +35,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 class ConfigCache {
 
-  constructor(configFileNames) {
+  constructor(configFileNames, searchStrategy = 'nearest') {
     this._configFileNames = configFileNames;
+    this._searchStrategy = searchStrategy;
     this._configCache = (0, (_lruCache || _load_lruCache()).default)({
       max: 200, // Want this to exceed the maximum expected number of open files + dirs.
       maxAge: 1000 * 30 // 30 seconds
@@ -59,13 +60,19 @@ class ConfigCache {
       const configDirs = yield Promise.all(_this._configFileNames.map(function (configFile) {
         return (_fsPromise || _load_fsPromise()).default.findNearestFile(configFile, path);
       }));
-      // Find the result with the greatest length (the closest match).
-      return configDirs.filter(Boolean).reduce(function (previous, configDir) {
-        if (previous == null || configDir.length > previous.length) {
-          return configDir;
-        }
-        return previous;
-      }, null);
+
+      if (_this._searchStrategy === 'nearest') {
+        // Find the result with the greatest length (the closest match).
+        return configDirs.filter(Boolean).reduce(function (previous, configDir) {
+          if (previous == null || configDir.length > previous.length) {
+            return configDir;
+          }
+          return previous;
+        }, null);
+      } else {
+        // Find the first match.
+        return configDirs.find(Boolean);
+      }
     })();
   }
 

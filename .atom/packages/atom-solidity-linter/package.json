@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68790-1nl0oyk.lj5k9jxlxr/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
-        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68790-1nl0oyk.lj5k9jxlxr/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68790-1nl0oyk.lj5k9jxlxr/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-1171111-41386-fvfyv2.wxkcz3erk9"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118027-68790-q8ajor.d9il766r"
     ]
   ],
-  "_from": "../d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
-  "_id": "atom-solidity-linter@0.0.8",
+  "_from": "../d-118027-68790-1nl0oyk.lj5k9jxlxr/package.tgz",
+  "_id": "atom-solidity-linter@0.0.11",
   "_inCache": true,
   "_location": "/atom-solidity-linter",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68790-1nl0oyk.lj5k9jxlxr/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
-    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68790-1nl0oyk.lj5k9jxlxr/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68790-1nl0oyk.lj5k9jxlxr/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
-  "_shasum": "033cdd1126ace520187e8d9a00eee6fba2df51a4",
+  "_resolved": "file:../d-118027-68790-1nl0oyk.lj5k9jxlxr/package.tgz",
+  "_shasum": "1773395d335a592d238608c6bb7055cec1798b26",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-1171111-41386-18g7b34.ygf4cuwhfr/package.tgz",
-  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-1171111-41386-fvfyv2.wxkcz3erk9",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68790-1nl0oyk.lj5k9jxlxr/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118027-68790-q8ajor.d9il766r",
   "author": {
     "name": "Ilya Drabenia"
   },
@@ -44,7 +44,7 @@
   "dependencies": {
     "atom-linter": "^10.0.0",
     "atom-package-deps": "^4.6.0",
-    "solhint": "^1.1.8"
+    "solhint": "^1.1.9"
   },
   "description": "Integration of Solhint linter with Atom editor",
   "devDependencies": {},
@@ -81,5 +81,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "0.0.8"
+  "version": "0.0.11"
 }

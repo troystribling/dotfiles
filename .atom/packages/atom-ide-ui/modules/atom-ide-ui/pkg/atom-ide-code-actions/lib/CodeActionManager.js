@@ -65,21 +65,25 @@ function _load_collection() {
 
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
+var _log4js;
+
+function _load_log4js() {
+  return _log4js = require('log4js');
+}
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
-const TIP_DELAY_MS = 500;
+const TIP_DELAY_MS = 500; /**
+                           * Copyright (c) 2017-present, Facebook, Inc.
+                           * All rights reserved.
+                           *
+                           * This source code is licensed under the BSD-style license found in the
+                           * LICENSE file in the root directory of this source tree. An additional grant
+                           * of patent rights can be found in the PATENTS file in the same directory.
+                           *
+                           * 
+                           * @format
+                           */
 
 class CodeActionManager {
 
@@ -98,8 +102,18 @@ class CodeActionManager {
     return disposable;
   }
 
+  consumeDiagnosticUpdates(diagnosticUpdater) {
+    this._diagnosticUpdater = diagnosticUpdater;
+    return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+      this._diagnosticUpdater = null;
+    });
+  }
+
   consumeIndie(register) {
-    const linterDelegate = register({ name: 'Code Actions' });
+    const linterDelegate = register({
+      name: 'Code Actions',
+      supportedMessageKinds: ['action']
+    });
     this._disposables.add(linterDelegate);
     this._linterDelegate = linterDelegate;
     return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
@@ -143,11 +157,11 @@ class CodeActionManager {
         return _rxjsBundlesRxMinJs.Observable.empty();
       }
       const destroyEvents = (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidDestroy.bind(editor));
-      const selections = (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidChangeSelectionRange.bind(editor)).switchMap(event => _rxjsBundlesRxMinJs.Observable.of(event.newBufferRange).delay(TIP_DELAY_MS) // Delay the emission of the range.
-      .startWith(null) // null the range immediately when selection changes.
-      ).distinctUntilChanged()
+      const selections = (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidChangeSelectionRange.bind(editor)).switchMap(event =>
       // Remove 0-character selections since it's just cursor movement.
-      .filter(range => range == null || !range.isEmpty()).takeUntil(destroyEvents);
+      event.newBufferRange.isEmpty() ? _rxjsBundlesRxMinJs.Observable.of(null) : _rxjsBundlesRxMinJs.Observable.of(event.newBufferRange).delay(TIP_DELAY_MS) // Delay the emission of the range.
+      .startWith(null) // null the range immediately when selection changes.
+      ).distinctUntilChanged().takeUntil(destroyEvents);
       return selections.map(range => range == null ? null : { editor, range });
     }).switchMap(
     // Get a message for the provided selection.
@@ -160,7 +174,8 @@ class CodeActionManager {
       if (file == null) {
         return _rxjsBundlesRxMinJs.Observable.empty();
       }
-      return _rxjsBundlesRxMinJs.Observable.fromPromise(this._genAllCodeActions(editor, range, [])).switchMap(actions => {
+      const diagnostics = this._diagnosticUpdater == null ? [] : this._diagnosticUpdater.getFileMessageUpdates(file).messages.filter(message => message.range && message.range.intersectsWith(range));
+      return _rxjsBundlesRxMinJs.Observable.fromPromise(this._genAllCodeActions(editor, range, diagnostics)).switchMap(actions => {
         // Only produce a message if we have actions to display.
         if (actions.length > 0) {
           return actionsToMessage({ file, position: range }, actions);
@@ -168,7 +183,10 @@ class CodeActionManager {
           return _rxjsBundlesRxMinJs.Observable.empty();
         }
       });
-    }).distinctUntilChanged().subscribe(message => {
+    }).distinctUntilChanged().catch((e, caught) => {
+      (0, (_log4js || _load_log4js()).getLogger)('code-actions').error('Error getting code actions on selection', e);
+      return caught;
+    }).subscribe(message => {
       if (this._linterDelegate == null) {
         return;
       }

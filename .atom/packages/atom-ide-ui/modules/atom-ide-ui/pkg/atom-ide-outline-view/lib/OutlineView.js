@@ -5,6 +5,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.OutlineView = undefined;
 
+var _HighlightedText;
+
+function _load_HighlightedText() {
+  return _HighlightedText = _interopRequireDefault(require('nuclide-commons-ui/HighlightedText'));
+}
+
 var _UniversalDisposable;
 
 function _load_UniversalDisposable() {
@@ -17,6 +23,12 @@ var _classnames;
 
 function _load_classnames() {
   return _classnames = _interopRequireDefault(require('classnames'));
+}
+
+var _matchIndexesToRanges;
+
+function _load_matchIndexesToRanges() {
+  return _matchIndexesToRanges = _interopRequireDefault(require('nuclide-commons/matchIndexesToRanges'));
 }
 
 var _analytics;
@@ -55,27 +67,9 @@ function _load_OutlineViewSearch() {
   return _OutlineViewSearch = require('./OutlineViewSearch');
 }
 
-var _groupMatchIndexes;
-
-function _load_groupMatchIndexes() {
-  return _groupMatchIndexes = _interopRequireDefault(require('nuclide-commons/groupMatchIndexes'));
-}
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
 
 const TOKEN_KIND_TO_CLASS_NAME_MAP = {
   keyword: 'syntax--keyword',
@@ -87,7 +81,17 @@ const TOKEN_KIND_TO_CLASS_NAME_MAP = {
   whitespace: '',
   plain: '',
   type: 'syntax--support syntax--type'
-};
+}; /**
+    * Copyright (c) 2017-present, Facebook, Inc.
+    * All rights reserved.
+    *
+    * This source code is licensed under the BSD-style license found in the
+    * LICENSE file in the root directory of this source tree. An additional grant
+    * of patent rights can be found in the PATENTS file in the same directory.
+    *
+    * 
+    * @format
+    */
 
 class OutlineView extends _react.PureComponent {
   constructor(...args) {
@@ -386,8 +390,11 @@ function renderItem(outline, searchResult) {
       return toReturn;
     }));
   } else if (outline.plainText != null) {
-    const textWithMatching = searchResult && searchResult.matchingCharacters ? (0, (_groupMatchIndexes || _load_groupMatchIndexes()).default)(outline.plainText, searchResult.matchingCharacters, renderMatchedSubsequence, renderUnmatchedSubsequence) : outline.plainText;
-    r.push(...textWithMatching);
+    const textWithMatching = searchResult && searchResult.matchingCharacters ? _react.createElement((_HighlightedText || _load_HighlightedText()).default, {
+      highlightedRanges: (0, (_matchIndexesToRanges || _load_matchIndexesToRanges()).default)(searchResult.matchingCharacters),
+      text: outline.plainText || ''
+    }) : outline.plainText;
+    r.push(textWithMatching);
   } else {
     r.push('Missing text');
   }
@@ -404,27 +411,11 @@ function renderTextToken(token, index, searchResult, offset) {
   return _react.createElement(
     'span',
     { className: className, key: index },
-    searchResult && searchResult.matchingCharacters ? (0, (_groupMatchIndexes || _load_groupMatchIndexes()).default)(token.value, searchResult.matchingCharacters.map(el => el - offset).filter(el => el >= 0 && el < token.value.length), renderMatchedSubsequence, renderUnmatchedSubsequence) : token.value
+    searchResult && searchResult.matchingCharacters ? _react.createElement((_HighlightedText || _load_HighlightedText()).default, {
+      highlightedRanges: (0, (_matchIndexesToRanges || _load_matchIndexesToRanges()).default)(searchResult.matchingCharacters.map(el => el - offset).filter(el => el >= 0 && el < token.value.length)),
+      text: token.value
+    }) : token.value
   );
-}
-
-function renderSubsequence(seq, props) {
-  return _react.createElement(
-    'span',
-    props,
-    seq
-  );
-}
-
-function renderUnmatchedSubsequence(seq, key) {
-  return renderSubsequence(seq, { key });
-}
-
-function renderMatchedSubsequence(seq, key) {
-  return renderSubsequence(seq, {
-    key,
-    className: 'outline-view-match'
-  });
 }
 
 function renderTrees(editor, outlines, searchResults) {

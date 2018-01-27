@@ -1,5 +1,5 @@
 /* @flow */
-import React from "react";
+import * as React from "react";
 
 import { objectToReactElement } from "./object-to-react";
 import { cloneDeep } from "lodash";
@@ -25,7 +25,7 @@ export default class VDOM extends React.Component<Props> {
       return objectToReactElement(obj);
     } catch (err) {
       return (
-        <div>
+        <React.Fragment>
           <pre
             style={{
               backgroundColor: "ghostwhite",
@@ -39,7 +39,7 @@ export default class VDOM extends React.Component<Props> {
             There was an error rendering VDOM data from the kernel or notebook
           </pre>
           <code>{err.toString()}</code>
-        </div>
+        </React.Fragment>
       );
     }
   }

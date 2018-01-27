@@ -244,7 +244,7 @@ class Activation {
       const packageStates = this._model.toObservable();
       const updaters = packageStates.map(state => state.diagnosticUpdater).distinctUntilChanged();
 
-      const diagnosticsStream = updaters.switchMap(updater => updater == null ? _rxjsBundlesRxMinJs.Observable.of([]) : (0, (_event || _load_event()).observableFromSubscribeFunction)(updater.observeMessages)).let((0, (_observable || _load_observable()).fastDebounce)(100)).startWith([]);
+      const diagnosticsStream = updaters.switchMap(updater => updater == null ? _rxjsBundlesRxMinJs.Observable.of([]) : (0, (_event || _load_event()).observableFromSubscribeFunction)(updater.observeMessages)).map(diagnostics => diagnostics.filter(d => d.type !== 'Hint')).let((0, (_observable || _load_observable()).fastDebounce)(100)).startWith([]);
 
       const showTracesStream = (_featureConfig || _load_featureConfig()).default.observeAsStream(SHOW_TRACES_SETTING);
       const setShowTraces = showTraces => {
@@ -266,8 +266,9 @@ class Activation {
 
       const uiConfigStream = updaters.switchMap(updater => updater == null ? _rxjsBundlesRxMinJs.Observable.of([]) : (0, (_event || _load_event()).observableFromSubscribeFunction)(updater.observeUiConfig.bind(updater)));
 
-      // $FlowFixMe: exceeds number of args defined in flow-typed definition
-      this._globalViewStates = _rxjsBundlesRxMinJs.Observable.combineLatest(diagnosticsStream, filterByActiveTextEditorStream, pathToActiveTextEditorStream, showTracesStream, showDirectoryColumnStream, autoVisibilityStream, supportedMessageKindsStream, uiConfigStream, (diagnostics, filterByActiveTextEditor, pathToActiveTextEditor, showTraces, showDirectoryColumn, autoVisibility, supportedMessageKinds, uiConfig) => ({
+      this._globalViewStates = _rxjsBundlesRxMinJs.Observable.combineLatest(diagnosticsStream, filterByActiveTextEditorStream, pathToActiveTextEditorStream, showTracesStream, showDirectoryColumnStream, autoVisibilityStream, supportedMessageKindsStream, uiConfigStream,
+      // $FlowFixMe
+      (diagnostics, filterByActiveTextEditor, pathToActiveTextEditor, showTraces, showDirectoryColumn, autoVisibility, supportedMessageKinds, uiConfig) => ({
         diagnostics,
         filterByActiveTextEditor,
         pathToActiveTextEditor,
@@ -418,7 +419,11 @@ function getActiveEditorPaths() {
 }
 
 function getEditorDiagnosticUpdates(editor, diagnosticUpdater) {
-  return (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidChangePath.bind(editor)).startWith(editor.getPath()).switchMap(filePath => filePath != null ? (0, (_event || _load_event()).observableFromSubscribeFunction)(cb => diagnosticUpdater.observeFileMessages(filePath, cb)) : _rxjsBundlesRxMinJs.Observable.empty()).takeUntil((0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidDestroy.bind(editor)));
+  return (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidChangePath.bind(editor)).startWith(editor.getPath()).switchMap(filePath => filePath != null ? (0, (_event || _load_event()).observableFromSubscribeFunction)(cb => diagnosticUpdater.observeFileMessages(filePath, cb)) : _rxjsBundlesRxMinJs.Observable.empty()).map(diagnosticMessages => {
+    return Object.assign({}, diagnosticMessages, {
+      messages: diagnosticMessages.messages.filter(diagnostic => diagnostic.type !== 'Hint')
+    });
+  }).takeUntil((0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidDestroy.bind(editor)));
 }
 
 (0, (_createPackage || _load_createPackage()).default)(module.exports, Activation);

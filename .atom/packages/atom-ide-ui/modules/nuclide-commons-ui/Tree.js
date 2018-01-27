@@ -145,7 +145,10 @@ class NestedTreeItem extends _react.Component {
         tabIndex: selected ? '0' : '-1' },
       title == null ? null : _react.createElement(
         'div',
-        { className: 'list-item', ref: node => this._itemNode = node },
+        {
+          tabIndex: -1,
+          className: 'native-key-bindings list-item',
+          ref: node => this._itemNode = node },
         title
       ),
       _react.createElement(

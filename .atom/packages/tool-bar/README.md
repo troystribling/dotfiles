@@ -1,8 +1,9 @@
 # Atom Tool Bar
 
 [![Travis CI](https://travis-ci.org/suda/tool-bar.svg?branch=master)](https://travis-ci.org/suda/tool-bar)
-[![Circle CI](https://circleci.com/gh/suda/tool-bar/tree/master.svg?style=svg)](https://circleci.com/gh/suda/tool-bar/tree/master)
+[![Circle CI](https://circleci.com/gh/suda/tool-bar/tree/master.svg?style=shield)](https://circleci.com/gh/suda/tool-bar/tree/master)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/xtm6u3sn3oil50da?svg=true)](https://ci.appveyor.com/project/suda/tool-bar)
+[![apm](https://img.shields.io/apm/dm/tool-bar.svg)]()
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/suda/tool-bar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This package provides extensible tool bar for Atom.
@@ -45,6 +46,11 @@ On which edge of the editor should the tool bar appear. Possible options:
 
 When on top/bottom, expand to full window width.
 
+### Use TouchBar
+
+If your computer is equipped with a TouchBar (only Apple MacBook Pro series
+currently) it can display up to seven tool bar buttons there.
+
 ## Plugins
 
 *   [Flex Tool Bar](https://atom.io/packages/flex-tool-bar)
@@ -79,7 +85,7 @@ Make sure the following properties are part of your `package.json`.
 }
 ```
 
-We recommend using [Atom-Package-Deps](https://github.com/steelbrain/package-deps) 
+We recommend using [Atom-Package-Deps](https://github.com/steelbrain/package-deps)
 in your package for installing dependency packages like this package.
 
 ### Main package file
@@ -153,10 +159,16 @@ export function consumeToolBar(getToolBar) {
         console.log(data);
       },
       'alt+shift': 'application:cmd-5',       // Multiple modifiers
-      'alt+ctrl+shift': 'application:cmd-6'   // All modifiers 
+      'alt+ctrl+shift': 'application:cmd-6'   // All modifiers
     },
     data: 'foo'
   });
+
+  // Calling multiple callbacks at once
+  toolBar.addButton({
+    icon: 'octoface',
+    callback: ['application:cmd-1', 'application:cmd-2']
+  });  
 
   // Adding spacer and button at the beginning of the tool bar
   toolBar.addSpacer({priority: 10});
@@ -188,7 +200,7 @@ The remaining properties `tooltip` (default there is no tooltip),
 `iconset` (defaults to `Octicons`), `data` and `priority` (defaults `50`)
 are optional.
 
-The return value of this method shares another method called 
+The return value of this method shares another method called
 `setEnabled(enabled)` to enable or disable the button.
 
 ### `.addSpacer({priority})`
@@ -215,7 +227,7 @@ cleanup when the `tool-bar` is deactivated but your package continues running.
 *   [FontAwesome](http://fortawesome.github.io/Font-Awesome) (`fa`)
 *   [Foundation](http://zurb.com/playground/foundation-icon-fonts-3) (`fi`)
 *   [IcoMoon](https://icomoon.io) (`icomoon`)
-*   [Devicon](http://devicon.fr) (`devicon`)
+*   [Devicon](http://konpa.github.io/devicon/) (`devicon`)
 *   [MaterialDesignIcons](https://materialdesignicons.com/) (`mdi`)
 
 ## Supported commands

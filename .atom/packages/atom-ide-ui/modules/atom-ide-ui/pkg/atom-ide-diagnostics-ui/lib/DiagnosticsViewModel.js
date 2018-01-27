@@ -123,11 +123,12 @@ class DiagnosticsViewModel {
     _initialiseProps.call(this);
 
     // Memoize `_filterDiagnostics()`
-    this._filterDiagnostics = (0, (_memoizeUntilChanged || _load_memoizeUntilChanged()).default)(this._filterDiagnostics, (diagnostics, pattern, hiddenGroups) => ({
+    this._filterDiagnostics = (0, (_memoizeUntilChanged || _load_memoizeUntilChanged()).default)(this._filterDiagnostics, (diagnostics, pattern, hiddenGroups, filterPath) => ({
       diagnostics,
       pattern,
-      hiddenGroups
-    }), (a, b) => patternsAreEqual(a.pattern, b.pattern) && (0, (_collection || _load_collection()).areSetsEqual)(a.hiddenGroups, b.hiddenGroups) && (0, (_collection || _load_collection()).arrayEqual)(a.diagnostics, b.diagnostics));
+      hiddenGroups,
+      filterPath
+    }), (a, b) => patternsAreEqual(a.pattern, b.pattern) && (0, (_collection || _load_collection()).areSetsEqual)(a.hiddenGroups, b.hiddenGroups) && (0, (_collection || _load_collection()).arrayEqual)(a.diagnostics, b.diagnostics) && a.filterPath === b.filterPath);
 
     const { pattern, invalid } = (0, (_RegExpFilter || _load_RegExpFilter()).getFilterPattern)('', false);
     this._model = new (_Model || _load_Model()).default({
@@ -145,7 +146,7 @@ class DiagnosticsViewModel {
     // and unchanging callbacks, to get the props for our component.
     const props = _rxjsBundlesRxMinJs.Observable.combineLatest(globalStates, this._model.toObservable(), visibility, (globalState, instanceState, isVisible) => Object.assign({}, globalState, instanceState, {
       isVisible,
-      diagnostics: this._filterDiagnostics(globalState.diagnostics, instanceState.textFilter.pattern, instanceState.hiddenGroups),
+      diagnostics: this._filterDiagnostics(globalState.diagnostics, instanceState.textFilter.pattern, instanceState.hiddenGroups, globalState.filterByActiveTextEditor ? globalState.pathToActiveTextEditor : null),
       onTypeFilterChange: this._handleTypeFilterChange,
       onTextFilterChange: this._handleTextFilterChange,
       selectMessage: this._selectMessage,
@@ -157,7 +158,6 @@ class DiagnosticsViewModel {
   }
 
   // If autoVisibility setting is on, then automatically show/hide on changes.
-  // Otherwise mute the props stream to prevent unnecessary updates.
   _trackVisibility(props) {
     let lastDiagnostics = [];
     return props.do(newProps => {
@@ -234,9 +234,12 @@ class DiagnosticsViewModel {
    */
 
 
-  _filterDiagnostics(diagnostics, pattern, hiddenGroups) {
+  _filterDiagnostics(diagnostics, pattern, hiddenGroups, filterByPath) {
     return diagnostics.filter(message => {
       if (hiddenGroups.has((_GroupUtils || _load_GroupUtils()).getGroup(message))) {
+        return false;
+      }
+      if (filterByPath != null && message.filePath !== filterByPath) {
         return false;
       }
       if (pattern == null) {

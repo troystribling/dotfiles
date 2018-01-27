@@ -7,14 +7,14 @@ exports.DatatipManager = undefined;
 
 var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));
 
-let getTopDatatipAndProvider = (() => {
+let getDatatipResults = (() => {
   var _ref5 = (0, _asyncToGenerator.default)(function* (providers, editor, position, invoke) {
     const filteredDatatipProviders = Array.from(providers.getAllProvidersForEditor(editor));
     if (filteredDatatipProviders.length === 0) {
-      return null;
+      return [];
     }
 
-    const datatipPromises = filteredDatatipProviders.map((() => {
+    const promises = filteredDatatipProviders.map((() => {
       var _ref6 = (0, _asyncToGenerator.default)(function* (provider) {
         const name = getProviderName(provider);
         const timingTracker = new (_analytics || _load_analytics()).default.TimingTracker(name + '.datatip');
@@ -42,18 +42,28 @@ let getTopDatatipAndProvider = (() => {
         return _ref6.apply(this, arguments);
       };
     })());
-
-    return (0, (_promise || _load_promise()).asyncFind)(datatipPromises, function (p) {
-      return p;
-    });
+    if ((_featureConfig || _load_featureConfig()).default.get('atom-ide-datatip.onlyTopDatatip')) {
+      const result = yield (0, (_promise || _load_promise()).asyncFind)(promises, function (x) {
+        return x;
+      });
+      return result != null ? [result] : [];
+    } else {
+      return (yield Promise.all(promises)).filter(Boolean);
+    }
   });
 
-  return function getTopDatatipAndProvider(_x, _x2, _x3, _x4) {
+  return function getDatatipResults(_x, _x2, _x3, _x4) {
     return _ref5.apply(this, arguments);
   };
 })();
 
 var _atom = require('atom');
+
+var _promise;
+
+function _load_promise() {
+  return _promise = require('nuclide-commons/promise');
+}
 
 var _react = _interopRequireWildcard(require('react'));
 
@@ -97,18 +107,6 @@ function _load_performanceNow() {
 
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
-var _collection;
-
-function _load_collection() {
-  return _collection = require('nuclide-commons/collection');
-}
-
-var _promise;
-
-function _load_promise() {
-  return _promise = require('nuclide-commons/promise');
-}
-
 var _log4js;
 
 function _load_log4js() {
@@ -137,6 +135,12 @@ var _DatatipComponent;
 
 function _load_DatatipComponent() {
   return _DatatipComponent = require('./DatatipComponent');
+}
+
+var _isScrollable;
+
+function _load_isScrollable() {
+  return _isScrollable = _interopRequireDefault(require('./isScrollable'));
 }
 
 var _PinnedDatatip;
@@ -283,6 +287,7 @@ class DatatipManagerForEditor {
     this._heldKeys = new Set();
     this._interactedWith = false;
     this._checkedScrollable = false;
+    this._isScrollable = false;
     this._lastHiddenTime = 0;
     this._lastFetchedFromCursorPosition = false;
     this._shouldDropNextMouseMoveAfterFocus = false;
@@ -350,18 +355,12 @@ class DatatipManagerForEditor {
       // We'll mark this as an 'interaction' only if the scroll target was scrollable.
       // This requires going over the ancestors, so only check this once.
       // If it comes back as false, we won't bother checking again.
-      if (!this._interactedWith && !this._checkedScrollable) {
-        let node = e.target;
-        while (node != null && node !== this._datatipElement) {
-          if (node.scrollHeight > node.clientHeight || node.scrollWidth > node.clientWidth) {
-            this._interactedWith = true;
-            break;
-          }
-          node = node.parentNode;
-        }
+      if (!this._checkedScrollable) {
+        this._isScrollable = (0, (_isScrollable || _load_isScrollable()).default)(this._datatipElement, e);
         this._checkedScrollable = true;
       }
-      if (this._interactedWith) {
+      if (this._isScrollable) {
+        this._interactedWith = true;
         e.stopPropagation();
       }
     }), _rxjsBundlesRxMinJs.Observable.fromEvent(this._datatipElement, 'mousedown').subscribe(() => {
@@ -476,22 +475,20 @@ class DatatipManagerForEditor {
     return (0, _asyncToGenerator.default)(function* () {
       _this2._setState(DatatipState.FETCHING);
 
-      let datatipAndProviderPromise;
-      if (_this2._lastPosition != null && position.isEqual(_this2._lastPosition) && _this2._lastDatatipAndProviderPromise != null) {
-        datatipAndProviderPromise = _this2._lastDatatipAndProviderPromise;
+      let results;
+      if (_this2._lastPosition != null && position.isEqual(_this2._lastPosition) && _this2._lastResultsPromise != null) {
+        results = _this2._lastResultsPromise;
       } else {
-        _this2._lastDatatipAndProviderPromise = getTopDatatipAndProvider(_this2._datatipProviders, _this2._editor, position, function (provider) {
+        _this2._lastResultsPromise = getDatatipResults(_this2._datatipProviders, _this2._editor, position, function (provider) {
           return provider.datatip(_this2._editor, position);
         });
-        datatipAndProviderPromise = _this2._lastDatatipAndProviderPromise;
+        results = _this2._lastResultsPromise;
         _this2._lastPosition = position;
       }
 
-      const datatipsAndProviders = (0, (_collection || _load_collection()).arrayCompact)((yield Promise.all([datatipAndProviderPromise, getTopDatatipAndProvider(_this2._modifierDatatipProviders, _this2._editor, position, function (provider) {
+      return (yield results).concat((yield getDatatipResults(_this2._modifierDatatipProviders, _this2._editor, position, function (provider) {
         return provider.modifierDatatip(_this2._editor, position, _this2._heldKeys);
-      })])));
-
-      return datatipsAndProviders;
+      })));
     })();
   }
 

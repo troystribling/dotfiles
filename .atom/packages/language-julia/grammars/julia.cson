@@ -67,6 +67,10 @@ repository:
             name: "constant.numeric.julia"
           }
           {
+            match: "\\bfor\\b"
+            name: "keyword.control.julia"
+          }
+          {
             include: "$self"
           }
         ]
@@ -117,6 +121,10 @@ repository:
             name: "keyword.operator.transposed-func.julia"
         patterns: [
           {
+            match: '\\bfor\\b'
+            name: 'keyword.control.julia'
+          }
+          {
             include: "$self"
           }
         ]
@@ -164,7 +172,24 @@ repository:
         name: "keyword.other.julia"
       }
       {
-        match: "\\b(?<![:_])(?:if|else|elseif|while|for|begin|let|do|try|catch|finally|return|break|continue)\\b"
+        comment: "special case for blocks to support tokenizing outer properly"
+        begin: "\\b(for)\\b"
+        beginCaptures:
+          "0":
+            name: "keyword.control.julia"
+        end: "(?<!,|\\s)(\\s*\\n)"
+        patterns: [
+          {
+            match: "\\bouter\\b"
+            name: "keyword.other.julia"
+          }
+          {
+            include: '$self'
+          }
+        ]
+      }
+      {
+        match: "\\b(?<![:_])(?:if|else|elseif|while|begin|let|do|try|catch|finally|return|break|continue)\\b"
         name: "keyword.control.julia"
       }
       {
@@ -192,7 +217,7 @@ repository:
         name: "keyword.control.using.julia"
       }
       {
-        match: "(@[[:alpha:]_\u2207][[:word:]\u207A-\u209C!\u2032\u2207]*)"
+        match: "(@(\\.|[[:alpha:]_\u2207][[:word:]\u207A-\u209C!\u2032\u2207]*))"
         name: "support.function.macro.julia"
       }
       {
@@ -203,7 +228,7 @@ repository:
   number:
     patterns: [
       {
-        match: "((\\b0(x|X)[0-9a-fA-F](_?[0-9a-fA-F])*)|(\\b0o[0-7](_?[0-7])*)|(\\b0b[0-1](_?[0-1])*)|((\\b[0-9](_?[0-9])*\\.?(_?[0-9]*))|(\\.[0-9](_?[0-9])*))([eE][+-]?[0-9](_?[0-9])*)?(im)?|\\bInf(32)?\\b|\\bNaN(32)?\\b)"
+        match: "((\\b0(x|X)[0-9a-fA-F](_?[0-9a-fA-F])*)|(\\b0o[0-7](_?[0-7])*)|(\\b0b[0-1](_?[0-1])*)|((\\b[0-9](_?[0-9])*\\.?(_?[0-9]*))|(\\.[0-9](_?[0-9])*))([eE][+-]?[0-9](_?[0-9])*)?(im\\b)?|\\bInf(32)?\\b|\\bNaN(32)?\\b)"
         name: "constant.numeric.julia"
       }
       {
@@ -226,7 +251,7 @@ repository:
         name: "keyword.operator.shift.julia"
       }
       {
-        match: "(?:\\s*(::|<:)\\s*((?:(?:Union)?\\([^)]*\\)|[[:alpha:]_][[:word:]\u207A-\u209C!\u2032\\.]*(?:{(?:[^{}]|{(?:[^{}]|{[^{}]*})*})*})?)))(?:\\.\\.\\.)?"
+        match: "(?:\\s*(::|>:|<:)\\s*((?:(?:Union)?\\([^)]*\\)|[[:alpha:]_][[:word:]\u207A-\u209C!\u2032\\.]*(?:{(?:[^{}]|{(?:[^{}]|{[^{}]*})*})*})?)))(?:\\.\\.\\.)?"
         captures:
           "1":
             name: "keyword.operator.relation.julia"
@@ -234,7 +259,7 @@ repository:
             name: "support.type.julia"
       }
       {
-        match: "(?:===|(?<=\\s)in(?=\\s)|\\.==|!==|!=|\\.>=|\\.>|\\.<|==|\\.!=|\\.=|\\.!|<:|:>|(?<!>)>=|(?<!<)<=|\\.<=|>|<)"
+        match: "(?:===|(?<=\\s)in(?=\\s)|\\.==|!==|!=|\\.>=|\\.>|\\.<=|\\.<|==|\\.!=|\\.=|\\.!|<:|>:|:>|(?<!>)>=|(?<!<)<=|>|<)"
         name: "keyword.operator.relation.julia"
       }
       {
@@ -246,7 +271,7 @@ repository:
         name: "keyword.operator.boolean.julia"
       }
       {
-        match: "(?<=[[:word:]\u207A-\u209C!\u2032])(?::)"
+        match: "(?<=[[:word:]\u207A-\u209C!\u2032\u2207\\)\\]\\}])(?::)"
         name: "keyword.operator.range.julia"
       }
       {
@@ -299,6 +324,29 @@ repository:
   string:
     patterns: [
       {
+        begin: '(?:(@doc)\\s((?:doc)?""")|(doc"""))'
+        beginCaptures:
+          '1':
+            'name': 'support.function.macro.julia'
+          '2':
+            'name': 'punctuation.definition.string.begin.julia'
+        end: '(""") ?(->)?'
+        endCaptures:
+          '1':
+            'name': 'punctuation.definition.string.end.julia'
+          '2':
+            'name': 'keyword.operator.arrow.julia'
+        name: 'string.docstring.julia'
+        patterns: [
+          {
+            include: '#string_escaped_char'
+          }
+          {
+            include: "#string_dollar_sign_interpolate"
+          }
+        ]
+      }
+      {
         begin: "(i?cxx)(\"\"\")"
         beginCaptures:
           "1":
@@ -349,20 +397,16 @@ repository:
             'name': 'support.function.macro.julia'
           '2':
             'name': 'punctuation.definition.string.begin.julia'
-        end: '\\s?^\\s*(""")\\s?'
+        end: '(""")'
         endCaptures:
           '1':
             'name': 'punctuation.definition.string.end.julia'
         name: 'string.docstring.julia'
-        contentName : 'source.gfm'
         comment: """
         This only matches docstrings that start and end with triple quotes on
         their own line in the void
         """
         patterns: [
-          {
-            include: 'source.gfm'
-          }
           {
             include: '#string_escaped_char'
           }
@@ -482,33 +526,6 @@ repository:
           }
         ]
       }
-      {
-        begin: '(@doc) ((?:doc)?""")'
-        beginCaptures:
-          '1':
-            'name': 'support.function.macro.julia'
-          '2':
-            'name': 'punctuation.definition.string.begin.julia'
-        end: '(""") ?(->)?'
-        endCaptures:
-          '1':
-            'name': 'punctuation.definition.string.end.julia'
-          '2':
-            'name': 'keyword.operator.arrow.julia'
-        name: 'string.docstring.julia'
-        contentName : 'source.gfm'
-        patterns: [
-          {
-            include: '#string_escaped_char'
-          }
-          {
-            include: 'source.gfm'
-          }
-          {
-            include: "#string_dollar_sign_interpolate"
-          }
-        ]
-      }
     ]
   string_escaped_char:
     patterns: [
@@ -561,7 +578,7 @@ repository:
   symbol:
     patterns: [
       {
-        match: "(?<![[:word:]\u207A-\u209C!\u2032\u2207]):(?:[[:alpha:]_\u2207][[:word:]\u207A-\u209C!\u2032\u2207]*)"
+        match: "(?<![[:word:]\u207A-\u209C!\u2032\u2207\\)\\]\\}]):(?:[[:alpha:]_\u2207][[:word:]\u207A-\u209C!\u2032\u2207]*)"
         name: "constant.other.symbol.julia"
         comment: "This is string.quoted.symbol.julia in tpoisot's package"
       }

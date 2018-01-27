@@ -21,6 +21,7 @@ exports.throttle = throttle;
 exports.completingSwitchMap = completingSwitchMap;
 exports.fastDebounce = fastDebounce;
 exports.toCancellablePromise = toCancellablePromise;
+exports.poll = poll;
 
 var _UniversalDisposable;
 
@@ -469,4 +470,38 @@ class SingletonExecutor {
     }
   }
 }
-exports.SingletonExecutor = SingletonExecutor;
+
+exports.SingletonExecutor = SingletonExecutor; /**
+                                                * Repeatedly subscribe to an observable every `delay` milliseconds, waiting for the observable to
+                                                * complete each time. This is preferable to, say, `Observable.interval(d).switchMap(() => source)`
+                                                * because, in the case that `source` takes longer than `d` milliseconds to produce a value, that
+                                                * formulation will never produce a value (while continuing to incur the overhead of subscribing to
+                                                * source).
+                                                *
+                                                * Example:
+                                                *
+                                                *    // Ask what time it is every second until it's Friday.
+                                                *    runCommand('date')
+                                                *      .let(poll(1000))
+                                                *      .filter(output => output.startsWith('Fri'))
+                                                *      .take(1)
+                                                *      .subscribe(() => {
+                                                *        console.log("IT'S FRIDAY!!")
+                                                *      });
+                                                *
+                                                */
+
+function poll(delay) {
+  return source => _rxjsBundlesRxMinJs.Observable.defer(() => {
+    const delays = new _rxjsBundlesRxMinJs.Subject();
+    return delays.switchMap(n => _rxjsBundlesRxMinJs.Observable.timer(n)).startWith(null).switchMap(() => {
+      const subscribedAt = Date.now();
+      return source.do({
+        complete: () => {
+          const timeElapsed = Date.now() - subscribedAt;
+          delays.next(Math.max(0, delay - timeElapsed));
+        }
+      });
+    });
+  });
+}

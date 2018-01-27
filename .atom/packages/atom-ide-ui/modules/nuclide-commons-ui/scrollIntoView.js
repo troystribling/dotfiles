@@ -49,32 +49,38 @@ exports.scrollIntoViewIfNeeded = scrollIntoViewIfNeeded;
  */
 
 function scrollIntoView(el, alignToTop) {
-  const scrollTops = getOverflowHiddenScrollTops(el);
+  const scrollTops = getScrollTops(el);
   el.scrollIntoView(alignToTop); // eslint-disable-line rulesdir/dom-apis
-  restoreScrollTops(scrollTops);
+  restoreOverflowHiddenScrollTops(scrollTops);
 }
 
 function scrollIntoViewIfNeeded(el, center) {
-  const scrollTops = getOverflowHiddenScrollTops(el);
+  const scrollTops = getScrollTops(el);
   // $FlowIgnore: This should be added to the element type.
   el.scrollIntoViewIfNeeded(center); // eslint-disable-line rulesdir/dom-apis
-  restoreScrollTops(scrollTops);
+  restoreOverflowHiddenScrollTops(scrollTops);
 }
 
-function getOverflowHiddenScrollTops(el_) {
+function getScrollTops(el_) {
   let el = el_;
   const scrollTops = new Map();
   while (el != null) {
-    if (getComputedStyle(el).overflow === 'hidden') {
-      scrollTops.set(el, el.scrollTop);
-    }
+    scrollTops.set(el, el.scrollTop);
     el = el.parentElement;
   }
   return scrollTops;
 }
 
-function restoreScrollTops(scrollTops) {
+function restoreOverflowHiddenScrollTops(scrollTops) {
   scrollTops.forEach((scrollTop, el) => {
-    el.scrollTop = scrollTop;
+    if (el.scrollTop !== scrollTop && isOverflowHidden(el)) {
+      el.scrollTop = scrollTop;
+    }
   });
+}
+
+function isOverflowHidden(el) {
+  const overflowStyle = el.style == null ? null : el.style.overflow;
+  const overflow = overflowStyle || getComputedStyle(el).overflow;
+  return overflow === 'hidden';
 }

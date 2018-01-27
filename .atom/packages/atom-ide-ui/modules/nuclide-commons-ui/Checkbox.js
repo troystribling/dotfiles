@@ -72,7 +72,10 @@ class Checkbox extends _react.PureComponent {
    * @see https://www.w3.org/TR/html5/forms.html#the-input-element
    */
   _setIndeterminate() {
-    this.refs.input.indeterminate = this.props.indeterminate;
+    if (this._input == null) {
+      return;
+    }
+    this._input.indeterminate = this.props.indeterminate;
   }
 
   render() {
@@ -111,7 +114,9 @@ class Checkbox extends _react.PureComponent {
         disabled: disabled,
         onChange: this._onChange,
         onMouseDown: onMouseDown,
-        ref: 'input',
+        ref: el => {
+          this._input = el;
+        },
         type: 'checkbox'
       }),
       text

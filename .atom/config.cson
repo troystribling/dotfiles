@@ -43,3 +43,4 @@
     scrollSyncType: "Vertical + Horizontal"
   "tree-view":
     hideIgnoredNames: true
+    hideVcsIgnoredFiles: true

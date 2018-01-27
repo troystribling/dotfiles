@@ -528,7 +528,6 @@ function scriptifyCommand(command, args = [], options) {
     return ['script', ['-q', '/dev/null', '-c', joined],
     // `script` will use `SHELL`, but shells have different behaviors with regard to escaping. To
     // make sure that out escaping is correct, we need to force a particular shell.
-    // $FlowIssue: Adding SHELL here makes it no longer really T
     Object.assign({}, opts, { env: Object.assign({}, env, { SHELL: '/bin/bash' }) })];
   }
 }

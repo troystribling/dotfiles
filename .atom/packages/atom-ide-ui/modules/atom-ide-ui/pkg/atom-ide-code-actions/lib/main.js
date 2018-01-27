@@ -40,6 +40,10 @@ class Activation {
     return this._codeActionManager.addProvider(provider);
   }
 
+  consumeDiagnosticUpdates(diagnosticUpdater) {
+    return this._codeActionManager.consumeDiagnosticUpdates(diagnosticUpdater);
+  }
+
   provideCodeActionFetcher() {
     return this._codeActionManager.createCodeActionFetcher();
   }

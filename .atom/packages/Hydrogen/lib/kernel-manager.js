@@ -3,7 +3,6 @@
 import _ from "lodash";
 import * as kernelspecs from "kernelspecs";
 import { launchSpec } from "spawnteract";
-// $FlowFixMe
 import { shell } from "electron";
 
 import ZMQKernel from "./zmq-kernel";

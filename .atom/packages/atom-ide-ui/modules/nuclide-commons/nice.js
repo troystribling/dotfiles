@@ -22,8 +22,8 @@ let niceSafeSpawn = exports.niceSafeSpawn = (() => {
 })();
 
 /**
-* Takes the arguments that you would normally pass to `spawn()` and returns an array of new
-* arguments to use to run the command under `nice`.
+ * Takes the arguments that you would normally pass to `spawn()` and returns an array of new
+ * arguments to use to run the command under `nice`.
  *
  * Example:
  *

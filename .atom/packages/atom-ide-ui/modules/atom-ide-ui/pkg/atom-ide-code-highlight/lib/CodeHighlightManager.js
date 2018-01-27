@@ -58,7 +58,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @format
  */
 
-const HIGHLIGHT_DELAY_MS = 250;
+const CURSOR_DELAY_MS = 250;
+// Apply a much higher debounce to text changes to avoid disrupting the typing experience.
+const CHANGE_TOGGLE_MS = 2500;
 
 class CodeHighlightManager {
 
@@ -71,23 +73,25 @@ class CodeHighlightManager {
   _highlightEditors() {
     var _this = this;
 
-    return (0, (_debounced || _load_debounced()).observeActiveEditorsDebounced)(0).switchMap(editor => {
+    return (0, (_debounced || _load_debounced()).observeActiveEditorsDebounced)(0).do(() => this._destroyMarkers()).switchMap(editor => {
       if (editor == null) {
         return _rxjsBundlesRxMinJs.Observable.empty();
       }
-      const changeCursorEvents = (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidChangeCursorPosition.bind(editor)).map(event => event.newBufferPosition).filter(
+      const cursorPositions = (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidChangeCursorPosition.bind(editor)).filter(
       // If we're moving around inside highlighted ranges, that's fine.
-      position => !this._isPositionInHighlightedRanges(editor, position));
+      event => !this._isPositionInHighlightedRanges(editor, event.newBufferPosition)).do(() => this._destroyMarkers()) // Immediately clear previous markers.
+      .let((0, (_observable || _load_observable()).fastDebounce)(CURSOR_DELAY_MS)).startWith(null) // Immediately kick off a highlight event.
+      .map(() => editor.getCursorBufferPosition());
 
-      const changeEvents = (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidChange.bind(editor))
-      // Ensure we start highlighting immediately.
-      .startWith(null).map(() => editor.getCursorBufferPosition());
+      // Changing text triggers a CHANGE_TOGGLE_MS period in which cursor changes are ignored.
+      // We'll model this as one stream that emits 'false' and another that debounces 'true's.
+      const changeEvents = (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidChange.bind(editor)).do(() => this._destroyMarkers()).share();
+
+      const changeToggles = _rxjsBundlesRxMinJs.Observable.merge(_rxjsBundlesRxMinJs.Observable.of(true), changeEvents.mapTo(false), changeEvents.let((0, (_observable || _load_observable()).fastDebounce)(CHANGE_TOGGLE_MS)).mapTo(true));
 
       const destroyEvents = (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidDestroy.bind(editor));
 
-      return _rxjsBundlesRxMinJs.Observable.merge(changeCursorEvents, changeEvents)
-      // Destroy old markers immediately - never show stale results.
-      .do(() => this._destroyMarkers()).let((0, (_observable || _load_observable()).fastDebounce)(HIGHLIGHT_DELAY_MS)).switchMap((() => {
+      return cursorPositions.let((0, (_observable || _load_observable()).toggle)(changeToggles)).switchMap((() => {
         var _ref = (0, _asyncToGenerator.default)(function* (position) {
           return {
             editor,

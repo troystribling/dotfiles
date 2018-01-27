@@ -486,7 +486,7 @@ class Table extends _react.Component {
     });
     return [_react.createElement(
       'div',
-      { key: 'header', className: 'nuclide-ui-table', ref: 'table' },
+      { key: 'header', className: 'nuclide-ui-table' },
       _react.createElement(
         'div',
         { className: 'nuclide-ui-table-header' },

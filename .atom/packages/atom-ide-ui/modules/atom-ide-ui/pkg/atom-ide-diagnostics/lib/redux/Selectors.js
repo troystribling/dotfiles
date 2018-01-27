@@ -28,9 +28,9 @@ const getMessagesState = state => state.messages; /**
 const getProviders = state => state.providers;
 
 /**
-  * Gets the current diagnostic messages for the file.
-  * Prefer to get updates via ::onFileMessagesDidUpdate.
-  */
+ * Gets the current diagnostic messages for the file.
+ * Prefer to get updates via ::onFileMessagesDidUpdate.
+ */
 function getFileMessages(state, filePath) {
   const messages = [];
   for (const providerMessages of state.messages.values()) {
@@ -51,9 +51,9 @@ function getFileMessageUpdates(state, filePath) {
 }
 
 /**
-  * Gets all current diagnostic messages.
-  * Prefer to get updates via ::onAllMessagesDidUpdate.
-  */
+ * Gets all current diagnostic messages.
+ * Prefer to get updates via ::onAllMessagesDidUpdate.
+ */
 const getMessages = exports.getMessages = (0, (_reselect || _load_reselect()).createSelector)([getMessagesState], messagesState => {
   const messages = [];
 

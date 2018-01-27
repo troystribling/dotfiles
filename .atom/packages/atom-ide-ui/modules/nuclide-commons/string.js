@@ -17,6 +17,7 @@ exports.splitOnce = splitOnce;
 exports.indent = indent;
 exports.pluralize = pluralize;
 exports.capitalize = capitalize;
+exports.getMatchRanges = getMatchRanges;
 
 var _shellQuote;
 
@@ -180,6 +181,31 @@ function pluralize(noun, count) {
 
 function capitalize(str) {
   return str.length === 0 ? str : str.charAt(0).toUpperCase().concat(str.slice(1));
+}
+
+/**
+ * Returns a list of ranges where needle occurs in haystack.
+ * This will *not* return overlapping matches; i.e. the returned list will be disjoint.
+ * This makes it easier to use for e.g. highlighting matches in a UI.
+ */
+function getMatchRanges(haystack, needle) {
+  if (needle === '') {
+    // Not really a valid use.
+    return [];
+  }
+
+  const ranges = [];
+  let matchIndex = 0;
+  while ((matchIndex = haystack.indexOf(needle, matchIndex)) !== -1) {
+    const prevRange = ranges[ranges.length - 1];
+    if (prevRange != null && prevRange[1] === matchIndex) {
+      prevRange[1] += needle.length;
+    } else {
+      ranges.push([matchIndex, matchIndex + needle.length]);
+    }
+    matchIndex += needle.length;
+  }
+  return ranges;
 }
 
 // Originally copied from:

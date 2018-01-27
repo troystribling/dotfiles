@@ -42,7 +42,7 @@ function ModalButton() {
    */
 
 function showExampleModal() {
-  (0, (_showModal || _load_showModal()).default)(dismiss => {
+  (0, (_showModal || _load_showModal()).default)(({ dismiss }) => {
     return _react.createElement(
       'div',
       null,

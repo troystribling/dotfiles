@@ -94,19 +94,45 @@ function tryCreateView(data) {
   } else if (data.type === 'error') {
     (_analytics || _load_analytics()).default.track('find-references:error', { message: data.message });
     showWarning(data.message);
-  } else if (!data.references.length) {
-    (_analytics || _load_analytics()).default.track('find-references:success', { resultCount: '0' });
-    showWarning('No references found.');
   } else {
     const { baseUri, referencedSymbolName, references } = data;
-    (_analytics || _load_analytics()).default.track('find-references:success', {
-      baseUri,
-      referencedSymbolName,
+    // Only record symbol name/uri if we actually found some references.
+    const trackData = references.length ? { baseUri, referencedSymbolName } : {};
+    (_analytics || _load_analytics()).default.track('find-references:success', Object.assign({
       resultCount: references.length.toString()
-    });
-    const model = new (_FindReferencesModel || _load_FindReferencesModel()).default(baseUri, referencedSymbolName, references);
+    }, trackData));
+    return createView(data);
+  }
+}
+
+function createView(data) {
+  const { baseUri, referencedSymbolName, references } = data;
+  if (!data.references.length) {
+    showWarning('No references found.');
+  } else {
+    let title = data.title;
+    if (title == null) {
+      title = 'Symbol References';
+    }
+    const model = new (_FindReferencesModel || _load_FindReferencesModel()).default(baseUri, referencedSymbolName, title, references);
     return new (_FindReferencesViewModel || _load_FindReferencesViewModel()).FindReferencesViewModel(model);
   }
+}
+
+function openViewModel(view) {
+  if (!view) {
+    return;
+  }
+  const disposable = atom.workspace.addOpener(newUri => {
+    if (view.getURI() === newUri) {
+      return view;
+    }
+  });
+  // not a file URI
+  // eslint-disable-next-line rulesdir/atom-apis
+  atom.workspace.open(view.getURI());
+  // The new tab opens instantly, so this is no longer needed.
+  disposable.dispose();
 }
 
 function enableForEditor(editor) {
@@ -176,25 +202,23 @@ class Activation {
     });
   }
 
+  provideReferencesViewService() {
+    return {
+      viewResults(results) {
+        return (0, _asyncToGenerator.default)(function* () {
+          openViewModel(createView(results));
+        })();
+      }
+    };
+  }
+
   registerOpenerAndCommand() {
     var _this2 = this;
 
     let lastMouseEvent;
     return new (_UniversalDisposable || _load_UniversalDisposable()).default(atom.commands.add('atom-text-editor', 'find-references:activate', (() => {
       var _ref2 = (0, _asyncToGenerator.default)(function* (event) {
-        const view = tryCreateView((yield _this2._getProviderData((_ContextMenu || _load_ContextMenu()).default.isEventFromContextMenu(event) ? lastMouseEvent : null)));
-        if (view != null) {
-          const disposable = atom.workspace.addOpener(function (newUri) {
-            if (view.getURI() === newUri) {
-              return view;
-            }
-          });
-          // not a file URI
-          // eslint-disable-next-line rulesdir/atom-apis
-          atom.workspace.open(view.getURI());
-          // The new tab opens instantly, so this is no longer needed.
-          disposable.dispose();
-        }
+        openViewModel(tryCreateView((yield _this2._getProviderData((_ContextMenu || _load_ContextMenu()).default.isEventFromContextMenu(event) ? lastMouseEvent : null))));
       });
 
       return function (_x2) {

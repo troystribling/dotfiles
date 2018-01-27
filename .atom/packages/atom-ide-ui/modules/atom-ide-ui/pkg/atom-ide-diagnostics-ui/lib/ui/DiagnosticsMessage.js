@@ -48,7 +48,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 const PROVIDER_CLASS_NAME = {
   Error: 'highlight-error',
   Warning: 'highlight-warning',
-  Info: 'highlight-info'
+  Info: 'highlight-info',
+  Hint: ''
 };
 
 function diagnosticHeader(props) {

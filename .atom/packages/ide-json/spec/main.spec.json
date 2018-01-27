@@ -1,7 +1,12 @@
 {
-	"fields" : [
-		{ "label" : "hello", "name" : "baz" },
-		{ "label" : "bar", "name" : "foo" },
-		{ "example" : 3 }
-	]
+	"$schema" : "some-schema.json",
+	"sites" : [
+		
+	],
+	"overwrites" : {
+		
+	},
+	"settings" : {
+		
+	}
 }

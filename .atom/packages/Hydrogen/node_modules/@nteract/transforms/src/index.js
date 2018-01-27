@@ -82,3 +82,14 @@ export function richestMimetype(
 }
 export const transforms = standardTransforms;
 export const displayOrder = standardDisplayOrder;
+export const TextTransform = TextDisplay;
+export const JSONTransform = JsonDisplay;
+export const JavaScriptTransform = JavaScriptDisplay;
+export const HTMLTransform = HTMLDisplay;
+export const MarkdownTransform = MarkdownDisplay;
+export const LaTeXTransform = LaTeXDisplay;
+export const SVGTransform = SVGDisplay;
+export const PNGTransform = PNGDisplay;
+export const JPEGTransform = JPEGDisplay;
+export const GIFTransform = GIFDisplay;
+export const VDOMTransform = VDOMDisplay;

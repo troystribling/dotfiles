@@ -114,23 +114,27 @@ function _load_goToLocation() {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function applyTextEdits(path, ...edits) {
-  // Sort the edits to be in order (For every edit, the start of its range will
-  // be after the end of the previous edit's range.)
-  edits.sort((e1, e2) => e1.oldRange.compare(e2.oldRange));
-  if (editsOverlap(edits)) {
-    (0, (_log4js || _load_log4js()).getLogger)('text-edit').warn('applyTextEdits was called with overlapping edits.');
-    return false;
-  }
+  const sortedEdits = sortEdits(edits);
   const editor = (0, (_textEditor || _load_textEditor()).existingEditorForUri)(path);
 
   if (!(editor != null)) {
     throw new Error('Invariant violation: "editor != null"');
   }
 
-  return applyTextEditsToBuffer(editor.getBuffer(), edits);
+  return applySortedTextEditsToBuffer(editor.getBuffer(), sortedEdits);
 }
 
 function applyTextEditsToBuffer(buffer, edits) {
+  return applySortedTextEditsToBuffer(buffer, sortEdits(edits));
+}
+
+function applySortedTextEditsToBuffer(buffer, edits) {
+  // For every edit, the start of its range will be after the end of the
+  // previous edit's range.
+  if (editsOverlap(edits)) {
+    (0, (_log4js || _load_log4js()).getLogger)('text-edit').warn('applyTextEdits was called with overlapping edits.');
+    return false;
+  }
   // Special-case whole-buffer changes to minimize disruption.
   if (edits.length === 1 && edits[0].oldRange.isEqual(buffer.getRange())) {
     if (edits[0].oldText != null && edits[0].oldText !== buffer.getText()) {
@@ -185,4 +189,8 @@ function editsOverlap(sortedEdits) {
     }
   }
   return false;
+}
+
+function sortEdits(edits) {
+  return edits.slice(0).sort((e1, e2) => e1.oldRange.compare(e2.oldRange));
 }

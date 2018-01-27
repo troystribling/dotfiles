@@ -20,18 +20,6 @@ function _load_SettingsUtils() {
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
 class SettingsInput extends _react.Component {
 
   constructor(props) {
@@ -49,7 +37,12 @@ class SettingsInput extends _react.Component {
 
     this._onFocus = () => {
       const keyPath = this.props.keyPath;
-      const input = this.refs[keyPath];
+      const input = this._input;
+
+      if (!(input != null)) {
+        throw new Error('Invariant violation: "input != null"');
+      }
+
       if ((0, (_SettingsUtils || _load_SettingsUtils()).isDefaultConfigValue)(keyPath)) {
         const defaultValue = (0, (_SettingsUtils || _load_SettingsUtils()).getDefaultConfigValueString)(keyPath);
         this._updateInput(input, defaultValue);
@@ -58,7 +51,12 @@ class SettingsInput extends _react.Component {
 
     this._onBlur = () => {
       const keyPath = this.props.keyPath;
-      const input = this.refs[keyPath];
+      const input = this._input;
+
+      if (!(input != null)) {
+        throw new Error('Invariant violation: "input != null"');
+      }
+
       if ((0, (_SettingsUtils || _load_SettingsUtils()).isDefaultConfigValue)(keyPath, input.getText())) {
         this._updateInput(input, '');
       }
@@ -90,7 +88,12 @@ class SettingsInput extends _react.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const input = this.refs[this.props.keyPath];
+    const input = this._input;
+
+    if (!(input != null)) {
+      throw new Error('Invariant violation: "input != null"');
+    }
+
     const value = this._getValue();
     if (input.getText() !== value) {
       this._updateInput(input, value);
@@ -138,7 +141,9 @@ class SettingsInput extends _react.Component {
               onFocus: this._onFocus,
               onBlur: this._onBlur,
               placeholderText: placeholder,
-              ref: keyPath,
+              ref: input => {
+                this._input = input;
+              },
               text: value
             })
           )
@@ -147,4 +152,14 @@ class SettingsInput extends _react.Component {
     );
   }
 }
-exports.default = SettingsInput;
+exports.default = SettingsInput; /**
+                                  * Copyright (c) 2017-present, Facebook, Inc.
+                                  * All rights reserved.
+                                  *
+                                  * This source code is licensed under the BSD-style license found in the
+                                  * LICENSE file in the root directory of this source tree. An additional grant
+                                  * of patent rights can be found in the PATENTS file in the same directory.
+                                  *
+                                  * 
+                                  * @format
+                                  */

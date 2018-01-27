@@ -48,6 +48,10 @@ class Cache {
     }
   }
 
+  entries() {
+    return this._values.entries();
+  }
+
   keys() {
     return this._values.keys();
   }
