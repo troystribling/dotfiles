@@ -6,13 +6,15 @@ Object.defineProperty(exports, "__esModule", {
 exports.attachEvent = attachEvent;
 exports.observableFromSubscribeFunction = observableFromSubscribeFunction;
 
-var _eventKit;
+var _UniversalDisposable;
 
-function _load_eventKit() {
-  return _eventKit = require('event-kit');
+function _load_UniversalDisposable() {
+  return _UniversalDisposable = _interopRequireDefault(require('./UniversalDisposable'));
 }
 
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Add an event listener an return a disposable for removing it. Note that this function assumes
@@ -33,7 +35,7 @@ var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
 function attachEvent(emitter, eventName, callback) {
   emitter.addListener(eventName, callback);
-  return new (_eventKit || _load_eventKit()).Disposable(() => {
+  return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
     emitter.removeListener(eventName, callback);
   });
 }

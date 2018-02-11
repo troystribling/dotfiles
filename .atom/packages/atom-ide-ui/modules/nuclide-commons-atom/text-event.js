@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.__TEST__ = exports.TextEventDispatcher = undefined;
 exports.observeTextEditorEvents = observeTextEditorEvents;
 
-var _atom = require('atom');
-
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
 var _debounce;
@@ -37,10 +35,6 @@ function _load_UniversalDisposable() {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // A reload changes the text in the buffer, so it should trigger a refresh.
-const FILE_CHANGE_EVENTS = ['did-change', 'did-reload', 'did-open'];
-
-// A reload basically indicates that an external program saved the file, so
-// it should trigger a refresh.
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -53,6 +47,10 @@ const FILE_CHANGE_EVENTS = ['did-change', 'did-reload', 'did-open'];
  * @format
  */
 
+const FILE_CHANGE_EVENTS = ['did-change', 'did-reload', 'did-open'];
+
+// A reload basically indicates that an external program saved the file, so
+// it should trigger a refresh.
 const FILE_SAVE_EVENTS = ['did-save', 'did-reload', 'did-open'];
 
 /**
@@ -196,7 +194,7 @@ class TextEventDispatcher {
     // (particularly on startup).
     const debouncedCallback = (0, (_debounce || _load_debounce()).default)(callback, 50, true);
     this._callbackContainer.addCallback(grammarScopes, events, debouncedCallback);
-    const disposables = new _atom.Disposable(() => {
+    const disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
       this._callbackContainer.removeCallback(grammarScopes, events, debouncedCallback);
       if (this._callbackContainer.isEmpty()) {
         this._deregisterEditorListeners();

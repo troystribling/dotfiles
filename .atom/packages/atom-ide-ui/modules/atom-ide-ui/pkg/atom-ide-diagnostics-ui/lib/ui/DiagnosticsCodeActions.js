@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = DiagnosticsCodeActions;
 
+var _atom = require('atom');
+
 var _react = _interopRequireWildcard(require('react'));
 
 var _Button;
@@ -22,19 +24,17 @@ function _load_ButtonGroup() {
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 // Maximum number of CodeActions to show for a given Diagnostic.
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
-const MAX_CODE_ACTIONS = 4;
+const MAX_CODE_ACTIONS = 4; /**
+                             * Copyright (c) 2017-present, Facebook, Inc.
+                             * All rights reserved.
+                             *
+                             * This source code is licensed under the BSD-style license found in the
+                             * LICENSE file in the root directory of this source tree. An additional grant
+                             * of patent rights can be found in the PATENTS file in the same directory.
+                             *
+                             * 
+                             * @format
+                             */
 
 function DiagnosticsCodeActions(props) {
   return _react.createElement(
@@ -53,7 +53,13 @@ function DiagnosticsCodeActions(props) {
             size: 'EXTRA_SMALL',
             onClick: () => {
               // TODO: (seansegal) T21130332 Display CodeAction status indicators
-              codeAction.apply().catch(handleCodeActionFailure);
+              codeAction.apply().catch(handleCodeActionFailure).then(() => {
+                // Return focus to the editor after clicking.
+                const activeItem = atom.workspace.getActivePaneItem();
+                if (activeItem && activeItem instanceof _atom.TextEditor) {
+                  activeItem.element.focus();
+                }
+              });
             } },
           _react.createElement(
             'span',

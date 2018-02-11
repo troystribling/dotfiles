@@ -4,7 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _atom = require('atom');
+var _UniversalDisposable;
+
+function _load_UniversalDisposable() {
+  return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));
+}
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -28,7 +34,7 @@ const NullService = {
   track(eventName, values) {},
   trackEvent(event) {},
   trackEvents(events) {
-    return new _atom.Disposable();
+    return new (_UniversalDisposable || _load_UniversalDisposable()).default();
   },
   trackImmediate(eventName, values) {
     return Promise.resolve();

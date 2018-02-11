@@ -44,6 +44,7 @@ function Tree(_ref) {
 
   return _react.createElement('ol', Object.assign({
     className: (0, (_classnames || _load_classnames()).default)('list-tree', className),
+    role: 'tree',
     style: Object.assign({ position: 'relative' }, style)
   }, props));
 }

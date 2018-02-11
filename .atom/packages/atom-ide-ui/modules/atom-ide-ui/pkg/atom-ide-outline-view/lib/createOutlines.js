@@ -19,8 +19,20 @@ function _load_textEditor() {
   return _textEditor = require('nuclide-commons-atom/text-editor');
 }
 
+var _collection;
+
+function _load_collection() {
+  return _collection = require('nuclide-commons/collection');
+}
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const LOADING_DELAY_MS = 500;
+
+/**
+ * Includes additional information that is useful to the UI, but redundant or nonsensical for
+ * providers to include in their responses.
+ */
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -33,12 +45,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @format
  */
 
-const LOADING_DELAY_MS = 500;
-
-/**
- * Includes additional information that is useful to the UI, but redundant or nonsensical for
- * providers to include in their responses.
- */
 function createOutlines(editorService) {
   return outlinesForProviderResults(editorService.getResultsStream());
 }
@@ -66,7 +72,7 @@ function uiOutlinesForResult(result) {
       if (outline == null) {
         return _rxjsBundlesRxMinJs.Observable.of({ kind: 'provider-no-outline' });
       }
-      return highlightedOutlines(outline, result.editor);
+      return rootOutline(outline, result.editor);
     case 'provider-error':
       return _rxjsBundlesRxMinJs.Observable.of({ kind: 'provider-no-outline' });
     default:
@@ -76,15 +82,16 @@ function uiOutlinesForResult(result) {
   }
 }
 
-function highlightedOutlines(outline, editor) {
+function rootOutline(outline, editor) {
   const nameOnly = (_featureConfig || _load_featureConfig()).default.get('atom-ide-outline-view.nameOnly');
-  const outlineForUi = {
-    kind: 'outline',
-    outlineTrees: outline.outlineTrees.map(outlineTree => treeToUiTree(outlineTree, Boolean(nameOnly))),
-    editor
-  };
+  const outlineTrees = outline.outlineTrees.map(outlineTree => treeToUiTree(outlineTree, Boolean(nameOnly)));
 
-  return (0, (_textEditor || _load_textEditor()).getCursorPositions)(editor).map(cursorLocation => highlightCurrentNode(outlineForUi, cursorLocation));
+  return getHighlightedPaths(outline, editor).map(highlightedPaths => ({
+    kind: 'outline',
+    highlightedPaths,
+    outlineTrees,
+    editor
+  }));
 }
 
 function treeToUiTree(outlineTree, nameOnly) {
@@ -97,47 +104,35 @@ function treeToUiTree(outlineTree, nameOnly) {
     startPosition: outlineTree.startPosition,
     endPosition: outlineTree.endPosition,
     landingPosition: outlineTree.landingPosition,
-    highlighted: false,
     children: outlineTree.children.map(tree => treeToUiTree(tree, nameOnly))
   };
 }
 
-// Return an outline object with the node under the cursor highlighted. Does not mutate the
-// original.
-function highlightCurrentNode(outline, cursorLocation) {
-  if (!(outline.kind === 'outline')) {
-    throw new Error('Invariant violation: "outline.kind === \'outline\'"');
-  }
-  // $FlowIssue
-
-
-  return Object.assign({}, outline, {
-    outlineTrees: highlightCurrentNodeInTrees(outline.outlineTrees, cursorLocation)
-  });
+function getHighlightedPaths(outline, editor) {
+  return (0, (_textEditor || _load_textEditor()).getCursorPositions)(editor)
+  // optimization: the outline never needs to update when navigating within a row
+  .distinctUntilChanged((p1, p2) => p1.row === p2.row).map(position => {
+    return highlightedPathsForOutline(outline, position);
+  }).distinctUntilChanged((p1, p2) => (0, (_collection || _load_collection()).arrayEqual)(p1, p2, (_collection || _load_collection()).arrayEqual));
 }
 
-function highlightCurrentNodeInTrees(outlineTrees, cursorLocation) {
-  // The corresponding UI component uses React.PureComponent.
-  // Minimize the amount of re-rendering per keystroke by only copying on change.
-  let changed = false;
-  const newTrees = outlineTrees.map(tree => {
-    const highlighted = shouldHighlightNode(tree, cursorLocation);
-    const children = highlightCurrentNodeInTrees(tree.children, cursorLocation);
-    if (highlighted === tree.highlighted && children === tree.children) {
-      return tree;
+function highlightedPathsForOutline(outline, position) {
+  const paths = [];
+  function findHighlightedNodes(currentNode, currentPath) {
+    if (shouldHighlightNode(currentNode, position)) {
+      paths.push(currentPath);
     }
-    changed = true;
-    return Object.assign({}, tree, {
-      highlighted,
-      children
-    });
-  });
-  return changed ? newTrees : outlineTrees;
+    if (currentNode.children) {
+      currentNode.children.forEach((n, i) => findHighlightedNodes(n, currentPath.concat([i])));
+    }
+  }
+  outline.outlineTrees.forEach((o, i) => findHighlightedNodes(o, [i]));
+
+  return paths;
 }
 
 function shouldHighlightNode(outlineTree, cursorLocation) {
-  const startPosition = outlineTree.startPosition;
-  const endPosition = outlineTree.endPosition;
+  const { startPosition, endPosition } = outlineTree;
   if (endPosition == null) {
     return false;
   }

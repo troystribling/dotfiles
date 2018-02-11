@@ -129,7 +129,7 @@ class HyperclickForTextEditor {
       }
       linesDomNode.addEventListener('mousedown', this._onMouseDown);
       linesDomNode.addEventListener('mousemove', this._onMouseMove);
-      const removalDisposable = new _atom.Disposable(() => {
+      const removalDisposable = new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
         linesDomNode.removeEventListener('mousedown', this._onMouseDown);
         linesDomNode.removeEventListener('mousemove', this._onMouseMove);
       });

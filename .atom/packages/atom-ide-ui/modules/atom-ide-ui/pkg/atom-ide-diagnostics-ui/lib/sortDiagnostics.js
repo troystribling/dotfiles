@@ -27,8 +27,10 @@ function sortDiagnostics(diagnostics, sortedColumnName, sortDescending) {
   if (!(compare != null)) {
     throw new Error('Invariant violation: "compare != null"');
   }
+  // Don't sort in place.
 
-  const sorted = diagnostics.sort(compare);
+
+  const sorted = diagnostics.slice().sort(compare);
   // We can't just reverse the sign of the comparison function because that would maintain the
   // ordering of "equal" items with respect to eachother.
   return sortDescending ? sorted.reverse() : sorted;

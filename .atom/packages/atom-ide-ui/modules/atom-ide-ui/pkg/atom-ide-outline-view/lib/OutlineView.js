@@ -11,6 +11,12 @@ function _load_HighlightedText() {
   return _HighlightedText = _interopRequireDefault(require('nuclide-commons-ui/HighlightedText'));
 }
 
+var _collection;
+
+function _load_collection() {
+  return _collection = require('nuclide-commons/collection');
+}
+
 var _UniversalDisposable;
 
 function _load_UniversalDisposable() {
@@ -19,10 +25,10 @@ function _load_UniversalDisposable() {
 
 var _react = _interopRequireWildcard(require('react'));
 
-var _classnames;
+var _nullthrows;
 
-function _load_classnames() {
-  return _classnames = _interopRequireDefault(require('classnames'));
+function _load_nullthrows() {
+  return _nullthrows = _interopRequireDefault(require('nullthrows'));
 }
 
 var _matchIndexesToRanges;
@@ -55,10 +61,10 @@ function _load_EmptyState() {
   return _EmptyState = require('nuclide-commons-ui/EmptyState');
 }
 
-var _Tree;
+var _SelectableTree;
 
-function _load_Tree() {
-  return _Tree = require('nuclide-commons-ui/Tree');
+function _load_SelectableTree() {
+  return _SelectableTree = require('nuclide-commons-ui/SelectableTree');
 }
 
 var _OutlineViewSearch;
@@ -142,7 +148,7 @@ class OutlineView extends _react.PureComponent {
 
   focus() {
     if (this._outlineViewRef != null) {
-      this._outlineViewRef.focus();
+      this._outlineViewRef.focusSearch();
     }
   }
 
@@ -182,9 +188,9 @@ class OutlineViewComponent extends _react.PureComponent {
     };
   }
 
-  focus() {
+  focusSearch() {
     if (this._outlineViewCoreRef != null) {
-      this._outlineViewCoreRef.focus();
+      this._outlineViewCoreRef.focusSearch();
     }
   }
 
@@ -252,13 +258,103 @@ class OutlineViewCore extends _react.PureComponent {
     var _temp2;
 
     return _temp2 = super(...args), this.state = {
+      collapsedPaths: [],
       searchResults: new Map()
+    }, this._setScrollerNode = node => {
+      this._scrollerNode = node;
     }, this._setSearchRef = element => {
       this._searchRef = element;
+    }, this._handleCollapse = nodePath => {
+      this.setState(prevState => {
+        const existing = this.state.collapsedPaths.find(path => (0, (_collection || _load_collection()).arrayEqual)(path, nodePath));
+        if (existing == null) {
+          return {
+            collapsedPaths: [...this.state.collapsedPaths, nodePath]
+          };
+        }
+      });
+    }, this._handleExpand = nodePath => {
+      this.setState(prevState => ({
+        collapsedPaths: prevState.collapsedPaths.filter(path => !(0, (_collection || _load_collection()).arrayEqual)(path, nodePath))
+      }));
+    }, this._handleSelect = nodePath => {
+      (_analytics || _load_analytics()).default.track('atom-ide-outline-view:go-to-location');
+
+      if (!(this.props.outline.kind === 'outline')) {
+        throw new Error('Invariant violation: "this.props.outline.kind === \'outline\'"');
+      }
+
+      const { editor } = this.props.outline;
+      const outlineNode = selectNodeFromPath(this.props.outline, nodePath);
+
+      const landingPosition = outlineNode.landingPosition != null ? outlineNode.landingPosition : outlineNode.startPosition;
+
+      // single click moves the cursor, but does not focus the editor
+      (0, (_goToLocation || _load_goToLocation()).goToLocationInEditor)(editor, {
+        line: landingPosition.row,
+        column: landingPosition.column
+      });
+    }, this._handleConfirm = () => {
+      this._focusEditor();
+    }, this._handleTripleClick = nodePath => {
+      if (!(this.props.outline.kind === 'outline')) {
+        throw new Error('Invariant violation: "this.props.outline.kind === \'outline\'"');
+      }
+
+      const { editor } = this.props.outline;
+      const outlineNode = selectNodeFromPath(this.props.outline, nodePath);
+
+      // triple click selects the symbol's region
+      const endPosition = outlineNode.endPosition;
+      if (endPosition != null) {
+        editor.selectToBufferPosition(endPosition);
+      }
+      this._focusEditor();
+    }, this._focusEditor = () => {
+      if (!(this.props.outline.kind === 'outline')) {
+        throw new Error('Invariant violation: "this.props.outline.kind === \'outline\'"');
+      }
+
+      const { editor } = this.props.outline;
+      // double and triple clicks focus the editor afterwards
+      const pane = atom.workspace.paneForItem(editor);
+      if (pane == null) {
+        return;
+      }
+
+      // Assumes that the click handler has already run, which moves the
+      // cursor to the start of the symbol. Let's activate the pane now.
+      pane.activate();
+      pane.activateItem(editor);
+    }, this._outlineTreeToNode = outlineTree => {
+      const searchResult = this.state.searchResults.get(outlineTree);
+
+      if (outlineTree.children.length === 0) {
+        return {
+          type: 'LEAF',
+          label: renderItem(outlineTree),
+          hidden: searchResult && !searchResult.visible
+        };
+      }
+
+      return {
+        type: 'NESTED',
+        label: renderItem(outlineTree),
+        children: outlineTree.children.map(this._outlineTreeToNode),
+        hidden: searchResult && !searchResult.visible
+      };
     }, _temp2;
   }
 
-  focus() {
+  componentDidMount() {
+    this._subscriptions = new (_UniversalDisposable || _load_UniversalDisposable()).default(atom.commands.add((0, (_nullthrows || _load_nullthrows()).default)(this._scrollerNode), 'atom-ide:filter', () => this.focusSearch()));
+  }
+
+  componentWillUnmount() {
+    (0, (_nullthrows || _load_nullthrows()).default)(this._subscriptions).dispose();
+  }
+
+  focusSearch() {
     if (this._searchRef != null) {
       this._searchRef.focus();
     }
@@ -284,88 +380,21 @@ class OutlineViewCore extends _react.PureComponent {
       }),
       _react.createElement(
         'div',
-        { className: 'outline-view-trees-scroller' },
-        _react.createElement(
-          (_Tree || _load_Tree()).Tree,
-          { className: 'outline-view-trees' },
-          renderTrees(outline.editor, outline.outlineTrees, this.state.searchResults)
-        )
-      )
-    );
-  }
-}
-
-class OutlineTree extends _react.PureComponent {
-  constructor(...args) {
-    var _temp3;
-
-    return _temp3 = super(...args), this._handleSelect = () => {
-      const { editor, outline } = this.props;
-      // single click moves the cursor, but does not focus the editor
-      (_analytics || _load_analytics()).default.track('atom-ide-outline-view:go-to-location');
-      const landingPosition = outline.landingPosition != null ? outline.landingPosition : outline.startPosition;
-      (0, (_goToLocation || _load_goToLocation()).goToLocationInEditor)(editor, {
-        line: landingPosition.row,
-        column: landingPosition.column
-      });
-    }, this._handleConfirm = () => {
-      this._focusEditor();
-    }, this._handleTripleClick = () => {
-      const { editor, outline } = this.props;
-      // triple click selects the symbol's region
-      const endPosition = outline.endPosition;
-      if (endPosition != null) {
-        editor.selectToBufferPosition(endPosition);
-      }
-      this._focusEditor();
-    }, this._focusEditor = () => {
-      const { editor } = this.props;
-      // double and triple clicks focus the editor afterwards
-      const pane = atom.workspace.paneForItem(editor);
-      if (pane == null) {
-        return;
-      }
-
-      // Assumes that the click handler has already run, which moves the
-      // cursor to the start of the symbol. Let's activate the pane now.
-      pane.activate();
-      pane.activateItem(editor);
-    }, _temp3;
-  }
-
-  render() {
-    const { editor, outline, searchResults } = this.props;
-
-    const classes = (0, (_classnames || _load_classnames()).default)('outline-view-item', outline.kind ? `kind-${outline.kind}` : null, {
-      selected: outline.highlighted
-    });
-
-    const childTrees = renderTrees(editor, outline.children, searchResults);
-    const itemContent = renderItem(outline, searchResults.get(outline));
-
-    if (childTrees.length === 0) {
-      return _react.createElement(
-        (_Tree || _load_Tree()).TreeItem,
         {
-          className: classes,
+          className: 'outline-view-trees-scroller',
+          ref: this._setScrollerNode },
+        _react.createElement((_SelectableTree || _load_SelectableTree()).Tree, {
+          className: 'outline-view-trees atom-ide-filterable',
+          collapsedPaths: this.state.collapsedPaths,
+          itemClassName: 'outline-view-item',
+          items: outline.outlineTrees.map(this._outlineTreeToNode),
+          onCollapse: this._handleCollapse,
           onConfirm: this._handleConfirm,
-          onSelect: this._handleSelect,
-          onTripleClick: this._handleTripleClick },
-        itemContent
-      );
-    }
-    return (
-      // Set fontSize for the li to make the highlighted region of selected
-      // lines (set equal to 2em) look reasonable relative to size of the font.
-      _react.createElement(
-        (_Tree || _load_Tree()).NestedTreeItem,
-        {
-          className: classes,
-          onConfirm: this._handleConfirm,
+          onExpand: this._handleExpand,
           onSelect: this._handleSelect,
           onTripleClick: this._handleTripleClick,
-          title: itemContent },
-        childTrees
+          selectedPaths: outline.highlightedPaths
+        })
       )
     );
   }
@@ -418,16 +447,16 @@ function renderTextToken(token, index, searchResult, offset) {
   );
 }
 
-function renderTrees(editor, outlines, searchResults) {
-  return outlines.map((outline, index) => {
-    const result = searchResults.get(outline);
-    return !result || result.visible ? _react.createElement(OutlineTree, {
-      editor: editor,
-      outline: outline,
-      key: index,
-      searchResults: searchResults
-    }) : null;
-  });
+function selectNodeFromPath(outline, path) {
+  if (!(outline.kind === 'outline')) {
+    throw new Error('Invariant violation: "outline.kind === \'outline\'"');
+  }
+
+  let node = outline.outlineTrees[path[0]];
+  for (let i = 1; i < path.length; i++) {
+    node = node.children[path[i]];
+  }
+  return node;
 }
 
 const OUTLINE_KIND_TO_ICON = {

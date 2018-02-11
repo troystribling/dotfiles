@@ -162,6 +162,14 @@ class DiagnosticsTable extends _react.PureComponent {
     this._disposables.dispose();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this._table != null && this.state.focused !== prevState.focused) {
+      // The row renderers depend on this state but the Table component doesn't know it about it, so
+      // we have to force it to rerender its rows.
+      this._table.forceUpdate();
+    }
+  }
+
   _getColumns() {
     const { showFileName, showDirectoryColumn } = this.props;
 

@@ -6,14 +6,18 @@ Object.defineProperty(exports, "__esModule", {
 
 var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));
 
-var _atom = require('atom');
-
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
 var _debounced;
 
 function _load_debounced() {
   return _debounced = require('./debounced');
+}
+
+var _UniversalDisposable;
+
+function _load_UniversalDisposable() {
+  return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));
 }
 
 var _event;
@@ -84,7 +88,7 @@ class ActiveEditorRegistry {
   consumeProvider(provider) {
     this._providerRegistry.addProvider(provider);
     this._newProviderEvents.next();
-    return new _atom.Disposable(() => {
+    return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
       this._providerRegistry.removeProvider(provider);
     });
   }

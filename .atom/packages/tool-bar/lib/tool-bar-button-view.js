@@ -15,12 +15,26 @@ module.exports = class ToolBarButtonView {
 
     if (options.tooltip) {
       const callback = this.options.callback;
+
+      let tooltip = {};
+      if (typeof options.tooltip === 'string') {
+        tooltip = {
+          title: options.tooltip
+        };
+      } else {
+        tooltip = options.tooltip;
+      }
+
+      if (!tooltip.hasOwnProperty('placement')) {
+        tooltip.placement = getTooltipPlacement;
+      }
+
+      if (!tooltip.hasOwnProperty('keyBindingCommand')) {
+        tooltip.keyBindingCommand = typeof callback === 'string' ? callback : null;
+      }
+
       this.subscriptions.add(
-        atom.tooltips.add(this.element, {
-          title: options.tooltip,
-          placement: getTooltipPlacement,
-          keyBindingCommand: typeof callback === 'string' ? callback : null
-        })
+        atom.tooltips.add(this.element, tooltip)
       );
     }
 
@@ -50,6 +64,18 @@ module.exports = class ToolBarButtonView {
       this.element.classList.add('disabled');
     }
     this.enabled = enabled;
+  }
+
+  setSelected (selected) {
+    if (selected) {
+      this.element.classList.add('selected');
+    } else {
+      this.element.classList.remove('selected');
+    }
+  }
+
+  getSelected () {
+    return this.element.classList.contains('selected');
   }
 
   destroy () {

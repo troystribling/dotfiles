@@ -7,8 +7,6 @@ exports.PinnedDatatip = undefined;
 
 var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));
 
-var _atom = require('atom');
-
 var _react = _interopRequireWildcard(require('react'));
 
 var _reactDom = _interopRequireDefault(require('react-dom'));
@@ -43,19 +41,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
-const LINE_END_MARGIN = 20;
+const LINE_END_MARGIN = 20; /**
+                             * Copyright (c) 2017-present, Facebook, Inc.
+                             * All rights reserved.
+                             *
+                             * This source code is licensed under the BSD-style license found in the
+                             * LICENSE file in the root directory of this source tree. An additional grant
+                             * of patent rights can be found in the PATENTS file in the same directory.
+                             *
+                             * 
+                             * @format
+                             */
 
 let _mouseMove$;
 function documentMouseMove$() {
@@ -77,7 +73,7 @@ class PinnedDatatip {
 
   constructor(datatip, editor, params) {
     this._subscriptions = new (_UniversalDisposable || _load_UniversalDisposable()).default();
-    this._subscriptions.add(new _atom.Disposable(() => params.onDispose(this)));
+    this._subscriptions.add(new (_UniversalDisposable || _load_UniversalDisposable()).default(() => params.onDispose(this)));
     this._datatip = datatip;
     this._editor = editor;
     this._marker = null;
@@ -103,7 +99,7 @@ class PinnedDatatip {
     }));
     this._hostElement.addEventListener('mouseenter', this._boundHandleMouseEnter);
     this._hostElement.addEventListener('mouseleave', this._boundHandleMouseLeave);
-    this._subscriptions.add(new _atom.Disposable(() => {
+    this._subscriptions.add(new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
       this._hostElement.removeEventListener('mouseenter', this._boundHandleMouseEnter);
       this._hostElement.removeEventListener('mouseleave', this._boundHandleMouseLeave);
     }));

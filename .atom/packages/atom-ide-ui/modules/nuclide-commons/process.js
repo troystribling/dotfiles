@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.killUnixProcessTree = exports.loggedCalls = exports.ProcessTimeoutError = exports.MaxBufferExceededError = exports.ProcessSystemError = exports.ProcessExitError = exports.psTree = exports.getChildrenOfProcess = exports.getOriginalEnvironment = undefined;
+exports.killUnixProcessTree = exports.loggedCalls = exports.ProcessLoggingEvent = exports.ProcessTimeoutError = exports.MaxBufferExceededError = exports.ProcessSystemError = exports.ProcessExitError = exports.psTree = exports.getChildrenOfProcess = exports.getOriginalEnvironment = exports.LOG_CATEGORY = undefined;
 
 var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));
 
@@ -169,6 +169,8 @@ function _load_log4js() {
 
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
+var _util = _interopRequireDefault(require('util'));
+
 var _UniversalDisposable;
 
 function _load_UniversalDisposable() {
@@ -219,17 +221,17 @@ function _load_string() {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
+const LOG_CATEGORY = exports.LOG_CATEGORY = 'nuclide-commons/process'; /**
+                                                                        * Copyright (c) 2017-present, Facebook, Inc.
+                                                                        * All rights reserved.
+                                                                        *
+                                                                        * This source code is licensed under the BSD-style license found in the
+                                                                        * LICENSE file in the root directory of this source tree. An additional grant
+                                                                        * of patent rights can be found in the PATENTS file in the same directory.
+                                                                        *
+                                                                        * 
+                                                                        * @format
+                                                                        */
 
 //
 //                 __   __   __   __   ___  __   __         __
@@ -269,7 +271,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 // [RxJS]: http://reactivex.io/rxjs/
 
-const logger = (0, (_log4js || _load_log4js()).getLogger)('nuclide-commons/process');
+const logger = (0, (_log4js || _load_log4js()).getLogger)(LOG_CATEGORY);
 
 /**
  * Run a command, accumulate the output. Errors are surfaced as stream errors and unsubscribing will
@@ -537,7 +539,7 @@ function scriptifyCommand(command, args = [], options) {
  */
 function killProcess(proc, killTree) {
   _killProcess(proc, killTree).then(() => {}, error => {
-    logError(`Killing process ${proc.pid} failed`, error);
+    logger.error(`Killing process ${proc.pid} failed`, error);
   });
 }
 
@@ -599,7 +601,7 @@ function preventStreamsFromThrowing(proc) {
  */
 function logStreamErrors(proc, command, args, options) {
   return new (_UniversalDisposable || _load_UniversalDisposable()).default(getStreamErrorEvents(proc).do(([err, streamName]) => {
-    logError(`stream error on stream ${streamName} with command:`, command, args, options, 'error:', err);
+    logger.error(`stream error on stream ${streamName} with command:`, command, args, options, 'error:', err);
   }).subscribe());
 }
 
@@ -706,6 +708,24 @@ const whenShellEnvironmentLoaded = typeof atom !== 'undefined' && !atom.inSpecMo
   return noopDisposable;
 };
 
+/**
+ * Log custom events to log4js so that we can easily hook into process events
+ * using a custom log4js appender (e.g. for analytics purposes).
+ */
+class ProcessLoggingEvent {
+
+  constructor(command, duration) {
+    this.command = command;
+    this.duration = duration;
+    // log4js uses util.inspect to convert log arguments to strings.
+    // Note: computed property methods aren't supported by Flow yet.
+    this[_util.default.inspect.custom] = () => {
+      return `${this.duration}ms: ${this.command}`;
+    };
+  }
+}
+
+exports.ProcessLoggingEvent = ProcessLoggingEvent;
 const loggedCalls = exports.loggedCalls = [];
 function logCall(duration, command, args) {
   // Trim the history once in a while, to avoid doing expensive array
@@ -718,19 +738,13 @@ function logCall(duration, command, args) {
     });
   }
 
-  const fullCommand = [command, ...args].join(' ');
+  const fullCommand = (0, (_string || _load_string()).shellQuote)([command, ...args]);
   loggedCalls.push({
     command: fullCommand,
     duration,
     time: new Date()
   });
-  logger.info(`${duration}ms: ${fullCommand}`);
-}
-
-function logError(...args) {
-  // Can't use nuclide-logging here to not cause cycle dependency.
-  // eslint-disable-next-line no-console
-  console.error(...args);
+  logger.info(new ProcessLoggingEvent(fullCommand, duration));
 }
 
 /**

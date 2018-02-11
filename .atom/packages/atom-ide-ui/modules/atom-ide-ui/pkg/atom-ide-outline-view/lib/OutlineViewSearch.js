@@ -67,7 +67,7 @@ class OutlineViewSearchComponent extends _react.Component {
     // An element is considered visible if it is not in the Map or if it has a
     // Search result that has the visible property set to true. Therefore, all
     // elements are visible when the Map is empty.
-    this.SEARCH_PLACEHOLDER = 'Search Outline';
+    this.SEARCH_PLACEHOLDER = 'Filter';
     this.DEBOUNCE_TIME = 100;
 
     this._handleInputRef = element => {
@@ -151,7 +151,6 @@ class OutlineViewSearchComponent extends _react.Component {
     return _react.createElement(
       'div',
       { className: 'outline-view-search-bar' },
-      _react.createElement((_Icon || _load_Icon()).Icon, { icon: 'search', className: 'outline-view-search-icon' }),
       _react.createElement((_AtomInput || _load_AtomInput()).AtomInput, {
         className: 'outline-view-search-pane',
         onConfirm: this._onConfirm,

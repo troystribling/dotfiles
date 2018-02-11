@@ -65,7 +65,7 @@ function getDisplayName(group) {
     case 'review':
       return 'Review';
     case 'action':
-      return 'Action';
+      return 'Actions';
     default:
       group;
       throw new Error(`Invalid group: ${group}`);

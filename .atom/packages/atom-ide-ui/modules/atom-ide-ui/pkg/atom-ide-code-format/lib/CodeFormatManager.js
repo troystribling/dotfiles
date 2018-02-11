@@ -316,7 +316,7 @@ class CodeFormatManager {
     if (busySignalService != null) {
       const path = editor.getPath();
       const displayPath = path != null ? (_nuclideUri || _load_nuclideUri()).default.basename(path) : '<untitled>';
-      return busySignalService.reportBusyWhile(`Formatting code in ${displayPath}`, () => promise);
+      return busySignalService.reportBusyWhile(`Formatting code in ${displayPath}`, () => promise, { revealTooltip: true });
     }
     return promise;
   }

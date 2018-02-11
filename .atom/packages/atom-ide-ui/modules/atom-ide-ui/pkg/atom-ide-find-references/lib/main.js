@@ -320,7 +320,7 @@ class Activation {
         const displayPath = (_nuclideUri || _load_nuclideUri()).default.basename(path);
         return busySignalService.reportBusyWhile(`Finding references for ${displayPath}:${point.row}:${point.column}`, function () {
           return resultPromise;
-        });
+        }, { revealTooltip: true });
       }
       return resultPromise;
     })();

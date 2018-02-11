@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.8.1
+
+- URL fragments/queries are now supported in diagnostic messages (#159)
+- Fixed exception at startup with various third-party themes (#160)
+
+## v0.8.0
+
+- Added `atom-ide-console`! More information to come soon.
+- Nested Outline elements can now be collapsed.
+- Outline is now keyboard navigable (up/down to move, left/right to collapse/expand, '/' to filter).
+- Fixed duplicate datatips when hovering over gutter diagnostics.
+- Fixed bug with diagnostic selection.
+- Long-running find references and code format operations now bring up a busy signal tooltip.
+- Text editors retain focus after clicking on code actions (#152).
+- Fixed inability to deselect diagnostic messages (#143).
+
 ## v0.7.2
 
 - Fixed "Failed to load resource" error in console (#100).

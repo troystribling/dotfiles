@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _atom = require('atom');
-
 var _UniversalDisposable;
 
 function _load_UniversalDisposable() {
@@ -30,20 +28,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * We need to create this custom HTML element so we can hook into the view
  * registry. The overlay decoration only works through the view registry.
  */
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
-/* global HTMLElement */
-
 class SuggestionListElement extends HTMLElement {
 
   initialize(model) {
@@ -64,7 +48,19 @@ class SuggestionListElement extends HTMLElement {
       this.parentNode.removeChild(this);
     }
   }
-}
+} /**
+   * Copyright (c) 2017-present, Facebook, Inc.
+   * All rights reserved.
+   *
+   * This source code is licensed under the BSD-style license found in the
+   * LICENSE file in the root directory of this source tree. An additional grant
+   * of patent rights can be found in the PATENTS file in the same directory.
+   *
+   * 
+   * @format
+   */
+
+/* global HTMLElement */
 
 class SuggestionList extends _react.Component {
 
@@ -121,7 +117,7 @@ class SuggestionList extends _react.Component {
     }
 
     scroller.addEventListener('mousewheel', stopPropagation);
-    this._subscriptions.add(new _atom.Disposable(() => {
+    this._subscriptions.add(new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
       scroller.removeEventListener('mousewheel', stopPropagation);
     }));
 
@@ -133,7 +129,7 @@ class SuggestionList extends _react.Component {
       }
     };
     textEditorView.addEventListener('keydown', keydown);
-    this._subscriptions.add(new _atom.Disposable(() => {
+    this._subscriptions.add(new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
       textEditorView.removeEventListener('keydown', keydown);
     }));
   }

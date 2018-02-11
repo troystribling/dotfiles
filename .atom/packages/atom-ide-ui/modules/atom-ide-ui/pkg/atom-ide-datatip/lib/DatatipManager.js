@@ -195,7 +195,7 @@ function getBufferPosition(editor, editorView, event) {
   // `screenPositionForMouseEvent.column` cannot exceed the current line length.
   // This is essentially a heuristic for "mouse cursor is to the left or right
   // of text content".
-  if (pixelPosition.left < 0 || horizontalDistance > editor.getDefaultCharWidth()) {
+  if (pixelPosition.left <= 0 || horizontalDistance > editor.getDefaultCharWidth()) {
     return null;
   }
   return editor.bufferPositionForScreenPosition(screenPosition);

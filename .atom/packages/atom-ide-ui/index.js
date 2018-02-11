@@ -44,7 +44,7 @@ const features = _fs.default.readdirSync(featureDir).map(item => {
   try {
     const pkgJson = _fs.default.readFileSync(_path.default.join(dirname, 'package.json'), 'utf8');
     return {
-      dirname,
+      path: dirname,
       pkg: JSON.parse(pkgJson)
     };
   } catch (err) {
@@ -61,7 +61,7 @@ const features = _fs.default.readdirSync(featureDir).map(item => {
  */
 let disposables;
 const featureLoader = new (_FeatureLoader || _load_FeatureLoader()).default({
-  pkgName: 'atom-ide-ui',
+  path: __dirname,
   config: {},
   features
 });

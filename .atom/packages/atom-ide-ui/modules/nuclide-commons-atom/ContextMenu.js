@@ -4,7 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _atom = require('atom');
+var _UniversalDisposable;
+
+function _load_UniversalDisposable() {
+  return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));
+}
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * This class represents a collection of context menu items that have been registered with Atom's
@@ -85,7 +91,7 @@ class ContextMenu {
 
     // TODO(mbolin): Ideally, this Disposable should be garbage-collected if this ContextMenu is
     // disposed.
-    return new _atom.Disposable(() => {
+    return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
       const index = this._items.indexOf(value);
       this._items.splice(index, 1);
 

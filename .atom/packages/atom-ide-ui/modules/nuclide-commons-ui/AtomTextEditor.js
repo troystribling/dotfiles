@@ -13,6 +13,12 @@ function _load_classnames() {
 
 var _react = _interopRequireWildcard(require('react'));
 
+var _semver;
+
+function _load_semver() {
+  return _semver = _interopRequireDefault(require('semver'));
+}
+
 var _atom = require('atom');
 
 var _textEditor;
@@ -31,19 +37,19 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
+const doNothing = () => {}; /**
+                             * Copyright (c) 2017-present, Facebook, Inc.
+                             * All rights reserved.
+                             *
+                             * This source code is licensed under the BSD-style license found in the
+                             * LICENSE file in the root directory of this source tree. An additional grant
+                             * of patent rights can be found in the PATENTS file in the same directory.
+                             *
+                             * 
+                             * @format
+                             */
 
-const doNothing = () => {};
+const ATOM_VERSION_CHECK_FOR_SET_GRAMMAR = '1.24.0-beta0';
 
 function setupTextEditor(props) {
   const textBuffer = props.textBuffer || new _atom.TextBuffer();
@@ -67,6 +73,8 @@ function setupTextEditor(props) {
   disposables.add(() => textEditor.destroy());
   if (props.grammar != null) {
     textEditor.setGrammar(props.grammar);
+  } else if ((_semver || _load_semver()).default.gte(atom.getVersion(), ATOM_VERSION_CHECK_FOR_SET_GRAMMAR)) {
+    atom.grammars.autoAssignLanguageMode(textBuffer);
   }
   disposables.add((0, (_textEditor || _load_textEditor()).enforceSoftWrap)(textEditor, props.softWrapped));
 

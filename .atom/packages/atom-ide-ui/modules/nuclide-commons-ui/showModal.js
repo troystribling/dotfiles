@@ -108,7 +108,11 @@ function showModal(contentFactory, options = defaults) {
     ModalContainer,
     null,
     contentFactory({ dismiss: disposable.dispose.bind(disposable), element })
-  ), hostElement);
+  ), hostElement, () => {
+    if (options.onOpen) {
+      options.onOpen();
+    }
+  });
 
   return disposable;
 }
