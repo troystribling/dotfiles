@@ -35,12 +35,16 @@
       pycodestyle:
         maxLineLength: 250
       pyflakes: {}
+  "linter-ui-default":
+    panelHeight: 412
   "split-diff":
     diffWords: true
     ignoreWhitespace: true
     leftEditorColor: "red"
     rightEditorColor: "green"
     scrollSyncType: "Vertical + Horizontal"
+  "tool-bar":
+    visible: false
   "tree-view":
     hideIgnoredNames: true
     hideVcsIgnoredFiles: true
