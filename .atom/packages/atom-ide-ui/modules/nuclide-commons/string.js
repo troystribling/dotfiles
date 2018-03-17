@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.URL_REGEX = undefined;
+exports.ELLIPSIS_CHAR = exports.URL_REGEX = undefined;
 exports.stringifyError = stringifyError;
 exports.maybeToString = maybeToString;
 exports.relativeDate = relativeDate;
@@ -216,3 +216,5 @@ function getMatchRanges(haystack, needle) {
 // Added a single matching group for use with String.split.
 // eslint-disable-next-line max-len
 const URL_REGEX = exports.URL_REGEX = /(https?:\/\/(?:www\.)?[-\w@:%.+~#=]{2,256}\.[a-z]{2,6}\b[-\w@:%+.~#?&/=!]*|www\.[-\w@:%.+~#=]{2,256}\.[a-z]{2,6}\b[-\w@:%+.~#?&/=!]*)/;
+
+const ELLIPSIS_CHAR = exports.ELLIPSIS_CHAR = '\u2026';

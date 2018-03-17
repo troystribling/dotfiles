@@ -302,7 +302,7 @@ class CodeFormatManager {
   _formatCodeOnSaveInTextEditor(editor) {
     const saveProvider = this._onSaveProviders.getProviderForEditor(editor);
     if (saveProvider != null) {
-      return _rxjsBundlesRxMinJs.Observable.defer(() => this._reportBusy(editor, saveProvider.formatOnSave(editor))).map(edits => {
+      return _rxjsBundlesRxMinJs.Observable.defer(() => this._reportBusy(editor, saveProvider.formatOnSave(editor), false)).map(edits => {
         (0, (_textEdit || _load_textEdit()).applyTextEditsToBuffer)(editor.getBuffer(), edits);
       });
     } else if ((0, (_config || _load_config()).getFormatOnSave)()) {
@@ -311,12 +311,12 @@ class CodeFormatManager {
     return _rxjsBundlesRxMinJs.Observable.empty();
   }
 
-  _reportBusy(editor, promise) {
+  _reportBusy(editor, promise, revealTooltip = true) {
     const busySignalService = this._busySignalService;
     if (busySignalService != null) {
       const path = editor.getPath();
       const displayPath = path != null ? (_nuclideUri || _load_nuclideUri()).default.basename(path) : '<untitled>';
-      return busySignalService.reportBusyWhile(`Formatting code in ${displayPath}`, () => promise, { revealTooltip: true });
+      return busySignalService.reportBusyWhile(`Formatting code in ${displayPath}`, () => promise, { revealTooltip });
     }
     return promise;
   }

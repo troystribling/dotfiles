@@ -96,13 +96,13 @@ class InputArea extends _react.Component {
         event.preventDefault();
         event.stopImmediatePropagation();
 
-        if (event.ctrlKey) {
+        if (event.ctrlKey || event.altKey || event.shiftKey) {
           editor.insertNewline();
           return;
         }
 
         this._submit();
-      } else if (event.which === UP_KEY_CODE) {
+      } else if (event.which === UP_KEY_CODE && editor.getLineCount() <= 1) {
         if (this.props.history.length === 0 || isAutocompleteOpen) {
           return;
         }
@@ -115,7 +115,7 @@ class InputArea extends _react.Component {
           this.setState({ historyIndex });
         }
         editor.setText(this.props.history[this.props.history.length - historyIndex - 1]);
-      } else if (event.which === DOWN_KEY_CODE) {
+      } else if (event.which === DOWN_KEY_CODE && editor.getLineCount() <= 1) {
         if (this.props.history.length === 0 || isAutocompleteOpen) {
           return;
         }
@@ -149,7 +149,8 @@ class InputArea extends _react.Component {
         autoGrow: true,
         lineNumberGutterVisible: false,
         onConfirm: this._submit,
-        onInitialized: this._attachLabel
+        onInitialized: this._attachLabel,
+        onDidTextBufferChange: this.props.onDidTextBufferChange
       })
     );
   }

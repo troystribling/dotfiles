@@ -233,6 +233,7 @@ function applyUpdateToEditor(editor, update, diagnosticUpdater) {
   // TextEditor.
   if (update.messages.length > 0) {
     gutter.show();
+    (_analytics || _load_analytics()).default.track('diagnostics-show-editor-diagnostics');
   }
 }
 

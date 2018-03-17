@@ -195,9 +195,7 @@ let copyFilePermissions = (() => {
         throw e;
       }
       // For new files, use the default process file creation mask.
-      yield chmod(destinationPath,
-      // $FlowIssue: umask argument is optional
-      0o666 & ~process.umask() // eslint-disable-line no-bitwise
+      yield chmod(destinationPath, 0o666 & ~process.umask() // eslint-disable-line no-bitwise
       );
     }
   });

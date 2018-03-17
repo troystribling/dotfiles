@@ -15,6 +15,12 @@ function _load_classnames() {
   return _classnames = _interopRequireDefault(require('classnames'));
 }
 
+var _analytics;
+
+function _load_analytics() {
+  return _analytics = _interopRequireDefault(require('nuclide-commons-atom/analytics'));
+}
+
 var _collection;
 
 function _load_collection() {
@@ -101,13 +107,25 @@ function getCodeActions(message, codeActionsForMessage) {
 }
 
 // TODO move LESS styles to nuclide-ui
-const DiagnosticsPopup = props => {
-  const { fixer, goToLocation, codeActionsForMessage, messages } = props,
-        rest = _objectWithoutProperties(props, ['fixer', 'goToLocation', 'codeActionsForMessage', 'messages']);
-  return _react.createElement(
-    'div',
-    Object.assign({ className: 'diagnostics-popup' }, rest),
-    messages.map(renderMessage.bind(null, fixer, goToLocation, codeActionsForMessage))
-  );
-};
+class DiagnosticsPopup extends _react.Component {
+  componentDidMount() {
+    (_analytics || _load_analytics()).default.track('diagnostics-show-popup');
+  }
+
+  render() {
+    const _props = this.props,
+          {
+      fixer,
+      goToLocation,
+      codeActionsForMessage,
+      messages
+    } = _props,
+          rest = _objectWithoutProperties(_props, ['fixer', 'goToLocation', 'codeActionsForMessage', 'messages']);
+    return _react.createElement(
+      'div',
+      Object.assign({ className: 'diagnostics-popup' }, rest),
+      messages.map(renderMessage.bind(null, fixer, goToLocation, codeActionsForMessage))
+    );
+  }
+}
 exports.DiagnosticsPopup = DiagnosticsPopup;

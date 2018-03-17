@@ -141,7 +141,16 @@ class ConsoleHeader extends _react.Component {
       value: source.name
     }));
 
-    const MultiSelectOption = this._renderOption;
+    const sourceButton = options.length === 0 ? null : _react.createElement((_ModalMultiSelect || _load_ModalMultiSelect()).ModalMultiSelect, {
+      labelComponent: MultiSelectLabel,
+      optionComponent: this._renderOption,
+      size: (_Button || _load_Button()).ButtonSizes.SMALL,
+      options: options,
+      value: this.props.selectedSourceIds,
+      onChange: this.props.onSelectedSourcesChange,
+      className: 'inline-block'
+    });
+
     const pasteButton = this.props.createPaste == null ? null : _react.createElement(
       (_Button || _load_Button()).Button,
       {
@@ -160,15 +169,7 @@ class ConsoleHeader extends _react.Component {
       _react.createElement(
         (_ToolbarLeft || _load_ToolbarLeft()).ToolbarLeft,
         null,
-        _react.createElement((_ModalMultiSelect || _load_ModalMultiSelect()).ModalMultiSelect, {
-          labelComponent: MultiSelectLabel,
-          optionComponent: MultiSelectOption,
-          size: (_Button || _load_Button()).ButtonSizes.SMALL,
-          options: options,
-          value: this.props.selectedSourceIds,
-          onChange: this.props.onSelectedSourcesChange,
-          className: 'inline-block'
-        }),
+        sourceButton,
         _react.createElement((_RegExpFilter || _load_RegExpFilter()).default, {
           value: {
             text: this.props.filterText,

@@ -1,8 +1,11 @@
 # Etheratom - compile and deploy solidity code from atom editor
 
-Etheratom is a package for hackable Atom editor. Is uses web3js to interact with an Ethereum node.
+[![Greenkeeper badge](https://badges.greenkeeper.io/0mkara/etheratom.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/0mkara/etheratom.svg?branch=master)](https://travis-ci.org/0mkara/etheratom)
 
-![A screenshot of Etheratom package](https://cloud.githubusercontent.com/assets/13261372/20199663/2d000048-a7d2-11e6-9eb6-222200442f5c.png)
+Etheratom is a package for hackable Atom editor. It uses web3js to interact with Ethereum node.
+
+![A screenshot of Etheratom package](https://user-images.githubusercontent.com/13261372/37424010-5f70657e-27e5-11e8-8639-0f2f0361f03c.png)
 
 # Requirements
 
@@ -14,19 +17,7 @@ To run and compile using Etheratom, it is now __not required to have a local eth
 
 Start geth node using following command
 
-    geth --rpc --rpcapi="db,eth,net,web3,personal" --rpcport "8545" --rpcaddr "127.0.0.1" --rpccorsdomain "localhost" console
-
-Check if solidity compiler is installed
-
-    eth.getCompilers()
-
-If solidity compiler is installed output will be similar
-
-    I0523 16:34:48.950510 common/compiler/solidity.go:114] solc, the solidity compiler commandline interface
-    Version: 0.3.0-0/Release-Linux/g++/Interpreter linked to libethereum-1.2.2-0/Release-Linux/g++/Interpreter
-
-    path: /usr/bin/solc
-    []
+    geth --testnet --cache=1024 --fast --rpc --rpcapi="db,eth,net,web3,personal" console
 
 # Installation
 
@@ -64,7 +55,9 @@ Activate Etheratom package `ctrl+alt+e`
 
 Compile solidity code `ctrl+alt+c`
 
-After deploying your code hit **Create** button to create and mine it
+Show/hide etheratom panel `ctrl+alt+v`
+
+After compiling your code hit **Create** button to deploy the contract on blockchain.
 
 Also you can select between **Javascript VM** and an actual running **Ethereum node**.
 
@@ -72,12 +65,17 @@ Also you can select between **Javascript VM** and an actual running **Ethereum n
 
 Once contract is mined you will see buttons with function names to call those functions
 
+Use **Transaction Analyzer** to get details about any transaction.
+
+Transaction                |  Transaction Recipt
+:-------------------------:|:-------------------------:
+![Transaction hash](https://user-images.githubusercontent.com/13261372/37555558-260d3a92-2a0f-11e8-8c18-f1ebe9a326ef.png)  |  ![Transaction recipt](https://user-images.githubusercontent.com/13261372/37555557-25dbb30a-2a0f-11e8-88f2-8e6208e9ddd1.png)
+
+###
+
 # Expectations
 
-This is aimed to provide a front-end for Ethereum node. This interacts with Ethereum node via web3js. In future this project expects to support and provide all web3js commands required specifically for compiling solidity codes and execute them.
+Etheratom aims to provide an interface where developers can write solidity smart contracts, test them on Javascript VM, deploy them to testnets & mainnet and do a transaction analysis.
 
-
-# Self promotion
-
-I have put my efforts to this project. I hope this package has helped my fellow ethereum developers.
-I am a MEAN stack developer. Also comfortable with ReactJS, meteor, golang. I am currently lookming for a decent paid job. If you are looking for a developer consider contacting me.
+# Support development :green_heart: show some love
+## Ethereum :point_right: 0xd22fE4aEFed0A984B1165dc24095728EE7005a36

@@ -137,10 +137,6 @@ function parse(uri) {
     return { hostname, path };
   }
 
-  if (!(uri.indexOf('://') === -1)) {
-    throw new Error('Nuclide URI must be either local file names or URLs starting with nuclide://');
-  }
-
   if (!!_endsWithArchiveSeparator(uri)) {
     throw new Error(`Path cannot end with archive separator. Failed to parse ${uri}`);
   }
@@ -310,7 +306,7 @@ function uriToNuclideUri(uri) {
   }
 
   const lspUri = (_vscodeUri || _load_vscodeUri()).default.parse(uri);
-  // flowlint-next-line sketchy-null-string:off
+
   if (lspUri.scheme === 'file' && lspUri.path) {
     // only handle real files for now.
     return lspUri.path;
@@ -707,9 +703,6 @@ function _isArchiveSeparator(path, index) {
 
 function _testForIllegalUri(uri) {
   if (uri != null) {
-    if (isAtomUri(uri)) {
-      throw new Error(`Path operation invoked on Atom URI ${uri}`);
-    }
     if (_endsWithArchiveSeparator(uri)) {
       throw new Error(`Path operation invoked on URI ending with ${ARCHIVE_SEPARATOR}: ${uri}`);
     }

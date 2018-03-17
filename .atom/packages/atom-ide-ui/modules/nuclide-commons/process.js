@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.killUnixProcessTree = exports.loggedCalls = exports.ProcessLoggingEvent = exports.ProcessTimeoutError = exports.MaxBufferExceededError = exports.ProcessSystemError = exports.ProcessExitError = exports.psTree = exports.getChildrenOfProcess = exports.getOriginalEnvironment = exports.LOG_CATEGORY = undefined;
+exports.killUnixProcessTree = exports.loggedCalls = exports.ProcessLoggingEvent = exports.ProcessTimeoutError = exports.MaxBufferExceededError = exports.ProcessSystemError = exports.ProcessExitError = exports.memoryUsagePerPid = exports.psTree = exports.getChildrenOfProcess = exports.getOriginalEnvironment = exports.LOG_CATEGORY = undefined;
 
 var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));
 
@@ -95,9 +95,12 @@ let getDescendantsOfProcess = (() => {
 
 let psTree = exports.psTree = (() => {
   var _ref9 = (0, _asyncToGenerator.default)(function* () {
-    const stdout = isWindowsPlatform() ? // See also: https://github.com/nodejs/node-v0.x-archive/issues/2318
-    yield runCommand('wmic.exe', ['PROCESS', 'GET', 'ParentProcessId,ProcessId,Name']).toPromise() : yield runCommand('ps', ['-A', '-o', 'ppid,pid,comm']).toPromise();
-    return parsePsOutput(stdout);
+    if (isWindowsPlatform()) {
+      return psTreeWindows();
+    }
+    const [commands, withArgs] = yield Promise.all([runCommand('ps', ['-A', '-o', 'ppid,pid,comm']).toPromise(), runCommand('ps', ['-A', '-ww', '-o', 'pid,args']).toPromise()]);
+
+    return parsePsOutput(commands, withArgs);
   });
 
   return function psTree() {
@@ -105,8 +108,52 @@ let psTree = exports.psTree = (() => {
   };
 })();
 
+let psTreeWindows = (() => {
+  var _ref10 = (0, _asyncToGenerator.default)(function* () {
+    const stdout = yield runCommand('wmic.exe', ['PROCESS', 'GET', 'ParentProcessId,ProcessId,Name']).toPromise();
+    return parsePsOutput(stdout);
+  });
+
+  return function psTreeWindows() {
+    return _ref10.apply(this, arguments);
+  };
+})();
+
+// Use `ps` to get memory usage for an array of process id's as a map.
+let memoryUsagePerPid = exports.memoryUsagePerPid = (() => {
+  var _ref11 = (0, _asyncToGenerator.default)(function* (pids) {
+    const usage = new Map();
+    if (pids.length >= 1) {
+      try {
+        const stdout = yield runCommand('ps', ['-p', pids.join(','), '-o', 'pid=', '-o', 'rss=']).toPromise();
+        stdout.split('\n').forEach(function (line) {
+          const parts = line.trim().split(/\s+/);
+          if (parts.length === 2) {
+            const [pid, rss] = parts.map(function (x) {
+              return parseInt(x, 10);
+            });
+            usage.set(pid, rss);
+          }
+        });
+      } catch (err) {
+        // Ignore errors.
+      }
+    }
+    return usage;
+  });
+
+  return function memoryUsagePerPid(_x3) {
+    return _ref11.apply(this, arguments);
+  };
+})();
+
+/**
+ * Add no-op error handlers to the process's streams so that Node doesn't throw them.
+ */
+
+
 let _killProcess = (() => {
-  var _ref10 = (0, _asyncToGenerator.default)(function* (proc, killTree) {
+  var _ref12 = (0, _asyncToGenerator.default)(function* (proc, killTree) {
     proc.wasKilled = true;
     if (!killTree) {
       proc.kill();
@@ -119,13 +166,13 @@ let _killProcess = (() => {
     }
   });
 
-  return function _killProcess(_x3, _x4) {
-    return _ref10.apply(this, arguments);
+  return function _killProcess(_x4, _x5) {
+    return _ref12.apply(this, arguments);
   };
 })();
 
 let killUnixProcessTree = exports.killUnixProcessTree = (() => {
-  var _ref11 = (0, _asyncToGenerator.default)(function* (proc) {
+  var _ref13 = (0, _asyncToGenerator.default)(function* (proc) {
     const descendants = yield getDescendantsOfProcess(proc.pid);
     // Kill the processes, starting with those of greatest depth.
     for (const info of descendants.reverse()) {
@@ -133,8 +180,8 @@ let killUnixProcessTree = exports.killUnixProcessTree = (() => {
     }
   });
 
-  return function killUnixProcessTree(_x5) {
-    return _ref11.apply(this, arguments);
+  return function killUnixProcessTree(_x6) {
+    return _ref13.apply(this, arguments);
   };
 })();
 
@@ -571,27 +618,35 @@ function exitEventToMessage(event) {
   }
 }
 
-function parsePsOutput(psOutput) {
+function parsePsOutput(psOutput, argsOutput) {
   // Remove the first header line.
-  const lines = psOutput.split(/\n|\r\n/).slice(1);
+  const lines = psOutput.trim().split(/\n|\r\n/).slice(1);
+
+  let withArgs = new Map();
+  if (argsOutput != null) {
+    withArgs = new Map(argsOutput.trim().split(/\n|\r\n/).slice(1).map(line => {
+      const columns = line.trim().split(/\s+/);
+      const pid = parseInt(columns[0], 10);
+      const command = columns.slice(1).join(' ');
+      return [pid, command];
+    }));
+  }
 
   return lines.map(line => {
     const columns = line.trim().split(/\s+/);
-    const [parentPid, pid] = columns;
+    const [parentPid, pidStr] = columns;
+    const pid = parseInt(pidStr, 10);
     const command = columns.slice(2).join(' ');
+    const commandWithArgs = withArgs.get(pid);
 
     return {
       command,
       parentPid: parseInt(parentPid, 10),
-      pid: parseInt(pid, 10)
+      pid,
+      commandWithArgs: commandWithArgs == null ? command : commandWithArgs
     };
   });
-}
-
-/**
- * Add no-op error handlers to the process's streams so that Node doesn't throw them.
- */
-function preventStreamsFromThrowing(proc) {
+}function preventStreamsFromThrowing(proc) {
   return new (_UniversalDisposable || _load_UniversalDisposable()).default(getStreamErrorEvents(proc).subscribe());
 }
 
@@ -815,7 +870,7 @@ function createProcessStream(type = 'spawn', commandOrModulePath, args = [], opt
     //
     // [1]: https://github.com/nodejs/node/blob/v7.10.0/lib/internal/child_process.js#L301
     proc.pid == null ? _rxjsBundlesRxMinJs.Observable.empty() : _rxjsBundlesRxMinJs.Observable.of(proc), _rxjsBundlesRxMinJs.Observable.never() // Don't complete until we say so!
-    )).takeUntil(errors).takeUntil(exitEvents).merge(
+    )).merge(
     // Write any input to stdin. This is just for the side-effect. We merge it here to
     // ensure that writing to the stdin stream happens after our event listeners are added.
     input == null ? _rxjsBundlesRxMinJs.Observable.empty() : input.do({
@@ -825,7 +880,7 @@ function createProcessStream(type = 'spawn', commandOrModulePath, args = [], opt
       complete: () => {
         proc.stdin.end();
       }
-    }).ignoreElements()).do({
+    }).ignoreElements()).takeUntil(errors).takeUntil(exitEvents).do({
       error: () => {
         finished = true;
       },

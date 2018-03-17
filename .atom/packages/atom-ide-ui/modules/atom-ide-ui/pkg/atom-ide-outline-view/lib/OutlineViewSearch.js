@@ -95,6 +95,7 @@ class OutlineViewSearchComponent extends _react.Component {
     };
 
     this._onDidChange = (0, (_debounce || _load_debounce()).default)(query => {
+      (_analytics || _load_analytics()).default.track('outline-view:change-query');
       this.setState({ currentQuery: query });
     }, this.DEBOUNCE_TIME);
 

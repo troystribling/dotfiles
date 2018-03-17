@@ -1,4 +1,20 @@
 'use babel'
+// Copyright 2018 Etheratom Authors
+// This file is part of Etheratom.
+
+// Etheratom is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// Etheratom is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with Etheratom.  If not, see <http://www.gnu.org/licenses/>.
+
 // web3.js should be use to handle all web3 compilation events
 // Every solidity file can be compiled in two ways jsvm and ethereum endpoint
 // After every command is invoked compilation endpoint should be chosen
@@ -7,18 +23,19 @@ import { CompositeDisposable } from 'atom'
 import path from 'path'
 import fs from 'fs'
 import Web3 from 'web3'
+import { connect } from 'react-redux'
 import Web3Helpers from './methods'
+import { combineSource } from '../helpers/compiler-imports'
+import View from './view'
+import { SET_COMPILED, ADD_INTERFACE, SET_COMPILING, SET_ERRORS } from '../actions/types'
 
-let View, helpers;
-View = require('./view');
-
-
-class Web3Env {
-	constructor() {
+export default class Web3Env {
+	constructor(store) {
 		this.subscriptions = new CompositeDisposable();
 		this.web3Subscriptions = new CompositeDisposable();
 		this.saveSubscriptions = new CompositeDisposable();
 		this.compileSubscriptions = new CompositeDisposable();
+		this.store = store;
 		this.observeConfig();
 	}
 	dispose() {
@@ -93,9 +110,6 @@ class Web3Env {
 			this.compileSubscriptions = new CompositeDisposable();
 			this.subscribeToCompileEvents();
 		}));
-		this.web3Subscriptions.add(atom.commands.add('atom-workspace', 'eth-interface:make', () => {
-			this.subscribeToMakeEvents();
-		}));
 	}
 	subscribeToWeb3Events() {
 		if(!this.web3Subscriptions) {
@@ -105,10 +119,10 @@ class Web3Env {
 		if(typeof this.web3 !== 'undefined') {
 			this.web3 = new Web3(this.web3.currentProvider);
 		} else {
-			this.web3 = new Web3(new Web3.providers.HttpProvider(rpcAddress));
+			this.web3 = new Web3(Web3.givenProvider || new Web3.providers.HttpProvider(rpcAddress));
 			this.helpers = new Web3Helpers(this.web3);
 		}
-		this.view = new View(this.web3);
+		this.view = new View(this.store, this.web3);
 		this.checkConnection((error, connection) => {
 			if(error) {
 				this.helpers.showPanelError(error);
@@ -116,6 +130,8 @@ class Web3Env {
 				this.view.createCompilerOptionsView();
 				this.view.createCoinbaseView();
 				this.view.createButtonsView();
+				this.view.createTabView();
+				this.view.createErrorView();
 			}
 		});
 		this.web3Subscriptions.add(atom.workspace.observeTextEditors((editor) => {
@@ -166,124 +182,52 @@ class Web3Env {
 			this.compile(editor);
 		}));
 	}
-	subscribeToMakeEvents() {
-		if(!this.compileSubscriptions) {
-			return
-		}
-		this.make(this.compiled)
-	}
 
 	// common functions
 	checkConnection(callback) {
 		let haveConn;
-		haveConn = this.web3.isConnected();
+		haveConn = this.web3.currentProvider;
 		if(!haveConn) {
 			return callback('Error could not connect to local geth instance!', null);
 		} else {
 			return callback(null, true);
 		}
 	}
-	combineSource(dir, source, imports) {
-		let fn, iline, ir, match, o, subSource;
-		o = {
-			encoding: 'UTF-8'
-		};
-		ir = /import\ [\'\"](.+)[\'\"]\;/g;
-		match = null;
-		while((match = ir.exec(source))) {
-			iline = match[0];
-			fn = match[1];
-			if(imports[fn]) {
-				source = source.replace(iline, '');
-				continue;
-			}
-			imports[fn] = 1;
-			subSource = fs.readFileSync(dir + "/" + fn, o);
-			match.source = this.combineSource(dir, subSource, imports);
-			source = source.replace(iline, match.source);
-		}
-		return source;
-	}
-	compile(editor) {
-		let filename, filePath, dir, source;
+	async compile(editor) {
+		const filePath = editor.getPath();
+		const filename = filePath.replace(/^.*[\\\/]/, '');
 
-		filePath = editor.getPath();
-		filename = filePath.replace(/^.*[\\\/]/, '');
 		if(filePath.split('.').pop() == 'sol') {
-			dir = path.dirname(filePath);
-			source = this.combineSource(dir, editor.getText(), {});
-			this.helpers.compileWeb3(source, (error, compiled) => {
-				if(error) {
-					this.helpers.showPanelError(error);
-				}
-				if(compiled) {
-					// Handle compilation returns
-					if(compiled.errors) {
-						this.view.viewErrors(compiled.errors);
-					} else {
-						// Reset compiled code view before compiling new contract
-						this.view.reset();
-						this.view.viewCompiled(compiled);
-						this.compiled = compiled;
+			console.log("%c Compiling contract... ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
+			this.store.dispatch({ type: SET_COMPILING, payload: true });
+			const dir = path.dirname(filePath);
+			var sources = {};
+			sources[filename] = { content: editor.getText() }
+			sources = await combineSource(dir, sources);
+			try {
+				// Reset errors
+				this.store.dispatch({ type: SET_COMPILED, payload: null });
+				this.store.dispatch({ type: SET_ERRORS, payload: [] });
+				const compiled = await this.helpers.compileWeb3(sources);
+				this.store.dispatch({ type: SET_COMPILED, payload: compiled });
+				if(compiled.contracts) {
+					for(const [fileName, contracts] of Object.entries(compiled.contracts)) {
+						for(const [contractName, contract] of Object.entries(contracts)) {
+							// Add interface to redux
+							this.store.dispatch({ type: ADD_INTERFACE, payload: { contractName, interface: contract.abi } });
+						}
 					}
 				}
-			});
+				if(compiled.errors) {
+					this.store.dispatch({ type: SET_ERRORS, payload: compiled.errors });
+				}
+				this.store.dispatch({ type: SET_COMPILING, payload: false });
+			} catch (e) {
+				console.log(e);
+				this.helpers.showPanelError(e);
+			}
 		} else {
 			return;
 		}
 	}
-	make(compiled) {
-		for(contractName in compiled) {
-			let variables, estimatedGas, bytecode, ContractABI, inputVars, constructVars, createButton;
-			constructVars = [];
-			variables = [];
-			estimatedGas = 0;
-			if(document.getElementById(contractName + '_create')) {
-				bytecode = compiled[contractName].code;
-				ContractABI = compiled[contractName].info.abiDefinition;
-				inputVars = document.getElementById(contractName + '_inputs') ? document.getElementById(contractName + '_inputs').getElementsByTagName('input') : null;
-				if(inputVars) {
-					for(var inputItem of inputVars) {
-						if(inputItem.getAttribute('id') === contractName + '_gas') {
-							estimatedGas = inputItem.value;
-							inputItem.readOnly = true;
-							break;
-						}
-						inputObj = {
-							"varName": inputItem.getAttribute('id'),
-							"varValue": inputItem.value
-						};
-						variables.push(inputObj);
-						inputItem.readOnly = true;
-						if(inputItem.nextSibling.getAttribute('id') === contractName + '_create') {
-							break;
-						}
-					}
-					constructVars[contractName] = {
-						'contractName': contractName,
-						'inputVariables': variables,
-						'estimatedGas': estimatedGas
-					};
-				}
-				createButton = React.createClass({
-					displayName: 'createButton',
-					_handleSubmit: function() {
-						return this.create(compiled[Object.keys(this.refs)[0]].info.abiDefinition, compiled[Object.keys(this.refs)[0]].code, constructVars[Object.keys(this.refs)[0]], Object.keys(this.refs)[0], constructVars[Object.keys(this.refs)[0]].estimatedGas);
-					},
-					render: function() {
-						return React.createElement('form', {
-							onSubmit: this._handleSubmit
-						}, React.createElement('input', {
-							type: 'submit',
-							value: 'Create',
-							ref: contractName,
-							className: 'btn btn-primary inline-block-tight'
-						}, null));
-					}
-				});
-				ReactDOM.render(React.createElement(createButton, null), document.getElementById(contractName + '_create'));
-			}
-		}
-	}
 }
-export { Web3Env }

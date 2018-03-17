@@ -74,22 +74,30 @@ function _load_StyleSheet() {
   return _StyleSheet = _interopRequireDefault(require('nuclide-commons-ui/StyleSheet'));
 }
 
+var _classnames;
+
+function _load_classnames() {
+  return _classnames = _interopRequireDefault(require('classnames'));
+}
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Maximum time (ms) for the console to try scrolling to the bottom.
-const MAXIMUM_SCROLLING_TIME = 3000; /**
-                                      * Copyright (c) 2017-present, Facebook, Inc.
-                                      * All rights reserved.
-                                      *
-                                      * This source code is licensed under the BSD-style license found in the
-                                      * LICENSE file in the root directory of this source tree. An additional grant
-                                      * of patent rights can be found in the PATENTS file in the same directory.
-                                      *
-                                      * 
-                                      * @format
-                                      */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
+const MAXIMUM_SCROLLING_TIME = 3000;
 
 let count = 0;
 
@@ -152,7 +160,8 @@ class ConsoleView extends _react.Component {
     };
 
     this.state = {
-      unseenMessages: false
+      unseenMessages: false,
+      promptBufferChanged: false
     };
     this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();
     this._isScrolledNearBottom = true;
@@ -280,8 +289,38 @@ class ConsoleView extends _react.Component {
             onClick: this._startScrollToBottom
           })
         ),
-        this._renderPrompt()
+        this._renderPrompt(),
+        this._renderMultilineTip()
       )
+    );
+  }
+
+  _renderMultilineTip() {
+    const { currentExecutor } = this.props;
+    if (currentExecutor == null) {
+      return;
+    }
+    const keyCombo = process.platform === 'darwin' ?
+    // Option + Enter on Mac
+    _react.createElement(
+      'span',
+      null,
+      '\u2325 + \u23CE'
+    ) :
+    // Shift + Enter on Windows and Linux.
+    _react.createElement(
+      'span',
+      null,
+      'Shift + Enter'
+    );
+
+    return _react.createElement(
+      'div',
+      {
+        className: (0, (_classnames || _load_classnames()).default)('console-multiline-tip', this.state.promptBufferChanged ? 'console-multiline-tip-dim' : 'console-multiline-tip-not-dim') },
+      'Tip: ',
+      keyCombo,
+      ' to insert a newline'
     );
   }
 
@@ -298,7 +337,10 @@ class ConsoleView extends _react.Component {
         scopeName: currentExecutor.scopeName,
         onSubmit: this._executePrompt,
         history: this.props.history,
-        watchEditor: this.props.watchEditor
+        watchEditor: this.props.watchEditor,
+        onDidTextBufferChange: () => {
+          this.setState({ promptBufferChanged: true });
+        }
       })
     );
   }

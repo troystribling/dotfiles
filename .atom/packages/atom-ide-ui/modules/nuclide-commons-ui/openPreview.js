@@ -11,6 +11,18 @@ function _load_goToLocation() {
   return _goToLocation = require('nuclide-commons-atom/go-to-location');
 }
 
+var _paneItem;
+
+function _load_paneItem() {
+  return _paneItem = require('nuclide-commons-atom/pane-item');
+}
+
+var _promise2;
+
+function _load_promise() {
+  return _promise2 = require('nuclide-commons/promise');
+}
+
 let preview; /**
               * Copyright (c) 2017-present, Facebook, Inc.
               * All rights reserved.
@@ -25,6 +37,7 @@ let preview; /**
 
 let marker;
 let originalPoint;
+let lastOpenablePreview;
 
 let activeOpenableId = 0;
 
@@ -32,18 +45,22 @@ let activeOpenableId = 0;
 // a new pane if the destination uri is not the active item. However, if the
 // user has disabled preview panes, we won't show them a preview.
 
-// previewOpenable supports being called many times, and it deallocates prior
+// openPreview supports being called many times, and it deallocates prior
 // previews on its own when this happens. It also returns the user's focus when
 // to the original destination when cancelled. This *could* be implemented using
 // a stack, but this simpler implementation just holds global references and restores
 // focus using the active item and position that was present when the first preview occurred.
 function openPreview(uri,
 // $FlowIgnore
-options = {}) {
+options = {}, openDelay = 0) {
   const { line, column } = options;
   const thisOpenableId = ++activeOpenableId;
 
-  let cancelled;
+  if (lastOpenablePreview != null) {
+    lastOpenablePreview.cancel();
+  }
+
+  let canceled;
   let confirmed;
 
   const activeItem = atom.workspace.getActivePaneItem();
@@ -63,59 +80,68 @@ options = {}) {
 
   let promise;
   if (isWithinSameFile || arePendingPanesEnabled) {
-    promise = (0, (_goToLocation || _load_goToLocation()).goToLocation)(uri, {
-      line,
-      column,
-      center: true,
-      activateItem: true,
-      activatePane: false,
-      pending: true,
-      moveCursor: false
-    }).then(newPreview => {
-      if (cancelled &&
-      // don't destroy the pane if it's not new (e.g. within the same file --
-      // like a symbol within the originating file)
-      originalPoint != null && newPreview !== originalPoint.item) {
-        newPreview.destroy();
-        return;
-      }
+    promise = (0, (_promise2 || _load_promise()).delayTime)(openDelay).then(() => {
+      // a common case is scrolling through many results, cancelling one after
+      // the other. give things a chance to cancel before going throught the work
+      // of rendering a preview
+      if (canceled) {
+        return Promise.resolve();
+      } else {
+        return (0, (_goToLocation || _load_goToLocation()).goToLocation)(uri, {
+          line,
+          column,
+          center: true,
+          activateItem: true,
+          activatePane: false,
+          pending: true,
+          moveCursor: false
+        }).then(newPreview => {
+          if (canceled && (0, (_paneItem || _load_paneItem()).isPending)(newPreview) &&
+          // don't destroy the pane if it's not new (e.g. within the same file --
+          // like a symbol within the originating file)
+          originalPoint != null && newPreview !== originalPoint.item) {
+            newPreview.destroy();
+            return;
+          }
 
-      // the pane may have been reused: e.g. previewing a line in the same file
-      // so make sure it wasn't. Then destroy the old preview if it's not the
-      // original pane.
-      if (preview != null && preview !== newPreview && originalPoint != null && newPreview !== originalPoint.item) {
-        preview.destroy();
-      }
+          // the pane may have been reused: e.g. previewing a line in the same file
+          // so make sure it wasn't. Then destroy the old preview if it's not the
+          // original pane.
+          if (preview != null && (0, (_paneItem || _load_paneItem()).isPending)(preview) && preview !== newPreview) {
+            preview.destroy();
+          }
 
-      if (marker != null) {
-        marker.destroy();
-        marker = null;
-      }
+          if (marker != null) {
+            marker.destroy();
+            marker = null;
+          }
 
-      preview = newPreview;
+          preview = newPreview;
 
-      // highlight the relevant line (and possibly point if there's a column)
-      // if a line is provided in the options
-      if (line != null) {
-        marker = preview.markBufferPosition({
-          row: line,
-          column: column == null ? 0 : column
+          // highlight the relevant line (and possibly point if there's a column)
+          // if a line is provided in the options
+          if (line != null) {
+            marker = preview.markBufferPosition({
+              row: line,
+              column: column == null ? 0 : column
+            });
+            preview.decorateMarker(marker, {
+              type: 'line',
+              class: 'nuclide-line-preview'
+            });
+          }
+
+          return newPreview;
         });
-        preview.decorateMarker(marker, {
-          type: 'line',
-          class: 'nuclide-line-preview'
-        });
       }
-
-      return newPreview;
     });
   } else {
     promise = Promise.resolve();
   }
 
-  return {
+  const openablePreview = {
     cancel() {
-      cancelled = true;
+      canceled = true;
 
       if (activeOpenableId !== thisOpenableId) {
         // the next preview has cleaned up our markers for us
@@ -142,13 +168,14 @@ options = {}) {
         throw new Error('Another preview has become active after this one was shown. Cannot confirm.');
       }
 
-      if (cancelled) {
+      if (canceled) {
         throw new Error('A preview cannot be confirmed after it has been cancelled');
       }
 
       confirmed = true;
 
       const goToLocationPromise = (0, (_goToLocation || _load_goToLocation()).goToLocation)(uri, options).then(newEditor => {
+        newEditor.terminatePendingState();
         if (preview != null && preview !== newEditor && (originalPoint == null || preview !== originalPoint.item)) {
           // This case seems very unlikely: if the editor opened on confirmation
           // is not the same editor that was used for the preview pane, destroy
@@ -168,4 +195,7 @@ options = {}) {
     // exported for test
     _promise: promise
   };
+
+  lastOpenablePreview = openablePreview;
+  return openablePreview;
 }

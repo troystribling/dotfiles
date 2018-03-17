@@ -9,7 +9,7 @@ const PYTHON_REGEX = /(([^\d\W]|[\u00A0-\uFFFF])[\w.\u00A0-\uFFFF]*)|\.$/;
 
 class PythonLanguageClient extends AutoLanguageClient {
   getGrammarScopes() {
-    return ["source.python"];
+    return ["source.python", "python"];
   }
 
   getLanguageName() {
@@ -21,11 +21,16 @@ class PythonLanguageClient extends AutoLanguageClient {
   }
 
   getRootConfigurationKey() {
-    return "ide-python.pylsPlugins";
+    return "ide-python";
   }
 
   mapConfigurationObject(configuration) {
-    return { pyls: { plugins: configuration } };
+    return {
+      pyls: {
+        configurationSources: configuration.pylsConfigurationSources,
+        plugins: configuration.pylsPlugins
+      }
+    };
   }
 
   async startServerProcess(projectPath) {

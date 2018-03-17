@@ -58,13 +58,24 @@ class ConfigCache {
 
     return (0, _asyncToGenerator.default)(function* () {
       const configDirs = yield Promise.all(_this._configFileNames.map(function (configFile) {
-        return (_fsPromise || _load_fsPromise()).default.findNearestFile(configFile, path);
+        if (_this._searchStrategy === 'furthest') {
+          return (_fsPromise || _load_fsPromise()).default.findFurthestFile(configFile, path);
+        } else {
+          return (_fsPromise || _load_fsPromise()).default.findNearestFile(configFile, path);
+        }
       }));
 
       if (_this._searchStrategy === 'nearest') {
         // Find the result with the greatest length (the closest match).
         return configDirs.filter(Boolean).reduce(function (previous, configDir) {
           if (previous == null || configDir.length > previous.length) {
+            return configDir;
+          }
+          return previous;
+        }, null);
+      } else if (_this._searchStrategy === 'furthest') {
+        return configDirs.filter(Boolean).reduce(function (previous, configDir) {
+          if (previous == null || configDir.length < previous.length) {
             return configDir;
           }
           return previous;

@@ -22,12 +22,6 @@ function _load_memoizeUntilChanged() {
   return _memoizeUntilChanged = _interopRequireDefault(require('nuclide-commons/memoizeUntilChanged'));
 }
 
-var _UniversalDisposable;
-
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));
-}
-
 var _humanizePath;
 
 function _load_humanizePath() {
@@ -84,8 +78,6 @@ function _load_Icon() {
   return _Icon = require('nuclide-commons-ui/Icon');
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -123,51 +115,9 @@ class DiagnosticsTable extends _react.PureComponent {
     this._getRows = (0, (_memoizeUntilChanged || _load_memoizeUntilChanged()).default)(this._getRows, (diagnostics, showTraces) => ({ diagnostics, showTraces }), (a, b) => a.showTraces === b.showTraces && (0, (_collection || _load_collection()).arrayEqual)(a.diagnostics, b.diagnostics));
 
     this.state = {
-      focused: false,
-      selectedMessage: null,
       sortDescending: true,
       sortedColumn: 'classification'
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this._selectedMessages.next(nextProps.selectedMessage);
-  }
-
-  componentDidMount() {
-    const focusedStream = this._focusChangeEvents.map(event => event.type === 'focus');
-    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(
-    // If we change the state synchronously on the focus change, the component will be
-    // re-rendered, removing the element with the click handler before the click event gets to us
-    // (via the table's `onSelect()`). This would manifest itself in rows not being selected when
-    // a click both changes the selection and focuses the table. A naive solution would be to
-    // simply delay the focus event, however, users would perceive the selection and focus styling
-    // changes (quick flashing changes). Therefore, we hold onto focus changes (i.e. don't
-    // re-render) until we hear the selection change. Because a focus change may occur without a
-    // subsequent selection change, we also always force a re-render after a certain number of
-    // milliseconds without hearing a selection change. The end result is that clicking a row when
-    // the table is not focused will immediately render the table with the correct focus and
-    // selection. Focusing the table without clicking a row will be queue a re-render in a few
-    // milliseconds.
-    this._selectedMessages.distinctUntilChanged().withLatestFrom(focusedStream).subscribe(([selectedMessage, focused]) => {
-      this.setState({ selectedMessage, focused });
-    }), focusedStream.delay(100).subscribe(focused => this.setState({ focused })));
-  }
-
-  componentWillUnmount() {
-    if (!(this._disposables != null)) {
-      throw new Error('Invariant violation: "this._disposables != null"');
-    }
-
-    this._disposables.dispose();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this._table != null && this.state.focused !== prevState.focused) {
-      // The row renderers depend on this state but the Table component doesn't know it about it, so
-      // we have to force it to rerender its rows.
-      this._table.forceUpdate();
-    }
   }
 
   _getColumns() {
@@ -263,8 +213,7 @@ class DiagnosticsTable extends _react.PureComponent {
   }
 
   render() {
-    const { diagnostics, showTraces } = this.props;
-    const { selectedMessage } = this.state;
+    const { diagnostics, selectedMessage, showTraces } = this.props;
     const columns = this._getColumns();
     const { sortedColumn, sortDescending } = this._getSortOptions(columns);
     const diagnosticRows = this._getRows(diagnostics, showTraces);
@@ -292,8 +241,6 @@ class DiagnosticsTable extends _react.PureComponent {
         ref: table => {
           this._table = table;
         },
-        onBodyFocus: this._handleFocusChangeEvent,
-        onBodyBlur: this._handleFocusChangeEvent,
         collapsable: true,
         columns: columns,
         emptyComponent: EmptyComponent,
@@ -391,8 +338,6 @@ exports.default = DiagnosticsTable;
 
 var _initialiseProps = function () {
   this._previousSelectedIndex = -1;
-  this._focusChangeEvents = new _rxjsBundlesRxMinJs.Subject();
-  this._selectedMessages = new _rxjsBundlesRxMinJs.BehaviorSubject();
 
   this._handleSort = (sortedColumn, sortDescending) => {
     this.setState({
@@ -419,8 +364,7 @@ var _initialiseProps = function () {
 
   this._renderDescription = props => {
     const { showTraces, diagnostic, text, isPlainText } = props.data;
-    const expanded = showTraces || this.state.focused && diagnostic === this.state.selectedMessage;
-    return expanded ? (0, (_DiagnosticsMessage || _load_DiagnosticsMessage()).DiagnosticsMessageNoHeader)({
+    return showTraces ? (0, (_DiagnosticsMessage || _load_DiagnosticsMessage()).DiagnosticsMessageNoHeader)({
       message: diagnostic,
       goToLocation: (file, line) => (0, (_goToLocation || _load_goToLocation()).goToLocation)(file, { line }),
       fixer: () => {}
@@ -428,10 +372,6 @@ var _initialiseProps = function () {
       preserveNewlines: showTraces,
       message: { text, html: isPlainText ? undefined : text }
     });
-  };
-
-  this._handleFocusChangeEvent = event => {
-    this._focusChangeEvents.next(event);
   };
 };
 

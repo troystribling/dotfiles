@@ -328,6 +328,7 @@ class Table extends _react.Component {
     const {
       alternateBackground,
       columns,
+      headerElement,
       headerTitle,
       maxBodyHeight,
       rows,
@@ -340,10 +341,10 @@ class Table extends _react.Component {
 
     const columnWidths = this._calculateColumnWidths();
 
-    const header = headerTitle != null ? _react.createElement(
+    const header = headerElement != null || headerTitle != null ? _react.createElement(
       'div',
       { className: 'nuclide-ui-table-header-cell nuclide-ui-table-full-header' },
-      headerTitle
+      headerElement != null ? headerElement : headerTitle
     ) : columns.map((column, i) => {
       const { title, key, shouldRightAlign, cellClassName } = column;
       let resizer;
@@ -398,7 +399,7 @@ class Table extends _react.Component {
       );
     });
     let body = rows.map((row, i) => {
-      const { className: rowClassName, data } = row;
+      const { className: rowClassName, data, rowAttributes } = row;
       const renderedRow = columns.map((column, j) => {
         const {
           key,
@@ -419,18 +420,20 @@ class Table extends _react.Component {
         }
         return _react.createElement(
           'div',
-          {
+          Object.assign({
             className: (0, (_classnames || _load_classnames()).default)(cellClassName, {
               'nuclide-ui-table-body-cell': true,
               'nuclide-ui-table-cell-text-align-right': shouldRightAlign
             }),
             key: j,
             style: cellStyle,
-            title: typeof datum !== 'object' ? String(datum) : null },
+            title: typeof datum !== 'object' ? String(datum) : null
+          }, rowAttributes),
           datum
         );
       });
-      const rowProps = selectable ? {
+      const selectableRow = typeof selectable === 'function' ? selectable(row.data) : selectable;
+      const rowProps = selectableRow ? {
         onClick: event => {
           switch (event.detail) {
             // This (`event.detail === 0`) shouldn't happen normally but does when the click is
@@ -456,7 +459,8 @@ class Table extends _react.Component {
         Object.assign({
           className: (0, (_classnames || _load_classnames()).default)(rowClassName, {
             'nuclide-ui-table-row': true,
-            'nuclide-ui-table-row-selectable': selectable,
+            'nuclide-ui-table-row-selectable': selectableRow,
+            'nuclide-ui-table-row-disabled': typeof selectable === 'function' && !selectableRow,
             'nuclide-ui-table-row-using-keyboard-nav': this.state.usingKeyboard,
             'nuclide-ui-table-row-selected': isSelectedRow,
             'nuclide-ui-table-row-alternate': alternateBackground !== false && i % 2 === 1,

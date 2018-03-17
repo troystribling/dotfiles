@@ -86,17 +86,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; } /**
+                                                                                                                                                                                                                              * Copyright (c) 2017-present, Facebook, Inc.
+                                                                                                                                                                                                                              * All rights reserved.
+                                                                                                                                                                                                                              *
+                                                                                                                                                                                                                              * This source code is licensed under the BSD-style license found in the
+                                                                                                                                                                                                                              * LICENSE file in the root directory of this source tree. An additional grant
+                                                                                                                                                                                                                              * of patent rights can be found in the PATENTS file in the same directory.
+                                                                                                                                                                                                                              *
+                                                                                                                                                                                                                              * 
+                                                                                                                                                                                                                              * @format
+                                                                                                                                                                                                                              */
 
 const MAXIMUM_SERIALIZED_MESSAGES_CONFIG = 'atom-ide-console.maximumSerializedMessages';
 const MAXIMUM_SERIALIZED_HISTORY_CONFIG = 'atom-ide-console.maximumSerializedHistory';
@@ -250,6 +250,9 @@ class Activation {
         info(object) {
           console.append({ text: object, level: 'info' });
         },
+        success(object) {
+          console.append({ text: object, level: 'success' });
+        },
         append(message) {
           if (!(activation != null && !disposed)) {
             throw new Error('Invariant violation: "activation != null && !disposed"');
@@ -342,7 +345,12 @@ class Activation {
     const maximumSerializedMessages = (_featureConfig || _load_featureConfig()).default.get(MAXIMUM_SERIALIZED_MESSAGES_CONFIG);
     const maximumSerializedHistory = (_featureConfig || _load_featureConfig()).default.get(MAXIMUM_SERIALIZED_HISTORY_CONFIG);
     return {
-      records: this._store.getState().records.slice(-maximumSerializedMessages).toArray(),
+      records: this._store.getState().records.slice(-maximumSerializedMessages).toArray().map(record => {
+        // `Executor` is not serializable. Make sure to remove it first.
+        const { executor } = record,
+              rest = _objectWithoutProperties(record, ['executor']);
+        return rest;
+      }),
       history: this._store.getState().history.slice(-maximumSerializedHistory)
     };
   }

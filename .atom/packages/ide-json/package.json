@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68853-r66t58.9i6drq9f6r/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51815-1r5yw1d.kdzhorms4i/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68853-r66t58.9i6drq9f6r/package.tgz",
-        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68853-r66t58.9i6drq9f6r/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51815-1r5yw1d.kdzhorms4i/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51815-1r5yw1d.kdzhorms4i/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118027-68853-16rvdtz.dyz9mb1emi"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118217-51815-1u5ovpm.nr5vm6xbt9"
     ]
   ],
-  "_from": "../d-118027-68853-r66t58.9i6drq9f6r/package.tgz",
-  "_id": "ide-json@0.2.0",
+  "_from": "../d-118217-51815-1r5yw1d.kdzhorms4i/package.tgz",
+  "_id": "ide-json@0.2.1",
   "_inCache": true,
   "_location": "/ide-json",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68853-r66t58.9i6drq9f6r/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51815-1r5yw1d.kdzhorms4i/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68853-r66t58.9i6drq9f6r/package.tgz",
-    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68853-r66t58.9i6drq9f6r/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51815-1r5yw1d.kdzhorms4i/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51815-1r5yw1d.kdzhorms4i/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-118027-68853-r66t58.9i6drq9f6r/package.tgz",
-  "_shasum": "0fce4c4a424960b2575fa90dbb8b3f5fb0427678",
+  "_resolved": "file:../d-118217-51815-1r5yw1d.kdzhorms4i/package.tgz",
+  "_shasum": "df9c23bf2435b182f5f7aeba9062a3c426a6c034",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118027-68853-r66t58.9i6drq9f6r/package.tgz",
-  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118027-68853-16rvdtz.dyz9mb1emi",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51815-1r5yw1d.kdzhorms4i/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118217-51815-1u5ovpm.nr5vm6xbt9",
   "bugs": {
     "url": "https://github.com/atom/ide-json/issues"
   },
@@ -51,7 +51,7 @@
     }
   },
   "dependencies": {
-    "atom-languageclient": "0.8.1",
+    "atom-languageclient": "0.8.3",
     "vscode-json-languageserver-bin": "^1.0.1"
   },
   "description": "JSON language support for Atom-IDE",
@@ -96,5 +96,5 @@
     "type": "git",
     "url": "git+https://github.com/atom/ide-json.git"
   },
-  "version": "0.2.0"
+  "version": "0.2.1"
 }

@@ -48,7 +48,15 @@ function _load_UniversalDisposable() {
   return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));
 }
 
+var _paneItem;
+
+function _load_paneItem() {
+  return _paneItem = require('nuclide-commons-atom/pane-item');
+}
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const PENDING_PANE_LINT_DEBOUNCE = 10000; // defer linting pending panes for 10s
 
 // Exported for testing.
 /**
@@ -237,7 +245,10 @@ class LinterAdapter {
       }
       const path = editor.getPath();
       const basename = path == null ? '(untitled)' : (_nuclideUri || _load_nuclideUri()).default.basename(path);
-      return _rxjsBundlesRxMinJs.Observable.using(() => new (_UniversalDisposable || _load_UniversalDisposable()).default(busyReporter(`${this._provider.name}: running on "${basename}"`)), () => this._runLint(editor));
+
+      const startLinting = (0, (_paneItem || _load_paneItem()).isPending)(editor) ? (0, (_paneItem || _load_paneItem()).observePendingStateEnd)(editor).timeoutWith(PENDING_PANE_LINT_DEBOUNCE, _rxjsBundlesRxMinJs.Observable.of(null)) : _rxjsBundlesRxMinJs.Observable.of(null);
+
+      return startLinting.switchMap(() => _rxjsBundlesRxMinJs.Observable.using(() => new (_UniversalDisposable || _load_UniversalDisposable()).default(busyReporter(`${this._provider.name}: running on "${basename}"`)), () => this._runLint(editor)));
     })
     // Track the previous update so we can invalidate its results.
     // (Prevents dangling diagnostics when a linter affects multiple files).

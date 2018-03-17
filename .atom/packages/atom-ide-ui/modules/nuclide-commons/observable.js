@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SingletonExecutor = exports.PromiseCancelledError = exports.nextAnimationFrame = exports.macrotask = exports.microtask = undefined;
+exports.SingletonExecutor = exports.PromiseCanceledError = exports.nextAnimationFrame = exports.macrotask = exports.microtask = undefined;
 
 var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));
 
@@ -20,7 +20,7 @@ exports.concatLatest = concatLatest;
 exports.throttle = throttle;
 exports.completingSwitchMap = completingSwitchMap;
 exports.fastDebounce = fastDebounce;
-exports.toCancellablePromise = toCancellablePromise;
+exports.toCancelablePromise = toCancelablePromise;
 exports.poll = poll;
 
 var _UniversalDisposable;
@@ -378,23 +378,23 @@ const nextAnimationFrame = exports.nextAnimationFrame = _rxjsBundlesRxMinJs.Obse
 });
 
 /**
- * Thrown when a CancellablePromise is cancelled().
+ * Thrown when a CancelablePromise is canceled().
  */
-class PromiseCancelledError extends Error {
+class PromiseCanceledError extends Error {
   constructor() {
     super();
-    this.name = 'PromiseCancelledError';
+    this.name = 'PromiseCanceledError';
   }
 }
 
-exports.PromiseCancelledError = PromiseCancelledError; // Given an observable, convert to a Promise (thereby subscribing to the Observable)
+exports.PromiseCanceledError = PromiseCanceledError; // Given an observable, convert to a Promise (thereby subscribing to the Observable)
 // and return back a cancellation function as well.
 // If the cancellation function is called before the returned promise resolves,
 // then unsubscribe from the underlying Promise and have the returned Promise throw.
 // If the cancellation function is called after the returned promise resolves,
 // then it does nothing.
 
-function toCancellablePromise(observable) {
+function toCancelablePromise(observable) {
   // Assign a dummy value to keep flow happy
   let cancel = () => {};
 
@@ -414,7 +414,7 @@ function toCancellablePromise(observable) {
         subscription.unsubscribe();
       } catch (e) {}
       try {
-        reject(new PromiseCancelledError());
+        reject(new PromiseCanceledError());
       } catch (e) {}
     };
   });
@@ -442,14 +442,14 @@ class SingletonExecutor {
       _this.cancel();
 
       // Start a new process
-      const task = toCancellablePromise(createTask);
+      const task = toCancelablePromise(createTask);
       _this._currentTask = task;
 
-      // Wait for the process to complete or be cancelled ...
+      // Wait for the process to complete or be canceled ...
       try {
         return yield task.promise;
       } finally {
-        // ... and always clean up if we haven't been cancelled already.
+        // ... and always clean up if we haven't been canceled already.
         if (task === _this._currentTask) {
           _this._currentTask = null;
         }
@@ -461,7 +461,7 @@ class SingletonExecutor {
     return this._currentTask != null;
   }
 
-  // Cancells any currently executing tasks.
+  // Cancels any currently executing tasks.
   cancel() {
     if (this._currentTask != null) {
       this._currentTask.cancel();
@@ -493,7 +493,7 @@ exports.SingletonExecutor = SingletonExecutor; /**
 function poll(delay) {
   return source => _rxjsBundlesRxMinJs.Observable.defer(() => {
     const delays = new _rxjsBundlesRxMinJs.Subject();
-    return delays.switchMap(n => _rxjsBundlesRxMinJs.Observable.timer(n)).startWith(null).switchMap(() => {
+    return delays.switchMap(n => _rxjsBundlesRxMinJs.Observable.timer(n)).merge(_rxjsBundlesRxMinJs.Observable.of(null)).switchMap(() => {
       const subscribedAt = Date.now();
       return source.do({
         complete: () => {

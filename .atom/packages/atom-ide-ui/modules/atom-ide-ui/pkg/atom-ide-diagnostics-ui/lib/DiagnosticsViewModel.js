@@ -264,6 +264,7 @@ var _initialiseProps = function () {
       nextHiddenTypes.add(type);
     }
     this._model.setState({ hiddenGroups: nextHiddenTypes });
+    (_analytics || _load_analytics()).default.track('diagnostics-panel-change-filter');
   };
 
   this._handleTextFilterChange = value => {
@@ -273,6 +274,7 @@ var _initialiseProps = function () {
     this._model.setState({
       textFilter: { text, isRegExp, invalid, pattern }
     });
+    (_analytics || _load_analytics()).default.track('diagnostics-panel-change-filter');
   };
 
   this._selectMessage = message => {

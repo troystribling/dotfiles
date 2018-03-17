@@ -6,6 +6,7 @@ import { launchSpec } from "spawnteract";
 import { shell } from "electron";
 
 import ZMQKernel from "./zmq-kernel";
+import Kernel from "./kernel";
 
 import KernelPicker from "./kernel-picker";
 import store from "./store";
@@ -32,9 +33,7 @@ export class KernelManager {
           grammar && /python/g.test(grammar.scopeName)
             ? "\n\nTo detect your current Python install you will need to run:<pre>python -m pip install ipykernel\npython -m ipykernel install --user</pre>"
             : "";
-        const description = `Check that the language for this file is set in Atom and that you have a Jupyter kernel installed for it.${
-          pythonDescription
-        }`;
+        const description = `Check that the language for this file is set in Atom and that you have a Jupyter kernel installed for it.${pythonDescription}`;
         atom.notifications.addError(message, {
           description,
           dismissable: pythonDescription !== ""
@@ -80,7 +79,8 @@ export class KernelManager {
       stdio: ["ignore", "pipe", "pipe"]
     };
 
-    const kernel = new ZMQKernel(kernelSpec, grammar, options, () => {
+    const transport = new ZMQKernel(kernelSpec, grammar, options, () => {
+      const kernel = new Kernel(transport);
       store.newKernel(kernel, filePath, editor, grammar);
       if (onStarted) onStarted(kernel);
     });

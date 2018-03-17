@@ -249,6 +249,7 @@ exports.denodeify = denodeify;
 exports.asyncLimit = asyncLimit;
 exports.isPromise = isPromise;
 exports.lastly = lastly;
+exports.delayTime = delayTime;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -633,4 +634,10 @@ class PromiseWithState {
     return this._state;
   }
 }
+
 exports.PromiseWithState = PromiseWithState;
+function delayTime(ms) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms);
+  });
+}

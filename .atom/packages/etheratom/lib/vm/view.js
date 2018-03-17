@@ -3,6 +3,7 @@
 import EthJSVM from 'ethereumjs-vm'
 import ethJSUtil from 'ethereumjs-util'
 import React from 'react'
+import createReactClass from 'create-react-class'
 import ReactDOM from 'react-dom'
 import VmHelpers from './methods'
 
@@ -14,7 +15,7 @@ export default class View {
 		this.helpers = new VmHelpers(this.vm, this.vmAccounts);
 	}
 	viewErrors(errors) {
-		let errorViews = React.createClass({
+		let errorViews = createReactClass({
 			displayName: 'errorList',
 			render: () => {
 				return React.createElement('ul', {
@@ -40,7 +41,7 @@ export default class View {
 			compiler: 'web3',
 			desc: 'Backend ethereum node'
 		}];
-		createCompilerEnvList = React.createClass({
+		createCompilerEnvList = createReactClass({
 			displayName: 'envList',
 			getInitialState: function() {
 				return {
@@ -144,7 +145,7 @@ export default class View {
 	}
 	createButtonsView() {
 		let workspaceElement = atom.views.getView(atom.workspace);
-		let compileButton = React.createClass({
+		let compileButton = createReactClass({
 			displayName: 'compileButton',
 			_handleSubmit: function() {
 				return atom.commands.dispatch(workspaceElement, 'eth-interface:compile');
@@ -295,14 +296,14 @@ export default class View {
 				super();
 				this._handleSubmit = this._handleSubmit.bind(this);
 			}
-			_handleSubmit() {
-				self.helpers.create(self.coinbase, abiDef, bytecode, params, contractName, estimatedGas, (error, contract) => {
-					if(error) {
-						self.helpers.showPanelError(error);
-					} else {
-						self.setExecutionView(contractName, abiDef, bytecode, constructorParams, params, contract);
-					}
-				});
+			async _handleSubmit() {
+				try {
+					const contract = await self.helpers.create(self.coinbase, abiDef, bytecode, params, contractName, estimatedGas);
+					self.setExecutionView(contractName, abiDef, bytecode, constructorParams, params, contract);
+				}
+				catch(e) {
+					self.helpers.showPanelError(e);
+				}
 			}
 			render() {
 				return React.createElement('form', {
@@ -424,64 +425,52 @@ export default class View {
 				this.state = { childFunctions: [] };
 				this._handleChange = this._handleChange.bind(this);
 			}
-			componentDidMount() {
-				let childFunctions;
-				childFunctions = [];
-				return self.helpers.constructFunctions(abiDef, (error, childFunction) => {
-					if(!error) {
-						childFunctions.push(childFunction);
-						this.setState({ childFunctions: childFunctions });
-					}
-				});
+			async componentDidMount() {
+				try {
+					const childFunctions = JSON.stringify(await self.helpers.constructFunctions(abiDef))
+					this.setState({ childFunctions: JSON.parse(childFunctions) });
+				} catch (e) {
+					self.helpers.showPanelError(e);
+				}
 			}
-			_handleChange(event) {
-				this.setState({ value: event.target.value });
+			_handleChange(interfaceName, type, event) {
+				const value = event.target.value;
+				let params = { ...this.state.params }
+				params[interfaceName] = { type, value }
+				this.setState({ params });
 			}
-			_handleSubmit(methodName) {
-				// call functions here
-				self.helpers.typesToArray(this.refs, methodName, (error, argTypeArray) => {
-					if(error) {
-						self.helpers.showPanelError(error);
-					} else {
-						self.helpers.argsToArray(this.refs, methodName, (error, argArray) => {
-							if(error) {
-								self.helpers.showPanelError(error);
-							} else {
-								self.helpers.call(self.coinbase, contract, abiDef, methodName, argTypeArray, argArray, (error, result) => {
-									if(error) {
-										self.helpers.showPanelError(error);
-									} else {
-										self.helpers.getOutputTypes(abiDef, methodName, (error, outputTypes) => {
-											if(error) {
-												self.helpers.showPanelError(error);
-											} else {
-												self.helpers.showOutput(contract.createdAddress.toString('hex'), outputTypes, result);
-											}
-										});
-									}
-								});
-							}
-						});
+			async _handleSubmit(methodItem) {
+				try {
+					// TODO: get input params into array if no params set empty
+					let params = [];
+					if(this.state.params && this.state.params[methodItem.name]) {
+						params = await self.helpers.inputsToArray(this.state.params[methodItem.name]);
 					}
-				});
+					const result = await self.helpers.call(self.coinbase, contract, abiDef, methodItem, params);
+					const outputTypes = await self.helpers.getOutputTypes(methodItem);
+					self.helpers.showOutput(contract.createdAddress.toString('hex'), outputTypes, result);
+				} catch(e) {
+					console.log(e);
+					self.helpers.showPanelError(e);
+				}
 			}
 			render() {
 				return React.createElement('div', {
 					htmlFor: 'contractFunctions'
 				}, this.state.childFunctions.map((childFunction, i) => {
 					return React.createElement('form', {
-						onSubmit: this._handleSubmit.bind(this, childFunction[0]),
+						onSubmit: this._handleSubmit.bind(this, childFunction.interface),
 						key: i,
-						ref: childFunction[0]
+						ref: childFunction.interface.name
 					}, React.createElement('input', {
 						type: 'submit',
-						value: childFunction[0],
+						value: childFunction.interface.name,
 						className: 'text-subtle call-button'
-					}), childFunction[1].map((childInput, j) => {
+					}), childFunction.params.map((childInput, j) => {
 						return React.createElement('input', {
 							name: childInput[0],
 							tye: 'text',
-							handleChange: this._handleChange,
+							onChange: (event) => this._handleChange(childFunction.interface.name, childInput[0], event),
 							placeholder: childInput[0] + ' ' + childInput[1],
 							className: 'call-button-values'
 						});
@@ -517,9 +506,13 @@ export default class View {
 	}
 	reset() {
 		this.compiledNode = document.getElementById('compiled-code');
+		this.errorNode = document.getElementById('compiled-error');
 		// Unset earlier compiled code
 		while(this.compiledNode.firstChild) {
 			this.compiledNode.removeChild(this.compiledNode.firstChild);
+		}
+		while (this.errorNode.firstChild && this.errorNode.firstChild.firstChild) {
+			this.errorNode.firstChild.removeChild(this.errorNode.firstChild.firstChild);
 		}
 	}
 }

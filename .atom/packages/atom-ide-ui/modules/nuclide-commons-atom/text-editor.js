@@ -16,6 +16,7 @@ exports.enforceSoftWrap = enforceSoftWrap;
 exports.observeTextEditors = observeTextEditors;
 exports.isValidTextEditor = isValidTextEditor;
 exports.centerScrollToBufferLine = centerScrollToBufferLine;
+exports.getNonWordCharacters = getNonWordCharacters;
 
 var _UniversalDisposable;
 
@@ -24,6 +25,12 @@ function _load_UniversalDisposable() {
 }
 
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+
+var _semver;
+
+function _load_semver() {
+  return _semver = _interopRequireDefault(require('semver'));
+}
 
 var _event;
 
@@ -43,18 +50,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Returns a text editor that has the given path open, or null if none exists. If there are multiple
  * text editors for this path, one is chosen arbitrarily.
  */
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
 function existingEditorForUri(path) {
   // This isn't ideal but realistically iterating through even a few hundred editors shouldn't be a
   // real problem. And if you have more than a few hundred you probably have bigger problems.
@@ -71,6 +66,18 @@ function existingEditorForUri(path) {
  * Returns a text editor that has the given buffer open, or null if none exists. If there are
  * multiple text editors for this buffer, one is chosen arbitrarily.
  */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+
 function existingEditorForBuffer(buffer) {
   // This isn't ideal but realistically iterating through even a few hundred editors shouldn't be a
   // real problem. And if you have more than a few hundred you probably have bigger problems.
@@ -227,4 +234,14 @@ function centerScrollToBufferLine(textEditorElement, bufferLineNumber) {
   textEditor.setCursorBufferPosition([bufferLineNumber, 0], {
     autoscroll: false
   });
+}
+
+function getNonWordCharacters(editor, position) {
+  if ((_semver || _load_semver()).default.gte(atom.getVersion(), '1.24.0-beta0')) {
+    return editor.getNonWordCharacters(position);
+  } else {
+    // This used to take a scope descriptor.
+    const scope = position == null ? null : editor.scopeDescriptorForBufferPosition(position);
+    return editor.getNonWordCharacters(scope);
+  }
 }

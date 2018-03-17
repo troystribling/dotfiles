@@ -5,19 +5,22 @@ Rust language support for Atom-IDE, powered by the Rust Language Server (RLS).
 
 ## Features
  - Auto-completion
- - Format on save (disabled by default, see `atom-ide-ui` settings)
- - Diagnostics (errors and warnings from `rustc`, support for `clippy` is pending on https://github.com/rust-lang-nursery/rls/issues/149)
+ - Diagnostics (errors and warnings from `rustc`, `clippy` support is pending on [rls#149](https://github.com/rust-lang-nursery/rls/issues/149))
  - Document outline
  - Go to definition (`ctrl` or `cmd` click)
  - Type information and Documentation on hover (hold `ctrl` or `cmd` for more information)
+ - Find references (`ctrl-alt-shift-f` or `cmd-opt-shift-f` also in context menu)
+ - Format file with rustfmt (`ctrl-shift-c` or `cmd-shift-c` also in context menu)
+ - Format on save (disabled by default, see `atom-ide-ui` settings)
  - Rls toolchain selection in package settings
  - Rls toolchain update checking at startup & every 6 hours thereafter
- - Rls configuration using `rls.toml` file at project root, see [rls#configuration](https://github.com/rust-lang-nursery/rls#configuration)
+ - Global Rls configuration for `all_targets`
+ - Per-project Rls configuration using `rls.toml` file at project root, see [rls#configuration](https://github.com/rust-lang-nursery/rls#configuration)
    ```toml
    # rls.toml
    features = ["serde"]
    ```
- - Graceful handling of Rls being missing from the distribution _(which is somewhat common on the nightly channel)_
+ - Graceful handling of Rls being missing from the distribution _(which is/was somewhat common on the nightly channel)_
    * Warns before installing a rust version without Rls or when using an already installed one
    * Automatic detection of, and prompt to install, the latest working dated release
 
@@ -28,7 +31,7 @@ $ apm install ide-rust
 ```
 Or you can install from Settings view by searching for `ide-rust`.
 
-No other packages or manual setup is required as these will be handled with user prompts after install.
+No other packages or manual setup is required as these will be handled with user prompts after install. However, you may wish to install `rustup` with your OS package manager instead of following prompts to install via [rustup.rs](https://rustup.rs).
 
 ## Commands
 - `ide-rust:restart-all-language-servers` Restart all currently active Rls processes
@@ -57,7 +60,7 @@ When set you'll be able to see, and remove, this from the package settings. Afte
 
 ![](https://image.ibb.co/jsR65w/rls_Command_Override_Info.png)
 
-## Debugging
+## Debugging IDE-Rust
 If stuff isn't working you can try **enabling logging** to debug:
   * Open the atom console _(ctrl-shift-i)_
   * Enter `atom.config.set('core.debugLSP', true)`

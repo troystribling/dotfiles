@@ -18,10 +18,15 @@ function _load_featureConfig() {
 
 var _path2 = _interopRequireDefault(require('path'));
 
+var _collection;
+
+function _load_collection() {
+  return _collection = require('nuclide-commons/collection');
+}
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// eslint-disable-line rulesdir/prefer-nuclide-uri
-
+const ALWAYS_ENABLED = 'always'; // eslint-disable-line rulesdir/prefer-nuclide-uri
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -36,14 +41,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* global localStorage */
 
+const NEVER_ENABLED = 'never';
+const DEFAULT = 'default';
+
 const { devMode } = atom.getLoadSettings();
 
 class FeatureLoader {
 
   constructor({ features, path: _path }) {
+    this._featureGroupMap = new (_collection || _load_collection()).MultiMap();
+    this._currentPackageState = new Set();
+
     this._path = _path;
     this._features = features;
-
     this._loadDisposable = new (_UniversalDisposable || _load_UniversalDisposable()).default();
     this._pkgName = packageNameFromPath(this._path);
     this._config = {
@@ -92,16 +102,23 @@ class FeatureLoader {
       const featurePkg = feature.pkg;
       const name = packageNameFromPath(feature.path);
 
-      // Sample packages are disabled by default. They are meant for development
-      // use only, and aren't included in Nuclide builds.
-      const enabled = !name.startsWith('sample-');
+      // Add the feature to its feature group.
+      this.addToFeatureGroup(feature);
 
       // Entry for enabling/disabling the feature
+
+      // Migrate the current feature (from boolean on/off to enumerated states).
+      this.migrateFeature(feature);
+
       const setting = {
         title: featurePkg.displayName == null ? `Enable the "${name}" feature` : `Enable ${featurePkg.displayName}`,
         description: featurePkg.description || '',
-        type: 'boolean',
-        default: enabled
+        type: 'string',
+        enum: [{ value: ALWAYS_ENABLED, description: 'Always enabled' }, { value: NEVER_ENABLED, description: 'Never enabled' }, {
+          value: DEFAULT,
+          description: 'Only when in an enabled package group'
+        }],
+        default: getFeatureDefaultValue(feature)
       };
 
       if (devMode) {
@@ -135,6 +152,7 @@ class FeatureLoader {
         });
       }
     });
+
     (_featureConfig || _load_featureConfig()).default.setPackageName(this._pkgName);
 
     // Nesting loads within loads leads to reverse activation order- that is, if
@@ -151,13 +169,7 @@ class FeatureLoader {
       // https://github.com/atom/atom/blob/v1.1.0/src/atom-environment.coffee#L625-L631
       // https://atom.io/docs/api/latest/PackageManager
       this._features.forEach(feature => {
-        // Config defaults are not merged with user defaults until activate. At
-        // this point `atom.config.get` returns the user set value. If it's
-        // `undefined`, then the user has not set it.
-        const enabled = atom.config.get(this.useKeyPathForFeature(feature));
-        const shouldEnable = enabled == null ? this._config.use.properties[packageNameFromPath(feature.path)].default : enabled;
-
-        if (shouldEnable) {
+        if (this.shouldEnable(feature)) {
           atom.packages.loadPackage(feature.path);
         }
       });
@@ -192,19 +204,48 @@ class FeatureLoader {
     localStorage.removeItem(rootPackage.getCanDeferMainModuleRequireStorageKey());
 
     this._features.forEach(feature => {
-      if (atom.config.get(this.useKeyPathForFeature(feature))) {
+      // Since the migration from bool to enum occurs before the config defaults
+      // are changed, the user's config gets filled with every Nuclide feature.
+      // Since these values are already the default, this `config.set`
+      // removes these uneccessary values from the user's config file.
+      // TODO: When enough users have migrated, this should be removed along with the enum migration.
+      atom.config.set(this.useKeyPathForFeature(feature), atom.config.get(this.useKeyPathForFeature(feature)));
+
+      if (this.shouldEnable(feature)) {
         atom.packages.activatePackage(feature.path);
       }
     });
 
     // Watch the config to manage toggling features
-    this._activationDisposable = new (_UniversalDisposable || _load_UniversalDisposable()).default(...this._features.map(feature => atom.config.onDidChange(this.useKeyPathForFeature(feature), event => {
-      if (event.newValue === true) {
+    this._activationDisposable = new (_UniversalDisposable || _load_UniversalDisposable()).default(atom.config.onDidChange(this.useKeyPath(), event => this.updateActiveFeatures()), atom.config.onDidChange(this.useKeyPathForFeatureGroup(), event => this.updateActiveFeatures()));
+
+    this.updateActiveFeatures();
+  }
+
+  updateActiveFeatures() {
+    const featureState = atom.config.get(this.useKeyPath());
+    const featureGroupState = atom.config.get(this.useKeyPathForFeatureGroup());
+
+    // we know featureGroupState must be ?Array, and featureState must
+    // be ?Object, since it's in our schema. However, flow thinks it's a mixed type,
+    // since it doesn't know about the schema enforcements. $FlowIgnore.
+    const desiredState = this.getDesiredState(featureState, featureGroupState);
+
+    // Enable all packages in desiredState but not in currentState.
+    // Disable all packages not in desiredState but in currentState.
+    for (const feature of desiredState) {
+      if (!this._currentPackageState.has(feature)) {
         atom.packages.activatePackage(feature.path);
-      } else if (event.newValue === false) {
+      }
+    }
+
+    for (const feature of this._currentPackageState) {
+      if (!desiredState.has(feature)) {
         safeDeactivate(feature);
       }
-    })));
+    }
+
+    this._currentPackageState = desiredState;
   }
 
   deactivate() {
@@ -227,6 +268,39 @@ class FeatureLoader {
     this._activationDisposable = null;
   }
 
+  getDesiredState(featureState, featureGroupState) {
+    // Figure out which features should be enabled:
+    //  * Add all packages in nuclide.use
+    //  * Remove any feature not in an active featureGroup.
+    let groupedPackages;
+    if (featureGroupState != null && featureGroupState.length > 0) {
+      groupedPackages = (0, (_collection || _load_collection()).setUnion)(...featureGroupState.map(featureGroup => this._featureGroupMap.get(featureGroup)));
+    } else {
+      // If featuregroups is empty or undefined, assume all features should be enabled.
+      groupedPackages = new Set(this._features);
+    }
+
+    // If a feature is "always enabled", it should be on whether or not a feature-group includes it.
+    // If a feature is "default", it should be on if and only if a feature-group includes it.
+    return new Set(this._features.filter(feature => {
+      const state = featureState[packageNameFromPath(feature.path)];
+      return state === ALWAYS_ENABLED || groupedPackages.has(feature) && state === DEFAULT || state === true;
+    }));
+  }
+
+  addToFeatureGroup(feature) {
+    const featureGroups = feature.pkg.featureGroups;
+    if (featureGroups != null) {
+      for (const featureGroup of featureGroups) {
+        this._featureGroupMap.add(featureGroup, feature);
+      }
+    }
+  }
+
+  getFeatureGroups() {
+    return this._featureGroupMap;
+  }
+
   getConfig() {
     return this._config;
   }
@@ -243,6 +317,67 @@ class FeatureLoader {
   useKeyPathForFeature(feature) {
     return `${this._pkgName}.use.${packageNameFromPath(feature.path)}`;
   }
+
+  useKeyPath() {
+    return `${this._pkgName}.use`;
+  }
+
+  useKeyPathForFeatureGroup() {
+    return `${this._pkgName}.enabled-feature-groups`;
+  }
+
+  shouldEnable(feature) {
+    const name = packageNameFromPath(feature.path);
+    const currentState = atom.config.get(this.useKeyPathForFeature(feature));
+    switch (currentState) {
+      // Previously, this setting was a boolean. They should be migrated but handle it just in case.
+      case true:
+      case false:
+        return currentState;
+      case ALWAYS_ENABLED:
+        return true;
+      case NEVER_ENABLED:
+        return false;
+      case DEFAULT:
+        // TODO: This will become dependent on project configuration.
+        return true;
+      default:
+        // This default will trigger if the user explicitly
+        // sets a package's state to undefined or to a non-enum value.
+        // If this is the case, set to false if it begins with sample- and true otherwise.
+        return !name.startsWith('sample-');
+    }
+  }
+
+  migrateFeature(feature) {
+    const keyPath = this.useKeyPathForFeature(feature);
+    const currentState = atom.config.get(keyPath);
+    const setTo = this.getValueForFeatureToEnumMigration(currentState, feature);
+    if (setTo !== currentState) {
+      atom.config.set(keyPath, setTo);
+    }
+  }
+
+  getValueForFeatureToEnumMigration(currentState, feature) {
+    const name = packageNameFromPath(feature.path);
+
+    switch (currentState) {
+      case true:
+        return name.startsWith('sample-') ? ALWAYS_ENABLED : DEFAULT;
+      case false:
+        return name.startsWith('sample-') ? DEFAULT : NEVER_ENABLED;
+      case ALWAYS_ENABLED:
+      case NEVER_ENABLED:
+      case DEFAULT:
+        if (!(typeof currentState === 'string')) {
+          throw new Error('Invariant violation: "typeof currentState === \'string\'"');
+        }
+
+        return currentState;
+      default:
+        return getFeatureDefaultValue(feature);
+    }
+  }
 }
 
 exports.default = FeatureLoader;
@@ -257,6 +392,11 @@ function safeDeactivate(feature, suppressSerialization = false) {
     // eslint-disable-next-line no-console
     console.error(`Error deactivating "${name}": ${err.message}`);
   }
+}
+
+function getFeatureDefaultValue(feature) {
+  const name = packageNameFromPath(feature.path);
+  return name.startsWith('sample-') ? NEVER_ENABLED : DEFAULT;
 }
 
 function safeSerialize(feature) {

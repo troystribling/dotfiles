@@ -35,6 +35,7 @@ exports.someOfIterable = someOfIterable;
 exports.findInIterable = findInIterable;
 exports.filterIterable = filterIterable;
 exports.mapIterable = mapIterable;
+exports.takeIterable = takeIterable;
 exports.range = range;
 exports.firstOfIterable = firstOfIterable;
 exports.iterableIsEmpty = iterableIsEmpty;
@@ -43,6 +44,8 @@ exports.count = count;
 exports.isIterable = isIterable;
 exports.insideOut = insideOut;
 exports.mapFromObject = mapFromObject;
+exports.lastFromArray = lastFromArray;
+exports.distinct = distinct;
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -208,7 +211,7 @@ function setIntersect(a, b) {
   return setFilter(a, e => b.has(e));
 }
 
-function setUnion(a, b) {
+function setUnionTwo(a, b) {
   // Avoids the extra Array allocations that `new Set([...a, ...b])` would incur. Some quick tests
   // indicate it would be about 60% slower.
   const result = new Set(a);
@@ -216,6 +219,18 @@ function setUnion(a, b) {
     result.add(x);
   });
   return result;
+}
+
+function setUnion(...sets) {
+  if (sets.length < 1) {
+    return new Set();
+  }
+
+  const setReducer = (accumulator, current) => {
+    return setUnionTwo(accumulator, current);
+  };
+
+  return sets.reduce(setReducer);
 }
 
 function setDifference(a, b, hash_) {
@@ -473,6 +488,16 @@ function* mapIterable(iterable, projectorFn) {
   }
 }
 
+function* takeIterable(iterable, limit) {
+  let i = 0;
+  for (const element of iterable) {
+    if (++i > limit) {
+      break;
+    }
+    yield element;
+  }
+}
+
 // Return an iterable of the numbers start (inclusive) through stop (exclusive)
 function* range(start, stop, step = 1) {
   for (let i = start; i < stop; i += step) {
@@ -532,4 +557,24 @@ function* insideOut(arr, startingIndex) {
 
 function mapFromObject(obj) {
   return new Map(objectEntries(obj));
+}
+
+function lastFromArray(arr) {
+  return arr[arr.length - 1];
+}
+
+function distinct(array, keyFn) {
+  if (keyFn == null) {
+    return Array.from(new Set(array));
+  }
+
+  const seenKeys = new Set();
+  return array.filter(elem => {
+    const key = keyFn(elem);
+    if (seenKeys.has(key)) {
+      return false;
+    }
+    seenKeys.add(key);
+    return true;
+  });
 }

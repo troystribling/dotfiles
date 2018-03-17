@@ -37,6 +37,8 @@ function _load_classnames() {
 
 var _react = _interopRequireWildcard(require('react'));
 
+var _reactDom = _interopRequireDefault(require('react-dom'));
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -45,18 +47,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * A `<select>`-like control that uses an Atom modal for its options. This component uses an API as
  * similar to `Dropdown` as possible, with extra props for customizing display options.
  */
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
 class ModalMultiSelect extends _react.Component {
 
   constructor(props) {
@@ -111,7 +101,15 @@ class ModalMultiSelect extends _react.Component {
         className: className,
         disabled: this.props.disabled,
         size: this.props.size,
-        onClick: this._showModal },
+        onClick: event => {
+          // Because of how Portals work in React, this handler will actually be triggered for all
+          // clicks within the modal! We need to filter those out to separate button clicks.
+          // (see https://reactjs.org/docs/portals.html#event-bubbling-through-portals)
+          const modalElement = this._modal && _reactDom.default.findDOMNode(this._modal);
+          if (modalElement == null || !modalElement.contains(event.target)) {
+            this._showModal();
+          }
+        } },
       _react.createElement(LabelComponent, { selectedOptions: selectedOptions }),
       this._renderModal()
     );
@@ -124,7 +122,11 @@ class ModalMultiSelect extends _react.Component {
 
     return _react.createElement(
       (_Modal || _load_Modal()).Modal,
-      { onDismiss: this._dismissModal },
+      {
+        ref: c => {
+          this._modal = c;
+        },
+        onDismiss: this._dismissModal },
       _react.createElement((_MultiSelectList || _load_MultiSelectList()).MultiSelectList, {
         commandScope: atom.views.getView(atom.workspace),
         value: this.state.activeValues,
@@ -175,7 +177,18 @@ class ModalMultiSelect extends _react.Component {
   }
 }
 
-exports.ModalMultiSelect = ModalMultiSelect;
+exports.ModalMultiSelect = ModalMultiSelect; /**
+                                              * Copyright (c) 2017-present, Facebook, Inc.
+                                              * All rights reserved.
+                                              *
+                                              * This source code is licensed under the BSD-style license found in the
+                                              * LICENSE file in the root directory of this source tree. An additional grant
+                                              * of patent rights can be found in the PATENTS file in the same directory.
+                                              *
+                                              * 
+                                              * @format
+                                              */
+
 ModalMultiSelect.defaultProps = {
   className: '',
   disabled: false,

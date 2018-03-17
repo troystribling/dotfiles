@@ -99,7 +99,7 @@ function showModal(contentFactory, options = defaults) {
     }
     _reactDom.default.unmountComponentAtNode(hostElement);
     atomPanel.destroy();
-    if (previouslyFocusedElement != null) {
+    if (document.activeElement === document.body && previouslyFocusedElement != null) {
       previouslyFocusedElement.focus();
     }
   });

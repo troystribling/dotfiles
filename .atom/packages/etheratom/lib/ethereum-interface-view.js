@@ -1,11 +1,9 @@
 'use babel'
 import React from 'react'
 import ReactDOM from 'react-dom'
-let AtomSolidityView, CompositeDisposable;
+import { CompositeDisposable } from 'atom'
 
-CompositeDisposable = require('atom').CompositeDisposable;
-
-module.exports = AtomSolidityView = (() => {
+export default AtomSolidityView = (() => {
 	function AtomSolidityView(serializedState) {
 		var mainNode,
 			resizeNode,
@@ -75,7 +73,7 @@ module.exports = AtomSolidityView = (() => {
 		message = document.createElement('div');
 		message.textContent = "Ethereum Interface";
 		message.classList.add('compiler-info');
-		message.classList.add('inline-block');
+		message.classList.add('block');
 		message.classList.add('highlight-info');
 		mainNode.appendChild(message);
 
@@ -106,12 +104,11 @@ module.exports = AtomSolidityView = (() => {
 		buttonNode.appendChild(compileButton);
 		mainNode.appendChild(buttonNode);
 
-		this.compiledNode = document.createElement('div');
+		tabNode = document.createElement('div');
 		att = document.createAttribute('id');
-		att.value = 'compiled-code';
-		this.compiledNode.setAttributeNode(att);
-		this.compiledNode.classList.add('compiled-code');
-		mainNode.appendChild(this.compiledNode);
+		att.value = 'tab_view';
+		tabNode.setAttributeNode(att);
+		mainNode.appendChild(tabNode);
 
 		this.errorNode = document.createElement('div');
 		att = document.createAttribute('id');

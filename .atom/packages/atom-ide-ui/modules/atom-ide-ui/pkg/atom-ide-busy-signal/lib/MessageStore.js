@@ -71,8 +71,6 @@ class MessageStore {
   }
 
   _publish() {
-    // Currently visible messages should no longer reveal the tooltip again.
-    this._currentVisibleMessages.forEach(message => message.setRevealTooltip(false));
     const visibleMessages = [...this._messages].filter(m => m.isVisible()).sort((m1, m2) => m1.compare(m2));
 
     // We only send out on messageStream when the list of visible
@@ -140,8 +138,6 @@ class MessageStore {
     }
 
     if (options.revealTooltip) {
-      // When the UI component receives this message, it'll reveal the tooltip.
-      // We'll clear this flag after the message becomes visible the first time.
       message.setRevealTooltip(true);
     }
 

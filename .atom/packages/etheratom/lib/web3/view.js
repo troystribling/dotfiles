@@ -1,34 +1,38 @@
 'use babel'
+// Copyright 2018 Etheratom Authors
+// This file is part of Etheratom.
 
+// Etheratom is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// Etheratom is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with Etheratom.  If not, see <http://www.gnu.org/licenses/>.
 import React from 'react'
 import ReactDOM from 'react-dom'
+import createReactClass from 'create-react-class'
 import ReactUpdate from 'react-addons-update'
+import ReactJson from 'react-json-view'
 import Web3Helpers from './methods'
+import TabView from '../components/TabView'
+import CoinbaseView from '../components/CoinbaseView'
+import CompileBtn from '../components/CompileBtn'
+import ErrorView from '../components/ErrorView'
+import { SET_ACCOUNTS, SET_COINBASE } from '../actions/types'
 
 export default class View {
-	constructor(web3) {
+	constructor(store, web3) {
 		this.Accounts = [];
 		this.coinbase = null;
 		this.web3 = web3;
+		this.store = store;
 		this.helpers = new Web3Helpers(this.web3);
-	}
-	viewErrors(errors) {
-		let errorViews = React.createClass({
-			displayName: 'errorList',
-			render: () => {
-				return React.createElement('ul', {
-					htmlFor: 'error-list',
-					className: 'error-list error-messages block'
-				}, errors.map((error) => {
-					return React.createElement('li', {
-						className: 'list-item'
-					}, React.createElement('span', {
-						className: 'icon icon-alert'
-					}, error));
-				}));
-			}
-		});
-		ReactDOM.render(React.createElement(errorViews), document.getElementById('compiled-error'));
 	}
 	createCompilerOptionsView() {
 		let createCompilerEnvList,
@@ -43,7 +47,7 @@ export default class View {
 				desc: 'Backend ethereum node'
 			}
 		];
-		createCompilerEnvList = React.createClass({
+		createCompilerEnvList = createReactClass({
 			displayName: 'envList',
 			getInitialState: function() {
 				return {selectedEnv: atom.config.get('etheratom.executionEnv')};
@@ -79,298 +83,40 @@ export default class View {
 		});
 		ReactDOM.render(React.createElement(createCompilerEnvList), document.getElementById('compiler-options'));
 	}
-	createCoinbaseView() {
-		let self;
-		self = this;
-		this.getAddresses((error, accounts) => {
-			if (error) {
-				console.error(error);
-			} else if (accounts != null) {
-				this.coinbase = accounts[0];
-				class createAddressList extends React.Component {
-					constructor() {
-						super();
-						this.state = {
-							account: accounts[0],
-							password: '',
-							unlock_style: 'unlock-default'
-						};
-						this._handleAccChange = this._handleAccChange.bind(this);
-						this._handlePasswordChange = this._handlePasswordChange.bind(this);
-						this._handleUnlock = this._handleUnlock.bind(this);
-						this._linkClick = this._linkClick.bind(this);
-					}
-					_linkClick(event) {
-						atom.clipboard.write(this.state.account);
-					}
-					_handleAccChange(event) {
-						self.coinbase = event.target.value;
-						this.setState({account: event.target.value});
-					}
-					_handlePasswordChange(event) {
-						this.setState({password: event.target.value});
-						// TODO: unless we show some indicator on `Unlock` let password set on change
-						self.password = this.state.password;
-						if (!((this.state.password.length - 1) > 0)) {
-							this.setState({unlock_style: 'unlock-default'});
-						}
-					}
-					_handleUnlock(event) {
-						// TODO: here try to unlock geth backend node using coinbase and password and show result
-						self.password = this.state.password;
-						if (this.state.password.length > 0) {
-							this.setState({unlock_style: 'unlock-active'});
-						}
-						event.preventDefault();
-					}
-					render() {
-						return React.createElement('div', {
-							htmlFor: 'acc-n-pass',
-							className: 'content'
-						}, React.createElement('div', {
-							className: 'row'
-						}, React.createElement('div', {
-							className: 'icon icon-link btn copy-btn btn-success',
-							onClick: this._linkClick
-						})
-						, React.createElement('select', {
-							onChange: this._handleAccChange,
-							value: this.state.account
-						}, accounts.map(function(account, i) {
-							return React.createElement('option', {
-								value: account
-							}, account);
-						}))), React.createElement('form', {
-							className: 'row',
-							onSubmit: this._handleUnlock
-						}, React.createElement('div', {className: 'icon icon-lock'}), React.createElement('input', {
-							type: 'password',
-							uniqueName: "password",
-							placeholder: "Password",
-							value: this.state.password,
-							onChange: this._handlePasswordChange
-						}), React.createElement('input', {
-							type: 'submit',
-							className: this.state.unlock_style,
-							value: 'Unlock'
-						})));
-					}
-				};
-				ReactDOM.render(React.createElement(createAddressList), document.getElementById('accounts-list'));
-			} else {
-				self.helpers.showPanelError("No account exists! Please create one.");
-			}
-		});
-	}
-	createButtonsView() {
-		let workspaceElement = atom.views.getView(atom.workspace);
-		let compileButton = React.createClass({
-			displayName: 'compileButton',
-			_handleSubmit: function() {
-				return atom.commands.dispatch(workspaceElement, 'eth-interface:compile');
-			},
-			render: function() {
-				return React.createElement('form', {
-					className: 'row',
-					onSubmit: this._handleSubmit
-				}, React.createElement('input', {
-					type: 'submit',
-					value: 'Compile',
-					className: 'btn copy-btn btn-success'
-				}, null));
-			}
-		});
-		ReactDOM.render(React.createElement(compileButton, null), document.getElementById('compile_btn'));
-	}
-	viewCompiled(compiled) {
-		// Deprecated web3 compiled code view
-		/*for(contractName in compiled) {
-			let estimatedGas = this.web3.eth.estimateGas({
-				from: this.web3.eth.defaultAccount,
-				data: compiled[contractName].code,
-				gas: 1000000
-			});
-			let bytecode = compiled[contractName].code;
-			let ContractABI = compiled[contractName].info.abiDefinition;
-			let inputs = [];
-			for(abiObj in ContractABI) {
-				if(ContractABI[abiObj].type === "constructor" && ContractABI[abiObj].inputs.length > 0) {
-					inputs = ContractABI[abiObj].inputs;
-				}
-			}
-			this.setContractView(contractName, bytecode, ContractABI, inputs, estimatedGas);
-		}*/
-		for (contractName in compiled.contracts) {
-			let bytecode = compiled.contracts[contractName].bytecode;
-			let ContractABI = JSON.parse(compiled.contracts[contractName]["interface"]);
-			let estimatedGas = 4700000;
-			inputs = [];
-			for (abiObj in ContractABI) {
-				if (ContractABI[abiObj].type === "constructor" && ContractABI[abiObj].inputs.length > 0) {
-					inputs = ContractABI[abiObj].inputs;
-				}
-			}
-			this.setContractView(contractName, bytecode, ContractABI, inputs, estimatedGas);
+	async createCoinbaseView() {
+		try {
+			const accounts = await this.web3.eth.getAccounts();
+			this.store.dispatch({ type: SET_ACCOUNTS, payload: accounts });
+			this.store.dispatch({ type: SET_COINBASE, payload: accounts[0] });
+			ReactDOM.render(<CoinbaseView store={this.store} helpers={this.helpers} />, document.getElementById('accounts-list'));
+		} catch (e) {
+			this.helpers.showPanelError("No account exists! Please create one.");
+			throw e;
 		}
 	}
-	setContractView(contractName, bytecode, abiDef, constructorParams, estimatedGas) {
-		// Make view Reactive
-		let params,
-			compiledNode,
-			cNode,
-			att,
-			self;
-		self = this;
-		params = [];
-		compiledNode = document.getElementById('compiled-code');
-		cNode = document.createElement('div');
-		att = document.createAttribute('id');
-		att.value = contractName;
-		cNode.classList.add('contract-container');
-		cNode.setAttributeNode(att);
-		compiledNode.appendChild(cNode);
-
-		// Create contract view with react
-		class contractNameHeader extends React.Component {
-			constructor() {
-				super();
-			}
-			render() {
-				return React.createElement('span', {
-					className: 'contract-name inline-block highlight-success'
-				}, contractName);
-			}
-		};
-		class byteCodeText extends React.Component {
-			constructor() {
-				super();
-			}
-			render() {
-				return React.createElement('div', {
-					className: 'byte-code'
-				}, React.createElement('pre', {
-					className: 'large-code'
-				}, JSON.stringify(bytecode)));
-			}
-		};
-		class abi_def extends React.Component {
-			constructor() {
-				super();
-			}
-			render() {
-				return React.createElement('div', {
-					className: 'abi-definition'
-				}, React.createElement('pre', {
-					className: 'large-code'
-				}, JSON.stringify(abiDef)));
-			}
-		};
-		class inputsForm extends React.Component {
-			constructor() {
-				super();
-				this._handleChange = this._handleChange.bind(this);
-			}
-			_handleChange(event) {
-				params[event.target.id] = event.target.value;
-			}
-			render() {
-				return React.createElement('div', {
-					id: contractName + '_inputs'
-				}, constructorParams.map((input, i) => {
-					return React.createElement('form', {
-						key: i,
-						ref: input.name
-					}, React.createElement('button', {
-						className: 'input text-subtle'
-					}, input.name), React.createElement('input', {
-						onChange: this._handleChange,
-						id: input.name,
-						type: 'text',
-						className: 'inputs',
-						placeholder: input.type
-					}));
-				}));
-			}
-		};
-		class estmGas extends React.Component {
-			constructor() {
-				super();
-				this.state = {
-					estimatedGas: estimatedGas
-				};
-				this._handleChange = this._handleChange.bind(this);
-			}
-			_handleChange(event) {
-				estimatedGas = event.target.value;
-				this.setState({estimatedGas: event.target.value});
-			}
-			render() {
-				return React.createElement('form', {
-					className: 'gas-estimate-form'
-				}, React.createElement('button', {
-					className: 'input text-subtle'
-				}, 'Estimated Gas'), React.createElement('input', {
-					onChange: this._handleChange,
-					id: contractName + '_gas',
-					type: 'number',
-					className: 'inputs',
-					value: this.state.estimatedGas
-				}));
-			}
-		};
-		class executeButton extends React.Component {
-			constructor() {
-				super();
-				this._handleSubmit = this._handleSubmit.bind(this);
-			}
-			_handleSubmit() {
-				self.helpers.create(self.coinbase, self.password, abiDef, bytecode, params, contractName, estimatedGas, (error, contract) => {
-					if (error) {
-						self.helpers.showPanelError(error);
-					} else {
-						self.setExecutionView(contractName, abiDef, bytecode, constructorParams, params, contract);
-					}
-				});
-			}
-			render() {
-				return React.createElement('form', {
-					onSubmit: this._handleSubmit
-				}, React.createElement('input', {
-					type: 'submit',
-					value: 'Create',
-					ref: contractName,
-					className: 'btn btn-primary inline-block-tight'
-				}, null));
-			}
-		};
-
-		// Add all elements to contract-content and finally render DOM
-		class compiledCodeContent extends React.Component {
-			constructor() {
-				super();
-			}
-			render() {
-				return React.createElement('div', {
-					className: 'contract-content'
-				}, React.createElement(contractNameHeader), React.createElement(byteCodeText), React.createElement(abi_def), React.createElement(inputsForm), React.createElement(estmGas), React.createElement(executeButton));
-			}
-		};
-		ReactDOM.render(React.createElement(compiledCodeContent), document.getElementById(contractName));
+	createButtonsView() {
+		ReactDOM.render(<CompileBtn store={this.store} />, document.getElementById('compile_btn'));
+	}
+	createTabView() {
+		ReactDOM.render(<TabView store={this.store} helpers={this.helpers}/>, document.getElementById('tab_view'));
+	}
+	createErrorView() {
+		ReactDOM.render(<ErrorView store={this.store} />, document.getElementById('compiled-error'));
 	}
 	setExecutionView(contractName, abiDef, bytecode, constructorParams, params, contract) {
 		let self;
 		self = this;
-		class contractNameHeader extends React.Component {
-			constructor() {
-				super();
+		class ContractNameHeader extends React.Component {
+			constructor(props) {
+				super(props);
 			}
 			render() {
-				return React.createElement('span', {
-					className: 'contract-name inline-block highlight-success'
-				}, contractName);
+				return (
+					<span class="contract-name inline-block highlight-success">{contractName}</span>
+				);
 			}
 		};
-		class byteCodeText extends React.Component {
+		class ByteCodeText extends React.Component {
 			constructor() {
 				super();
 			}
@@ -382,11 +128,16 @@ export default class View {
 				}, JSON.stringify(bytecode)));
 			}
 		};
-		class abi_def extends React.Component {
-			constructor() {
-				super();
+		class ABIDef extends React.Component {
+			constructor(props) {
+				super(props);
 			}
 			render() {
+				return (
+					<div class="abi-definition">
+						<pre class="large-code">{JSON.stringify(abiDef)}</pre>
+					</div>
+				);
 				return React.createElement('div', {
 					className: 'abi-definition'
 				}, React.createElement('pre', {
@@ -394,42 +145,52 @@ export default class View {
 				}, JSON.stringify(abiDef)));
 			}
 		};
-		class mineStat extends React.Component {
-			constructor() {
-				super();
+		class MineStat extends React.Component {
+			constructor(props) {
+				super(props);
 			}
 			render() {
-				if (!contract.address) {
+				if (!contract.options.address) {
 					// Waiting to be mined
 					return React.createElement('div', {
 						id: contractName + '_stat'
 					}, React.createElement('div', {
 						htmlFor: 'contractStat'
 					}, React.createElement('span', {
-						className: 'inline-block highlight'
-					}, 'TransactionHash: '), React.createElement('pre', {
-						className: 'large-code'
-					}, contract.transactionHash), React.createElement('span', {
 						className: 'stat-mining stat-mining-align'
 					}, 'waiting to be mined '), React.createElement('span', {className: 'loading loading-spinner-tiny inline-block stat-mining-align'})));
-				} else if (contract.address) {
+				} else if (contract.options.address) {
 					return React.createElement('div', {
 						id: contractName + '_stat'
 					}, React.createElement('div', {
 						htmlFor: 'contractStat'
 					}, React.createElement('span', {
 						className: 'inline-block highlight'
-					}, 'TransactionHash: '), React.createElement('pre', {
-						className: 'large-code'
-					}, contract.transactionHash), React.createElement('span', {
-						className: 'inline-block highlight'
 					}, 'Mined at: '), React.createElement('pre', {
 						className: 'large-code'
-					}, contract.address)));
+					}, contract.options.address)));
 				}
 			}
 		};
-		class inputsForm extends React.Component {
+		class TxHash extends React.Component {
+			constructor(props) {
+				super(props);
+			}
+			render() {
+				return (
+					<div id={contractName + '_txHash'}>
+						{
+							contract.transactionHash &&
+							<div>
+								<span class="inline-block highlight">Transaction hash:</span>
+								<pre class="large-code">{contract.transactionHash}</pre>
+							</div>
+						}
+					</div>
+				);
+			}
+		};
+		class InputsForm extends React.Component {
 			constructor() {
 				super();
 			}
@@ -453,7 +214,7 @@ export default class View {
 				}));
 			}
 		};
-		class functionABI extends React.Component {
+		class FunctionABI extends React.Component {
 			constructor() {
 				super();
 				this.state = {
@@ -461,62 +222,52 @@ export default class View {
 				};
 				this._handleChange = this._handleChange.bind(this);
 			}
-			componentDidMount() {
-				let childFunctions;
-				childFunctions = [];
-				return self.helpers.constructFunctions(abiDef, (error, childFunction) => {
-					if (!error) {
-						childFunctions.push(childFunction);
-						this.setState({childFunctions: childFunctions});
-					}
-				});
+			async componentDidMount() {
+				try {
+					const childFunctions = await self.helpers.constructFunctions(abiDef);
+					this.setState({ childFunctions: childFunctions });
+				} catch (e) {
+					self.helpers.showPanelError(e);
+				}
 			}
-			_handleChange(event) {
-				this.setState({value: event.target.value});
+			_handleChange(interfaceName, type, event) {
+				const value = event.target.value;
+				let params = { ...this.state.params }
+				params[interfaceName] = { type, value }
+				this.setState({ params });
 			}
-			_handleSubmit(methodName) {
+			async _handleSubmit(methodItem) {
+				console.log("%c Submit handle... ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
 				// call functions here
-				self.helpers.typesToArray(this.refs, methodName, (error, argTypeArray) => {
-					if (error) {
-						self.helpers.showPanelError(error);
-					} else {
-						self.helpers.argsToArray(this.refs, methodName, (error, argArray) => {
-							if (!error) {
-								self.helpers.call(self.coinbase, self.password, abiDef, bytecode, contract, methodName, argTypeArray, argArray, (error, result) => {
-									if (error) {
-										self.helpers.showPanelError(error);
-									} else {
-										self.helpers.getOutputTypes(abiDef, methodName, (error, outputTypes) => {
-											if (error) {
-												self.helpers.showPanelError(error);
-											} else {
-												self.helpers.showOutput(contract.address.toString('hex'), outputTypes, result);
-											}
-										});
-									}
-								});
-							}
-						});
+				try {
+					let params = [];
+					if(this.state.params && this.state.params[methodItem.name]) {
+						params = await self.helpers.inputsToArray(this.state.params[methodItem.name]);
 					}
-				});
+					const result = await self.helpers.call(self.coinbase, self.password, contract, methodItem, params);
+					const outputTypes = await self.helpers.getOutputTypes(methodItem);
+					self.helpers.showOutput(contract.options.address, outputTypes, result);
+				} catch (e) {
+					self.helpers.showPanelError(e);
+				}
 			}
 			render() {
 				return React.createElement('div', {
 					htmlFor: 'contractFunctions'
 				}, this.state.childFunctions.map((childFunction, i) => {
 					return React.createElement('form', {
-						onSubmit: this._handleSubmit.bind(this, childFunction[0]),
+						onSubmit: this._handleSubmit.bind(this, childFunction.interface),
 						key: i,
-						ref: childFunction[0]
+						ref: childFunction.interface.name
 					}, React.createElement('input', {
 						type: 'submit',
-						value: childFunction[0],
+						value: childFunction.interface.name,
 						className: 'text-subtle call-button'
-					}), childFunction[1].map((childInput, j) => {
+					}), childFunction.params.map((childInput, j) => {
 						return React.createElement('input', {
 							name: childInput[0],
-							tye: 'text',
-							handleChange: this._handleChange,
+							type: 'text',
+							onChange: (event) => this._handleChange(childFunction.interface.name, childInput[0], event),
 							placeholder: childInput[0] + ' ' + childInput[1],
 							className: 'call-button-values'
 						});
@@ -524,17 +275,25 @@ export default class View {
 				}));
 			}
 		};
-		class executionContent extends React.Component {
-			constructor() {
-				super();
+		class ExecutionContent extends React.Component {
+			constructor(props) {
+				super(props);
 			}
 			render() {
-				return React.createElement('div', {
-					className: 'contract-content'
-				}, React.createElement(contractNameHeader), React.createElement(byteCodeText), React.createElement(abi_def), React.createElement(mineStat), React.createElement(inputsForm), React.createElement(functionABI));
+				return (
+					<div class="contract-content">
+						<ContractNameHeader />
+						<ByteCodeText />
+						<ABIDef />
+						<TxHash />
+						<MineStat />
+						<InputsForm />
+						<FunctionABI />
+					</div>
+				);
 			}
 		};
-		ReactDOM.render(React.createElement(executionContent), document.getElementById(contractName));
+		ReactDOM.render(React.createElement(ExecutionContent), document.getElementById(contractName));
 	}
 	createTextareaR(text) {
 		var textNode;
@@ -544,7 +303,7 @@ export default class View {
 		textNode.classList.add('large-code');
 		return textNode;
 	}
-	getAddresses(callback) {
+	async getAddresses(callback) {
 		return this.web3.eth.getAccounts(function(err, accounts) {
 			if (err) {
 				return callback('Error no base account!', null);
@@ -552,12 +311,5 @@ export default class View {
 				return callback(null, accounts);
 			}
 		});
-	}
-	reset() {
-		this.compiledNode = document.getElementById('compiled-code');
-		// Unset earlier compiled code
-		while (this.compiledNode.firstChild) {
-			this.compiledNode.removeChild(this.compiledNode.firstChild);
-		}
 	}
 }

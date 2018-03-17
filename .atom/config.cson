@@ -1,4 +1,6 @@
 "*":
+  "atom-ide-ui":
+    use: {}
   "autocomplete-python":
     useKite: false
   autosave:
