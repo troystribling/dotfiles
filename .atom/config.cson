@@ -1,4 +1,6 @@
 "*":
+  Hydrogen:
+    debug: true
   "atom-ide-ui":
     use: {}
   "autocomplete-python":

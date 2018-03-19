@@ -42,10 +42,20 @@ module.exports = class ToolBarButtonView {
     if (this.priority < 0) {
       classNames.push('tool-bar-item-align-end');
     }
-    if (options.iconset) {
-      classNames.push(options.iconset, `${options.iconset}-${options.icon}`);
-    } else {
-      classNames.push(`icon-${options.icon}`);
+    if (options.icon) {
+      if (options.iconset) {
+        classNames.push(options.iconset, `${options.iconset}-${options.icon}`);
+      } else {
+        classNames.push(`icon-${options.icon}`);
+      }
+    }
+
+    if (options.text) {
+      if (options.html) {
+        this.element.innerHTML = options.text;
+      } else {
+        this.element.textContent = options.text;
+      }
     }
 
     this.element.classList.add(...classNames);
@@ -94,7 +104,7 @@ module.exports = class ToolBarButtonView {
   _onClick (e) {
     getPrevFocusedElm().focus();
     if (this.element && !this.element.classList.contains('disabled')) {
-      executeCallback(this.options, e);
+      executeCallback(this, e);
     }
     if (e.preventDefault) {
       e.preventDefault();
@@ -127,7 +137,8 @@ function getTooltipPlacement () {
        : null;
 }
 
-function executeCallback ({callback, data}, e) {
+function executeCallback (buttonView, e) {
+  let {callback, data} = buttonView.options;
   if (typeof callback === 'object' && !Array.isArray(callback) && callback) {
     callback = getCallbackModifier(callback, e);
   }
@@ -138,7 +149,7 @@ function executeCallback ({callback, data}, e) {
       atom.commands.dispatch(getPrevFocusedElm(), callback[i]);
     }
   } else if (typeof callback === 'function') {
-    callback(data, getPrevFocusedElm());
+    callback.call(buttonView, data, getPrevFocusedElm());
   }
 }
 
