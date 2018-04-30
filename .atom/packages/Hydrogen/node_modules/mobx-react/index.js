@@ -711,7 +711,7 @@ var reactiveMixin = {
 
         function makePropertyObservableReference(propName) {
             var valueHolder = this[propName];
-            var atom = new mobx.Atom("reactive " + propName);
+            var atom = mobx.createAtom("reactive " + propName);
             Object.defineProperty(this, propName, {
                 configurable: true,
                 enumerable: true,
@@ -781,7 +781,7 @@ var reactiveMixin = {
                     _this.__$mobRenderStart = Date.now();
                 }
                 try {
-                    rendering = mobx.extras.allowStateChanges(false, baseRender);
+                    rendering = mobx._allowStateChanges(false, baseRender);
                 } catch (e) {
                     exception = e;
                 }
@@ -1002,9 +1002,9 @@ var Provider = (_temp = _class = function (_Component) {
 }, _temp);
 
 if (!React.Component) throw new Error("mobx-react requires React to be available");
-if (!mobx.extras) throw new Error("mobx-react requires mobx to be available");
+if (!mobx.spy) throw new Error("mobx-react requires mobx to be available");
 
-if (typeof reactDom.unstable_batchedUpdates === "function") mobx.extras.setReactionScheduler(reactDom.unstable_batchedUpdates);else if (typeof unstable_batchedUpdates$1 === "function") mobx.extras.setReactionScheduler(unstable_batchedUpdates$1);
+if (typeof reactDom.unstable_batchedUpdates === "function") mobx.configure({ reactionScheduler: reactDom.unstable_batchedUpdates });else if (typeof unstable_batchedUpdates$1 === "function") mobx.configure({ reactionScheduler: unstable_batchedUpdates$1 });
 
 var onError = function onError(fn) {
     return errorsReporter.on(fn);
@@ -1014,7 +1014,7 @@ var onError = function onError(fn) {
 // See: https://github.com/andykog/mobx-devtools/blob/d8976c24b8cb727ed59f9a0bc905a009df79e221/src/backend/installGlobalHook.js
 
 if ((typeof __MOBX_DEVTOOLS_GLOBAL_HOOK__ === "undefined" ? "undefined" : _typeof(__MOBX_DEVTOOLS_GLOBAL_HOOK__)) === "object") {
-    var mobx$1 = { spy: mobx.spy, extras: mobx.extras };
+    var mobx$1 = { spy: mobx.spy, extras: { getDebugName: mobx.getDebugName } };
     var mobxReact = { renderReporter: renderReporter, componentByNodeRegistery: componentByNodeRegistery, trackComponents: trackComponents };
     __MOBX_DEVTOOLS_GLOBAL_HOOK__.injectMobxReact(mobxReact, mobx$1);
 }

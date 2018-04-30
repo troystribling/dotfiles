@@ -1,7 +1,14 @@
 /* @flow */
 
 import { CompositeDisposable } from "atom";
-import { observable, computed, action } from "mobx";
+import {
+  observable,
+  computed,
+  action,
+  isObservableMap,
+  keys,
+  values
+} from "mobx";
 import { isMultilanguageGrammar, getEmbeddedScope } from "./../utils";
 import _ from "lodash";
 
@@ -28,14 +35,19 @@ export class Store {
   @computed
   get kernel(): ?Kernel {
     if (!this.filePath) return null;
-    const kernel = this.kernelMapping.get(this.filePath);
-    if (!kernel || kernel instanceof Kernel) return kernel;
-    if (this.grammar) return kernel[this.grammar.name];
+    const kernelOrMap = this.kernelMapping.get(this.filePath);
+    if (!kernelOrMap || kernelOrMap instanceof Kernel) return kernelOrMap;
+    if (this.grammar) return kernelOrMap.get(this.grammar.name);
   }
 
   @computed
   get filePath(): ?string {
     return this.editor ? this.editor.getPath() : null;
+  }
+
+  @computed
+  get filePaths(): Array<?string> {
+    return keys(this.kernelMapping);
   }
 
   @computed
@@ -70,10 +82,11 @@ export class Store {
     grammar: atom$Grammar
   ) {
     if (isMultilanguageGrammar(editor.getGrammar())) {
-      const old = this.kernelMapping.get(filePath);
-      const newMap = old && old instanceof Kernel === false ? old : {};
-      newMap[grammar.name] = kernel;
-      this.kernelMapping.set(filePath, newMap);
+      if (!this.kernelMapping.has(filePath)) {
+        this.kernelMapping.set(filePath, new Map());
+      }
+      const multiLanguageMap = this.kernelMapping.get(filePath);
+      multiLanguageMap.set(grammar.name, kernel);
     } else {
       this.kernelMapping.set(filePath, kernel);
     }
@@ -87,44 +100,30 @@ export class Store {
 
   @action
   deleteKernel(kernel: Kernel) {
-    this._iterateOverKernels(
-      kernel,
-      (_, file) => {
+    const grammar = kernel.grammar.name;
+    const files = this.getFilesForKernel(kernel);
+
+    files.forEach(file => {
+      const kernelOrMap = this.kernelMapping.get(file);
+      if (!kernelOrMap) return;
+      if (kernelOrMap instanceof Kernel) {
         this.kernelMapping.delete(file);
-      },
-      (map, _, grammar) => {
-        map[grammar] = null;
-        delete map[grammar];
+      } else {
+        kernelOrMap.delete(grammar);
       }
-    );
+    });
 
     this.runningKernels.remove(kernel);
   }
 
-  _iterateOverKernels(
-    kernel: Kernel,
-    func: (kernel: Kernel | KernelObj, file: string) => mixed,
-    func2: (obj: KernelObj, file: string, grammar: string) => mixed = func
-  ) {
-    this.kernelMapping.forEach((kernelOrObj, file) => {
-      if (kernelOrObj === kernel) {
-        func(kernel, file);
-      }
-
-      if (kernelOrObj instanceof Kernel === false) {
-        _.forEach(kernelOrObj, (k, grammar) => {
-          if (k === kernel) {
-            func2(kernelOrObj, file, grammar);
-          }
-        });
-      }
-    });
-  }
-
   getFilesForKernel(kernel: Kernel) {
-    const files = [];
-    this._iterateOverKernels(kernel, (_, file) => files.push(file));
-    return files;
+    const grammar = kernel.grammar.name;
+    return this.filePaths.filter(file => {
+      const kernelOrMap = this.kernelMapping.get(file);
+      return kernelOrMap instanceof Kernel
+        ? kernelOrMap === kernel
+        : kernelOrMap.get(grammar) === kernel;
+    });
   }
 
   @action

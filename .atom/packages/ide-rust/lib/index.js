@@ -265,6 +265,14 @@ class RustLanguageClient extends AutoLanguageClient {
             default: "Rls Default",
             order: 1,
             enum: ["On", "Off", "Rls Default"]
+          },
+          clippyPreference: {
+            title: "Clippy Preference",
+            description: 'Controls eagerness of clippy diagnostics. `Opt-in` requires each crate specifying `#![warn(clippy)]. Note clippy is only available on Rls releases that have it enabled at compile time.',
+            type: "string",
+            default: "Rls Default",
+            order: 2,
+            enum: ["On", "Opt-in", "Off", "Rls Default"]
           }
         }
       }
@@ -528,7 +536,7 @@ class RustLanguageClient extends AutoLanguageClient {
   }
 
   getGrammarScopes() {
-    return ["source.rust"]
+    return ["source.rust", "rust"]
   }
   getLanguageName() {
     return "Rust"

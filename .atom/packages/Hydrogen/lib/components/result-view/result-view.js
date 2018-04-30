@@ -27,7 +27,7 @@ class ResultViewComponent extends React.Component<Props> {
   containerTooltip = new CompositeDisposable();
   buttonTooltip = new CompositeDisposable();
   closeTooltip = new CompositeDisposable();
-  expanded: IObservableValue<boolean> = observable(false);
+  expanded: IObservableValue<boolean> = observable.box(false);
 
   getAllText = () => {
     if (!this.el) return "";
@@ -160,6 +160,7 @@ class ResultViewComponent extends React.Component<Props> {
           }}
         >
           <Display
+            // $FlowFixMe
             outputs={toJS(outputs)}
             displayOrder={displayOrder}
             transforms={transforms}

@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51755-xnamfw.2q9a0xusor/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64404-1b5c0ck.ewcmed0a4i/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51755-xnamfw.2q9a0xusor/package.tgz",
-        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51755-xnamfw.2q9a0xusor/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64404-1b5c0ck.ewcmed0a4i/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64404-1b5c0ck.ewcmed0a4i/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118217-51755-rd13hh.zl0zppsyvi"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118330-64404-1xuncu8.uztb0m5cdi"
     ]
   ],
-  "_from": "../d-118217-51755-xnamfw.2q9a0xusor/package.tgz",
-  "_id": "Hydrogen@2.3.0",
+  "_from": "../d-118330-64404-1b5c0ck.ewcmed0a4i/package.tgz",
+  "_id": "Hydrogen@2.4.1",
   "_inCache": true,
   "_location": "/Hydrogen",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51755-xnamfw.2q9a0xusor/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64404-1b5c0ck.ewcmed0a4i/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51755-xnamfw.2q9a0xusor/package.tgz",
-    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51755-xnamfw.2q9a0xusor/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64404-1b5c0ck.ewcmed0a4i/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64404-1b5c0ck.ewcmed0a4i/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-118217-51755-xnamfw.2q9a0xusor/package.tgz",
-  "_shasum": "ae8011cd709c079bbc49c6a1be730897021820bb",
+  "_resolved": "file:../d-118330-64404-1b5c0ck.ewcmed0a4i/package.tgz",
+  "_shasum": "aabc0fac996301b1f016e6e4e13dcc77e35dbff0",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51755-xnamfw.2q9a0xusor/package.tgz",
-  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118217-51755-rd13hh.zl0zppsyvi",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64404-1b5c0ck.ewcmed0a4i/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118330-64404-1xuncu8.uztb0m5cdi",
   "activationCommands": {
     "atom-text-editor": [
       "hydrogen:start-local-kernel",
@@ -49,7 +49,7 @@
       "hydrogen:toggle-bubble"
     ]
   },
-  "atomTestRunner": "atom-jasmine2-test-runner",
+  "atomTestRunner": "atom-jasmine3-test-runner",
   "author": {
     "name": "nteract contributors"
   },
@@ -68,7 +68,7 @@
     "@nteract/commutable": "^3.0.4",
     "@nteract/display-area": "^3.1.7",
     "@nteract/transform-plotly": "^3.1.4",
-    "@nteract/transform-vega": "^3.0.5",
+    "@nteract/transform-vega": "^3.1.0",
     "@nteract/transforms": "^3.1.4",
     "anser": "^1.4.4",
     "atom-select-list": "^0.7.0",
@@ -77,8 +77,8 @@
     "jmp": "^1.0.0",
     "kernelspecs": "^2.0.0",
     "lodash": "^4.14.0",
-    "mobx": "^3.3.0",
-    "mobx-react": "^4.3.5",
+    "mobx": "^4.1.1",
+    "mobx-react": "^5.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-rangeslider": "^2.1.0",
@@ -90,14 +90,14 @@
   },
   "description": "Run code interactively, inspect data, and plot. All the power of Jupyter kernels, inside your favorite text editor.",
   "devDependencies": {
-    "atom-jasmine2-test-runner": "^1.0.0",
+    "atom-jasmine3-test-runner": "^3.0.1",
     "enzyme": "^3.1.1",
     "enzyme-adapter-react-16": "^1.0.4",
-    "flow-bin": "^0.66.0",
+    "flow-bin": "^0.67.1",
     "husky": "^0.14.0",
     "lint-staged": "^7.0.0",
     "markdox": "^0.1.10",
-    "mobx-react-devtools": "^4.2.11",
+    "mobx-react-devtools": "^5.0.0",
     "prettier": "^1.8.2",
     "react-test-renderer": "^16.0.0"
   },
@@ -146,7 +146,7 @@
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nteract/hydrogen.git"
+    "url": "git+ssh://git@github.com/nteract/hydrogen.git"
   },
   "scripts": {
     "build:docs": "markdox lib/plugin-api/hydrogen-provider.js lib/plugin-api/hydrogen-kernel.js -o docs/PluginAPI.md",
@@ -154,5 +154,5 @@
     "precommit": "lint-staged",
     "prettier": "prettier --write 'lib/**/*.js' 'spec/**/*.js'"
   },
-  "version": "2.3.0"
+  "version": "2.4.1"
 }

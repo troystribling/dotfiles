@@ -44,6 +44,7 @@ class ScrollList extends React.Component<Props> {
         }}
       >
         <Display
+          // $FlowFixMe
           outputs={toJS(this.props.outputs)}
           displayOrder={displayOrder}
           transforms={transforms}

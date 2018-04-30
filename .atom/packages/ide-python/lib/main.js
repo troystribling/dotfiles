@@ -28,6 +28,7 @@ class PythonLanguageClient extends AutoLanguageClient {
     return {
       pyls: {
         configurationSources: configuration.pylsConfigurationSources,
+        rope: { ropeFolder: configuration.ropeFolder !== "null" ? configuration.ropeFolder : null },
         plugins: configuration.pylsPlugins
       }
     };
@@ -62,7 +63,7 @@ class PythonLanguageClient extends AutoLanguageClient {
           }
         ],
         description:
-          "This can occur if you do not have Python installed or if it is not in your path.\n\n Make sure to install `pyls` by running:\n```\npip install python-language-server\n```"
+          "This can occur if you do not have Python installed or if it is not in your path.\n\n Make sure to install `pyls` by running:\n```\npip install 'python-language-server[all]'\n```"
       })
     );
     return childProcess;

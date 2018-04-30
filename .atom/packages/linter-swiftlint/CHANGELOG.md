@@ -1,3 +1,41 @@
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/AtomLinter/linter-swiftlint/compare/v1.3.0...v1.3.1) (2018-04-18)
+
+
+### Bug Fixes
+
+* parse all available results ([d3aad07](https://github.com/AtomLinter/linter-swiftlint/commit/d3aad07))
+
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/AtomLinter/linter-swiftlint/compare/v1.2.3...v1.3.0) (2018-04-18)
+
+
+### Bug Fixes
+
+* **engine:** use better Atom version ([449de7c](https://github.com/AtomLinter/linter-swiftlint/commit/449de7c))
+* **performance:** install dependencies in an idle callback ([6e691e8](https://github.com/AtomLinter/linter-swiftlint/commit/6e691e8))
+* **style:** don't specify variable name twice ([01c1f25](https://github.com/AtomLinter/linter-swiftlint/commit/01c1f25))
+* **types:** fix generateRange return type ([6314dfb](https://github.com/AtomLinter/linter-swiftlint/commit/6314dfb))
+* **ux:** fix setting descriptions ([bb61ce3](https://github.com/AtomLinter/linter-swiftlint/commit/bb61ce3))
+* do not infinite loop when matching ([ef5b930](https://github.com/AtomLinter/linter-swiftlint/commit/ef5b930))
+* don't rewrite parameters on every change ([8347bd5](https://github.com/AtomLinter/linter-swiftlint/commit/8347bd5))
+* verify the TextEditor has a path ([11df60e](https://github.com/AtomLinter/linter-swiftlint/commit/11df60e))
+
+
+### Features
+
+* **ux:** return Linter v2 messages ([6c499b7](https://github.com/AtomLinter/linter-swiftlint/commit/6c499b7))
+
+<a name="1.2.3"></a>
+## [1.2.3](https://github.com/AtomLinter/linter-swiftlint/compare/v1.2.2...v1.2.3) (2018-04-16)
+
+
+### Bug Fixes
+
+* **package:** update atom-linter to version 10.0.0 🚀 ([#48](https://github.com/AtomLinter/linter-swiftlint/issues/48)) ([89ba440](https://github.com/AtomLinter/linter-swiftlint/commit/89ba440))
+* **package:** update fs-plus to version 3.0.0 ([#47](https://github.com/AtomLinter/linter-swiftlint/issues/47)) ([5a68de4](https://github.com/AtomLinter/linter-swiftlint/commit/5a68de4)), closes [#46](https://github.com/AtomLinter/linter-swiftlint/issues/46)
+* **package:** update fs-plus to version 3.0.2 ([#49](https://github.com/AtomLinter/linter-swiftlint/issues/49)) ([6d05e46](https://github.com/AtomLinter/linter-swiftlint/commit/6d05e46))
+
 # Change Log
 
 ## [v1.2.2](https://github.com/AtomLinter/linter-swiftlint/tree/v1.2.2) (2017-02-15)
