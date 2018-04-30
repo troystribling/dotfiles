@@ -1,4 +1,5 @@
 .DS_Store
 .AppleDouble/
 *.swp
+.atom/recovery/
 __pycache__/
