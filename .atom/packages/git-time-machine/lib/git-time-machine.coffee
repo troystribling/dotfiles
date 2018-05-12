@@ -6,6 +6,7 @@ module.exports = GitTimeMachine =
   timelinePanel: null
   subscriptions: null
 
+
   activate: (state) ->
     @gitTimeMachineView = new GitTimeMachineView state.gitTimeMachineViewState
     @timelinePanel = atom.workspace.addBottomPanel(item: @gitTimeMachineView.getElement(), visible: false)
@@ -14,8 +15,11 @@ module.exports = GitTimeMachine =
     @subscriptions = new CompositeDisposable
 
     # Register command that toggles this view
-    @subscriptions.add atom.commands.add 'atom-workspace', 'git-time-machine:toggle': => @toggle()
-    atom.workspace.onDidChangeActivePaneItem (editor) => @_onDidChangeActivePaneItem()
+    @subscriptions.add atom.commands.add 'atom-workspace', 
+      'git-time-machine:toggle': => @toggle()
+      'core:cancel': () => @timelinePanel?.isVisible() && @toggle()
+    
+    @subscriptions.add atom.workspace.onDidChangeActivePaneItem((editor) => @_onDidChangeActivePaneItem(editor))
 
 
   deactivate: ->
@@ -34,13 +38,20 @@ module.exports = GitTimeMachine =
       @gitTimeMachineView.hide()
       @timelinePanel.hide()
     else
-      @timelinePanel.show()
-      @gitTimeMachineView.show()
-      @gitTimeMachineView.setEditor atom.workspace.getActiveTextEditor()
+      require('atom-package-deps').install('git-time-machine')
+        .then (->
+          @timelinePanel.show()
+          @gitTimeMachineView.show()
+          @gitTimeMachineView.setEditor atom.workspace.getActiveTextEditor()
+        ).bind(this)
 
 
   _onDidChangeActivePaneItem: (editor) ->
-    editor = atom.workspace.getActiveTextEditor()
     if @timelinePanel.isVisible()
+      editor = atom.workspace.getActiveTextEditor()
       @gitTimeMachineView.setEditor(editor)
     return
+
+
+  consumeSplitDiff: (splitDiffService) ->
+    require('./git-revision-view').SplitDiffService = splitDiffService

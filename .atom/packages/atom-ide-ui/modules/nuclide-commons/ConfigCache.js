@@ -22,7 +22,7 @@ function _load_fsPromise() {return _fsPromise = _interopRequireDefault(require('
                                                                                                                                                                                                * LICENSE file in the root directory of this source tree. An additional grant
                                                                                                                                                                                                * of patent rights can be found in the PATENTS file in the same directory.
                                                                                                                                                                                                *
-                                                                                                                                                                                               * 
+                                                                                                                                                                                               *  strict-local
                                                                                                                                                                                                * @format
                                                                                                                                                                                                */class ConfigCache {constructor(configFileNames,
   searchStrategy = 'nearest')

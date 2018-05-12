@@ -16,9 +16,9 @@
 
 
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}
 var _atom = require('atom');var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../../../../nuclide-commons/nuclideUri'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 const WORKSPACE_VIEW_URI = exports.WORKSPACE_VIEW_URI = 'atom://nuclide/debugger'; /**
                                                                                     * Copyright (c) 2017-present, Facebook, Inc.
@@ -28,7 +28,7 @@ const WORKSPACE_VIEW_URI = exports.WORKSPACE_VIEW_URI = 'atom://nuclide/debugger
                                                                                     * LICENSE file in the root directory of this source tree. An additional grant
                                                                                     * of patent rights can be found in the PATENTS file in the same directory.
                                                                                     *
-                                                                                    * 
+                                                                                    *  strict-local
                                                                                     * @format
                                                                                     */const CONNECTIONS_UPDATED_EVENT = 'CONNECTIONS_UPDATED_EVENT';const PROVIDERS_UPDATED_EVENT = 'PROVIDERS_UPDATED_EVENT'; /**
                                                                                                                                                                                                                 * Atom ViewProvider compatible model object.

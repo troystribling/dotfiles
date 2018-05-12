@@ -12,8 +12,8 @@
 
 
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _createPackage;
-function _load_createPackage() {return _createPackage = _interopRequireDefault(require('nuclide-commons-atom/createPackage'));}var _Hyperclick;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _createPackage;
+function _load_createPackage() {return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));}var _Hyperclick;
 function _load_Hyperclick() {return _Hyperclick = _interopRequireDefault(require('./Hyperclick'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // Legacy providers have a default priority of 0.

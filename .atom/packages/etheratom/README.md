@@ -5,23 +5,30 @@
 
 Etheratom is a package for hackable Atom editor. It uses web3js to interact with Ethereum node.
 
-![A screenshot of Etheratom package](https://user-images.githubusercontent.com/13261372/37424010-5f70657e-27e5-11e8-8639-0f2f0361f03c.png)
+![A screenshot of Etheratom package](https://user-images.githubusercontent.com/13261372/37828365-f43a0c8c-2ec0-11e8-8d09-d1c29d7168d3.png)
 
 # Requirements
 
-To run and compile using Etheratom, it is now __not required to have a local ethereum node running and compilers installed__. New version adds support to solc and ethereumjs to compile and run solidity codes without running a local node.
-
-*Note: Currently only solidity compiler is supported.*
-
+#### Use [Ganache](http://truffleframework.com/ganache/) or
+#### Install geth
 [Ethereum client installation instruction](https://www.ethereum.org/cli)
+**Or**
+You can just download binary from [https://geth.ethereum.org/downloads/](https://geth.ethereum.org/downloads/) and run.
 
-Start geth node using following command
+#### Run go-ethereum client
+Start geth node on testnet using following command:
 
-    geth --testnet --cache=1024 --fast --rpc --rpcapi="db,eth,net,web3,personal" console
+    geth --testnet --fast --rpc --rpcapi="eth,web3,personal" --ws --wsorigins="*" --wsapi="eth,web3,personal" console
+
+*Note:* Only solidity compiler is supported.
 
 # Installation
 
-## Install from source
+`apm install etheratom`
+
+Or you can install [Etheratom](https://atom.io/packages/etheratom) from Atom packages.
+
+#### Install from source
 
 Clone git repository
 
@@ -33,21 +40,15 @@ Install as atom package
     apm link .
     apm install
 
-## Install using atom-package-manager
-
-You need to install
-
-* [Etheratom](https://atom.io/packages/etheratom) (`apm install etheratom`)
-
 # Configuration
 
-Assuming you have a local geth client running and rpc api listening on http://127.0.0.1:8545/
+Assuming you have a local geth client running and rpc api listening on [http://127.0.0.1:8545/](http://127.0.0.1:8545/) & websocket endpoint listening on [ws://127.0.0.1:8546](ws://127.0.0.1:8546)
 
-1. Go to package settings and set rpc address.
+#### Go to package settings and set rpc address & websocket address.
 
-    ![etheratom package config](https://cloud.githubusercontent.com/assets/13261372/15468216/9989115e-2100-11e6-8dd5-e02fb9459ab6.gif)
+![etheratom package config](https://cloud.githubusercontent.com/assets/13261372/15468216/9989115e-2100-11e6-8dd5-e02fb9459ab6.gif)
 
-2. Restart atom
+**Restart atom** to load your configuration changes.
 
 # Usage
 
@@ -63,19 +64,13 @@ Also you can select between **Javascript VM** and an actual running **Ethereum n
 
 ![New panel features](https://cloud.githubusercontent.com/assets/13261372/20199656/227e5a52-a7d2-11e6-95f5-ec7fb16b4564.png)
 
-Once contract is mined you will see buttons with function names to call those functions
+It has a tiny **Ethereum client monitor** to check how your node is doing
 
-Use **Transaction Analyzer** to get details about any transaction.
+![nodeinfo](https://user-images.githubusercontent.com/13261372/39017080-f99b6d76-443f-11e8-94b5-ca77238a7011.png)
 
-Transaction                |  Transaction Recipt
-:-------------------------:|:-------------------------:
-![Transaction hash](https://user-images.githubusercontent.com/13261372/37555558-260d3a92-2a0f-11e8-8c18-f1ebe9a326ef.png)  |  ![Transaction recipt](https://user-images.githubusercontent.com/13261372/37555557-25dbb30a-2a0f-11e8-88f2-8e6208e9ddd1.png)
 
-###
+# Support development :heart:
 
-# Expectations
+Etheratom aims to provide a clean interactive interface to develop solidity smart contracts, test them on testnet, do security analysis and deploy them on mainnet. **Etheratom needs your help!**
 
-Etheratom aims to provide an interface where developers can write solidity smart contracts, test them on Javascript VM, deploy them to testnets & mainnet and do a transaction analysis.
-
-# Support development :green_heart: show some love
 ## Ethereum :point_right: 0xd22fE4aEFed0A984B1165dc24095728EE7005a36

@@ -1,46 +1,89 @@
 'use babel'
+// Copyright 2018 Etheratom Authors
+// This file is part of Etheratom.
+
+// Etheratom is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// Etheratom is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with Etheratom.  If not, see <http://www.gnu.org/licenses/>.
 import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
-import ReactJson from 'react-json-view'
 import { connect } from 'react-redux'
 import Contracts from '../Contracts'
+import TxAnalyzer from '../TxAnalyzer'
+import Events from '../Events'
+import NodeControl from '../NodeControl'
 
 class TabView extends React.Component {
     constructor(props) {
         super(props);
         this.helpers = props.helpers;
         this.state = {
-            txHash: undefined,
-            txAnalysis: undefined
+            txBtnStyle: 'btn',
+            eventBtnStyle: 'btn',
+            newTxCounter: 0,
+            newEventCounter: 0
         }
-        this._handleTxHashChange = this._handleTxHashChange.bind(this);
-        this._handleTxHashSubmit = this._handleTxHashSubmit.bind(this);
+        this._handleTabSelect = this._handleTabSelect.bind(this);
     }
-    _handleTxHashChange(event) {
-        this.setState({ txHash: event.target.value });
+    _handleTabSelect(index) {
+        if(index === 1) {
+            this.setState({ newTxCounter: 0, txBtnStyle: 'btn' });
+        }
+        if(index === 2) {
+            this.setState({ newEventCounter: 0, eventBtnStyle: 'btn' });
+        }
     }
-    async _handleTxHashSubmit() {
-        const { txHash } = this.state;
-        try {
-            const txAnalysis = await this.helpers.getTxAnalysis(txHash);
-            this.setState({ txAnalysis });
-        } catch (e) {
-            console.log(e);
+    componentWillReceiveProps(nextProps) {
+        const { newTxCounter, newEventCounter } = this.state;
+        if(this.props.pendingTransactions !== nextProps.pendingTransactions) {
+            this.setState({ newTxCounter: newTxCounter+1, txBtnStyle: 'btn btn-error' });
+        }
+        if(this.props.events !== nextProps.events && nextProps.events.length > 0) {
+            this.setState({ newEventCounter: newEventCounter+1, eventBtnStyle: 'btn btn-error' });
         }
     }
     render() {
+        const { eventBtnStyle, txBtnStyle, newTxCounter, newEventCounter  } = this.state;
+
         return (
-            <Tabs>
-                <TabList>
+            <Tabs onSelect={index => this._handleTabSelect(index)} className="react-tabs vertical-tabs">
+                <TabList className="react-tabs__tab-list vertical tablist">
                     <div class="tab_btns">
                         <Tab>
-                            <div class="btn copy-btn btn-primary">Contract</div>
+                            <div class="btn">Contract</div>
                         </Tab>
                         <Tab>
-                            <div class="btn copy-btn btn-primary">Transaction analyzer</div>
+                            <div class={txBtnStyle}>
+                                Transaction analyzer
+                                {
+                                    newTxCounter > 0 &&
+                                    <span class='badge badge-small badge-error notify-badge'>{newTxCounter}</span>
+                                }
+                            </div>
                         </Tab>
                         <Tab>
-                            <div class="btn copy-btn btn-success">Donate</div>
+                            <div class={eventBtnStyle}>
+                                Events
+                                {
+                                    newEventCounter > 0 &&
+                                    <span class='badge badge-small badge-error notify-badge'>{newEventCounter}</span>
+                                }
+                            </div>
+                        </Tab>
+                        <Tab>
+                            <div class="btn">Node</div>
+                        </Tab>
+                        <Tab>
+                            <div class="btn btn-warning">Help</div>
                         </Tab>
                     </div>
                 </TabList>
@@ -49,49 +92,22 @@ class TabView extends React.Component {
                     <Contracts store={this.props.store} helpers={this.helpers} />
                 </TabPanel>
                 <TabPanel>
-                    <div class="block">
-                        <form onSubmit={this._handleTxHashSubmit}>
-                            <div class="inline-block">
-                                <input type="text" name="txhash" value={this.state.txHash} onChange={this._handleTxHashChange} placeholder="Transaction hash" class="input-search" />
-                            </div>
-                            <div class="inline-block">
-                                <input type="submit" value="Analyze" class="btn btn-success" />
-                            </div>
-                        </form>
-                    </div>
-                    {
-                        (this.state.txAnalysis && this.state.txAnalysis.transaction) &&
-                        <div class="block">
-                            <h2 class="block highlight-info tx-header">Transaction</h2>
-                            <ReactJson
-                                src={this.state.txAnalysis.transaction}
-                                theme="solarized"
-                                displayDataTypes={false}
-                                name={false}
-                            />
-                        </div>
-                    }
-                    {
-                        (this.state.txAnalysis && this.state.txAnalysis.transactionRecipt) &&
-                        <div class="block">
-                            <h2 class="block highlight-info tx-header">Transaction receipt</h2>
-                            <ReactJson
-                                src={this.state.txAnalysis.transactionRecipt}
-                                theme="solarized"
-                                displayDataTypes={false}
-                                name={false}
-                            />
-                        </div>
-                    }
+                    <TxAnalyzer store={this.props.store} helpers={this.helpers} />
                 </TabPanel>
                 <TabPanel>
-                    <h2 class="text-warning">Donate & help Etheratom to keep solidity development interactive.</h2>
-                    <h4 class="text-success">Ethereum: 0xd22fE4aEFed0A984B1165dc24095728EE7005a36</h4>
+                    <Events store={this.props.store} helpers={this.helpers} />
+                </TabPanel>
+                <TabPanel>
+                    <NodeControl store={this.props.store} helpers={this.helpers} />
+                </TabPanel>
+                <TabPanel>
+                    <h2 class="text-warning">Help Etheratom to keep solidity development interactive.</h2>
+                    <h4 class="text-success">Donate Ethereum: 0xd22fE4aEFed0A984B1165dc24095728EE7005a36</h4>
                     <p>
-                        <span>Tweet about Etheratom </span><a href="https://twitter.com/hashtag/Etheratom">#Etheratom</a>
+                        <span>Etheratom news </span><a href="https://twitter.com/hashtag/Etheratom">#Etheratom</a>
                     </p>
                     <p>
-                        <a href="mailto:0mkar@protonmail.com" target="_top">0mkar@protonmail.com</a>
+                        Contact: <a href="mailto:0mkar@protonmail.com" target="_top">0mkar@protonmail.com</a>
                     </p>
                 </TabPanel>
             </Tabs>
@@ -99,9 +115,10 @@ class TabView extends React.Component {
     }
 }
 
-const mapStateToProps = ({ contract }) => {
+const mapStateToProps = ({ contract, eventReducer }) => {
 	const { compiled } = contract;
-	return { compiled };
+    const { pendingTransactions, events } = eventReducer;
+	return { compiled, pendingTransactions, events };
 }
 
 export default connect(mapStateToProps, {})(TabView);

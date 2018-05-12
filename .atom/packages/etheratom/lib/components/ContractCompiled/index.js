@@ -28,16 +28,21 @@ class ContractCompiled extends React.Component {
         super(props);
         this.helpers = props.helpers;
         this.state = {
-            estimatedGas: 4700000,
+            estimatedGas: 9000000,
             ContractABI: props.interfaces[props.contractName].interface
         }
         this._handleGasChange = this._handleGasChange.bind(this);
         this._handleInput = this._handleInput.bind(this);
     }
     async componentDidMount() {
-        const { bytecode } = this.props;
-        //const gas = await this.helpers.getGasEstimate(that.coinbase, bytecode);
-        //this.setState({ estimatedGas: gas });
+        try {
+            const { coinbase, bytecode } = this.props;
+            const gas = await this.helpers.getGasEstimate(coinbase, bytecode);
+            this.setState({ estimatedGas: gas });
+        } catch(e) {
+            console.log(e);
+            this.helpers.showPanelError(e);
+        }
     }
     _handleGasChange(event) {
         this.setState({ estimatedGas: event.target.value });
@@ -75,10 +80,12 @@ class ContractCompiled extends React.Component {
                         <TabPanel>
                             <ReactJson
                                 src={ContractABI}
-                                theme="ocean"
+                                theme="chalk"
                                 displayDataTypes={false}
                                 name={false}
-                                collapsed={3}
+                                collapsed={2}
+                                collapseStringsAfterLength={32}
+                                iconStyle="triangle"
                             />
                         </TabPanel>
                     </Tabs>
@@ -103,9 +110,10 @@ class ContractCompiled extends React.Component {
     }
 };
 
-const mapStateToProps = ({ contract }) => {
+const mapStateToProps = ({ account, contract }) => {
 	const { compiled, interfaces } = contract;
-	return { compiled, interfaces };
+    const { coinbase } = account;
+	return { compiled, interfaces, coinbase };
 }
 
 export default connect(mapStateToProps, { addInterface })(ContractCompiled);

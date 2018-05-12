@@ -14,19 +14,17 @@
 
 
 function _load_log4js() {return _log4js = require('log4js');}var _debounced;
-function _load_debounced() {return _debounced = require('nuclide-commons-atom/debounced');}var _textEditor;
-function _load_textEditor() {return _textEditor = require('nuclide-commons-atom/text-editor');}var _ProviderRegistry;
-function _load_ProviderRegistry() {return _ProviderRegistry = _interopRequireDefault(require('nuclide-commons-atom/ProviderRegistry'));}var _event;
-function _load_event() {return _event = require('nuclide-commons/event');}var _observable;
-function _load_observable() {return _observable = require('nuclide-commons/observable');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_debounced() {return _debounced = require('../../../../nuclide-commons-atom/debounced');}var _featureConfig;
+function _load_featureConfig() {return _featureConfig = _interopRequireDefault(require('../../../../nuclide-commons-atom/feature-config'));}var _textEditor;
+function _load_textEditor() {return _textEditor = require('../../../../nuclide-commons-atom/text-editor');}var _ProviderRegistry;
+function _load_ProviderRegistry() {return _ProviderRegistry = _interopRequireDefault(require('../../../../nuclide-commons-atom/ProviderRegistry'));}var _event;
+function _load_event() {return _event = require('../../../../nuclide-commons/event');}var _observable;
+function _load_observable() {return _observable = require('../../../../nuclide-commons/observable');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _getSignatureDatatip;
 function _load_getSignatureDatatip() {return _getSignatureDatatip = _interopRequireDefault(require('./getSignatureDatatip'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // Chosen to be a little more than the default key repeat rate.
-const CURSOR_DEBOUNCE_TIME = 200;
-
-// Aggressively timeout signature requests to avoid 'stuck' signatures.
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -35,9 +33,12 @@ const CURSOR_DEBOUNCE_TIME = 200;
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *  strict-local
  * @format
- */const SIGNATURE_TIMEOUT = 2500;class SignatureHelpManager {constructor() {this._commands = new _rxjsBundlesRxMinJs.Subject();this._providerRegistry = new (_ProviderRegistry || _load_ProviderRegistry()).default();this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(
+ */const CURSOR_DEBOUNCE_TIME = 200; // Aggressively timeout signature requests to avoid 'stuck' signatures.
+const SIGNATURE_TIMEOUT = 2500;class SignatureHelpManager {constructor() {this._commands = new _rxjsBundlesRxMinJs.Subject();
+    this._providerRegistry = new (_ProviderRegistry || _load_ProviderRegistry()).default();
+    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(
     this._subscribeToEditors(),
     // Share the command subscription between all editors.
     atom.commands.add('atom-text-editor', 'signature-help:show', () => {
@@ -73,12 +74,23 @@ const CURSOR_DEBOUNCE_TIME = 200;
       if (editor == null) {
         return _rxjsBundlesRxMinJs.Observable.of({ editor, signatureHelp: null });
       }
-      return this._signatureHelpTriggers(editor).
-      exhaustMap(() => this._getSignatureStream(editor)).
-      takeUntil(
-      (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidDestroy.bind(editor))).
+      return (_featureConfig || _load_featureConfig()).default.
+      observeAsStream('atom-ide-signature-help.enable', {
+        scope: editor.getRootScopeDescriptor() }).
 
-      map(signatureHelp => ({ editor, signatureHelp }));
+      switchMap(enabled => {
+        if (enabled === false) {
+          return _rxjsBundlesRxMinJs.Observable.empty();
+        }
+        return this._signatureHelpTriggers(editor).
+        exhaustMap(() => this._getSignatureStream(editor)).
+        takeUntil(
+        (0, (_event || _load_event()).observableFromSubscribeFunction)(
+        editor.onDidDestroy.bind(editor))).
+
+
+        map(signatureHelp => ({ editor, signatureHelp }));
+      });
     }).
     switchMap(({ editor, signatureHelp }) => {
       if (editor != null && signatureHelp != null) {

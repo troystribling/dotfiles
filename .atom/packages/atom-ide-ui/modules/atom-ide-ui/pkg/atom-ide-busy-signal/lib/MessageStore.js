@@ -14,8 +14,8 @@
 
 
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _collection;
-function _load_collection() {return _collection = require('nuclide-commons/collection');}var _BusyMessageInstance;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _collection;
+function _load_collection() {return _collection = require('../../../../nuclide-commons/collection');}var _BusyMessageInstance;
 function _load_BusyMessageInstance() {return _BusyMessageInstance = require('./BusyMessageInstance');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // The "busy debounce delay" is for busy messages that were created with the

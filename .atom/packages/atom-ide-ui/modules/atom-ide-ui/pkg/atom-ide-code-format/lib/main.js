@@ -19,7 +19,7 @@
 
 
 
-function _load_createPackage() {return _createPackage = _interopRequireDefault(require('nuclide-commons-atom/createPackage'));}var _CodeFormatManager;
+function _load_createPackage() {return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));}var _CodeFormatManager;
 function _load_CodeFormatManager() {return _CodeFormatManager = _interopRequireDefault(require('./CodeFormatManager'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
                                                                                                                                                                                                                        * Copyright (c) 2017-present, Facebook, Inc.
                                                                                                                                                                                                                        * All rights reserved.
@@ -28,7 +28,7 @@ function _load_CodeFormatManager() {return _CodeFormatManager = _interopRequireD
                                                                                                                                                                                                                        * LICENSE file in the root directory of this source tree. An additional grant
                                                                                                                                                                                                                        * of patent rights can be found in the PATENTS file in the same directory.
                                                                                                                                                                                                                        *
-                                                                                                                                                                                                                       * 
+                                                                                                                                                                                                                       *  strict-local
                                                                                                                                                                                                                        * @format
                                                                                                                                                                                                                        */class Activation {constructor() {this.codeFormatManager = new (_CodeFormatManager || _load_CodeFormatManager()).default();}consumeLegacyProvider(provider) {// Legacy providers used `selector` / `inclusionPriority`.
     provider.grammarScopes =
@@ -37,6 +37,7 @@ function _load_CodeFormatManager() {return _CodeFormatManager = _interopRequireD
     provider.priority =
     provider.priority != null ?
     provider.priority :
+    // $FlowFixMe(>=0.68.0) Flow suppress (T27187857)
     provider.inclusionPriority != null ?
     provider.inclusionPriority :
     0;

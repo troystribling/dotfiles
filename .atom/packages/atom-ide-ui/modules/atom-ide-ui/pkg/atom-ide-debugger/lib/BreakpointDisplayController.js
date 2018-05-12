@@ -13,14 +13,14 @@
 
 
 
-function _load_mouseToPosition() {return _mouseToPosition = require('nuclide-commons-atom/mouse-to-position');}var _event;
-function _load_event() {return _event = require('nuclide-commons/event');}var _observable;
-function _load_observable() {return _observable = require('nuclide-commons/observable');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _ContextMenu;
-function _load_ContextMenu() {return _ContextMenu = require('nuclide-commons-atom/ContextMenu');}var _classnames;
+function _load_mouseToPosition() {return _mouseToPosition = require('../../../../nuclide-commons-atom/mouse-to-position');}var _event;
+function _load_event() {return _event = require('../../../../nuclide-commons/event');}var _observable;
+function _load_observable() {return _observable = require('../../../../nuclide-commons/observable');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _ContextMenu;
+function _load_ContextMenu() {return _ContextMenu = require('../../../../nuclide-commons-atom/ContextMenu');}var _classnames;
 function _load_classnames() {return _classnames = _interopRequireDefault(require('classnames'));}var _constants;
 function _load_constants() {return _constants = require('./constants');}var _featureConfig;
-function _load_featureConfig() {return _featureConfig = _interopRequireDefault(require('nuclide-commons-atom/feature-config'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_featureConfig() {return _featureConfig = _interopRequireDefault(require('../../../../nuclide-commons-atom/feature-config'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 
 
@@ -40,25 +40,25 @@ function _load_featureConfig() {return _featureConfig = _interopRequireDefault(r
 
 
 /**
-                                                                                                                                                                                                                               * Handles displaying breakpoints and processing events for a single text
-                                                                                                                                                                                                                               * editor.
-                                                                                                                                                                                                                               */ /**
-                                                                                                                                                                                                                                   * A single delegate which handles events from the object.
-                                                                                                                                                                                                                                   *
-                                                                                                                                                                                                                                   * This is simpler than registering handlers using emitter events directly, as
-                                                                                                                                                                                                                                   * there's less messy bookkeeping regarding lifetimes of the unregister
-                                                                                                                                                                                                                                   * Disposable objects.
-                                                                                                                                                                                                                                   */ /**
-                                                                                                                                                                                                                                       * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                                                                                                                       * All rights reserved.
-                                                                                                                                                                                                                                       *
-                                                                                                                                                                                                                                       * This source code is licensed under the BSD-style license found in the
-                                                                                                                                                                                                                                       * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                                                                                                                       * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                                                                                                                       *
-                                                                                                                                                                                                                                       * 
-                                                                                                                                                                                                                                       * @format
-                                                                                                                                                                                                                                       */class BreakpointDisplayController {constructor(delegate, service,
+                                                                                                                                                                                                                                           * Handles displaying breakpoints and processing events for a single text
+                                                                                                                                                                                                                                           * editor.
+                                                                                                                                                                                                                                           */ /**
+                                                                                                                                                                                                                                               * A single delegate which handles events from the object.
+                                                                                                                                                                                                                                               *
+                                                                                                                                                                                                                                               * This is simpler than registering handlers using emitter events directly, as
+                                                                                                                                                                                                                                               * there's less messy bookkeeping regarding lifetimes of the unregister
+                                                                                                                                                                                                                                               * Disposable objects.
+                                                                                                                                                                                                                                               */ /**
+                                                                                                                                                                                                                                                   * Copyright (c) 2017-present, Facebook, Inc.
+                                                                                                                                                                                                                                                   * All rights reserved.
+                                                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                                                   * This source code is licensed under the BSD-style license found in the
+                                                                                                                                                                                                                                                   * LICENSE file in the root directory of this source tree. An additional grant
+                                                                                                                                                                                                                                                   * of patent rights can be found in the PATENTS file in the same directory.
+                                                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                                                   * 
+                                                                                                                                                                                                                                                   * @format
+                                                                                                                                                                                                                                                   */class BreakpointDisplayController {constructor(delegate, service,
   editor)
   {
     this._delegate = delegate;

@@ -17,9 +17,9 @@
 
 
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _goToLocation;
-function _load_goToLocation() {return _goToLocation = require('nuclide-commons-atom/go-to-location');}var _event;
-function _load_event() {return _event = require('nuclide-commons/event');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _goToLocation;
+function _load_goToLocation() {return _goToLocation = require('../../../../nuclide-commons-atom/go-to-location');}var _event;
+function _load_event() {return _event = require('../../../../nuclide-commons/event');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // TODO(peterhal): The current index should really live in the DiagnosticStore.
 class KeyboardShortcuts {
@@ -178,6 +178,6 @@ class KeyboardShortcuts {
                                           * LICENSE file in the root directory of this source tree. An additional grant
                                           * of patent rights can be found in the PATENTS file in the same directory.
                                           *
-                                          * 
+                                          *  strict-local
                                           * @format
                                           */

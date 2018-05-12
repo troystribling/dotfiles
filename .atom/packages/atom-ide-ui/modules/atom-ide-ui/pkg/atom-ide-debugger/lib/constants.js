@@ -46,7 +46,7 @@ const AnalyticsEvents = exports.AnalyticsEvents = Object.freeze({
                                                                                     * LICENSE file in the root directory of this source tree. An additional grant
                                                                                     * of patent rights can be found in the PATENTS file in the same directory.
                                                                                     *
-                                                                                    * 
+                                                                                    *  strict-local
                                                                                     * @format
                                                                                     */const DebuggerMode = exports.DebuggerMode = Object.freeze({ STARTING: 'starting', RUNNING: 'running', PAUSED: 'paused', STOPPED: 'stopped', STOPPING: 'stopping' });
 // This is to work around flow's missing support of enums.

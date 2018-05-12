@@ -12,7 +12,7 @@
 
 function _load_terminalView() {return _terminalView = require('./terminal-view.js');}var _log4js;
 function _load_log4js() {return _log4js = require('log4js');}var _analytics;
-function _load_analytics() {return _analytics = require('nuclide-commons/analytics');}
+function _load_analytics() {return _analytics = require('../../../../nuclide-commons/analytics');}
 
 const logger = (0, (_log4js || _load_log4js()).getLogger)('terminal-focus-manager');
 

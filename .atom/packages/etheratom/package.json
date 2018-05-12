@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51795-g5cjgg.tvxqbsm7vi/package.tgz",
+        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6514-z4way1.gmrlmu0udi/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51795-g5cjgg.tvxqbsm7vi/package.tgz",
-        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51795-g5cjgg.tvxqbsm7vi/package.tgz",
+        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6514-z4way1.gmrlmu0udi/package.tgz",
+        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6514-z4way1.gmrlmu0udi/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118217-51795-7d8y0b.f3k7c766r"
+      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-118412-6514-c9qiy1.yn5u7n9udi"
     ]
   ],
-  "_from": "../d-118217-51795-g5cjgg.tvxqbsm7vi/package.tgz",
-  "_id": "etheratom@4.0.2",
+  "_from": "../d-118412-6514-z4way1.gmrlmu0udi/package.tgz",
+  "_id": "etheratom@4.2.1",
   "_inCache": true,
   "_location": "/etheratom",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51795-g5cjgg.tvxqbsm7vi/package.tgz",
+    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6514-z4way1.gmrlmu0udi/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51795-g5cjgg.tvxqbsm7vi/package.tgz",
-    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51795-g5cjgg.tvxqbsm7vi/package.tgz",
+    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6514-z4way1.gmrlmu0udi/package.tgz",
+    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6514-z4way1.gmrlmu0udi/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-118217-51795-g5cjgg.tvxqbsm7vi/package.tgz",
-  "_shasum": "83e9c2ddac57c300c8f3b40ec66e308517e99485",
+  "_resolved": "file:../d-118412-6514-z4way1.gmrlmu0udi/package.tgz",
+  "_shasum": "253337ea42abcec4481f772b9514882098ee107c",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118217-51795-g5cjgg.tvxqbsm7vi/package.tgz",
-  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118217-51795-7d8y0b.f3k7c766r",
+  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6514-z4way1.gmrlmu0udi/package.tgz",
+  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-118412-6514-c9qiy1.yn5u7n9udi",
   "activationCommands": {
     "atom-workspace": [
       "eth-interface:activate",
@@ -52,29 +52,35 @@
   },
   "configSchema": {
     "rpcAddress": {
-      "title": "Ethereum instance",
-      "description": "Point to local ethereum instance",
+      "title": "Ethereum rpc endpoint.",
+      "description": "Point to local ethereum rpc endpoint. Used as HttpProvider.",
       "type": "string",
-      "default": "http://localhost:8545/",
+      "default": "http://127.0.0.1:8545/",
       "order": 1
+    },
+    "websocketAddress": {
+      "title": "Ethereum websocket endpoint.",
+      "description": "Point to local ethereum websocket endpoint. Used as WebsocketProvider.",
+      "type": "string",
+      "default": "",
+      "order": 2
     },
     "compileOnSave": {
       "title": "Compile Solidity on Save",
       "description": "Compile solidity code each time a file is saved",
       "type": "boolean",
       "default": true,
-      "order": 2
+      "order": 3
     },
     "executionEnv": {
       "title": "Environment selection",
       "description": "Choose between VM and Web3 endpoint",
       "type": "string",
-      "default": "solcjs",
+      "default": "web3",
       "enum": [
-        "solcjs",
         "web3"
       ],
-      "order": 3
+      "order": 4
     }
   },
   "contributors": [
@@ -88,8 +94,6 @@
     "atom-package-deps": "^4.6.0",
     "axios": "^0.18.0",
     "create-react-class": "^15.6.2",
-    "etch": "^0.12.7",
-    "etch-octicon": "^2.0.0",
     "ethereumjs-abi": "^0.6.4",
     "ethereumjs-account": "^2.0.4",
     "ethereumjs-block": "^1.5.0",
@@ -105,6 +109,7 @@
     "react-motion": "^0.5.2",
     "react-redux": "^5.0.7",
     "react-tabs": "^2.2.1",
+    "react-tiny-virtual-list": "^2.1.4",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
@@ -132,10 +137,9 @@
   "name": "etheratom",
   "optionalDependencies": {},
   "package-deps": [
-    "linter-solidity",
-    "atom-solidity-linter"
+    "language-solidity"
   ],
-  "readme": "# Etheratom - compile and deploy solidity code from atom editor\n\n[![Greenkeeper badge](https://badges.greenkeeper.io/0mkara/etheratom.svg)](https://greenkeeper.io/)\n[![Build Status](https://travis-ci.org/0mkara/etheratom.svg?branch=master)](https://travis-ci.org/0mkara/etheratom)\n\nEtheratom is a package for hackable Atom editor. It uses web3js to interact with Ethereum node.\n\n![A screenshot of Etheratom package](https://user-images.githubusercontent.com/13261372/37424010-5f70657e-27e5-11e8-8639-0f2f0361f03c.png)\n\n# Requirements\n\nTo run and compile using Etheratom, it is now __not required to have a local ethereum node running and compilers installed__. New version adds support to solc and ethereumjs to compile and run solidity codes without running a local node.\n\n*Note: Currently only solidity compiler is supported.*\n\n[Ethereum client installation instruction](https://www.ethereum.org/cli)\n\nStart geth node using following command\n\n    geth --testnet --cache=1024 --fast --rpc --rpcapi=\"db,eth,net,web3,personal\" console\n\n# Installation\n\n## Install from source\n\nClone git repository\n\n    git clone https://gitlab.com/0mkara/etheratom.git\n    cd etheratom\n\nInstall as atom package\n\n    apm link .\n    apm install\n\n## Install using atom-package-manager\n\nYou need to install\n\n* [Etheratom](https://atom.io/packages/etheratom) (`apm install etheratom`)\n\n# Configuration\n\nAssuming you have a local geth client running and rpc api listening on http://127.0.0.1:8545/\n\n1. Go to package settings and set rpc address.\n\n    ![etheratom package config](https://cloud.githubusercontent.com/assets/13261372/15468216/9989115e-2100-11e6-8dd5-e02fb9459ab6.gif)\n\n2. Restart atom\n\n# Usage\n\nActivate Etheratom package `ctrl+alt+e`\n\nCompile solidity code `ctrl+alt+c`\n\nShow/hide etheratom panel `ctrl+alt+v`\n\nAfter compiling your code hit **Create** button to deploy the contract on blockchain.\n\nAlso you can select between **Javascript VM** and an actual running **Ethereum node**.\n\n![New panel features](https://cloud.githubusercontent.com/assets/13261372/20199656/227e5a52-a7d2-11e6-95f5-ec7fb16b4564.png)\n\nOnce contract is mined you will see buttons with function names to call those functions\n\nUse **Transaction Analyzer** to get details about any transaction.\n\nTransaction                |  Transaction Recipt\n:-------------------------:|:-------------------------:\n![Transaction hash](https://user-images.githubusercontent.com/13261372/37555558-260d3a92-2a0f-11e8-8c18-f1ebe9a326ef.png)  |  ![Transaction recipt](https://user-images.githubusercontent.com/13261372/37555557-25dbb30a-2a0f-11e8-88f2-8e6208e9ddd1.png)\n\n###\n\n# Expectations\n\nEtheratom aims to provide an interface where developers can write solidity smart contracts, test them on Javascript VM, deploy them to testnets & mainnet and do a transaction analysis.\n\n# Support development :green_heart: show some love\n## Ethereum :point_right: 0xd22fE4aEFed0A984B1165dc24095728EE7005a36\n",
+  "readme": "# Etheratom - compile and deploy solidity code from atom editor\n\n[![Greenkeeper badge](https://badges.greenkeeper.io/0mkara/etheratom.svg)](https://greenkeeper.io/)\n[![Build Status](https://travis-ci.org/0mkara/etheratom.svg?branch=master)](https://travis-ci.org/0mkara/etheratom)\n\nEtheratom is a package for hackable Atom editor. It uses web3js to interact with Ethereum node.\n\n![A screenshot of Etheratom package](https://user-images.githubusercontent.com/13261372/37828365-f43a0c8c-2ec0-11e8-8d09-d1c29d7168d3.png)\n\n# Requirements\n\n#### Use [Ganache](http://truffleframework.com/ganache/) or\n#### Install geth\n[Ethereum client installation instruction](https://www.ethereum.org/cli)\n**Or**\nYou can just download binary from [https://geth.ethereum.org/downloads/](https://geth.ethereum.org/downloads/) and run.\n\n#### Run go-ethereum client\nStart geth node on testnet using following command:\n\n    geth --testnet --fast --rpc --rpcapi=\"eth,web3,personal\" --ws --wsorigins=\"*\" --wsapi=\"eth,web3,personal\" console\n\n*Note:* Only solidity compiler is supported.\n\n# Installation\n\n`apm install etheratom`\n\nOr you can install [Etheratom](https://atom.io/packages/etheratom) from Atom packages.\n\n#### Install from source\n\nClone git repository\n\n    git clone https://gitlab.com/0mkara/etheratom.git\n    cd etheratom\n\nInstall as atom package\n\n    apm link .\n    apm install\n\n# Configuration\n\nAssuming you have a local geth client running and rpc api listening on [http://127.0.0.1:8545/](http://127.0.0.1:8545/) & websocket endpoint listening on [ws://127.0.0.1:8546](ws://127.0.0.1:8546)\n\n#### Go to package settings and set rpc address & websocket address.\n\n![etheratom package config](https://cloud.githubusercontent.com/assets/13261372/15468216/9989115e-2100-11e6-8dd5-e02fb9459ab6.gif)\n\n**Restart atom** to load your configuration changes.\n\n# Usage\n\nActivate Etheratom package `ctrl+alt+e`\n\nCompile solidity code `ctrl+alt+c`\n\nShow/hide etheratom panel `ctrl+alt+v`\n\nAfter compiling your code hit **Create** button to deploy the contract on blockchain.\n\nAlso you can select between **Javascript VM** and an actual running **Ethereum node**.\n\n![New panel features](https://cloud.githubusercontent.com/assets/13261372/20199656/227e5a52-a7d2-11e6-95f5-ec7fb16b4564.png)\n\nIt has a tiny **Ethereum client monitor** to check how your node is doing\n\n![nodeinfo](https://user-images.githubusercontent.com/13261372/39017080-f99b6d76-443f-11e8-94b5-ca77238a7011.png)\n\n\n# Support development :heart:\n\nEtheratom aims to provide a clean interactive interface to develop solidity smart contracts, test them on testnet, do security analysis and deploy them on mainnet. **Etheratom needs your help!**\n\n## Ethereum :point_right: 0xd22fE4aEFed0A984B1165dc24095728EE7005a36\n",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
@@ -144,5 +148,5 @@
   "scripts": {
     "postinstall": "node ./formatSolc.js"
   },
-  "version": "4.0.2"
+  "version": "4.2.1"
 }

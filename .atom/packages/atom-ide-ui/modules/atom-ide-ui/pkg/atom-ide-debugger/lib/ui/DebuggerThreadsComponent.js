@@ -15,17 +15,17 @@
 
 var _react = _interopRequireWildcard(require('react'));var _event;
 
-function _load_event() {return _event = require('nuclide-commons/event');}var _observable;
-function _load_observable() {return _observable = require('nuclide-commons/observable');}
+function _load_event() {return _event = require('../../../../../nuclide-commons/event');}var _observable;
+function _load_observable() {return _observable = require('../../../../../nuclide-commons/observable');}
 var _reactDom = _interopRequireDefault(require('react-dom'));var _Icon;
-function _load_Icon() {return _Icon = require('nuclide-commons-ui/Icon');}var _Table;
-function _load_Table() {return _Table = require('nuclide-commons-ui/Table');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _LoadingSpinner;
-function _load_LoadingSpinner() {return _LoadingSpinner = require('nuclide-commons-ui/LoadingSpinner');}var _scrollIntoView;
+function _load_Icon() {return _Icon = require('../../../../../nuclide-commons-ui/Icon');}var _Table;
+function _load_Table() {return _Table = require('../../../../../nuclide-commons-ui/Table');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}var _LoadingSpinner;
+function _load_LoadingSpinner() {return _LoadingSpinner = require('../../../../../nuclide-commons-ui/LoadingSpinner');}var _scrollIntoView;
 
 
 
-function _load_scrollIntoView() {return _scrollIntoView = require('nuclide-commons-ui/scrollIntoView');}
+function _load_scrollIntoView() {return _scrollIntoView = require('../../../../../nuclide-commons-ui/scrollIntoView');}
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
                                                                                                                                                                                                                                                                                                                                                                                                                            * Copyright (c) 2017-present, Facebook, Inc.
                                                                                                                                                                                                                                                                                                                                                                                                                            * All rights reserved.

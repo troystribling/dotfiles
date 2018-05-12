@@ -327,8 +327,9 @@
 
 
 
-
-observeTextEditorEvents = observeTextEditorEvents;var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _debounce;function _load_debounce() {return _debounce = _interopRequireDefault(require('nuclide-commons/debounce'));}var _event;function _load_event() {return _event = require('nuclide-commons/event');}var _textEditor;function _load_textEditor() {return _textEditor = require('./text-editor');}var _UniversalDisposable;function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // A reload changes the text in the buffer, so it should trigger a refresh.
+observeTextEditorEvents = observeTextEditorEvents;var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _debounce;function _load_debounce() {return _debounce = _interopRequireDefault(require('../nuclide-commons/debounce'));}var _event;function _load_event() {return _event = require('../nuclide-commons/event');}var _UniversalDisposable;function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // A reload changes the text in the buffer, so it should trigger a refresh.
+const FILE_CHANGE_EVENTS = ['did-change', 'did-reload', 'did-open']; // A reload basically indicates that an external program saved the file, so
+// it should trigger a refresh.
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -337,15 +338,13 @@ observeTextEditorEvents = observeTextEditorEvents;var _rxjsBundlesRxMinJs = requ
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *  strict-local
  * @format
- */const FILE_CHANGE_EVENTS = ['did-change', 'did-reload', 'did-open']; // A reload basically indicates that an external program saved the file, so
-// it should trigger a refresh.
-const FILE_SAVE_EVENTS = ['did-save', 'did-reload', 'did-open']; /**
-                                                                  * Stores callbacks keyed on grammar and event, to allow for easy retrieval when
-                                                                  * we need to dispatch to all callbacks registered for a given (grammar, event)
-                                                                  * pair.
-                                                                  */class TextCallbackContainer {// grammar -> event -> callback
+ */const FILE_SAVE_EVENTS = ['did-save', 'did-reload', 'did-open']; /**
+                                                                     * Stores callbacks keyed on grammar and event, to allow for easy retrieval when
+                                                                     * we need to dispatch to all callbacks registered for a given (grammar, event)
+                                                                     * pair.
+                                                                     */class TextCallbackContainer {// grammar -> event -> callback
   // invariant: no empty maps or sets (they should be removed instead)
   constructor() {this._callbacks = new Map();this._allGrammarCallbacks = new Map();} // event -> callback
   // invariant: no keys mapping to empty sets (they should be removed instead)
@@ -371,7 +370,7 @@ const FILE_SAVE_EVENTS = ['did-save', 'did-reload', 'did-open']; /**
     // (particularly on startup).
     const debouncedCallback = (0, (_debounce || _load_debounce()).default)(callback, 50, true);this._callbackContainer.addCallback(grammarScopes, events, debouncedCallback);const disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {this._callbackContainer.removeCallback(grammarScopes, events, debouncedCallback);if (this._callbackContainer.isEmpty()) {this._deregisterEditorListeners();}});return disposables;}onFileChange(grammarScopes, callback) {return this._onEvents(grammarScopes, FILE_CHANGE_EVENTS, callback);}onAnyFileChange(callback) {return this._onEvents('all', FILE_CHANGE_EVENTS, callback);}onFileSave(grammarScopes, callback) {return this._onEvents(grammarScopes, FILE_SAVE_EVENTS, callback);}onAnyFileSave(callback) {return this._onEvents('all', FILE_SAVE_EVENTS, callback);}_registerEditorListeners() {if (!this._editorListenerDisposable) {this._editorListenerDisposable = new (_UniversalDisposable || _load_UniversalDisposable()).default();} // Whenever the active pane item changes, we check to see if there are any
     // pending events for the newly-focused TextEditor.
-    this._getEditorListenerDisposable().add(atom.workspace.onDidChangeActivePaneItem(() => {const currentEditor = atom.workspace.getActiveTextEditor();if (currentEditor) {const pendingEvents = this._pendingEvents.get(currentEditor.getBuffer());if (pendingEvents) {for (const event of pendingEvents) {this._dispatchEvents(currentEditor, event);}this._pendingEvents.delete(currentEditor.getBuffer());}}}));this._getEditorListenerDisposable().add((0, (_textEditor || _load_textEditor()).observeTextEditors)(editor => {const buffer = editor.getBuffer();const makeDispatch = event => {return () => {this._dispatchEvents(editor, event);};};this._getEditorListenerDisposable().add(buffer.onDidStopChanging(makeDispatch('did-change')));this._getEditorListenerDisposable().add(buffer.onDidSave(makeDispatch('did-save')));this._getEditorListenerDisposable().add(buffer.onDidReload(makeDispatch('did-reload'))); // During reload, many text editors are opened simultaneously.
+    this._getEditorListenerDisposable().add(atom.workspace.onDidChangeActivePaneItem(() => {const currentEditor = atom.workspace.getActiveTextEditor();if (currentEditor) {const pendingEvents = this._pendingEvents.get(currentEditor.getBuffer());if (pendingEvents) {for (const event of pendingEvents) {this._dispatchEvents(currentEditor, event);}this._pendingEvents.delete(currentEditor.getBuffer());}}}));this._getEditorListenerDisposable().add(atom.workspace.observeTextEditors(editor => {const buffer = editor.getBuffer();const makeDispatch = event => {return () => {this._dispatchEvents(editor, event);};};this._getEditorListenerDisposable().add(buffer.onDidStopChanging(makeDispatch('did-change')));this._getEditorListenerDisposable().add(buffer.onDidSave(makeDispatch('did-save')));this._getEditorListenerDisposable().add(buffer.onDidReload(makeDispatch('did-reload'))); // During reload, many text editors are opened simultaneously.
       // Due to the debounce on the event callback, this means that many editors never receive
       // a 'did-open' event. To work around this, defer editor open events so that simultaneous
       // open events are properly registered as pending.

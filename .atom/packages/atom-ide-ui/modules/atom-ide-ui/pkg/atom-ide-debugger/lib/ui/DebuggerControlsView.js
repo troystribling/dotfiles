@@ -12,14 +12,14 @@
 
 
 
-function _load_event() {return _event = require('nuclide-commons/event');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_event() {return _event = require('../../../../../nuclide-commons/event');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}
 var _react = _interopRequireWildcard(require('react'));var _TruncatedButton;
-function _load_TruncatedButton() {return _TruncatedButton = _interopRequireDefault(require('nuclide-commons-ui/TruncatedButton'));}var _DebuggerSteppingComponent;
+function _load_TruncatedButton() {return _TruncatedButton = _interopRequireDefault(require('../../../../../nuclide-commons-ui/TruncatedButton'));}var _DebuggerSteppingComponent;
 function _load_DebuggerSteppingComponent() {return _DebuggerSteppingComponent = _interopRequireDefault(require('./DebuggerSteppingComponent'));}var _constants;
 function _load_constants() {return _constants = require('../constants');}var _DebuggerControllerView;
 function _load_DebuggerControllerView() {return _DebuggerControllerView = _interopRequireDefault(require('./DebuggerControllerView'));}var _goToLocation;
-function _load_goToLocation() {return _goToLocation = require('nuclide-commons-atom/go-to-location');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_goToLocation() {return _goToLocation = require('../../../../../nuclide-commons-atom/go-to-location');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 const DEVICE_PANEL_URL = 'atom://nuclide/devices'; /**
                                                     * Copyright (c) 2017-present, Facebook, Inc.
@@ -29,7 +29,7 @@ const DEVICE_PANEL_URL = 'atom://nuclide/devices'; /**
                                                     * LICENSE file in the root directory of this source tree. An additional grant
                                                     * of patent rights can be found in the PATENTS file in the same directory.
                                                     *
-                                                    * 
+                                                    *  strict-local
                                                     * @format
                                                     */
 class DebuggerControlsView extends _react.PureComponent

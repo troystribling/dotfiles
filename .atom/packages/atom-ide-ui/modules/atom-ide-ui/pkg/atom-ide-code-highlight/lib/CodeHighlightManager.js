@@ -14,21 +14,21 @@
 
 function _load_log4js() {return _log4js = require('log4js');}
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _event;
-function _load_event() {return _event = require('nuclide-commons/event');}var _observable;
-function _load_observable() {return _observable = require('nuclide-commons/observable');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _ProviderRegistry;
-function _load_ProviderRegistry() {return _ProviderRegistry = _interopRequireDefault(require('nuclide-commons-atom/ProviderRegistry'));}var _debounced;
-function _load_debounced() {return _debounced = require('nuclide-commons-atom/debounced');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
-                                                                                                                                                                                          * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                                                                          * All rights reserved.
-                                                                                                                                                                                          *
-                                                                                                                                                                                          * This source code is licensed under the BSD-style license found in the
-                                                                                                                                                                                          * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                                                                          * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                                                                          *
-                                                                                                                                                                                          * 
-                                                                                                                                                                                          * @format
-                                                                                                                                                                                          */const CURSOR_DELAY_MS = 250; // Apply a much higher debounce to text changes to avoid disrupting the typing experience.
+function _load_event() {return _event = require('../../../../nuclide-commons/event');}var _observable;
+function _load_observable() {return _observable = require('../../../../nuclide-commons/observable');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _ProviderRegistry;
+function _load_ProviderRegistry() {return _ProviderRegistry = _interopRequireDefault(require('../../../../nuclide-commons-atom/ProviderRegistry'));}var _debounced;
+function _load_debounced() {return _debounced = require('../../../../nuclide-commons-atom/debounced');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
+                                                                                                                                                                                                      * Copyright (c) 2017-present, Facebook, Inc.
+                                                                                                                                                                                                      * All rights reserved.
+                                                                                                                                                                                                      *
+                                                                                                                                                                                                      * This source code is licensed under the BSD-style license found in the
+                                                                                                                                                                                                      * LICENSE file in the root directory of this source tree. An additional grant
+                                                                                                                                                                                                      * of patent rights can be found in the PATENTS file in the same directory.
+                                                                                                                                                                                                      *
+                                                                                                                                                                                                      * 
+                                                                                                                                                                                                      * @format
+                                                                                                                                                                                                      */const CURSOR_DELAY_MS = 250; // Apply a much higher debounce to text changes to avoid disrupting the typing experience.
 const CHANGE_TOGGLE_MS = 2500;class CodeHighlightManager {constructor() {
     this._providers = new (_ProviderRegistry || _load_ProviderRegistry()).default();
     this._markers = [];

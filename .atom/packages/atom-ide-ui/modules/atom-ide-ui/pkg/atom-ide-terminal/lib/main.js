@@ -10,16 +10,16 @@
 
 
 
-function _load_destroyItemWhere() {return _destroyItemWhere = require('nuclide-commons-atom/destroyItemWhere');}
+function _load_destroyItemWhere() {return _destroyItemWhere = require('../../../../nuclide-commons-atom/destroyItemWhere');}
 
 var _os = _interopRequireDefault(require('os'));var _nullthrows;
 function _load_nullthrows() {return _nullthrows = _interopRequireDefault(require('nullthrows'));}var _createPackage;
 
-function _load_createPackage() {return _createPackage = _interopRequireDefault(require('nuclide-commons-atom/createPackage'));}var _getElementFilePath;
-function _load_getElementFilePath() {return _getElementFilePath = _interopRequireDefault(require('nuclide-commons-atom/getElementFilePath'));}var _goToLocation;
-function _load_goToLocation() {return _goToLocation = require('nuclide-commons-atom/go-to-location');}var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _AtomServiceContainer;
+function _load_createPackage() {return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));}var _getElementFilePath;
+function _load_getElementFilePath() {return _getElementFilePath = _interopRequireDefault(require('../../../../nuclide-commons-atom/getElementFilePath'));}var _goToLocation;
+function _load_goToLocation() {return _goToLocation = require('../../../../nuclide-commons-atom/go-to-location');}var _nuclideUri;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../../../../nuclide-commons/nuclideUri'));}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _AtomServiceContainer;
 
 function _load_AtomServiceContainer() {return _AtomServiceContainer = require('./AtomServiceContainer');}var _terminalView;
 function _load_terminalView() {return _terminalView = require('./terminal-view');}var _nuclideTerminalUri;
@@ -174,7 +174,7 @@ function _load_FocusManager() {return _FocusManager = require('./FocusManager');
   }}
 
 
-// eslint-disable-next-line rulesdir/no-commonjs
+// eslint-disable-next-line nuclide-internal/no-commonjs
 // for homedir
 module.exports = { // exported for package.json entry
   deserializeTerminalView: (_terminalView || _load_terminalView()).deserializeTerminalView };

@@ -25,41 +25,40 @@
 
 
 
-function _load_analytics() {return _analytics = _interopRequireDefault(require('nuclide-commons/analytics'));}var _idx;
+function _load_analytics() {return _analytics = _interopRequireDefault(require('../../../../nuclide-commons/analytics'));}var _idx;
 
 function _load_idx() {return _idx = _interopRequireDefault(require('idx'));}var _collection;
-function _load_collection() {return _collection = require('nuclide-commons/collection');}var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _observable;
-function _load_observable() {return _observable = require('nuclide-commons/observable');}var _KeyboardShortcuts;
+function _load_collection() {return _collection = require('../../../../nuclide-commons/collection');}var _nuclideUri;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../../../../nuclide-commons/nuclideUri'));}var _observable;
+function _load_observable() {return _observable = require('../../../../nuclide-commons/observable');}var _KeyboardShortcuts;
 function _load_KeyboardShortcuts() {return _KeyboardShortcuts = _interopRequireDefault(require('./KeyboardShortcuts'));}var _Model;
-function _load_Model() {return _Model = _interopRequireDefault(require('nuclide-commons/Model'));}var _createPackage;
-function _load_createPackage() {return _createPackage = _interopRequireDefault(require('nuclide-commons-atom/createPackage'));}var _textEditor;
-function _load_textEditor() {return _textEditor = require('nuclide-commons-atom/text-editor');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _event;
-function _load_event() {return _event = require('nuclide-commons/event');}var _DiagnosticsViewModel;
+function _load_Model() {return _Model = _interopRequireDefault(require('../../../../nuclide-commons/Model'));}var _createPackage;
+function _load_createPackage() {return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _event;
+function _load_event() {return _event = require('../../../../nuclide-commons/event');}var _DiagnosticsViewModel;
 function _load_DiagnosticsViewModel() {return _DiagnosticsViewModel = require('./DiagnosticsViewModel');}var _StatusBarTile;
 function _load_StatusBarTile() {return _StatusBarTile = _interopRequireDefault(require('./ui/StatusBarTile'));}var _gutter;
 function _load_gutter() {return _gutter = require('./gutter');}var _getDiagnosticDatatip;
 function _load_getDiagnosticDatatip() {return _getDiagnosticDatatip = _interopRequireDefault(require('./getDiagnosticDatatip'));}var _goToLocation;
-function _load_goToLocation() {return _goToLocation = require('nuclide-commons-atom/go-to-location');}var _featureConfig;
-function _load_featureConfig() {return _featureConfig = _interopRequireDefault(require('nuclide-commons-atom/feature-config'));}var _destroyItemWhere;
-function _load_destroyItemWhere() {return _destroyItemWhere = require('nuclide-commons-atom/destroyItemWhere');}
-
+function _load_goToLocation() {return _goToLocation = require('../../../../nuclide-commons-atom/go-to-location');}var _featureConfig;
+function _load_featureConfig() {return _featureConfig = _interopRequireDefault(require('../../../../nuclide-commons-atom/feature-config'));}var _destroyItemWhere;
+function _load_destroyItemWhere() {return _destroyItemWhere = require('../../../../nuclide-commons-atom/destroyItemWhere');}var _textEditor;
+function _load_textEditor() {return _textEditor = require('../../../../nuclide-commons-atom/text-editor');}
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _showActionsMenu;
 function _load_showActionsMenu() {return _showActionsMenu = _interopRequireDefault(require('./showActionsMenu'));}var _showAtomLinterWarning;
-function _load_showAtomLinterWarning() {return _showAtomLinterWarning = _interopRequireDefault(require('./showAtomLinterWarning'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_showAtomLinterWarning() {return _showAtomLinterWarning = _interopRequireDefault(require('./showAtomLinterWarning'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
+                                                                                                                                                                                                                                   * Copyright (c) 2017-present, Facebook, Inc.
+                                                                                                                                                                                                                                   * All rights reserved.
+                                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                                   * This source code is licensed under the BSD-style license found in the
+                                                                                                                                                                                                                                   * LICENSE file in the root directory of this source tree. An additional grant
+                                                                                                                                                                                                                                   * of patent rights can be found in the PATENTS file in the same directory.
+                                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                                   * 
+                                                                                                                                                                                                                                   * @format
+                                                                                                                                                                                                                                   */const MAX_OPEN_ALL_FILES = 20;const SHOW_TRACES_SETTING = 'atom-ide-diagnostics-ui.showDiagnosticTraces';
 
-const MAX_OPEN_ALL_FILES = 20; /**
-                                * Copyright (c) 2017-present, Facebook, Inc.
-                                * All rights reserved.
-                                *
-                                * This source code is licensed under the BSD-style license found in the
-                                * LICENSE file in the root directory of this source tree. An additional grant
-                                * of patent rights can be found in the PATENTS file in the same directory.
-                                *
-                                * 
-                                * @format
-                                */const SHOW_TRACES_SETTING = 'atom-ide-diagnostics-ui.showDiagnosticTraces';
+
 
 class Activation {
 
@@ -123,7 +122,7 @@ class Activation {
     this._subscriptions.add(atomCommandsDisposable);
     this._subscriptions.add(
     // Track diagnostics for all active editors.
-    (0, (_textEditor || _load_textEditor()).observeTextEditors)(editor => {
+    atom.workspace.observeTextEditors(editor => {
       this._fileDiagnostics.set(editor, []);
       // TODO: this is actually inefficient - this filters all file events
       // by their path, so this is actually O(N^2) in the number of editors.
@@ -358,7 +357,7 @@ diagnosticUpdater)
 {
   const subscriptions = new (_UniversalDisposable || _load_UniversalDisposable()).default();
   subscriptions.add(
-  (0, (_textEditor || _load_textEditor()).observeTextEditors)(editor => {
+  atom.workspace.observeTextEditors(editor => {
     const subscription = getEditorDiagnosticUpdates(editor, diagnosticUpdater).
     finally(() => {
       subscriptions.remove(subscription);

@@ -14,13 +14,13 @@
 
 
 var _react = _interopRequireWildcard(require('react'));var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _DebuggerPaneViewModel;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}var _DebuggerPaneViewModel;
 function _load_DebuggerPaneViewModel() {return _DebuggerPaneViewModel = _interopRequireDefault(require('./DebuggerPaneViewModel'));}var _DebuggerPaneContainerViewModel;
 function _load_DebuggerPaneContainerViewModel() {return _DebuggerPaneContainerViewModel = _interopRequireDefault(require('./DebuggerPaneContainerViewModel'));}var _constants;
 function _load_constants() {return _constants = require('../constants');}var _createPaneContainer;
 
-function _load_createPaneContainer() {return _createPaneContainer = _interopRequireDefault(require('nuclide-commons-atom/create-pane-container'));}var _destroyItemWhere;
-function _load_destroyItemWhere() {return _destroyItemWhere = require('nuclide-commons-atom/destroyItemWhere');}var _nullthrows;
+function _load_createPaneContainer() {return _createPaneContainer = _interopRequireDefault(require('../../../../../nuclide-commons-atom/create-pane-container'));}var _destroyItemWhere;
+function _load_destroyItemWhere() {return _destroyItemWhere = require('../../../../../nuclide-commons-atom/destroyItemWhere');}var _nullthrows;
 function _load_nullthrows() {return _nullthrows = _interopRequireDefault(require('nullthrows'));}var _DebuggerControlsView;
 
 

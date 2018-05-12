@@ -37,7 +37,7 @@ contextRows = 1)
    * LICENSE file in the root directory of this source tree. An additional grant
    * of patent rights can be found in the PATENTS file in the same directory.
    *
-   * 
+   *  strict-local
    * @format
    */function getHunks(buffer, edits, contextRows) {return edits.sort((e1, e2) => e1.oldRange.compare(e2.oldRange)).reduce((mergedEdits, nextEdit) => {const edit = mergedEdits[mergedEdits.length - 1];
     if (

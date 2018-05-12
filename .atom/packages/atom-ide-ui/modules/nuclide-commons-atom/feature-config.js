@@ -96,18 +96,27 @@ function getSchema(keyPath) {
    */
 function observe(
 keyPath,
+optionsOrCallback,
+
+
 callback)
 {
-  return atom.config.observe(formatKeyPath(keyPath), callback);
+  return atom.config.observe(
+  formatKeyPath(keyPath),
+  ...Array.prototype.slice.call(arguments, 1));
+
 }
 
 /*
    * Behaves similarly to the `observe` function, but returns a stream of values, rather
    * then receiving a callback.
    */
-function observeAsStream(keyPath) {
+function observeAsStream(
+keyPath,
+options = {})
+{
   return _rxjsBundlesRxMinJs.Observable.create(observer => {
-    const disposable = observe(keyPath, observer.next.bind(observer));
+    const disposable = observe(keyPath, options, observer.next.bind(observer));
     return disposable.dispose.bind(disposable);
   });
 }
@@ -119,6 +128,8 @@ function observeAsStream(keyPath) {
 function onDidChange(
 keyPath,
 optionsOrCallback,
+
+
 callback)
 {
   return atom.config.onDidChange(

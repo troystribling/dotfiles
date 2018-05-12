@@ -20,16 +20,13 @@
 
 var _atom = require('atom');
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _event;
-function _load_event() {return _event = require('nuclide-commons/event');}var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _observable;
-function _load_observable() {return _observable = require('nuclide-commons/observable');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _ProviderRegistry;
-function _load_ProviderRegistry() {return _ProviderRegistry = _interopRequireDefault(require('nuclide-commons-atom/ProviderRegistry'));}var _textEditor;
-function _load_textEditor() {return _textEditor = require('nuclide-commons-atom/text-editor');}var _textEdit;
-
-
-
-function _load_textEdit() {return _textEdit = require('nuclide-commons-atom/text-edit');}var _config;
+function _load_event() {return _event = require('../../../../nuclide-commons/event');}var _nuclideUri;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../../../../nuclide-commons/nuclideUri'));}var _observable;
+function _load_observable() {return _observable = require('../../../../nuclide-commons/observable');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _ProviderRegistry;
+function _load_ProviderRegistry() {return _ProviderRegistry = _interopRequireDefault(require('../../../../nuclide-commons-atom/ProviderRegistry'));}var _textEditor;
+function _load_textEditor() {return _textEditor = require('../../../../nuclide-commons-atom/text-editor');}var _textEdit;
+function _load_textEdit() {return _textEdit = require('../../../../nuclide-commons-atom/text-edit');}var _config;
 function _load_config() {return _config = require('./config');}var _log4js;
 function _load_log4js() {return _log4js = require('log4js');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
@@ -86,8 +83,8 @@ class CodeFormatManager {
     });
 
     // Events from editor actions (saving, typing).
-    const editorEvents = (0, (_event || _load_event()).observableFromSubscribeFunction)((_textEditor || _load_textEditor()).observeTextEditors).
-
+    const editorEvents = (0, (_event || _load_event()).observableFromSubscribeFunction)(cb =>
+    atom.workspace.observeTextEditors(cb)).
     mergeMap(editor => this._getEditorEventStream(editor));
 
     return (

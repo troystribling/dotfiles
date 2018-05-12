@@ -20,6 +20,6 @@ const DEBUGGER_LOGGER_CATEGORY = 'atom-debugger'; /**
                                                    * LICENSE file in the root directory of this source tree. An additional grant
                                                    * of patent rights can be found in the PATENTS file in the same directory.
                                                    *
-                                                   * 
+                                                   *  strict
                                                    * @format
                                                    */exports.default = (0, (_log4js || _load_log4js()).getLogger)(DEBUGGER_LOGGER_CATEGORY);

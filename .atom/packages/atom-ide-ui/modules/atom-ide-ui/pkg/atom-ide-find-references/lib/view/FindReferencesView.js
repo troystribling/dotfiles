@@ -16,7 +16,7 @@
 var _react = _interopRequireWildcard(require('react'));var _FileReferencesView;
 function _load_FileReferencesView() {return _FileReferencesView = _interopRequireDefault(require('./FileReferencesView'));}var _FindReferencesModel;
 function _load_FindReferencesModel() {return _FindReferencesModel = _interopRequireDefault(require('../FindReferencesModel'));}var _string;
-function _load_string() {return _string = require('nuclide-commons/string');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_string() {return _string = require('../../../../../nuclide-commons/string');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // Number of files to show on every page.
 /**

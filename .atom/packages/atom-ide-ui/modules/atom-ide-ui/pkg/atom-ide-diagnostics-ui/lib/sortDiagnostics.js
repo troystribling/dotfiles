@@ -37,7 +37,7 @@ sortDiagnostics; /*
                       * LICENSE file in the root directory of this source tree. An additional grant
                       * of patent rights can be found in the PATENTS file in the same directory.
                       *
-                      * 
+                      *  strict-local
                       * @format
                       */function sortDiagnostics(diagnostics, sortedColumnName, sortDescending) {const compare = SORT_FUNCTIONS[sortedColumnName];if (!(compare != null)) {throw new Error('Invariant violation: "compare != null"');} // Don't sort in place.
   const sorted = diagnostics.slice().sort(compare); // We can't just reverse the sign of the comparison function because that would maintain the

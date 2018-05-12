@@ -27,7 +27,17 @@ import { connect } from 'react-redux'
 import Web3Helpers from './methods'
 import { combineSource } from '../helpers/compiler-imports'
 import View from './view'
-import { SET_COMPILED, ADD_INTERFACE, SET_COMPILING, SET_ERRORS } from '../actions/types'
+import {
+	SET_COMPILED,
+	ADD_INTERFACE,
+	SET_COMPILING,
+	SET_ERRORS,
+	ADD_PENDING_TRANSACTION,
+	SET_EVENTS,
+	SET_GAS_LIMIT,
+	SET_SYNC_STATUS,
+	SET_SYNCING
+} from '../actions/types'
 
 export default class Web3Env {
 	constructor(store) {
@@ -115,14 +125,70 @@ export default class Web3Env {
 		if(!this.web3Subscriptions) {
 			return
 		}
-		rpcAddress = atom.config.get('etheratom.rpcAddress');
+		const rpcAddress = atom.config.get('etheratom.rpcAddress');
+		const websocketAddress = atom.config.get('etheratom.websocketAddress')
 		if(typeof this.web3 !== 'undefined') {
 			this.web3 = new Web3(this.web3.currentProvider);
 		} else {
 			this.web3 = new Web3(Web3.givenProvider || new Web3.providers.HttpProvider(rpcAddress));
+			if(websocketAddress) {
+				this.web3.setProvider(new Web3.providers.WebsocketProvider(websocketAddress));
+			}
 			this.helpers = new Web3Helpers(this.web3);
 		}
 		this.view = new View(this.store, this.web3);
+		if(Object.is(this.web3.currentProvider.constructor, Web3.providers.WebsocketProvider)) {
+			console.log("%c Provider is websocket. Creating subscriptions... ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
+			// newBlockHeaders subscriber
+			this.web3.eth.subscribe('newBlockHeaders')
+				.on("data", (blocks) => {
+					console.log("%c newBlockHeaders:data ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
+					console.log(blocks);
+				})
+				.on('error', (e) => {
+					console.log("%c newBlockHeaders:error ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
+					console.log(e);
+				})
+			// pendingTransactions subscriber
+			this.web3.eth.subscribe('pendingTransactions')
+				.on("data", (transaction) => {
+					console.log("%c pendingTransactions:data ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
+					console.log(transaction);
+					this.store.dispatch({ type: ADD_PENDING_TRANSACTION, payload: transaction });
+				})
+				.on('error', (e) => {
+					console.log("%c pendingTransactions:error ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
+					console.log(e);
+				})
+			// syncing subscription
+			this.web3.eth.subscribe('syncing')
+				.on("data", (sync) => {
+					console.log("%c syncing:data ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
+					console.log(sync);
+					if(typeof(sync) === 'boolean') {
+						this.store.dispatch({ type: SET_SYNCING, payload: sync });
+					}
+					if(typeof(sync) === 'object') {
+						this.store.dispatch({ type: SET_SYNCING, payload: sync.syncing });
+						const status = {
+							currentBlock: sync.status.CurrentBlock,
+							highestBlock: sync.status.HighestBlock,
+							knownStates: sync.status.KnownStates,
+							pulledStates: sync.status.PulledStates,
+							startingBlock: sync.status.StartingBlock
+						}
+						this.store.dispatch({ type: SET_SYNC_STATUS, payload: status });
+					}
+				})
+				.on('changed', (isSyncing) => {
+					console.log("%c syncing:changed ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
+					console.log(isSyncing);
+				})
+				.on('error', (e) => {
+					console.log("%c syncing:error ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
+					console.log(e);
+				})
+		}
 		this.checkConnection((error, connection) => {
 			if(error) {
 				this.helpers.showPanelError(error);
@@ -204,10 +270,12 @@ export default class Web3Env {
 			var sources = {};
 			sources[filename] = { content: editor.getText() }
 			sources = await combineSource(dir, sources);
+			console.log(sources);
 			try {
-				// Reset errors
+				// Reset redux store
 				this.store.dispatch({ type: SET_COMPILED, payload: null });
 				this.store.dispatch({ type: SET_ERRORS, payload: [] });
+				this.store.dispatch({ type: SET_EVENTS, payload: [] });
 				const compiled = await this.helpers.compileWeb3(sources);
 				this.store.dispatch({ type: SET_COMPILED, payload: compiled });
 				if(compiled.contracts) {
@@ -221,6 +289,8 @@ export default class Web3Env {
 				if(compiled.errors) {
 					this.store.dispatch({ type: SET_ERRORS, payload: compiled.errors });
 				}
+				const gasLimit = await this.helpers.getGasLimit();
+				this.store.dispatch({ type: SET_GAS_LIMIT, payload: gasLimit });
 				this.store.dispatch({ type: SET_COMPILING, payload: false });
 			} catch (e) {
 				console.log(e);

@@ -19,19 +19,19 @@
 
 
 
-getSignatureDatatip;var _atom = require('atom');var _string;function _load_string() {return _string = require('nuclide-commons/string');} /**
-                                                                                                                                           * WIP: This is just what VSCode displays. We can likely make this more Atom-y.
-                                                                                                                                           */ /**
-                                                                                                                                               * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                               * All rights reserved.
-                                                                                                                                               *
-                                                                                                                                               * This source code is licensed under the BSD-style license found in the
-                                                                                                                                               * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                               * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                               *
-                                                                                                                                               * 
-                                                                                                                                               * @format
-                                                                                                                                               */function getSignatureDatatip(signatureHelp, point) {// Note: empty signatures have already been filtered out above.
+getSignatureDatatip;var _atom = require('atom');var _string;function _load_string() {return _string = require('../../../../nuclide-commons/string');} /**
+                                                                                                                                                       * WIP: This is just what VSCode displays. We can likely make this more Atom-y.
+                                                                                                                                                       */ /**
+                                                                                                                                                           * Copyright (c) 2017-present, Facebook, Inc.
+                                                                                                                                                           * All rights reserved.
+                                                                                                                                                           *
+                                                                                                                                                           * This source code is licensed under the BSD-style license found in the
+                                                                                                                                                           * LICENSE file in the root directory of this source tree. An additional grant
+                                                                                                                                                           * of patent rights can be found in the PATENTS file in the same directory.
+                                                                                                                                                           *
+                                                                                                                                                           *  strict-local
+                                                                                                                                                           * @format
+                                                                                                                                                           */function getSignatureDatatip(signatureHelp, point) {// Note: empty signatures have already been filtered out above.
   const activeSignature = signatureHelp.signatures[signatureHelp.activeSignature || 0];const markedStrings = [{ type: 'markdown', value: (0, (_string || _load_string()).escapeMarkdown)(activeSignature.label) }];if (activeSignature.parameters != null) {
     const activeParameterIndex = signatureHelp.activeParameter || 0;
     const activeParameter = activeSignature.parameters[activeParameterIndex];

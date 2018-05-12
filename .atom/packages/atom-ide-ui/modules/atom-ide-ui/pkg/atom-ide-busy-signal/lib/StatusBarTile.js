@@ -15,9 +15,9 @@
 
 var _react = _interopRequireWildcard(require('react'));
 var _reactDom = _interopRequireDefault(require('react-dom'));var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _collection;
-function _load_collection() {return _collection = require('nuclide-commons/collection');}var _Icon;
-function _load_Icon() {return _Icon = require('nuclide-commons-ui/Icon');}var _BusyMessageInstance;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _collection;
+function _load_collection() {return _collection = require('../../../../nuclide-commons/collection');}var _Icon;
+function _load_Icon() {return _Icon = require('../../../../nuclide-commons-ui/Icon');}var _BusyMessageInstance;
 function _load_BusyMessageInstance() {return _BusyMessageInstance = require('./BusyMessageInstance');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}
 
 // We want to be the furthest left on the right side of the status bar so as not to leave a
@@ -30,7 +30,7 @@ function _load_BusyMessageInstance() {return _BusyMessageInstance = require('./B
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *  strict-local
  * @format
  */const STATUS_BAR_PRIORITY = 1000;function StatusBarTileComponent(props) {let element;if (props.waitingForUser) {
     element = _react.createElement((_Icon || _load_Icon()).Icon, { className: 'busy-signal-status-bar', icon: 'unverified' });

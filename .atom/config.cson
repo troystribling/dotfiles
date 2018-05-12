@@ -38,9 +38,10 @@
     pylsPlugins:
       pycodestyle:
         maxLineLength: 250
-      pyflakes: {}
+      pyflakes:
+        enabled: false
   "linter-ui-default":
-    panelHeight: 412
+    panelHeight: 399
   "markdown-writer":
     fileExtension: ".md"
   "split-diff":

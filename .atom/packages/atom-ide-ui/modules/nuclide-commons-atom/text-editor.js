@@ -191,28 +191,8 @@ enforceSoftWrap = enforceSoftWrap;exports.
 
 
 
-observeTextEditors = observeTextEditors;exports.
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 isValidTextEditor = isValidTextEditor;exports.
-
-
-
-
-
-
 
 
 
@@ -241,10 +221,10 @@ centerScrollToBufferLine = centerScrollToBufferLine;exports.
 
 
 
-getNonWordCharacters = getNonWordCharacters;var _UniversalDisposable;function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _semver;function _load_semver() {return _semver = _interopRequireDefault(require('semver'));}var _event;function _load_event() {return _event = require('nuclide-commons/event');}var _nuclideUri;function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   * Returns a text editor that has the given path open, or null if none exists. If there are multiple
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   * text editors for this path, one is chosen arbitrarily.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   */function existingEditorForUri(path) {// This isn't ideal but realistically iterating through even a few hundred editors shouldn't be a
+getNonWordCharacters = getNonWordCharacters;var _atom = require('atom');var _UniversalDisposable;function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));}var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _semver;function _load_semver() {return _semver = _interopRequireDefault(require('semver'));}var _event;function _load_event() {return _event = require('../nuclide-commons/event');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    * Returns a text editor that has the given path open, or null if none exists. If there are multiple
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    * text editors for this path, one is chosen arbitrarily.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */function existingEditorForUri(path) {// This isn't ideal but realistically iterating through even a few hundred editors shouldn't be a
   // real problem. And if you have more than a few hundred you probably have bigger problems.
   for (const editor of atom.workspace.getTextEditors()) {if (editor.getPath() === path) {return editor;}}return null;} /**
                                                                                                                         * Returns a text editor that has the given buffer open, or null if none exists. If there are
@@ -282,14 +262,10 @@ function enforceReadOnlyEditor(textEditor, readOnlyExceptions = ['append', 'setT
 // after mounting an editor to the workspace - here, that's watched and reset to `false`.
 function enforceSoftWrap(editor, enforcedSoftWrap) {editor.setSoftWrapped(enforcedSoftWrap);return editor.onDidChangeSoftWrapped(softWrapped => {if (softWrapped !== enforcedSoftWrap) {// Reset the overridden softWrap to `false` once the operation completes.
       process.nextTick(() => {if (!editor.isDestroyed()) {editor.setSoftWrapped(enforcedSoftWrap);}});}});} /**
-                                                                                                             * Small wrapper around `atom.workspace.observeTextEditors` that filters out
-                                                                                                             * uninitialized remote editors. Most callers should use this one instead.
-                                                                                                             */function observeTextEditors(callback) {// The one place where atom.workspace.observeTextEditors needs to be used.
-  // eslint-disable-next-line rulesdir/atom-apis
-  return atom.workspace.observeTextEditors(editor => {if (isValidTextEditor(editor)) {callback(editor);}});} /**
-                                                                                                              * Checks if an object (typically an Atom pane) is a TextEditor with a non-broken path.
-                                                                                                              */function isValidTextEditor(item) {// eslint-disable-next-line rulesdir/atom-apis
-  if (atom.workspace.isTextEditor(item)) {return !(_nuclideUri || _load_nuclideUri()).default.isBrokenDeserializedUri(item.getPath());}return false;}function centerScrollToBufferLine(textEditorElement, bufferLineNumber) {const textEditor = textEditorElement.getModel();const pixelPositionTop = textEditorElement.pixelPositionForBufferPosition([bufferLineNumber, 0]).top; // Manually calculate the scroll location, instead of using
+                                                                                                             * Checks if an object (typically an Atom pane) is a TextEditor.
+                                                                                                             * Could be replaced with atom.workspace.isValidTextEditor,
+                                                                                                             * but Flow doesn't support %checks in methods yet.
+                                                                                                             */function isValidTextEditor(item) {return item instanceof _atom.TextEditor;}function centerScrollToBufferLine(textEditorElement, bufferLineNumber) {const textEditor = textEditorElement.getModel();const pixelPositionTop = textEditorElement.pixelPositionForBufferPosition([bufferLineNumber, 0]).top; // Manually calculate the scroll location, instead of using
   // `textEditor.scrollToBufferPosition([lineNumber, 0], {center: true})`
   // because that API to wouldn't center the line if it was in the visible screen range.
   const scrollTop = pixelPositionTop + textEditor.getLineHeightInPixels() / 2 - textEditorElement.clientHeight / 2;textEditorElement.setScrollTop(Math.max(scrollTop, 1));textEditorElement.focus();textEditor.setCursorBufferPosition([bufferLineNumber, 0], { autoscroll: false });}function getNonWordCharacters(editor, position) {if ((_semver || _load_semver()).default.gte(atom.getVersion(), '1.24.0-beta0')) {return editor.getNonWordCharacters(position);} else {// This used to take a scope descriptor.

@@ -19,7 +19,7 @@ function _load_Icon() {return _Icon = require('./Icon');}
 var _react = _interopRequireWildcard(require('react'));var _bindObservableAsProps;
 
 function _load_bindObservableAsProps() {return _bindObservableAsProps = require('./bindObservableAsProps');}var _analytics;
-function _load_analytics() {return _analytics = _interopRequireDefault(require('nuclide-commons/analytics'));}var _highlightOnUpdate;
+function _load_analytics() {return _analytics = _interopRequireDefault(require('../nuclide-commons/analytics'));}var _highlightOnUpdate;
 function _load_highlightOnUpdate() {return _highlightOnUpdate = require('./highlightOnUpdate');}var _SimpleValueComponent;
 function _load_SimpleValueComponent() {return _SimpleValueComponent = require('./SimpleValueComponent');}var _ValueComponentClassNames;
 function _load_ValueComponentClassNames() {return _ValueComponentClassNames = require('./ValueComponentClassNames');}var _Tree;

@@ -37,7 +37,7 @@ function sanitizePathForWindows(path) {
    * LICENSE file in the root directory of this source tree. An additional grant
    * of patent rights can be found in the PATENTS file in the same directory.
    *
-   * 
+   *  strict-local
    * @format
    */exports.default = (() => {var _ref = (0, _asyncToGenerator.default)(function* (path) {const isWindows = process.platform === 'win32';const whichCommand = isWindows ? 'where' : 'which';const searchPath = isWindows ? sanitizePathForWindows(path) : path;try {const result = yield (0, (_process || _load_process()).runCommand)(whichCommand, [searchPath]).toPromise();return result.split(_os.default.EOL)[0];} catch (e) {return null;
     }

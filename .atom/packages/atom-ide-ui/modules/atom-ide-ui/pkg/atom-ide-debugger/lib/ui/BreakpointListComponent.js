@@ -12,15 +12,15 @@
 
 
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}
 
 var _react = _interopRequireWildcard(require('react'));var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _Checkbox;
-function _load_Checkbox() {return _Checkbox = require('nuclide-commons-ui/Checkbox');}var _analytics;
-function _load_analytics() {return _analytics = require('nuclide-commons/analytics');}var _ListView;
-function _load_ListView() {return _ListView = require('nuclide-commons-ui/ListView');}var _classnames;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../../../../../nuclide-commons/nuclideUri'));}var _Checkbox;
+function _load_Checkbox() {return _Checkbox = require('../../../../../nuclide-commons-ui/Checkbox');}var _analytics;
+function _load_analytics() {return _analytics = require('../../../../../nuclide-commons/analytics');}var _ListView;
+function _load_ListView() {return _ListView = require('../../../../../nuclide-commons-ui/ListView');}var _classnames;
 function _load_classnames() {return _classnames = _interopRequireDefault(require('classnames'));}var _Icon;
-function _load_Icon() {return _Icon = require('nuclide-commons-ui/Icon');}var _constants;
+function _load_Icon() {return _Icon = require('../../../../../nuclide-commons-ui/Icon');}var _constants;
 function _load_constants() {return _constants = require('../constants');}var _utils;
 function _load_utils() {return _utils = require('../utils');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
@@ -271,6 +271,6 @@ class BreakpointListComponent extends _react.Component
                                                 * LICENSE file in the root directory of this source tree. An additional grant
                                                 * of patent rights can be found in the PATENTS file in the same directory.
                                                 *
-                                                * 
+                                                *  strict-local
                                                 * @format
                                                 */

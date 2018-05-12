@@ -19,14 +19,39 @@
 
 function _load_vscodeDebugprotocol() {return _vscodeDebugprotocol = _interopRequireWildcard(require('vscode-debugprotocol'));}var _constants;
 
-function _load_constants() {return _constants = require('./constants');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_constants() {return _constants = require('./constants');}var _UniversalDisposable;
 
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Copyright (c) 2017-present, Facebook, Inc.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * All rights reserved.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * This source code is licensed under the BSD-style license found in the
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * LICENSE file in the root directory of this source tree. An additional grant
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * of patent rights can be found in the PATENTS file in the same directory.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * @format
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */class RemoteControlService {constructor(service) {this._service = service;this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();}
+  dispose() {
+    this._disposables.dispose();
+  }
 
-class RemoteControlService {
+  onSessionEnd(
+  focusedProcess,
+  disposables)
+  {
+    disposables.add(
+    this._service.viewModel.onDidFocusProcess(() => {
+      if (
+      !this._service.
+      getModel().
+      getProcesses().
+      includes(focusedProcess))
+      {
+        disposables.dispose();
+      }
+    }));
 
-
-  constructor(service) {
-    this._service = service;
   }
 
   startDebugging(processInfo) {var _this = this;return (0, _asyncToGenerator.default)(function* () {
@@ -38,17 +63,9 @@ class RemoteControlService {
 
       const { focusedProcess } = _this._service.viewModel;if (!(
       focusedProcess != null)) {throw new Error('Invariant violation: "focusedProcess != null"');}
-      const disposable = _this._service.viewModel.onDidFocusProcess(function () {
-        if (
-        !_this._service.
-        getModel().
-        getProcesses().
-        includes(focusedProcess))
-        {
-          processInfo.dispose();
-          disposable.dispose();
-        }
-      });})();
+      const disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();
+      disposables.add(processInfo);
+      _this.onSessionEnd(focusedProcess, disposables);})();
   }
 
   startVspDebugging(config) {var _this2 = this;return (0, _asyncToGenerator.default)(function* () {
@@ -86,18 +103,16 @@ class RemoteControlService {
         return focusedProcess.session.observeCustomEvents();
       };
 
+      const disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();
+      const addCustomDisposable = function (disposable) {
+        disposables.add(disposable);
+      };
+
+      _this2.onSessionEnd(focusedProcess, disposables);
+
       return Object.freeze({
         customRequest,
-        observeCustomEvents });})();
+        observeCustomEvents,
+        addCustomDisposable });})();
 
-  }}exports.default = RemoteControlService; /**
-                                             * Copyright (c) 2017-present, Facebook, Inc.
-                                             * All rights reserved.
-                                             *
-                                             * This source code is licensed under the BSD-style license found in the
-                                             * LICENSE file in the root directory of this source tree. An additional grant
-                                             * of patent rights can be found in the PATENTS file in the same directory.
-                                             *
-                                             * 
-                                             * @format
-                                             */
+  }}exports.default = RemoteControlService;

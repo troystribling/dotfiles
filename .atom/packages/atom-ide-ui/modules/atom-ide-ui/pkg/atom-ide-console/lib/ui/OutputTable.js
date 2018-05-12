@@ -18,10 +18,10 @@
 
 
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _nullthrows;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}var _nullthrows;
 function _load_nullthrows() {return _nullthrows = _interopRequireDefault(require('nullthrows'));}var _observableDom;
-function _load_observableDom() {return _observableDom = require('nuclide-commons-ui/observable-dom');}var _Hasher;
-function _load_Hasher() {return _Hasher = _interopRequireDefault(require('nuclide-commons/Hasher'));}
+function _load_observableDom() {return _observableDom = require('../../../../../nuclide-commons-ui/observable-dom');}var _Hasher;
+function _load_Hasher() {return _Hasher = _interopRequireDefault(require('../../../../../nuclide-commons/Hasher'));}
 var _react = _interopRequireWildcard(require('react'));var _List;
 function _load_List() {return _List = _interopRequireDefault(require('react-virtualized/dist/commonjs/List'));}
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _RecordView;
@@ -186,7 +186,7 @@ function _load_recordsChanged() {return _recordsChanged = _interopRequireDefault
             className: 'console-table-row-wrapper',
             style: style },
           _react.createElement((_RecordView || _load_RecordView()).default
-          // eslint-disable-next-line rulesdir/jsx-simple-callback-refs
+          // eslint-disable-next-line nuclide-internal/jsx-simple-callback-refs
           , { ref: view => {
               if (view != null) {
                 this._renderedRecords.set(record, view);

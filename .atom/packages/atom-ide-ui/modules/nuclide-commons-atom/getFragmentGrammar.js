@@ -28,7 +28,7 @@ getFragmentGrammar; /**
                      * LICENSE file in the root directory of this source tree. An additional grant
                      * of patent rights can be found in the PATENTS file in the same directory.
                      *
-                     * 
+                     *  strict
                      * @format
                      */ /**
                          * Some grammars should use a specialized grammar for code fragments

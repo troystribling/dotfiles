@@ -87,6 +87,6 @@ function removePrefixSink(prefix, next) {let doneMatching = false;let matched = 
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *  strict
  * @format
  */function patternCounterSink(pattern, notify, next) {let enabled = true;let partial = [];let nextPartial = [];return data => {for (let i = 0; enabled && i < data.length; i++) {const dataCh = data.charAt(i);partial.push(0);while (enabled && partial.length > 0) {let patternIndex = partial.pop();const patternCh = pattern.charAt(patternIndex++);if (patternCh === dataCh) {if (patternIndex < pattern.length) {nextPartial.push(patternIndex);} else {enabled = notify();}}}[partial, nextPartial] = [nextPartial, partial];}next(data);};}

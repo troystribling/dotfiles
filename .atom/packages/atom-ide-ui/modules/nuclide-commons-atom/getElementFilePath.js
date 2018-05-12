@@ -24,7 +24,8 @@ getElementFilePath;var _textEditor;function _load_textEditor() {return _textEdit
                                                                                                                  *
                                                                                                                  * 
                                                                                                                  * @format
-                                                                                                                 */function getElementFilePath(element, fallbackToActiveTextEditor = false) {let el = element;while (el != null) {if (el.dataset != null && el.dataset.path != null) {return el.dataset.path;}if (typeof el.getModel === 'function') {const model = el.getModel();
+                                                                                                                 */function getElementFilePath(element, fallbackToActiveTextEditor = false) {let el = element;while (el != null) {if (el.dataset != null && el.dataset.path != null) {return el.dataset.path;} // $FlowFixMe(>=0.68.0) Flow suppress (T27187857)
+    if (typeof el.getModel === 'function') {const model = el.getModel();
       if ((0, (_textEditor || _load_textEditor()).isValidTextEditor)(model)) {
         const path = model.getPath();
         if (path != null) {
@@ -36,7 +37,7 @@ getElementFilePath;var _textEditor;function _load_textEditor() {return _textEdit
   }
   if (fallbackToActiveTextEditor) {
     const editor = atom.workspace.getActiveTextEditor();
-    if (editor != null && (0, (_textEditor || _load_textEditor()).isValidTextEditor)(editor)) {
+    if (editor != null) {
       return editor.getPath();
     }
   }

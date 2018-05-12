@@ -22,9 +22,9 @@ function _load_debounced() {return _debounced = require('./debounced');}var _Uni
 
 
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _event;
-function _load_event() {return _event = require('nuclide-commons/event');}var _observable;
-function _load_observable() {return _observable = require('nuclide-commons/observable');}var _log4js;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));}var _event;
+function _load_event() {return _event = require('../nuclide-commons/event');}var _observable;
+function _load_observable() {return _observable = require('../nuclide-commons/observable');}var _log4js;
 
 function _load_log4js() {return _log4js = require('log4js');}var _ProviderRegistry;
 
@@ -111,7 +111,7 @@ const DEFAULT_CONFIG = {
                          * LICENSE file in the root directory of this source tree. An additional grant
                          * of patent rights can be found in the PATENTS file in the same directory.
                          *
-                         * 
+                         *  strict-local
                          * @format
                          */ /**
                              * ActiveEditorRegistry provides abstractions for creating services that operate

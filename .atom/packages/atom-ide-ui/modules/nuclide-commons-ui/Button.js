@@ -15,7 +15,7 @@
 function _load_classnames() {return _classnames = _interopRequireDefault(require('classnames'));}
 var _react = _interopRequireWildcard(require('react'));
 var _reactDom = _interopRequireDefault(require('react-dom'));var _string;
-function _load_string() {return _string = require('nuclide-commons/string');}var _addTooltip;
+function _load_string() {return _string = require('../nuclide-commons/string');}var _addTooltip;
 function _load_addTooltip() {return _addTooltip = _interopRequireDefault(require('./addTooltip'));}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectWithoutProperties(obj, keys) {var target = {};for (var i in obj) {if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];}return target;} /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Copyright (c) 2017-present, Facebook, Inc.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * All rights reserved.
@@ -108,7 +108,7 @@ class Button extends _react.Component {
       // $FlowFixMe(>=0.53.0) Flow suppress
       _react.createElement(Wrapper, Object.assign({
           className: newClassName
-          // eslint-disable-next-line rulesdir/jsx-simple-callback-refs
+          // eslint-disable-next-line nuclide-internal/jsx-simple-callback-refs
           , ref: ref },
         remainingProps, {
           title: titleToolTip }),

@@ -71,7 +71,7 @@ export default AtomSolidityView = (() => {
 		mainNode.setAttribute('tabindex', '-1');
 
 		message = document.createElement('div');
-		message.textContent = "Ethereum Interface";
+		message.textContent = "Etheratom IDE";
 		message.classList.add('compiler-info');
 		message.classList.add('block');
 		message.classList.add('highlight-info');
@@ -79,7 +79,7 @@ export default AtomSolidityView = (() => {
 
 		compilerNode = document.createElement('div');
 		att = document.createAttribute('id');
-		att.value = 'compiler-options';
+		att.value = 'client-options';
 		compilerNode.setAttributeNode(att);
 		mainNode.appendChild(compilerNode);
 

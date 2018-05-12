@@ -15,16 +15,9 @@ const {
 /** @type {number} interval between toolchain update checks, milliseconds */
 const PERIODIC_UPDATE_CHECK_MILLIS = 6 * 60 * 60 * 1000
 
-function getPath() {
-  // Make sure the cargo directory is in PATH
-  let { PATH } = process.env
-  PATH = PATH + ":" + path.join(os.homedir(), ".cargo/bin")
-  return PATH
-}
-
 async function exec(command) {
   return new Promise((resolve, reject) => {
-    cp.exec(command, { env: { PATH: getPath() } }, (err, stdout, stderr) => {
+    cp.exec(command, { env: { PATH: envPath() } }, (err, stdout, stderr) => {
       if (err != null) {
         reject(err)
         return
@@ -101,16 +94,23 @@ async function rustcSysroot(toolchain) {
   return stdout.trim()
 }
 
+/** @return {string} environment variable path */
+let envPath = () => {
+  // Make sure the cargo directory is in PATH
+  let envPath = process.env.PATH || ''
+  if (!envPath.includes(".cargo/bin"))
+    envPath += `:${path.join(os.homedir(), ".cargo/bin")}`
+  return envPath
+}
+
 /**
  * @param {string} [toolchain]
  * @return {Promise<object>} environment vars
  */
 async function serverEnv(toolchain) {
-  const env = {
-    PATH: getPath(),
-    RUST_BACKTRACE: '1',
-    RUST_LOG: process.env.RUST_LOG,
-  }
+  const env = process.env
+  env.PATH = envPath()
+  env.RUST_BACKTRACE = env.RUST_BACKTRACE || "1"
 
   if (!env.RUST_LOG && atom.config.get('core.debugLSP')) {
     env.RUST_LOG = 'rls=warn'
@@ -241,7 +241,7 @@ class RustLanguageClient extends AutoLanguageClient {
     this.config = {
       rlsToolchain: {
         description: 'Sets the toolchain installed using rustup and used to run the Rls.' +
-          ' For example ***beta*** or ***nightly-yyyy-mm-dd***.',
+          ' For example ***nightly***, ***stable***, ***beta***, or ***nightly-yyyy-mm-dd***.',
         type: 'string',
         default: 'nightly',
         order: 1
@@ -615,6 +615,37 @@ class RustLanguageClient extends AutoLanguageClient {
     }
 
     return provide
+  }
+}
+
+// override windows specific implementations
+if (process.platform === "win32") {
+  // handle different slashes
+  // TODO ignore all files and wait for `client/registerCapability` as
+  // in unix method
+  RustLanguageClient.prototype.filterChangeWatchedFiles = filePath => {
+    return !filePath.includes('\\.git\\') &&
+      !filePath.includes('\\target\\rls\\') &&
+      !filePath.includes('\\target\\debug\\') &&
+      !filePath.includes('\\target\\doc\\') &&
+      !filePath.includes('\\target\\release\\')
+  }
+
+  // handle different slashes & path separator
+  envPath = () => {
+    // Make sure the cargo directory is in PATH
+    let envPath = process.env.PATH || ''
+    if (!envPath.includes(".cargo\\bin"))
+      envPath += `;${path.join(os.homedir(), ".cargo", "bin")}`
+    return envPath
+  }
+
+  // curl | sh is not valid for windows, users must install rustup manually
+  RustLanguageClient.prototype._handleMissingRustup = () => {
+    atomPrompt("`rustup` is not available", {
+      description: "`rustup` is required for ide-rust functionality. " +
+      "**Install from https://www.rustup.rs and restart atom**."
+    })
   }
 }
 

@@ -55,7 +55,7 @@ scrollIntoViewIfNeeded = scrollIntoViewIfNeeded; /**
                                                   * LICENSE file in the root directory of this source tree. An additional grant
                                                   * of patent rights can be found in the PATENTS file in the same directory.
                                                   *
-                                                  * 
+                                                  *  strict
                                                   * @format
                                                   */ /* globals getComputedStyle */ /**
                                                                                      * Use these functions instead of `Element::scrollIntoView()` and
@@ -84,7 +84,8 @@ scrollIntoViewIfNeeded = scrollIntoViewIfNeeded; /**
                                                                                      *
                                                                                      * [1]: https://drafts.csswg.org/cssom-view/#element-scrolling-members
                                                                                      * [2]: https://drafts.csswg.org/cssom-view/#scrolling-box
-                                                                                     */function scrollIntoView(el, alignToTop) {const scrollTops = getScrollTops(el);el.scrollIntoView(alignToTop); // eslint-disable-line rulesdir/dom-apis
+                                                                                     */function scrollIntoView(el, alignToTop) {const scrollTops = getScrollTops(el);el.scrollIntoView(alignToTop); // eslint-disable-line nuclide-internal/dom-apis
   restoreOverflowHiddenScrollTops(scrollTops);}function scrollIntoViewIfNeeded(el, center) {const scrollTops = getScrollTops(el); // $FlowIgnore: This should be added to the element type.
-  el.scrollIntoViewIfNeeded(center); // eslint-disable-line rulesdir/dom-apis
-  restoreOverflowHiddenScrollTops(scrollTops);}function getScrollTops(el_) {let el = el_;const scrollTops = new Map();while (el != null) {scrollTops.set(el, el.scrollTop);el = el.parentElement;}return scrollTops;}function restoreOverflowHiddenScrollTops(scrollTops) {scrollTops.forEach((scrollTop, el) => {if (el.scrollTop !== scrollTop && isOverflowHidden(el)) {el.scrollTop = scrollTop;}});}function isOverflowHidden(el) {const overflowStyle = el.style == null ? null : el.style.overflow;const overflow = overflowStyle || getComputedStyle(el).overflow;return overflow === 'hidden';}
+  el.scrollIntoViewIfNeeded(center); // eslint-disable-line nuclide-internal/dom-apis
+  restoreOverflowHiddenScrollTops(scrollTops);}function getScrollTops(el_) {let el = el_;const scrollTops = new Map();while (el != null) {scrollTops.set(el, el.scrollTop);el = el.parentElement;}return scrollTops;}function restoreOverflowHiddenScrollTops(scrollTops) {scrollTops.forEach((scrollTop, el) => {if (el.scrollTop !== scrollTop && isOverflowHidden(el)) {el.scrollTop = scrollTop;}});}function isOverflowHidden(el) {// $FlowFixMe(>=0.68.0) Flow suppress (T27187857)
+  const overflowStyle = el.style == null ? null : el.style.overflow;const overflow = overflowStyle || getComputedStyle(el).overflow;return overflow === 'hidden';}

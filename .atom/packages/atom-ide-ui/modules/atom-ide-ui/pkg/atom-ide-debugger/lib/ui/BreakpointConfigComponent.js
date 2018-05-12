@@ -12,17 +12,17 @@
 
 
 
-function _load_AtomInput() {return _AtomInput = require('nuclide-commons-ui/AtomInput');}
+function _load_AtomInput() {return _AtomInput = require('../../../../../nuclide-commons-ui/AtomInput');}
 var _react = _interopRequireWildcard(require('react'));var _Button;
-function _load_Button() {return _Button = require('nuclide-commons-ui/Button');}var _ButtonGroup;
-function _load_ButtonGroup() {return _ButtonGroup = require('nuclide-commons-ui/ButtonGroup');}var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _nullthrows;
+function _load_Button() {return _Button = require('../../../../../nuclide-commons-ui/Button');}var _ButtonGroup;
+function _load_ButtonGroup() {return _ButtonGroup = require('../../../../../nuclide-commons-ui/ButtonGroup');}var _nuclideUri;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../../../../../nuclide-commons/nuclideUri'));}var _nullthrows;
 function _load_nullthrows() {return _nullthrows = _interopRequireDefault(require('nullthrows'));}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _Checkbox;
-function _load_Checkbox() {return _Checkbox = require('nuclide-commons-ui/Checkbox');}var _Modal;
-function _load_Modal() {return _Modal = require('nuclide-commons-ui/Modal');}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}var _Checkbox;
+function _load_Checkbox() {return _Checkbox = require('../../../../../nuclide-commons-ui/Checkbox');}var _Modal;
+function _load_Modal() {return _Modal = require('../../../../../nuclide-commons-ui/Modal');}
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _analytics;
-function _load_analytics() {return _analytics = require('nuclide-commons/analytics');}var _constants;
+function _load_analytics() {return _analytics = require('../../../../../nuclide-commons/analytics');}var _constants;
 function _load_constants() {return _constants = require('../constants');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 
@@ -186,6 +186,6 @@ class BreakpointConfigComponent extends _react.Component
                                                   * LICENSE file in the root directory of this source tree. An additional grant
                                                   * of patent rights can be found in the PATENTS file in the same directory.
                                                   *
-                                                  * 
+                                                  *  strict-local
                                                   * @format
                                                   */

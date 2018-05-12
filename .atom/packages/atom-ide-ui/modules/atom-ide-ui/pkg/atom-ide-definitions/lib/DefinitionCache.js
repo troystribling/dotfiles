@@ -11,9 +11,9 @@
 
 
 
-function _load_range() {return _range = require('nuclide-commons-atom/range');}var _range2;
-function _load_range2() {return _range2 = require('nuclide-commons/range');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_range() {return _range = require('../../../../nuclide-commons-atom/range');}var _range2;
+function _load_range2() {return _range2 = require('../../../../nuclide-commons/range');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // An atom$Range-aware, single-item cache for the common case of requerying
 // a definition (such as previewing hyperclick and then jumping to the

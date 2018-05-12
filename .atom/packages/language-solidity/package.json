@@ -1,0 +1,64 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-13450-1n6y0ab.k8hg1oflxr/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-13450-1n6y0ab.k8hg1oflxr/package.tgz",
+        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-13450-1n6y0ab.k8hg1oflxr/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-118412-13450-tjdela.6mcm04fgvi"
+    ]
+  ],
+  "_from": "../d-118412-13450-1n6y0ab.k8hg1oflxr/package.tgz",
+  "_id": "language-solidity@0.1.0",
+  "_inCache": true,
+  "_location": "/language-solidity",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-13450-1n6y0ab.k8hg1oflxr/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-13450-1n6y0ab.k8hg1oflxr/package.tgz",
+    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-13450-1n6y0ab.k8hg1oflxr/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-118412-13450-1n6y0ab.k8hg1oflxr/package.tgz",
+  "_shasum": "fbc217d5d225fa5723e4e0b2a8b74737a9facc62",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-13450-1n6y0ab.k8hg1oflxr/package.tgz",
+  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-118412-13450-tjdela.6mcm04fgvi",
+  "bugs": {
+    "url": "https://github.com/jesseweed/language-solidity/issues"
+  },
+  "dependencies": {},
+  "description": "Solidity language support in Atom",
+  "devDependencies": {},
+  "engines": {
+    "atom": "*",
+    "node": "*"
+  },
+  "homepage": "https://github.com/jesseweed/language-solidity#readme",
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "grammar"
+  ],
+  "license": "MIT",
+  "name": "language-solidity",
+  "optionalDependencies": {},
+  "readme": "# Solidity language support in Atom\n\nAdds syntax highlighting for Solidty in Atom.\n\nConverted from the [Solidty TextMate bundle](https://github.com/davesag/Solidity.tmbundle).\n\nContributions are greatly appreciated. Please fork this repository and open a pull request to add snippets, make grammar tweaks, etc.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesseweed/language-solidity.git"
+  },
+  "version": "0.1.0"
+}

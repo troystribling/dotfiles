@@ -74,7 +74,7 @@ hoveringOrAiming = hoveringOrAiming;var _rxjsBundlesRxMinJs = require('rxjs/bund
                                                                                                                               * LICENSE file in the root directory of this source tree. An additional grant
                                                                                                                               * of patent rights can be found in the PATENTS file in the same directory.
                                                                                                                               *
-                                                                                                                              * 
+                                                                                                                              *  strict
                                                                                                                               * @format
                                                                                                                               */const distance = (a, b) => {return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));};const eventToPoint = e => ({ x: e.clientX, y: e.clientY }); // Combine mouseenter and mouseleave to create an observable of hovering state.
 function areHovering(element) {return _rxjsBundlesRxMinJs.Observable.merge(_rxjsBundlesRxMinJs.Observable.fromEvent(element, 'mouseenter').mapTo(true), _rxjsBundlesRxMinJs.Observable.fromEvent(element, 'mouseleave').mapTo(false));}function findCorners(node) {const { left, width, top, height } = node.getBoundingClientRect();return [{ x: left, y: top }, // Top left

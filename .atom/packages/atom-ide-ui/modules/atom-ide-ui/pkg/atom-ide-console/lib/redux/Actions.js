@@ -36,7 +36,6 @@
 
 
 
-
 clearRecords = clearRecords;exports.
 
 
@@ -163,6 +162,8 @@ setWatchEditor = setWatchEditor;exports.
 
 
 
+
+
 setFontSize = setFontSize; /**
                             * Copyright (c) 2017-present, Facebook, Inc.
                             * All rights reserved.
@@ -171,7 +172,7 @@ setFontSize = setFontSize; /**
                             * LICENSE file in the root directory of this source tree. An additional grant
                             * of patent rights can be found in the PATENTS file in the same directory.
                             *
-                            * 
+                            *  strict-local
                             * @format
                             */const CLEAR_RECORDS = exports.CLEAR_RECORDS = 'CLEAR_RECORDS';const SET_CREATE_PASTE_FUNCTION = exports.SET_CREATE_PASTE_FUNCTION = 'SET_CREATE_PASTE_FUNCTION';const SET_WATCH_EDITOR_FUNCTION = exports.SET_WATCH_EDITOR_FUNCTION = 'SET_WATCH_EDITOR_FUNCTION';const REGISTER_EXECUTOR = exports.REGISTER_EXECUTOR = 'REGISTER_EXECUTOR';const EXECUTE = exports.EXECUTE = 'EXECUTE';const REGISTER_RECORD_PROVIDER = exports.REGISTER_RECORD_PROVIDER = 'REGISTER_RECORD_PROVIDER';const SELECT_EXECUTOR = exports.SELECT_EXECUTOR = 'SELECT_EXECUTOR';const SET_MAX_MESSAGE_COUNT = exports.SET_MAX_MESSAGE_COUNT = 'SET_MAX_MESSAGE_COUNT';const RECORD_RECEIVED = exports.RECORD_RECEIVED = 'RECORD_RECEIVED';const REGISTER_SOURCE = exports.REGISTER_SOURCE = 'REGISTER_SOURCE';const REMOVE_SOURCE = exports.REMOVE_SOURCE = 'REMOVE_SOURCE';const UPDATE_STATUS = exports.UPDATE_STATUS = 'UPDATE_STATUS';const SET_FONT_SIZE = exports.SET_FONT_SIZE = 'SET_FONT_SIZE';function clearRecords() {return { type: CLEAR_RECORDS };}function recordReceived(record) {return { type: RECORD_RECEIVED, payload: { record } };}function registerExecutor(executor) {return { type: REGISTER_EXECUTOR, payload: { executor } };}function execute(code) {return { type: EXECUTE, payload: { code } };}function registerOutputProvider(outputProvider) {// Transform the messages into actions and merge them into the action stream.
   // TODO: Add enabling/disabling of registered source and only subscribe when enabled. That

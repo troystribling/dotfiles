@@ -16,7 +16,7 @@
 // along with Etheratom.  If not, see <http://www.gnu.org/licenses/>.
 import React from 'react'
 import { connect } from 'react-redux'
-import { setInstance, setDeployed } from '../../actions'
+import { setInstance, setDeployed, addNewEvents } from '../../actions'
 
 class CreateButton extends React.Component {
     constructor(props) {
@@ -25,8 +25,10 @@ class CreateButton extends React.Component {
         this.state = {
             constructorParams: undefined,
             coinbase: props.coinbase,
-            password: props.password
+            password: props.password,
+            atAddress: undefined
         }
+        this._handleAtAddressChange = this._handleAtAddressChange.bind(this);
         this._handleSubmit = this._handleSubmit.bind(this);
     }
     async componentDidMount() {
@@ -39,10 +41,13 @@ class CreateButton extends React.Component {
         }
         this.setState({ constructorParams: inputs });
     }
+    async _handleAtAddressChange(event) {
+        this.setState({ atAddress: event.target.value });
+    }
     async _handleSubmit() {
         try {
             const { abi, bytecode, contractName, gas, coinbase, password } = this.props;
-            const { constructorParams } = this.state;
+            const { constructorParams, atAddress } = this.state;
             const contractInterface = this.props.interfaces[contractName].interface;
             const constructor = contractInterface.find(interfaceItem => interfaceItem.type === "constructor");
             const params = [];
@@ -54,22 +59,59 @@ class CreateButton extends React.Component {
                 }
             }
 
-            const contract = await this.helpers.create(coinbase, password, abi, bytecode, contractName, gas);
+            const contract = await this.helpers.create({ coinbase, password, atAddress, abi, bytecode, contractName, gas });
             this.props.setInstance({ contractName, instance: Object.assign({}, contract) });
 
-            const contractInstance = await this.helpers.deploy(contract, params);
-            this.props.setDeployed({ contractName, deployed: true });
-            contractInstance.on('address', address => {
-                contract.options.address = address;
+            if(!atAddress) {
+                const contractInstance = await this.helpers.deploy(contract, params);
+                this.props.setDeployed({ contractName, deployed: true });
+                contractInstance.on('address', address => {
+                    contract.options.address = address;
+                    this.props.setInstance({ contractName, instance: Object.assign({}, contract) });
+                });
+                contractInstance.on('transactionHash', transactionHash => {
+                    contract.transactionHash = transactionHash;
+                    this.props.setInstance({ contractName, instance: Object.assign({}, contract) });
+                });
+                contractInstance.on('error', error => {
+                    this.helpers.showPanelError(error);
+                });
+                contractInstance.on('instance', instance => {
+                    instance.events.allEvents({ fromBlock: 'latest' })
+                        .on('logs', (logs) => {
+                            this.props.addNewEvents({ payload: logs });
+                        })
+                        .on('data', (data) => {
+                            this.props.addNewEvents({ payload: data });
+                        })
+                        .on('changed', (changed) => {
+                            this.props.addNewEvents({ payload: changed });
+                        })
+                        .on('error', (error) => {
+                            console.log(error);
+                        })
+                });
+                contractInstance.on('error', error => {
+                    this.helpers.showPanelError(error);
+                });
+            } else {
+                contract.options.address = atAddress;
+                this.props.setDeployed({ contractName, deployed: true });
                 this.props.setInstance({ contractName, instance: Object.assign({}, contract) });
-            });
-            contractInstance.on('transactionHash', transactionHash => {
-                contract.transactionHash = transactionHash;
-                this.props.setInstance({ contractName, instance: Object.assign({}, contract) });
-            });
-            contractInstance.on('error', error => {
-                this.helpers.showPanelError(error);
-            });
+                contract.events.allEvents({ fromBlock: 'latest' })
+                    .on('logs', (logs) => {
+                        this.props.addNewEvents({ payload: logs });
+                    })
+                    .on('data', (data) => {
+                        this.props.addNewEvents({ payload: data });
+                    })
+                    .on('changed', (changed) => {
+                        this.props.addNewEvents({ payload: changed });
+                    })
+                    .on('error', (error) => {
+                        console.log(error);
+                    })
+            }
         } catch(e) {
             console.log(e);
             this.helpers.showPanelError(e);
@@ -78,13 +120,18 @@ class CreateButton extends React.Component {
     render() {
         const { contractName } = this.props;
         return (
-            <form onSubmit={this._handleSubmit}>
+            <form onSubmit={this._handleSubmit} class="padded">
                 <input
                     type="submit"
                     value="Deploy to blockchain"
                     ref={contractName}
                     class="btn btn-primary inline-block-tight">
                 </input>
+                <input
+                    type="text" placeholder="at:" class="inputs"
+                    value={this.state.atAddress}
+                    onChange={this._handleAtAddressChange}
+                />
             </form>
         );
     }
@@ -96,4 +143,4 @@ const mapStateToProps = ({ contract, account }) => {
 	return { compiled, interfaces, coinbase, password };
 }
 
-export default connect(mapStateToProps, { setDeployed, setInstance })(CreateButton);
+export default connect(mapStateToProps, { setDeployed, setInstance, addNewEvents })(CreateButton);

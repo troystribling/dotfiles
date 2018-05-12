@@ -19,7 +19,7 @@
 
 
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _LinterAdapter;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}var _LinterAdapter;
 function _load_LinterAdapter() {return _LinterAdapter = require('../services/LinterAdapter');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
                                                                                                                                                                                              * Copyright (c) 2017-present, Facebook, Inc.
                                                                                                                                                                                              * All rights reserved.

@@ -24,7 +24,7 @@ function ModalButton() {
    * LICENSE file in the root directory of this source tree. An additional grant
    * of patent rights can be found in the PATENTS file in the same directory.
    *
-   * 
+   *  strict-local
    * @format
    */function showExampleModal() {(0, (_showModal || _load_showModal()).default)(({ dismiss }) => {return _react.createElement('div', null, _react.createElement('div', null, 'I\'m a modal. You can add any content you like. I have all the standard behavior, like obeying the "core:cancel" command!'), _react.createElement((_Button || _load_Button()).Button, { onClick: dismiss }, 'Hide Modal'));
 

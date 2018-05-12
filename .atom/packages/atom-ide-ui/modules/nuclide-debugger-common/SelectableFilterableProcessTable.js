@@ -16,10 +16,10 @@
 var _react = _interopRequireWildcard(require('react'));var _debugAdapterService;
 
 function _load_debugAdapterService() {return _debugAdapterService = require('./debug-adapter-service');}var _AtomInput;
-function _load_AtomInput() {return _AtomInput = require('nuclide-commons-ui/AtomInput');}var _Table;
-function _load_Table() {return _Table = require('nuclide-commons-ui/Table');}var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_AtomInput() {return _AtomInput = require('../nuclide-commons-ui/AtomInput');}var _Table;
+function _load_Table() {return _Table = require('../nuclide-commons-ui/Table');}var _nuclideUri;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../nuclide-commons/nuclideUri'));}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));}
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}} /**
                                                                                                                                                                                                                                                                                                                                                                                                                            * Copyright (c) 2017-present, Facebook, Inc.
                                                                                                                                                                                                                                                                                                                                                                                                                            * All rights reserved.

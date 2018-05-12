@@ -20,7 +20,7 @@
 
 
 
-DiagnosticsCodeActions;var _atom = require('atom');var _react = _interopRequireWildcard(require('react'));var _Button;function _load_Button() {return _Button = require('nuclide-commons-ui/Button');}var _ButtonGroup;function _load_ButtonGroup() {return _ButtonGroup = require('nuclide-commons-ui/ButtonGroup');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}} // Maximum number of CodeActions to show for a given Diagnostic.
+DiagnosticsCodeActions;var _atom = require('atom');var _react = _interopRequireWildcard(require('react'));var _Button;function _load_Button() {return _Button = require('../../../../../nuclide-commons-ui/Button');}var _ButtonGroup;function _load_ButtonGroup() {return _ButtonGroup = require('../../../../../nuclide-commons-ui/ButtonGroup');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}} // Maximum number of CodeActions to show for a given Diagnostic.
 const MAX_CODE_ACTIONS = 4; /**
                              * Copyright (c) 2017-present, Facebook, Inc.
                              * All rights reserved.

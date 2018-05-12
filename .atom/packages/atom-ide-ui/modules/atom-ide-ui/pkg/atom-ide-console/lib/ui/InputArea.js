@@ -10,41 +10,47 @@
 
 
 
-
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}
 var _react = _interopRequireWildcard(require('react'));
 var _reactDom = _interopRequireDefault(require('react-dom'));var _AtomTextEditor;
-function _load_AtomTextEditor() {return _AtomTextEditor = require('nuclide-commons-ui/AtomTextEditor');}
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
-                                                                                                                                                                                                                                                                                                                                                                                                                           * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                                                                                                                                                                                                                                                                                                           * All rights reserved.
-                                                                                                                                                                                                                                                                                                                                                                                                                           *
-                                                                                                                                                                                                                                                                                                                                                                                                                           * This source code is licensed under the BSD-style license found in the
-                                                                                                                                                                                                                                                                                                                                                                                                                           * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                                                                                                                                                                                                                                                                                                           * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                                                                                                                                                                                                                                                                                                           *
-                                                                                                                                                                                                                                                                                                                                                                                                                           * 
-                                                                                                                                                                                                                                                                                                                                                                                                                           * @format
-                                                                                                                                                                                                                                                                                                                                                                                                                           */
-
-
-
-
-const ENTER_KEY_CODE = 13;
-const UP_KEY_CODE = 38;
-const DOWN_KEY_CODE = 40;
-
-class InputArea extends _react.Component {
-
-
-
-  constructor(props) {
-    super(props);this.
+function _load_AtomTextEditor() {return _AtomTextEditor = require('../../../../../nuclide-commons-ui/AtomTextEditor');}
+var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+const ENTER_KEY_CODE = 13; /**
+                            * Copyright (c) 2017-present, Facebook, Inc.
+                            * All rights reserved.
+                            *
+                            * This source code is licensed under the BSD-style license found in the
+                            * LICENSE file in the root directory of this source tree. An additional grant
+                            * of patent rights can be found in the PATENTS file in the same directory.
+                            *
+                            *  strict-local
+                            * @format
+                            */const UP_KEY_CODE = 38;const DOWN_KEY_CODE = 40;class InputArea extends _react.Component {constructor(props) {super(props);this.
+
+
+
+
+
+    focus = () => {
+      if (this._textEditorModel != null) {
+        this._textEditorModel.getElement().focus();
+      }
+    };this.
 
     _submit = () => {
       // Clear the text and trigger the `onSubmit` callback
@@ -162,7 +168,8 @@ class InputArea extends _react.Component {
           lineNumberGutterVisible: false,
           onConfirm: this._submit,
           onInitialized: this._attachLabel,
-          onDidTextBufferChange: this.props.onDidTextBufferChange })));
+          onDidTextBufferChange: this.props.onDidTextBufferChange,
+          placeholderText: this.props.placeholderText })));
 
 
 

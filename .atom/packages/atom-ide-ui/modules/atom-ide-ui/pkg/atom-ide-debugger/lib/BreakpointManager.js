@@ -12,20 +12,19 @@
 
 
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _textEditor;
-function _load_textEditor() {return _textEditor = require('nuclide-commons-atom/text-editor');}var _BreakpointDisplayController;
-function _load_BreakpointDisplayController() {return _BreakpointDisplayController = _interopRequireDefault(require('./BreakpointDisplayController'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
-                                                                                                                                                                                                                                                     * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                                                                                                                                     * All rights reserved.
-                                                                                                                                                                                                                                                     *
-                                                                                                                                                                                                                                                     * This source code is licensed under the BSD-style license found in the
-                                                                                                                                                                                                                                                     * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                                                                                                                                     * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                                                                                                                                     *
-                                                                                                                                                                                                                                                     * 
-                                                                                                                                                                                                                                                     * @format
-                                                                                                                                                                                                                                                     */class BreakpointManager {constructor(service) {this._service = service;this._displayControllers = new Map();this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(
-    (0, (_textEditor || _load_textEditor()).observeTextEditors)(this._handleTextEditor.bind(this)));
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _BreakpointDisplayController;
+function _load_BreakpointDisplayController() {return _BreakpointDisplayController = _interopRequireDefault(require('./BreakpointDisplayController'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+class BreakpointManager {
+
+
+
+
+  constructor(service) {
+    this._service = service;
+    this._displayControllers = new Map();
+    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(
+    atom.workspace.observeTextEditors(this._handleTextEditor.bind(this)));
 
   }
 
@@ -59,4 +58,14 @@ function _load_BreakpointDisplayController() {return _BreakpointDisplayControlle
 
       this._displayControllers.set(editor, controller);
     }
-  }}exports.default = BreakpointManager;
+  }}exports.default = BreakpointManager; /**
+                                          * Copyright (c) 2017-present, Facebook, Inc.
+                                          * All rights reserved.
+                                          *
+                                          * This source code is licensed under the BSD-style license found in the
+                                          * LICENSE file in the root directory of this source tree. An additional grant
+                                          * of patent rights can be found in the PATENTS file in the same directory.
+                                          *
+                                          *  strict-local
+                                          * @format
+                                          */

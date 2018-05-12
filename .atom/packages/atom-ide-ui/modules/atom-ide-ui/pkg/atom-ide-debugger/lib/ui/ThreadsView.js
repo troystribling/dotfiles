@@ -13,8 +13,8 @@
 
 
 function _load_classnames() {return _classnames = _interopRequireDefault(require('classnames'));}var _event;
-function _load_event() {return _event = require('nuclide-commons/event');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_event() {return _event = require('../../../../../nuclide-commons/event');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}
 var _react = _interopRequireWildcard(require('react'));var _DebuggerThreadsComponent;
 function _load_DebuggerThreadsComponent() {return _DebuggerThreadsComponent = _interopRequireDefault(require('./DebuggerThreadsComponent'));}var _constants;
 function _load_constants() {return _constants = require('../constants');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
@@ -77,6 +77,6 @@ class ThreadsView extends _react.PureComponent
                                     * LICENSE file in the root directory of this source tree. An additional grant
                                     * of patent rights can be found in the PATENTS file in the same directory.
                                     *
-                                    * 
+                                    *  strict-local
                                     * @format
                                     */

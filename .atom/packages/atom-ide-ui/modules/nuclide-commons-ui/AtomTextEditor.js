@@ -15,11 +15,11 @@ function _load_classnames() {return _classnames = _interopRequireDefault(require
 var _react = _interopRequireWildcard(require('react'));var _semver;
 function _load_semver() {return _semver = _interopRequireDefault(require('semver'));}
 var _atom = require('atom');var _textEditor;
-function _load_textEditor() {return _textEditor = require('nuclide-commons-atom/text-editor');}var _UniversalDisposable;
+function _load_textEditor() {return _textEditor = require('../nuclide-commons-atom/text-editor');}var _UniversalDisposable;
 
 
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 const doNothing = () => {}; /**
                              * Copyright (c) 2017-present, Facebook, Inc.

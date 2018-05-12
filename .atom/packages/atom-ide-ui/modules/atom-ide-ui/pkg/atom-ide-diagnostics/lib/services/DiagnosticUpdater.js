@@ -23,8 +23,8 @@
 
 function _load_Actions() {return _Actions = _interopRequireWildcard(require('../redux/Actions'));}var _Selectors;
 function _load_Selectors() {return _Selectors = _interopRequireWildcard(require('../redux/Selectors'));}var _collection;
-function _load_collection() {return _collection = require('nuclide-commons/collection');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_collection() {return _collection = require('../../../../../nuclide-commons/collection');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}
 
 class DiagnosticUpdater {
@@ -118,6 +118,6 @@ class DiagnosticUpdater {
                                                                                                                                                                                                                        * LICENSE file in the root directory of this source tree. An additional grant
                                                                                                                                                                                                                        * of patent rights can be found in the PATENTS file in the same directory.
                                                                                                                                                                                                                        *
-                                                                                                                                                                                                                       * 
+                                                                                                                                                                                                                       *  strict-local
                                                                                                                                                                                                                        * @format
                                                                                                                                                                                                                        */

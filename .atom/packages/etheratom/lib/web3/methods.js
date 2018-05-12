@@ -66,8 +66,35 @@ export default class Web3Helpers {
 			throw e;
 		}
 	}
-	async create(coinbase, password, abi, code, contractName, estimatedGas) {
+	async getBalance(coinbase) {
+		if(!coinbase) {
+			const error = new Error('No coinbase selected!');
+			throw error;
+		}
+		try {
+			const weiBalance = await this.web3.eth.getBalance(coinbase);
+			const ethBalance = await this.web3.utils.fromWei(weiBalance, "ether");
+			return ethBalance;
+		} catch(e) {
+			throw e;
+		}
+	}
+	async getSyncStat() {
+		try {
+			return this.web3.eth.isSyncing();
+		} catch(e) {
+			throw e;
+		}
+	}
+	async create({...arguments}) {
 		console.log("%c Creating contract... ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
+		const coinbase = arguments.coinbase;
+		const password = arguments.password;
+		const abi = arguments.abi;
+		const code = arguments.bytecode;
+		const contractName = arguments.contractName;
+		const gasSupply = arguments.gas;
+
 		if(!coinbase) {
 			const error = new Error('No coinbase selected!');
 			throw error;
@@ -82,7 +109,7 @@ export default class Web3Helpers {
 				const contract = await new this.web3.eth.Contract(abi, {
 					from: this.web3.eth.defaultAccount,
 					data: '0x' + code,
-					gas: this.web3.utils.toHex(9000000),
+					gas: this.web3.utils.toHex(gasSupply),
 					gasPrice: this.web3.utils.toHex(gasPrice)
 				});
 				return contract;
@@ -97,7 +124,6 @@ export default class Web3Helpers {
 	}
 	async deploy(contract, params) {
 		console.log("%c Deploying contract... ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
-		console.log(contract);
 		class ContractInstance extends EventEmitter {};
 		const contractInstance = new ContractInstance();
 		try {
@@ -108,67 +134,88 @@ export default class Web3Helpers {
 			contract.deploy({
 				arguments: params
 			})
-				.send({
-					from: this.web3.eth.defaultAccount,
-					gas: this.web3.utils.toHex(9000000),
-					gasPrice: this.web3.utils.toHex(gasPrice)
-				})
-				.on('transactionHash', transactionHash => {
-					contractInstance.emit('transactionHash', transactionHash);
-				})
-				.on('receipt', txReceipt => {
-					contractInstance.emit('receipt', txReceipt);
-				})
-				.on('confirmation', confirmationNumber => {
-					contractInstance.emit('confirmation', confirmationNumber);
-				})
-				.on('error', error => {
-					contractInstance.emit('error', error);
-				})
-				.then(instance => {
-					contractInstance.emit('address', instance.options.address);
-				})
+			.send({
+				from: this.web3.eth.defaultAccount
+			})
+			.on('transactionHash', transactionHash => {
+				contractInstance.emit('transactionHash', transactionHash);
+			})
+			.on('receipt', txReceipt => {
+				contractInstance.emit('receipt', txReceipt);
+
+			})
+			.on('confirmation', confirmationNumber => {
+				contractInstance.emit('confirmation', confirmationNumber);
+			})
+			.on('error', error => {
+				contractInstance.emit('error', error);
+			})
+			.then(instance => {
+				contractInstance.emit('address', instance.options.address);
+				contractInstance.emit('instance', instance);
+			})
 			return contractInstance;
 		} catch (e) {
 			console.log(e);
 			throw e;
 		}
 	}
-	async call(coinbase, password, contract, methodItem, params) {
+	async call({...arguments}) {
 		console.log("%c Web3 calling functions... ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
+		const coinbase = arguments.coinbase;
+		const password = arguments.password;
+		const contract = arguments.contract;
+		const abiItem = arguments.abiItem;
+		var params = arguments.params || [];
+
 		this.web3.eth.defaultAccount = coinbase;
 		try {
-			if(methodItem.constant === false || methodItem.payable === true) {
+			// Prepare params for call
+			params = params.map(param => {
+				if(param.type.endsWith('[]')) {
+					return param.value.search(', ') > 0 ? param.value.split(', ') : param.value.split(',');
+				}
+				if(param.type.indexOf('int') > -1) {
+					return new this.web3.utils.BN(param.value);
+				}
+				return param.value;
+			});
+
+			// Handle fallback
+			if(abiItem.type === 'fallback') {
+				if(password) {
+					await this.web3.eth.personal.unlockAccount(coinbase, password);
+				}
+				const result = await this.web3.eth.sendTransaction({
+					from: coinbase,
+					to: contract.options.address,
+					value: abiItem.payableValue || 0
+				})
+				return result;
+			}
+
+			if(abiItem.constant === false || abiItem.payable === true) {
 				if(password) {
 					await this.web3.eth.personal.unlockAccount(coinbase, password);
 				}
 				if(params.length > 0) {
-					const result = await contract.methods[methodItem.name](params).send({ from: coinbase });
+					const result = await contract.methods[abiItem.name](...params).send({ from: coinbase, value: abiItem.payableValue });
 					return result;
 				}
-				const result = await contract.methods[methodItem.name]().send({ from: coinbase });
+				const result = await contract.methods[abiItem.name]().send({ from: coinbase, value: abiItem.payableValue });
 				return result;
 			}
 			if(params.length > 0) {
-				const result = await contract.methods[methodItem.name](params).call({ from: coinbase });
+				const result = await contract.methods[abiItem.name](...params).call({ from: coinbase });
 				return result;
 			}
-			const result = await contract.methods[methodItem.name]().call({ from: coinbase });
+			const result = await contract.methods[abiItem.name]().call({ from: coinbase });
 			return result;
 		}
-		catch(error) {
-			this.showPanelError(error);
+		catch(e) {
+			console.log(e);
+			throw e;
 		}
-	}
-	async constructFunctions(contractABI) {
-		const that = this;
-		const functionItems = await contractABI.filter((abiObj) => {
-			return abiObj.type === 'function';
-		});
-		const results = await Promise.all(functionItems.map(async (functionItem) => {
-			return { interface: functionItem, params: await that.funcParamsToArray(functionItem) };
-		}));
-		return results;
 	}
 	async funcParamsToArray(contractFunction) {
 		if(contractFunction && contractFunction.inputs.length > 0) {
@@ -185,57 +232,36 @@ export default class Web3Helpers {
 		}
 		return this.web3.utils.toHex(paramObject.value);
 	}
-	createChilds(contractFunction, callback) {
-		let i,
-			reactElements;
-		reactElements = [];
-		i = 0;
-		if (contractFunction.inputs.length > 0) {
-			while (i < contractFunction.inputs.length) {
-				reactElements[i] = [contractFunction.inputs[i].type, contractFunction.inputs[i].name];
-				i++;
-			}
-		}
-		callback(null, reactElements);
-	}
-	async typesToArray(reactElements, methodName) {
-		let types = await Promise.all();
-	}
 	showPanelError(err_message) {
 		let messages;
 		messages = new MessagePanelView({ title: 'Etheratom report' });
 		messages.attach();
 		messages.add(new PlainMessageView({ message: err_message, className: 'red-message' }));
 	}
-	showOutput(address, outputTypes, result) {
-		let messages,
-			outputBuffer;
-		messages = new MessagePanelView({ title: 'Etheratom output' });
+	showOutput({...arguments}) {
+		const address = arguments.address;
+		const data = arguments.data;
+		const messages = new MessagePanelView({ title: 'Etheratom output' });
 		messages.attach();
 		messages.add(new PlainMessageView({
 			message: 'Contract address: ' + address,
 			className: 'green-message'
 		}));
-		if(result instanceof Object) {
+		if(data instanceof Object) {
+			const rawMessage = `<h6>Contract output:</h6><pre>${JSON.stringify(data, null, 4)}</pre>`
 			messages.add(new PlainMessageView({
-				message: 'Contract output: ' + JSON.stringify(result),
+				message: rawMessage,
+				raw: true,
 				className: 'green-message'
 			}));
 			return;
 		}
 		messages.add(new PlainMessageView({
-			message: 'Contract output: ' + result,
+			message: 'Contract output: ' + data,
 			className: 'green-message'
 		}));
 		return;
 	}
-	async getOutputTypes(functionItem) {
-		const outputTypes = await Promise.all(functionItem.outputs.map(async (outputItem) => {
-			return outputItem.type;
-		}));
-		return outputTypes;
-	}
-
 	// Transaction analysis
 	async getTxAnalysis(txHash) {
 		try {
@@ -243,6 +269,36 @@ export default class Web3Helpers {
 			const transactionRecipt = await this.web3.eth.getTransactionReceipt(txHash);
 			return { transaction, transactionRecipt };
 		} catch(e) {
+			throw e;
+		}
+	}
+	// Gas Limit
+	async getGasLimit() {
+		try {
+			const block = await this.web3.eth.getBlock('latest');
+			return block.gasLimit;
+		} catch(e) {
+			throw e;
+		}
+	}
+	async getAccounts() {
+		try {
+			return await this.web3.eth.getAccounts();
+		} catch (e) {
+			throw e;
+		}
+	}
+	async getMining() {
+		try {
+			return await this.web3.eth.isMining();
+		} catch (e) {
+			throw e;
+		}
+	}
+	async getHashrate() {
+		try {
+			return await this.web3.eth.getHashrate();
+		} catch (e) {
 			throw e;
 		}
 	}

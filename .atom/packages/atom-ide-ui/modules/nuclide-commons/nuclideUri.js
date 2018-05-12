@@ -56,19 +56,11 @@ function _load_string() {return _string = require('./string');}function _interop
 // of the form nuclide://<host><path>
 //
 // This package creates, queries and decomposes NuclideUris.
-const ARCHIVE_SEPARATOR = '!'; // eslint-disable-next-line rulesdir/prefer-nuclide-uri
+const ARCHIVE_SEPARATOR = '!'; // eslint-disable-next-line nuclide-internal/prefer-nuclide-uri
 const KNOWN_ARCHIVE_EXTENSIONS = ['.jar', '.zip'];const REMOTE_PATH_URI_PREFIX = 'nuclide://'; // TODO(ljw): following regex is incorrect. A URI scheme must start with
 // [A-Za-z] not [0-9_-]. Also, not all schemes require // after them.
-const URI_PREFIX_REGEX = /^[A-Za-z0-9_-]+:\/\/.*/;function isRemote(uri) {return uri.startsWith(REMOTE_PATH_URI_PREFIX);} // When restoring Atom state on load, Atom mangles our remote URIs by
-// removing one of the '/'s. These TextBuffers/TextEditors live for a short time
-// and are destroyed during Nuclide startup.
-// On Windows, we further mangle the colon into an underscore to avoid an invalid drive prefix.
-function isBrokenDeserializedUri(uri) {return uri != null && uri.match(/nuclide[:_][\\/][^/]/) != null;}
-// Atom often puts its URIs in places where we'd expect to see Nuclide URIs (or plain paths)
-function isAtomUri(uri) {
-  return uri.startsWith('atom://');
-}
-
+const URI_PREFIX_REGEX = /^[A-Za-z0-9_-]+:\/\/.*/;function isRemote(uri) {return uri.startsWith(REMOTE_PATH_URI_PREFIX);} // Atom often puts its URIs in places where we'd expect to see Nuclide URIs (or plain paths)
+function isAtomUri(uri) {return uri.startsWith('atom://');}
 function isUri(uri) {
   return URI_PREFIX_REGEX.test(uri);
 }
@@ -834,7 +826,6 @@ function validate(uri, mustBeRemote) {
   extname,
   stripExtension,
   isRemote,
-  isBrokenDeserializedUri,
   isLocal,
   createRemoteUri,
   isInArchive,

@@ -63,7 +63,7 @@ isPositionInRange = isPositionInRange; /**
                                         * LICENSE file in the root directory of this source tree. An additional grant
                                         * of patent rights can be found in the PATENTS file in the same directory.
                                         *
-                                        * 
+                                        *  strict
                                         * @format
                                         */function wordAtPositionFromBuffer(buffer, position, wordRegex) {const { row, column } = position;const rowRange = buffer.rangeForRow(row);let matchData; // Extract the expression from the row text.
   buffer.scanInRange(wordRegex, rowRange, data => {const { range } = data;if (range.start.isLessThanOrEqual(position) && range.end.isGreaterThan(position)) {matchData = data;} // Stop the scan if the scanner has passed our position.

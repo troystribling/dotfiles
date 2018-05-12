@@ -35,14 +35,14 @@
 function _load_log4js() {return _log4js = require('log4js');}
 var _atom = require('atom');var _analytics;
 
-function _load_analytics() {return _analytics = _interopRequireDefault(require('nuclide-commons/analytics'));}var _createPackage;
-function _load_createPackage() {return _createPackage = _interopRequireDefault(require('nuclide-commons-atom/createPackage'));}var _featureConfig;
-function _load_featureConfig() {return _featureConfig = _interopRequireDefault(require('nuclide-commons-atom/feature-config'));}var _range;
-function _load_range() {return _range = require('nuclide-commons-atom/range');}var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _ProviderRegistry;
-function _load_ProviderRegistry() {return _ProviderRegistry = _interopRequireDefault(require('nuclide-commons-atom/ProviderRegistry'));}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _goToLocation;
-function _load_goToLocation() {return _goToLocation = require('nuclide-commons-atom/go-to-location');}var _DefinitionCache;
+function _load_analytics() {return _analytics = _interopRequireDefault(require('../../../../nuclide-commons/analytics'));}var _createPackage;
+function _load_createPackage() {return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));}var _featureConfig;
+function _load_featureConfig() {return _featureConfig = _interopRequireDefault(require('../../../../nuclide-commons-atom/feature-config'));}var _range;
+function _load_range() {return _range = require('../../../../nuclide-commons-atom/range');}var _nuclideUri;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../../../../nuclide-commons/nuclideUri'));}var _ProviderRegistry;
+function _load_ProviderRegistry() {return _ProviderRegistry = _interopRequireDefault(require('../../../../nuclide-commons-atom/ProviderRegistry'));}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _goToLocation;
+function _load_goToLocation() {return _goToLocation = require('../../../../nuclide-commons-atom/go-to-location');}var _DefinitionCache;
 
 function _load_DefinitionCache() {return _DefinitionCache = _interopRequireDefault(require('./DefinitionCache'));}var _getPreviewDatatipFromDefinitionResult;
 function _load_getPreviewDatatipFromDefinitionResult() {return _getPreviewDatatipFromDefinitionResult = _interopRequireDefault(require('./getPreviewDatatipFromDefinitionResult'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
@@ -198,7 +198,7 @@ class Activation {constructor() {this._providers = new (_ProviderRegistry || _lo
       grammar);
 
 
-      // flowlint-next-line sketchy-null-mixed:off
+      // $FlowFixMe(>=0.68.0) Flow suppress (T27187857)
       if (previewDatatip != null && previewDatatip.markedStrings) {
         (_analytics || _load_analytics()).default.track('hyperclick-preview-popup', {
           grammar: grammar.name,

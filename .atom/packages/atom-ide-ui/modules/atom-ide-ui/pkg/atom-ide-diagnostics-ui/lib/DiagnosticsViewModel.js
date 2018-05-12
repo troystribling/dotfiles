@@ -16,21 +16,21 @@
 
 
 
-function _load_dockForLocation() {return _dockForLocation = _interopRequireDefault(require('nuclide-commons-atom/dock-for-location'));}var _goToLocation;
-function _load_goToLocation() {return _goToLocation = require('nuclide-commons-atom/go-to-location');}var _memoizeUntilChanged;
-function _load_memoizeUntilChanged() {return _memoizeUntilChanged = _interopRequireDefault(require('nuclide-commons/memoizeUntilChanged'));}var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _observePaneItemVisibility;
-function _load_observePaneItemVisibility() {return _observePaneItemVisibility = _interopRequireDefault(require('nuclide-commons-atom/observePaneItemVisibility'));}var _collection;
-function _load_collection() {return _collection = require('nuclide-commons/collection');}var _observable;
-function _load_observable() {return _observable = require('nuclide-commons/observable');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_dockForLocation() {return _dockForLocation = _interopRequireDefault(require('../../../../nuclide-commons-atom/dock-for-location'));}var _goToLocation;
+function _load_goToLocation() {return _goToLocation = require('../../../../nuclide-commons-atom/go-to-location');}var _memoizeUntilChanged;
+function _load_memoizeUntilChanged() {return _memoizeUntilChanged = _interopRequireDefault(require('../../../../nuclide-commons/memoizeUntilChanged'));}var _nuclideUri;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../../../../nuclide-commons/nuclideUri'));}var _observePaneItemVisibility;
+function _load_observePaneItemVisibility() {return _observePaneItemVisibility = _interopRequireDefault(require('../../../../nuclide-commons-atom/observePaneItemVisibility'));}var _collection;
+function _load_collection() {return _collection = require('../../../../nuclide-commons/collection');}var _observable;
+function _load_observable() {return _observable = require('../../../../nuclide-commons/observable');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}
 var _react = _interopRequireDefault(require('react'));var _analytics;
-function _load_analytics() {return _analytics = _interopRequireDefault(require('nuclide-commons/analytics'));}var _Model;
-function _load_Model() {return _Model = _interopRequireDefault(require('nuclide-commons/Model'));}var _renderReactRoot;
-function _load_renderReactRoot() {return _renderReactRoot = require('nuclide-commons-ui/renderReactRoot');}var _bindObservableAsProps;
-function _load_bindObservableAsProps() {return _bindObservableAsProps = require('nuclide-commons-ui/bindObservableAsProps');}
+function _load_analytics() {return _analytics = _interopRequireDefault(require('../../../../nuclide-commons/analytics'));}var _Model;
+function _load_Model() {return _Model = _interopRequireDefault(require('../../../../nuclide-commons/Model'));}var _renderReactRoot;
+function _load_renderReactRoot() {return _renderReactRoot = require('../../../../nuclide-commons-ui/renderReactRoot');}var _bindObservableAsProps;
+function _load_bindObservableAsProps() {return _bindObservableAsProps = require('../../../../nuclide-commons-ui/bindObservableAsProps');}
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _RegExpFilter;
-function _load_RegExpFilter() {return _RegExpFilter = require('nuclide-commons-ui/RegExpFilter');}var _GroupUtils;
+function _load_RegExpFilter() {return _RegExpFilter = require('../../../../nuclide-commons-ui/RegExpFilter');}var _GroupUtils;
 function _load_GroupUtils() {return _GroupUtils = _interopRequireWildcard(require('./GroupUtils'));}var _DiagnosticsView;
 function _load_DiagnosticsView() {return _DiagnosticsView = _interopRequireDefault(require('./ui/DiagnosticsView'));}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * Copyright (c) 2017-present, Facebook, Inc.

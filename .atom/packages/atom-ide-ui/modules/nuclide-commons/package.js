@@ -27,7 +27,7 @@ const SEMVERISH_RE = /^(\d+)\.(\d+)\.(\d+)(?:-([a-z0-9.-]+))?$/; /**
                                                                   * LICENSE file in the root directory of this source tree. An additional grant
                                                                   * of patent rights can be found in the PATENTS file in the same directory.
                                                                   *
-                                                                  * 
+                                                                  *  strict
                                                                   * @format
                                                                   */function getPackageMinorVersion(packageJsonPath) {const pkgJson = JSON.parse(_fs.default.readFileSync(packageJsonPath, 'utf8'));const match = SEMVERISH_RE.exec(pkgJson.version);if (!match) {throw new Error('Invariant violation: "match"');} // const majorVersion = match[1];
   const minorVersion = match[2]; // const patchVersion = match[3];

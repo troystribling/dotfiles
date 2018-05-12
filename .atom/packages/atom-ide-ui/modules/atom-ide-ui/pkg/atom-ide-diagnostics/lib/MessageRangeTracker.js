@@ -14,28 +14,27 @@
 
 
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _textEditor;
-function _load_textEditor() {return _textEditor = require('nuclide-commons-atom/text-editor');}var _collection;
-function _load_collection() {return _collection = require('nuclide-commons/collection');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _collection;
+function _load_collection() {return _collection = require('../../../../nuclide-commons/collection');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 /**
-                                                                                                                                                                                        * This class tracks the position of messages as the contents of the editor changes. It does this
-                                                                                                                                                                                        * using markers. Note that there's no visible change to the editor; the markers are just a means to
-                                                                                                                                                                                        * track ranges as surrounding lines change.
-                                                                                                                                                                                        */ /**
-                                                                                                                                                                                            * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                                                                            * All rights reserved.
-                                                                                                                                                                                            *
-                                                                                                                                                                                            * This source code is licensed under the BSD-style license found in the
-                                                                                                                                                                                            * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                                                                            * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                                                                            *
-                                                                                                                                                                                            * 
-                                                                                                                                                                                            * @format
-                                                                                                                                                                                            */class MessageRangeTracker {/**
-                                                                                                                                                                                                                          * Stores all current markers, indexed by DiagnosticMessage.
-                                                                                                                                                                                                                          * invariant: No messages for closed files, no destroyed markers.
-                                                                                                                                                                                                                          */
+                                                                                                                                                                                                    * This class tracks the position of messages as the contents of the editor changes. It does this
+                                                                                                                                                                                                    * using markers. Note that there's no visible change to the editor; the markers are just a means to
+                                                                                                                                                                                                    * track ranges as surrounding lines change.
+                                                                                                                                                                                                    */
+class MessageRangeTracker {
+
+
+
+
+
+
+  /**
+                            * Stores all current markers, indexed by DiagnosticMessage.
+                            * invariant: No messages for closed files, no destroyed markers.
+                            */
+
+
 
 
   constructor() {
@@ -43,7 +42,7 @@ function _load_collection() {return _collection = require('nuclide-commons/colle
     this._fileToMessages = new (_collection || _load_collection()).MultiMap();
 
     this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(
-    (0, (_textEditor || _load_textEditor()).observeTextEditors)(editor => {
+    atom.workspace.observeTextEditors(editor => {
       const path = editor.getPath();
       if (path == null) {
         return;
@@ -150,4 +149,14 @@ function _load_collection() {return _collection = require('nuclide-commons/colle
     !this._disposables.disposed) {throw new Error(
       `${this.constructor.name} has been disposed`);}
 
-  }}exports.default = MessageRangeTracker;
+  }}exports.default = MessageRangeTracker; /**
+                                            * Copyright (c) 2017-present, Facebook, Inc.
+                                            * All rights reserved.
+                                            *
+                                            * This source code is licensed under the BSD-style license found in the
+                                            * LICENSE file in the root directory of this source tree. An additional grant
+                                            * of patent rights can be found in the PATENTS file in the same directory.
+                                            *
+                                            *  strict-local
+                                            * @format
+                                            */

@@ -18,12 +18,12 @@
 
 
 var _react = _interopRequireWildcard(require('react'));var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _Button;
-function _load_Button() {return _Button = require('nuclide-commons-ui/Button');}var _ButtonGroup;
-function _load_ButtonGroup() {return _ButtonGroup = require('nuclide-commons-ui/ButtonGroup');}var _Dropdown;
-function _load_Dropdown() {return _Dropdown = require('nuclide-commons-ui/Dropdown');}var _Tabs;
-function _load_Tabs() {return _Tabs = _interopRequireDefault(require('nuclide-commons-ui/Tabs'));}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}var _nuclideUri;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../../../../../nuclide-commons/nuclideUri'));}var _Button;
+function _load_Button() {return _Button = require('../../../../../nuclide-commons-ui/Button');}var _ButtonGroup;
+function _load_ButtonGroup() {return _ButtonGroup = require('../../../../../nuclide-commons-ui/ButtonGroup');}var _Dropdown;
+function _load_Dropdown() {return _Dropdown = require('../../../../../nuclide-commons-ui/Dropdown');}var _Tabs;
+function _load_Tabs() {return _Tabs = _interopRequireDefault(require('../../../../../nuclide-commons-ui/Tabs'));}
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _AtomServiceContainer;
 
 function _load_AtomServiceContainer() {return _AtomServiceContainer = require('../AtomServiceContainer');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
@@ -190,8 +190,6 @@ debuggerDisplayName)
 
 
 
-
-
     _setConfigValid = valid => {
       this.setState({
         configIsValid: valid });
@@ -200,7 +198,7 @@ debuggerDisplayName)
           // component gets to handle the event first (and start the debugger).
           process.nextTick(this.props.dialogCloser);}} }), atom.commands.add('atom-workspace', { 'core:cancel': () => {this._rememberTab();this.props.dialogCloser();} }));this.state = { selectedProviderTab: null, configIsValid: false, enabledProviders: [] };}_rememberTab() {// Remember the last tab the user used for this connection when the "launch/attach"
     // button is clicked.
-    const host = (_nuclideUri || _load_nuclideUri()).default.isRemote(this.props.connection) ? (_nuclideUri || _load_nuclideUri()).default.getHostname(this.props.connection) : 'local';if (this.state.selectedProviderTab != null) {setLastUsedDebugger(host, this.props.dialogMode, this.state.selectedProviderTab || '');}}componentWillMount() {const host = (_nuclideUri || _load_nuclideUri()).default.isRemote(this.props.connection) ? (_nuclideUri || _load_nuclideUri()).default.getHostname(this.props.connection) : 'local';this._filterProviders(host);this.setState({ selectedProviderTab: getLastUsedDebugger(host, this.props.dialogMode) });}componentWillReceiveProps(nextProps) {const host = (_nuclideUri || _load_nuclideUri()).default.isRemote(nextProps.connection) ? (_nuclideUri || _load_nuclideUri()).default.getHostname(nextProps.connection) : 'local';this._filterProviders(host);this.setState({ selectedProviderTab: getLastUsedDebugger(host, nextProps.dialogMode) });}componentWillUnmount() {this._disposables.dispose();}_getProviderIfEnabled(provider) {var _this = this;return (0, _asyncToGenerator.default)(function* () {const enabled = yield provider.getCallbacksForAction(_this.props.dialogMode).isEnabled();return enabled ? provider : null;})();}_filterProviders(key) {this.setState({ enabledProviders: [] });_rxjsBundlesRxMinJs.Observable.merge(...(this.props.providers.get(key) || []).map(provider => _rxjsBundlesRxMinJs.Observable.fromPromise(this._getProviderIfEnabled(provider)))).filter(provider => provider != null).subscribe(provider => {if (!(provider != null)) {throw new Error('Invariant violation: "provider != null"');}const enabledProviders = this.state.enabledProviders.concat(...provider.getCallbacksForAction(this.props.dialogMode).getDebuggerTypeNames().map(debuggerName => {return { provider, debuggerName };}));this.setState({ enabledProviders });});}_getTabsFromEnabledProviders(enabledProviders) {const tabs = this.state.enabledProviders.map(debuggerType => ({
+    const host = (_nuclideUri || _load_nuclideUri()).default.isRemote(this.props.connection) ? (_nuclideUri || _load_nuclideUri()).default.getHostname(this.props.connection) : 'local';if (this.state.selectedProviderTab != null) {setLastUsedDebugger(host, this.props.dialogMode, this.state.selectedProviderTab || '');}}componentWillMount() {const host = (_nuclideUri || _load_nuclideUri()).default.isRemote(this.props.connection) ? (_nuclideUri || _load_nuclideUri()).default.getHostname(this.props.connection) : 'local';this._filterProviders(host);this.setState({ selectedProviderTab: getLastUsedDebugger(host, this.props.dialogMode) });}componentWillReceiveProps(nextProps) {const host = (_nuclideUri || _load_nuclideUri()).default.isRemote(nextProps.connection) ? (_nuclideUri || _load_nuclideUri()).default.getHostname(nextProps.connection) : 'local';this._filterProviders(host);this.setState({ selectedProviderTab: getLastUsedDebugger(host, nextProps.dialogMode) });}componentWillUnmount() {this._disposables.dispose();}_getProviderIfEnabled(provider) {var _this = this;return (0, _asyncToGenerator.default)(function* () {const enabled = yield provider.getCallbacksForAction(_this.props.dialogMode).isEnabled();return enabled ? provider : null;})();}_filterProviders(key) {this.setState({ enabledProviders: [] });_rxjsBundlesRxMinJs.Observable.merge(...(this.props.providers.get(key) || []).map(provider => _rxjsBundlesRxMinJs.Observable.fromPromise(this._getProviderIfEnabled(provider)))).filter(provider => provider != null).map(provider => {if (!(provider != null)) {throw new Error('Invariant violation: "provider != null"');}return provider.getCallbacksForAction(this.props.dialogMode).getDebuggerTypeNames().map(debuggerName => {return { provider, debuggerName };});}).scan((arr, provider) => arr.concat(provider), []).subscribe(enabledProviders => {this.setState({ enabledProviders });});}_getTabsFromEnabledProviders(enabledProviders) {const tabs = this.state.enabledProviders.map(debuggerType => ({
       name: debuggerType.debuggerName,
       tabContent:
       _react.createElement('span', { title: debuggerType.debuggerName },

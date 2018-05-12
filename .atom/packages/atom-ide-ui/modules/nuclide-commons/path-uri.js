@@ -36,7 +36,7 @@ uriToPath = uriToPath;var _url = _interopRequireDefault(require('url'));function
                              * LICENSE file in the root directory of this source tree. An additional grant
                              * of patent rights can be found in the PATENTS file in the same directory.
                              *
-                             * 
+                             *  strict
                              * @format
                              */function uriToPath(uri) {// TODO: this will think that "c:\file.txt" uses the protocol "c",
   // rather than being a local filename. It also fails to recognize the host,

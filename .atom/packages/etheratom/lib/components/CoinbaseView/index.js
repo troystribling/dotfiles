@@ -21,10 +21,11 @@ import { setCoinbase, setPassword } from '../../actions'
 class CoinbaseView extends React.Component {
     constructor(props) {
         super(props);
+        this.helpers = props.helpers;
         this.state = {
             coinbase: props.accounts[0],
+            balance: 0.00,
             password: '',
-            accounts: props.accounts,
             unlock_style: 'unlock-default'
         };
         this._handleAccChange = this._handleAccChange.bind(this);
@@ -32,14 +33,20 @@ class CoinbaseView extends React.Component {
         this._handleUnlock = this._handleUnlock.bind(this);
         this._linkClick = this._linkClick.bind(this);
     }
+    async componentDidMount() {
+        const { coinbase } = this.state;
+        const balance = await this.helpers.getBalance(coinbase);
+        this.setState({ balance });
+    }
     _linkClick(event) {
         const { coinbase } = this.state;
         atom.clipboard.write(coinbase);
     }
-    _handleAccChange(event) {
+    async _handleAccChange(event) {
         const coinbase = event.target.value;
+        const balance = await this.helpers.getBalance(coinbase);
         this.props.setCoinbase(coinbase);
-        this.setState({ coinbase });
+        this.setState({ coinbase, balance });
     }
     _handlePasswordChange(event) {
         const password = event.target.value
@@ -59,9 +66,10 @@ class CoinbaseView extends React.Component {
         event.preventDefault();
     }
     render() {
-        const { coinbase, password, accounts } = this.state;
+        const { coinbase, balance, password } = this.state;
+        const { accounts } = this.props;
         return (
-            <div for="acc-n-pass" class="content">
+            <div class="content">
                 <div class="row">
                     <div class="icon icon-link btn copy-btn btn-success" onClick={this._linkClick}></div>
                     <select onChange={this._handleAccChange} value={this.state.coinbase}>
@@ -73,6 +81,7 @@ class CoinbaseView extends React.Component {
                             })
                         }
                     </select>
+                    <button class="btn">{balance} ETH</button>
                 </div>
                 <form class="row" onSubmit={this._handleUnlock}>
                     <div class="icon icon-lock"></div>

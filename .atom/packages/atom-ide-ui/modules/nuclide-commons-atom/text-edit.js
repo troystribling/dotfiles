@@ -90,7 +90,7 @@
                                                                                                          * LICENSE file in the root directory of this source tree. An additional grant
                                                                                                          * of patent rights can be found in the PATENTS file in the same directory.
                                                                                                          *
-                                                                                                         * 
+                                                                                                         *  strict-local
                                                                                                          * @format
                                                                                                          */exports.applyTextEdits = applyTextEdits;exports.
 applyTextEditsToBuffer = applyTextEditsToBuffer;var _log4js;function _load_log4js() {return _log4js = require('log4js');}var _textEditor;function _load_textEditor() {return _textEditor = require('./text-editor');}var _goToLocation;function _load_goToLocation() {return _goToLocation = require('./go-to-location');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function applyTextEdits(path, ...edits) {const sortedEdits = sortEdits(edits);const editor = (0, (_textEditor || _load_textEditor()).existingEditorForUri)(path);if (!(editor != null)) {throw new Error('Invariant violation: "editor != null"');}return applySortedTextEditsToBuffer(editor.getBuffer(), sortedEdits);}function applyTextEditsToBuffer(

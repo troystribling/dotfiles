@@ -10,14 +10,14 @@
 
 
 
-function _load_ActiveEditorRegistry() {return _ActiveEditorRegistry = _interopRequireDefault(require('nuclide-commons-atom/ActiveEditorRegistry'));}var _debounced;
-function _load_debounced() {return _debounced = require('nuclide-commons-atom/debounced');}var _textEditor;
-function _load_textEditor() {return _textEditor = require('nuclide-commons-atom/text-editor');}var _createPackage;
-function _load_createPackage() {return _createPackage = _interopRequireDefault(require('nuclide-commons-atom/createPackage'));}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _analytics;
-function _load_analytics() {return _analytics = _interopRequireDefault(require('nuclide-commons/analytics'));}var _destroyItemWhere;
+function _load_ActiveEditorRegistry() {return _ActiveEditorRegistry = _interopRequireDefault(require('../../../../nuclide-commons-atom/ActiveEditorRegistry'));}var _debounced;
+function _load_debounced() {return _debounced = require('../../../../nuclide-commons-atom/debounced');}var _textEditor;
+function _load_textEditor() {return _textEditor = require('../../../../nuclide-commons-atom/text-editor');}var _createPackage;
+function _load_createPackage() {return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _analytics;
+function _load_analytics() {return _analytics = _interopRequireDefault(require('../../../../nuclide-commons/analytics'));}var _destroyItemWhere;
 
-function _load_destroyItemWhere() {return _destroyItemWhere = require('nuclide-commons-atom/destroyItemWhere');}var _OutlineViewPanel;
+function _load_destroyItemWhere() {return _destroyItemWhere = require('../../../../nuclide-commons-atom/destroyItemWhere');}var _OutlineViewPanel;
 
 function _load_OutlineViewPanel() {return _OutlineViewPanel = require('./OutlineViewPanel');}var _createOutlines;
 function _load_createOutlines() {return _createOutlines = require('./createOutlines');}
@@ -99,8 +99,6 @@ function getActiveEditorRegistryEventSources() {
     activeEditors: (0, (_debounced || _load_debounced()).observeActivePaneItemDebounced)().
     switchMap(item => {
       if ((0, (_textEditor || _load_textEditor()).isValidTextEditor)(item)) {
-        // Flow cannot understand the type refinement provided by the isValidTextEditor function,
-        // so we have to cast.
         return _rxjsBundlesRxMinJs.Observable.of(item);
       } else if (item instanceof (_OutlineViewPanel || _load_OutlineViewPanel()).OutlineViewPanelState) {
         // Ignore switching to the outline view.

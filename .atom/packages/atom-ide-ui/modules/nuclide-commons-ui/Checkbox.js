@@ -107,7 +107,7 @@ function _load_ignoreTextSelectionEvents() {return _ignoreTextSelectionEvents = 
           className: (0, (_classnames || _load_classnames()).default)(className, 'nuclide-ui-checkbox-label', {
             'nuclide-ui-checkbox-disabled': disabled })
 
-          // eslint-disable-next-line rulesdir/jsx-simple-callback-refs
+          // eslint-disable-next-line nuclide-internal/jsx-simple-callback-refs
           , ref: ref,
           onClick: onClick && (0, (_ignoreTextSelectionEvents || _load_ignoreTextSelectionEvents()).default)(onClick),
           title: title },

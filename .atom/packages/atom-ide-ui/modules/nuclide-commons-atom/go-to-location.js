@@ -49,7 +49,7 @@
                                                                                                                                                                                             *
                                                                                                                                                                                             * In these cases, you may disable the lint rule against `atom.workspace.open` by adding the
                                                                                                                                                                                             * following comment above its use:
-                                                                                                                                                                                            * // eslint-disable-next-line rulesdir/atom-apis
+                                                                                                                                                                                            * // eslint-disable-next-line nuclide-internal/atom-apis
                                                                                                                                                                                             */ /**
                                                                                                                                                                                                 * Copyright (c) 2017-present, Facebook, Inc.
                                                                                                                                                                                                 * All rights reserved.
@@ -58,7 +58,7 @@
                                                                                                                                                                                                 * LICENSE file in the root directory of this source tree. An additional grant
                                                                                                                                                                                                 * of patent rights can be found in the PATENTS file in the same directory.
                                                                                                                                                                                                 *
-                                                                                                                                                                                                * 
+                                                                                                                                                                                                *  strict-local
                                                                                                                                                                                                 * @format
                                                                                                                                                                                                 */let goToLocation = exports.goToLocation = (() => {var _ref8 = (0, _asyncToGenerator.default)(function* (file, options) {var _ref, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;const center_ = (_ref = options) != null ? _ref.center : _ref;const center = center_ == null ? true : center_;const moveCursor_ = (_ref2 = options) != null ? _ref2.moveCursor : _ref2;const moveCursor = moveCursor_ == null ? true : moveCursor_;const activatePane_ = (_ref3 = options) != null ? _ref3.activatePane : _ref3;const activatePane = activatePane_ == null ? true : activatePane_;
     const activateItem = (_ref4 = options) != null ? _ref4.activateItem : _ref4;
@@ -87,7 +87,7 @@
       return currentEditor;
     } else {
       // Obviously, calling goToLocation isn't a viable alternative here :P
-      // eslint-disable-next-line rulesdir/atom-apis
+      // eslint-disable-next-line nuclide-internal/atom-apis
       const editor = yield atom.workspace.open(file, {
         initialLine: line,
         initialColumn: column,

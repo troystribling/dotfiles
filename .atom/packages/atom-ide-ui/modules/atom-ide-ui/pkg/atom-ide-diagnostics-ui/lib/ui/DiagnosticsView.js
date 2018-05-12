@@ -21,18 +21,18 @@
 
 
 
-function _load_analytics() {return _analytics = _interopRequireDefault(require('nuclide-commons/analytics'));}var _DiagnosticsTable;
+function _load_analytics() {return _analytics = _interopRequireDefault(require('../../../../../nuclide-commons/analytics'));}var _DiagnosticsTable;
 function _load_DiagnosticsTable() {return _DiagnosticsTable = _interopRequireDefault(require('./DiagnosticsTable'));}var _showModal;
-function _load_showModal() {return _showModal = _interopRequireDefault(require('nuclide-commons-ui/showModal'));}var _Toggle;
-function _load_Toggle() {return _Toggle = require('nuclide-commons-ui/Toggle');}var _Toolbar;
-function _load_Toolbar() {return _Toolbar = require('nuclide-commons-ui/Toolbar');}var _ToolbarLeft;
-function _load_ToolbarLeft() {return _ToolbarLeft = require('nuclide-commons-ui/ToolbarLeft');}var _ToolbarRight;
-function _load_ToolbarRight() {return _ToolbarRight = require('nuclide-commons-ui/ToolbarRight');}
+function _load_showModal() {return _showModal = _interopRequireDefault(require('../../../../../nuclide-commons-ui/showModal'));}var _Toggle;
+function _load_Toggle() {return _Toggle = require('../../../../../nuclide-commons-ui/Toggle');}var _Toolbar;
+function _load_Toolbar() {return _Toolbar = require('../../../../../nuclide-commons-ui/Toolbar');}var _ToolbarLeft;
+function _load_ToolbarLeft() {return _ToolbarLeft = require('../../../../../nuclide-commons-ui/ToolbarLeft');}var _ToolbarRight;
+function _load_ToolbarRight() {return _ToolbarRight = require('../../../../../nuclide-commons-ui/ToolbarRight');}
 var _react = _interopRequireWildcard(require('react'));var _Button;
-function _load_Button() {return _Button = require('nuclide-commons-ui/Button');}var _ButtonGroup;
-function _load_ButtonGroup() {return _ButtonGroup = require('nuclide-commons-ui/ButtonGroup');}var _FilterButton;
+function _load_Button() {return _Button = require('../../../../../nuclide-commons-ui/Button');}var _ButtonGroup;
+function _load_ButtonGroup() {return _ButtonGroup = require('../../../../../nuclide-commons-ui/ButtonGroup');}var _FilterButton;
 function _load_FilterButton() {return _FilterButton = _interopRequireDefault(require('./FilterButton'));}var _RegExpFilter;
-function _load_RegExpFilter() {return _RegExpFilter = _interopRequireDefault(require('nuclide-commons-ui/RegExpFilter'));}var _SettingsModal;
+function _load_RegExpFilter() {return _RegExpFilter = _interopRequireDefault(require('../../../../../nuclide-commons-ui/RegExpFilter'));}var _SettingsModal;
 function _load_SettingsModal() {return _SettingsModal = _interopRequireDefault(require('./SettingsModal'));}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 

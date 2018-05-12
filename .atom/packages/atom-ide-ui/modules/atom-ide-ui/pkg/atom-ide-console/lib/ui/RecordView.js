@@ -21,15 +21,15 @@
 
 
 function _load_classnames() {return _classnames = _interopRequireDefault(require('classnames'));}var _MeasuredComponent;
-function _load_MeasuredComponent() {return _MeasuredComponent = require('nuclide-commons-ui/MeasuredComponent');}
+function _load_MeasuredComponent() {return _MeasuredComponent = require('../../../../../nuclide-commons-ui/MeasuredComponent');}
 var _react = _interopRequireWildcard(require('react'));var _LazyNestedValueComponent;
-function _load_LazyNestedValueComponent() {return _LazyNestedValueComponent = require('nuclide-commons-ui/LazyNestedValueComponent');}var _SimpleValueComponent;
-function _load_SimpleValueComponent() {return _SimpleValueComponent = _interopRequireDefault(require('nuclide-commons-ui/SimpleValueComponent'));}var _shallowequal;
+function _load_LazyNestedValueComponent() {return _LazyNestedValueComponent = require('../../../../../nuclide-commons-ui/LazyNestedValueComponent');}var _SimpleValueComponent;
+function _load_SimpleValueComponent() {return _SimpleValueComponent = _interopRequireDefault(require('../../../../../nuclide-commons-ui/SimpleValueComponent'));}var _shallowequal;
 function _load_shallowequal() {return _shallowequal = _interopRequireDefault(require('shallowequal'));}var _Ansi;
-function _load_Ansi() {return _Ansi = _interopRequireDefault(require('nuclide-commons-ui/Ansi'));}var _TextRenderer;
-function _load_TextRenderer() {return _TextRenderer = require('nuclide-commons-ui/TextRenderer');}var _debounce;
-function _load_debounce() {return _debounce = _interopRequireDefault(require('nuclide-commons/debounce'));}var _observable;
-function _load_observable() {return _observable = require('nuclide-commons/observable');}var _parseText;
+function _load_Ansi() {return _Ansi = _interopRequireDefault(require('../../../../../nuclide-commons-ui/Ansi'));}var _TextRenderer;
+function _load_TextRenderer() {return _TextRenderer = require('../../../../../nuclide-commons-ui/TextRenderer');}var _debounce;
+function _load_debounce() {return _debounce = _interopRequireDefault(require('../../../../../nuclide-commons/debounce'));}var _observable;
+function _load_observable() {return _observable = require('../../../../../nuclide-commons/observable');}var _parseText;
 function _load_parseText() {return _parseText = _interopRequireDefault(require('../parseText'));}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 

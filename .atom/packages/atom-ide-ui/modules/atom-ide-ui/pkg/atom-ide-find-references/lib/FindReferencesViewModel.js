@@ -12,8 +12,8 @@
 
 var _react = _interopRequireWildcard(require('react'));var _renderReactRoot;
 
-function _load_renderReactRoot() {return _renderReactRoot = require('nuclide-commons-ui/renderReactRoot');}var _featureConfig;
-function _load_featureConfig() {return _featureConfig = _interopRequireDefault(require('nuclide-commons-atom/feature-config'));}var _FindReferencesView;
+function _load_renderReactRoot() {return _renderReactRoot = require('../../../../nuclide-commons-ui/renderReactRoot');}var _featureConfig;
+function _load_featureConfig() {return _featureConfig = _interopRequireDefault(require('../../../../nuclide-commons-atom/feature-config'));}var _FindReferencesView;
 
 function _load_FindReferencesView() {return _FindReferencesView = _interopRequireDefault(require('./view/FindReferencesView'));}
 
@@ -27,7 +27,7 @@ const FIND_REFERENCES_URI = 'atom://nuclide/find-references/'; /**
                                                                 * LICENSE file in the root directory of this source tree. An additional grant
                                                                 * of patent rights can be found in the PATENTS file in the same directory.
                                                                 *
-                                                                * 
+                                                                *  strict-local
                                                                 * @format
                                                                 */const DEFAULT_LOCATION_SETTING = 'atom-ide-find-references.defaultLocationForPane';const DEFAULT_PANE_LOCATION = 'bottom';class FindReferencesViewModel {
 

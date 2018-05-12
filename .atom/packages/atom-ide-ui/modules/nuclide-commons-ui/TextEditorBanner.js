@@ -14,7 +14,7 @@
 
 function _load_Message() {return _Message = require('./Message');}var _UniversalDisposable;
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));}
 var _react = _interopRequireWildcard(require('react'));
 var _reactDom = _interopRequireDefault(require('react-dom'));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
                                                                                                                                                                                                                                                                                                                                                                                                                             * Copyright (c) 2017-present, Facebook, Inc.
@@ -92,7 +92,7 @@ var _reactDom = _interopRequireDefault(require('react-dom'));function _interopRe
         reactElement),
 
       _react.createElement('div', {
-        // eslint-disable-next-line rulesdir/jsx-simple-callback-refs
+        // eslint-disable-next-line nuclide-internal/jsx-simple-callback-refs
         ref: ref => this._updateTextEditorElement(ref),
         className: 'nuclide-ui-text-editor-banner-editor' })),
 

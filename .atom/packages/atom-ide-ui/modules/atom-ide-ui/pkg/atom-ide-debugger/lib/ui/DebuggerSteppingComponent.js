@@ -12,19 +12,19 @@
 
 
 
-function _load_LoadingSpinner() {return _LoadingSpinner = require('nuclide-commons-ui/LoadingSpinner');}var _event;
+function _load_LoadingSpinner() {return _LoadingSpinner = require('../../../../../nuclide-commons-ui/LoadingSpinner');}var _event;
 
 
 
 
-function _load_event() {return _event = require('nuclide-commons/event');}var _observable;
-function _load_observable() {return _observable = require('nuclide-commons/observable');}
+function _load_event() {return _event = require('../../../../../nuclide-commons/event');}var _observable;
+function _load_observable() {return _observable = require('../../../../../nuclide-commons/observable');}
 var _react = _interopRequireWildcard(require('react'));var _Button;
-function _load_Button() {return _Button = require('nuclide-commons-ui/Button');}var _ButtonGroup;
-function _load_ButtonGroup() {return _ButtonGroup = require('nuclide-commons-ui/ButtonGroup');}
+function _load_Button() {return _Button = require('../../../../../nuclide-commons-ui/Button');}var _ButtonGroup;
+function _load_ButtonGroup() {return _ButtonGroup = require('../../../../../nuclide-commons-ui/ButtonGroup');}
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _constants;
 function _load_constants() {return _constants = require('../constants');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _logger;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}var _logger;
 function _load_logger() {return _logger = _interopRequireDefault(require('../logger'));}var _nullthrows;
 function _load_nullthrows() {return _nullthrows = _interopRequireDefault(require('nullthrows'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}
 

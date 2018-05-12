@@ -21,13 +21,13 @@ var _react = _interopRequireWildcard(require('react'));var _idx;
 
 function _load_idx() {return _idx = _interopRequireDefault(require('idx'));}var _nullthrows;
 function _load_nullthrows() {return _nullthrows = _interopRequireDefault(require('nullthrows'));}var _Checkbox;
-function _load_Checkbox() {return _Checkbox = require('nuclide-commons-ui/Checkbox');}var _RadioGroup;
-function _load_RadioGroup() {return _RadioGroup = _interopRequireDefault(require('nuclide-commons-ui/RadioGroup'));}var _AtomInput;
-function _load_AtomInput() {return _AtomInput = require('nuclide-commons-ui/AtomInput');}var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _string;
-function _load_string() {return _string = require('nuclide-commons/string');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _debugger;
-function _load_debugger() {return _debugger = require('nuclide-commons-atom/debugger');}var _DebuggerConfigSerializer;
+function _load_Checkbox() {return _Checkbox = require('../nuclide-commons-ui/Checkbox');}var _RadioGroup;
+function _load_RadioGroup() {return _RadioGroup = _interopRequireDefault(require('../nuclide-commons-ui/RadioGroup'));}var _AtomInput;
+function _load_AtomInput() {return _AtomInput = require('../nuclide-commons-ui/AtomInput');}var _nuclideUri;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../nuclide-commons/nuclideUri'));}var _string;
+function _load_string() {return _string = require('../nuclide-commons/string');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));}var _debugger;
+function _load_debugger() {return _debugger = require('../nuclide-commons-atom/debugger');}var _DebuggerConfigSerializer;
 function _load_DebuggerConfigSerializer() {return _DebuggerConfigSerializer = require('./DebuggerConfigSerializer');}var _SelectableFilterableProcessTable;
 
 
@@ -447,8 +447,9 @@ class AutoGenLaunchAttachUiComponent extends _react.Component
         capabilities: { threads },
         properties: {
           customControlButtons: [],
-          threadsComponentTitle: 'Threads' } });
+          threadsComponentTitle: 'Threads' },
 
+        customDisposable: new (_UniversalDisposable || _load_UniversalDisposable()).default() });
 
 
       (0, (_DebuggerConfigSerializer || _load_DebuggerConfigSerializer()).serializeDebuggerConfig)(..._this._getSerializationArgs(_this.props), {

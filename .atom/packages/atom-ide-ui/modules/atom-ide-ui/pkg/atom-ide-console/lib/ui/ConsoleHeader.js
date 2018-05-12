@@ -13,16 +13,16 @@
 
 
 
-function _load_LoadingSpinner() {return _LoadingSpinner = require('nuclide-commons-ui/LoadingSpinner');}
+function _load_LoadingSpinner() {return _LoadingSpinner = require('../../../../../nuclide-commons-ui/LoadingSpinner');}
 var _react = _interopRequireWildcard(require('react'));var _ModalMultiSelect;
-function _load_ModalMultiSelect() {return _ModalMultiSelect = require('nuclide-commons-ui/ModalMultiSelect');}var _RegExpFilter;
-function _load_RegExpFilter() {return _RegExpFilter = _interopRequireDefault(require('nuclide-commons-ui/RegExpFilter'));}var _Toolbar;
-function _load_Toolbar() {return _Toolbar = require('nuclide-commons-ui/Toolbar');}var _ToolbarLeft;
-function _load_ToolbarLeft() {return _ToolbarLeft = require('nuclide-commons-ui/ToolbarLeft');}var _ToolbarRight;
-function _load_ToolbarRight() {return _ToolbarRight = require('nuclide-commons-ui/ToolbarRight');}var _addTooltip;
-function _load_addTooltip() {return _addTooltip = _interopRequireDefault(require('nuclide-commons-ui/addTooltip'));}var _Button;
+function _load_ModalMultiSelect() {return _ModalMultiSelect = require('../../../../../nuclide-commons-ui/ModalMultiSelect');}var _RegExpFilter;
+function _load_RegExpFilter() {return _RegExpFilter = _interopRequireDefault(require('../../../../../nuclide-commons-ui/RegExpFilter'));}var _Toolbar;
+function _load_Toolbar() {return _Toolbar = require('../../../../../nuclide-commons-ui/Toolbar');}var _ToolbarLeft;
+function _load_ToolbarLeft() {return _ToolbarLeft = require('../../../../../nuclide-commons-ui/ToolbarLeft');}var _ToolbarRight;
+function _load_ToolbarRight() {return _ToolbarRight = require('../../../../../nuclide-commons-ui/ToolbarRight');}var _addTooltip;
+function _load_addTooltip() {return _addTooltip = _interopRequireDefault(require('../../../../../nuclide-commons-ui/addTooltip'));}var _Button;
 
-function _load_Button() {return _Button = require('nuclide-commons-ui/Button');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}
+function _load_Button() {return _Button = require('../../../../../nuclide-commons-ui/Button');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}
 
 
 
@@ -139,7 +139,7 @@ class ConsoleHeader extends _react.Component {constructor(...args) {var _temp;re
         className: 'inline-block',
         size: (_Button || _load_Button()).ButtonSizes.SMALL,
         onClick: this._handleCreatePasteButtonClick
-        // eslint-disable-next-line rulesdir/jsx-simple-callback-refs
+        // eslint-disable-next-line nuclide-internal/jsx-simple-callback-refs
         , ref: (0, (_addTooltip || _load_addTooltip()).default)({
           title: 'Creates a Paste from the current contents of the console' }) }, 'Create Paste');
 

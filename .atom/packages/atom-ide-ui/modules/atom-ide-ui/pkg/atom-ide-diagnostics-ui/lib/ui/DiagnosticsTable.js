@@ -22,17 +22,17 @@
 function _load_classnames() {return _classnames = _interopRequireDefault(require('classnames'));}var _idx;
 
 function _load_idx() {return _idx = _interopRequireDefault(require('idx'));}var _memoizeUntilChanged;
-function _load_memoizeUntilChanged() {return _memoizeUntilChanged = _interopRequireDefault(require('nuclide-commons/memoizeUntilChanged'));}var _humanizePath;
-function _load_humanizePath() {return _humanizePath = _interopRequireDefault(require('nuclide-commons-atom/humanizePath'));}var _collection;
-function _load_collection() {return _collection = require('nuclide-commons/collection');}
+function _load_memoizeUntilChanged() {return _memoizeUntilChanged = _interopRequireDefault(require('../../../../../nuclide-commons/memoizeUntilChanged'));}var _humanizePath;
+function _load_humanizePath() {return _humanizePath = _interopRequireDefault(require('../../../../../nuclide-commons-atom/humanizePath'));}var _collection;
+function _load_collection() {return _collection = require('../../../../../nuclide-commons/collection');}
 var _react = _interopRequireWildcard(require('react'));var _nuclideUri;
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _goToLocation;
-function _load_goToLocation() {return _goToLocation = require('nuclide-commons-atom/go-to-location');}var _Table;
-function _load_Table() {return _Table = require('nuclide-commons-ui/Table');}var _sortDiagnostics;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../../../../../nuclide-commons/nuclideUri'));}var _goToLocation;
+function _load_goToLocation() {return _goToLocation = require('../../../../../nuclide-commons-atom/go-to-location');}var _Table;
+function _load_Table() {return _Table = require('../../../../../nuclide-commons-ui/Table');}var _sortDiagnostics;
 function _load_sortDiagnostics() {return _sortDiagnostics = _interopRequireDefault(require('../sortDiagnostics'));}var _DiagnosticsMessage;
 function _load_DiagnosticsMessage() {return _DiagnosticsMessage = require('./DiagnosticsMessage');}var _DiagnosticsMessageText;
 function _load_DiagnosticsMessageText() {return _DiagnosticsMessageText = require('./DiagnosticsMessageText');}var _Icon;
-function _load_Icon() {return _Icon = require('nuclide-commons-ui/Icon');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_Icon() {return _Icon = require('../../../../../nuclide-commons-ui/Icon');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 const DIAGNOSTICS_TO_ROWS_TRACES_MAP = new WeakMap(); /**
                                                        * Copyright (c) 2017-present, Facebook, Inc.

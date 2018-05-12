@@ -16,6 +16,8 @@
 // along with Etheratom.  If not, see <http://www.gnu.org/licenses/>.
 import React from 'react'
 import { connect } from 'react-redux'
+import ReactJson from 'react-json-view'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import InputsForm from '../InputsForm'
 import FunctionABI from '../FunctionABI'
 
@@ -25,10 +27,8 @@ class ContractExecution extends React.Component {
         this.helpers = props.helpers;
     }
     render() {
-        console.log(this.props);
         const { contractName, bytecode, index, instances, interfaces } = this.props;
         const contract = instances[contractName];
-        console.log(contract);
         const ContractABI = interfaces[contractName].interface;
         return (
             <div class="contract-content" key={index}>
@@ -37,7 +37,31 @@ class ContractExecution extends React.Component {
                     <pre class="large-code">{ JSON.stringify(bytecode) }</pre>
                 </div>
                 <div class="abi-definition">
-                    <pre class="large-code">{ JSON.stringify(ContractABI) }</pre>
+                    <Tabs>
+                        <TabList>
+                            <div class="tab_btns">
+                                <Tab>
+                                    <div class="btn">Interface</div>
+                                </Tab>
+                                <Tab>
+                                    <div class="btn">Interface Object</div>
+                                </Tab>
+                            </div>
+                        </TabList>
+
+                        <TabPanel>
+                            <pre class="large-code">{ JSON.stringify(ContractABI) }</pre>
+                        </TabPanel>
+                        <TabPanel>
+                            <ReactJson
+                                src={ContractABI}
+                                theme="ocean"
+                                displayDataTypes={false}
+                                name={false}
+                                collapsed={2}
+                            />
+                        </TabPanel>
+                    </Tabs>
                 </div>
                 {
                     contract.transactionHash &&

@@ -12,12 +12,12 @@
 
 
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));}
 var _react = _interopRequireDefault(require('react'));
 var _reactDom = _interopRequireDefault(require('react-dom'));var _nullthrows;
 function _load_nullthrows() {return _nullthrows = _interopRequireDefault(require('nullthrows'));}var _Model;
 
-function _load_Model() {return _Model = _interopRequireDefault(require('nuclide-commons/Model'));}var _Jest;
+function _load_Model() {return _Model = _interopRequireDefault(require('../nuclide-commons/Model'));}var _Jest;
 function _load_Jest() {return _Jest = _interopRequireDefault(require('./frontend/Jest'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 const div = document.createElement('div'); /**
@@ -31,7 +31,7 @@ const div = document.createElement('div'); /**
                                             * 
                                             * @format
                                             */(0, (_nullthrows || _load_nullthrows()).default)(document.body).appendChild(div); // Jest seems to be particular about this being a commonjs export
-// eslint-disable-next-line rulesdir/no-commonjs
+// eslint-disable-next-line nuclide-internal/no-commonjs
 module.exports = class AtomReporter {
 
 

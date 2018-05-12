@@ -12,10 +12,10 @@
 
 
 
-function _load_LoadingSpinner() {return _LoadingSpinner = require('nuclide-commons-ui/LoadingSpinner');}
+function _load_LoadingSpinner() {return _LoadingSpinner = require('../../../../../nuclide-commons-ui/LoadingSpinner');}
 var _react = _interopRequireWildcard(require('react'));var _LazyNestedValueComponent;
-function _load_LazyNestedValueComponent() {return _LazyNestedValueComponent = require('nuclide-commons-ui/LazyNestedValueComponent');}var _SimpleValueComponent;
-function _load_SimpleValueComponent() {return _SimpleValueComponent = _interopRequireDefault(require('nuclide-commons-ui/SimpleValueComponent'));}var _utils;
+function _load_LazyNestedValueComponent() {return _LazyNestedValueComponent = require('../../../../../nuclide-commons-ui/LazyNestedValueComponent');}var _SimpleValueComponent;
+function _load_SimpleValueComponent() {return _SimpleValueComponent = _interopRequireDefault(require('../../../../../nuclide-commons-ui/SimpleValueComponent'));}var _utils;
 function _load_utils() {return _utils = require('../utils');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}} /**
                                                                                                                                                                                                                                                                                                                                                                                                                             * Copyright (c) 2017-present, Facebook, Inc.
                                                                                                                                                                                                                                                                                                                                                                                                                             * All rights reserved.

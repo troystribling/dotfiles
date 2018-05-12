@@ -17,7 +17,7 @@ var _react = _interopRequireDefault(require('react'));
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _tabbable;
 function _load_tabbable() {return _tabbable = _interopRequireDefault(require('tabbable'));}var _classnames;
 function _load_classnames() {return _classnames = _interopRequireDefault(require('classnames'));}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 
 
@@ -225,6 +225,7 @@ container)
     index = (index + elements.length + increment) % elements.length;
     const element = elements[index];
     if (
+    // $FlowFixMe(>=0.68.0) Flow suppress (T27187857)
     element.disabled === true ||
     element.tabIndex == null ||
     element.tabIndex === -1)

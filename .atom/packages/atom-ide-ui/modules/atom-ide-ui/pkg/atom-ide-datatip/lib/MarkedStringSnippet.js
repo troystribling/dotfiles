@@ -12,7 +12,7 @@
 
 var _atom = require('atom');
 var _react = _interopRequireWildcard(require('react'));var _AtomTextEditor;
-function _load_AtomTextEditor() {return _AtomTextEditor = require('nuclide-commons-ui/AtomTextEditor');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}
+function _load_AtomTextEditor() {return _AtomTextEditor = require('../../../../nuclide-commons-ui/AtomTextEditor');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}
 
 // Complex types can end up being super long. Truncate them.
 const MAX_LENGTH = 100; /**

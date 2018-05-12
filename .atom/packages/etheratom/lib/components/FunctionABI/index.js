@@ -21,71 +21,102 @@ class FunctionABI extends React.Component {
     constructor(props) {
         super(props);
         this.helpers = props.helpers;
-        this.state = {
-            childFunctions: []
-        };
         this._handleChange = this._handleChange.bind(this);
+        this._handlePayableValue = this._handlePayableValue.bind(this);
+        this._handleFallback = this._handleFallback.bind(this);
+        this._handleSubmit = this._handleSubmit.bind(this);
     }
-    async componentDidMount() {
-        const { contractName, interfaces } = this.props;
-        console.log(interfaces);
-        console.log(contractName);
-        console.log(interfaces[contractName]);
-        const ContractABI = interfaces[contractName].interface;
+    _handleChange(input, event) {
+        input.value = event.target.value;
+    }
+    _handlePayableValue(abi, event) {
+        abi.payableValue = event.target.value;
+    }
+    async _handleFallback(abiItem) {
+        const { contractName, coinbase, password, instances } = this.props;
+        const contract = instances[contractName];
         try {
-            const childFunctions = await this.helpers.constructFunctions(ContractABI);
-            this.setState({ childFunctions: childFunctions });
-        } catch (e) {
+            const result = await this.helpers.call({ coinbase, password, contract, abiItem });
+            this.helpers.showOutput({ address: contract.options.address, data: result });
+        } catch(e) {
+            console.log(e);
             this.helpers.showPanelError(e);
         }
     }
-    _handleChange(interfaceName, type, event) {
-        const value = event.target.value;
-        let params = { ...this.state.params };
-        params[interfaceName] = { type, value };
-        this.setState({ params });
-    }
     async _handleSubmit(methodItem) {
-        console.log("%c Submit handle... ", 'background: rgba(36, 194, 203, 0.3); color: #EF525B');
-        // call functions here
         try {
             const { contractName, coinbase, password, instances } = this.props;
             const contract = instances[contractName];
             let params = [];
-            if(this.state.params && this.state.params[methodItem.name]) {
-                params = await this.helpers.inputsToArray(this.state.params[methodItem.name]);
+            for(input of methodItem.inputs) {
+                if(input.value) {
+                    params.push(input);
+                }
             }
-            const result = await this.helpers.call(coinbase, password, contract, methodItem, params);
-            const outputTypes = await this.helpers.getOutputTypes(methodItem);
-            this.helpers.showOutput(contract.options.address, outputTypes, result);
+            const result = await this.helpers.call({ coinbase, password, contract, abiItem: methodItem, params });
+            this.helpers.showOutput({ address: contract.options.address, data: result });
         } catch (e) {
+            console.log(e);
             this.helpers.showPanelError(e);
         }
     }
     render() {
+        const { contractName, interfaces } = this.props;
+        const ContractABI = interfaces[contractName].interface;
         return (
-            <div for="contractFunctions">
+            <div class="abi-container">
                 {
-                    this.state.childFunctions.map((childFunction, i) => {
-                        return (
-                            <form
-                                onSubmit={() => { this._handleSubmit(childFunction.interface) }}
-                                key={i}>
-                                <input type="submit" value={childFunction.interface.name} class="text-subtle call-button" />
-                                {
-                                    childFunction.params.map((childInput, j) => {
-                                        return (
+                    ContractABI.map((abi, i) => {
+                        if(abi.type === 'function') {
+                            return (
+                                <div class="function-container">
+                                    <form onSubmit={() => { this._handleSubmit(abi) }} key={i}>
+                                        <input type="submit" value={abi.name} class="text-subtle call-button" />
+                                        {
+                                            abi.inputs.map((input, j) => {
+                                                return (
+                                                    <input
+                                                        type="text"
+                                                        class="call-button-values"
+                                                        placeholder={input.name + ' ' + input.type}
+                                                        value={input.value}
+                                                        onChange={(event) => this._handleChange(input, event)}
+                                                        key={j}
+                                                    />
+                                                );
+                                            })
+                                        }
+                                        {
+                                            abi.payable === true &&
                                             <input
                                                 class="call-button-values"
-                                                type="text"
-                                                placeholder={childInput[0] + ' ' + childInput[1]}
-                                                onChange={(event) => this._handleChange(childFunction.interface.name, childInput[0], event)}
+                                                type="number"
+                                                placeholder="payable value"
+                                                onChange={(event) => this._handlePayableValue(abi, event)}
                                             />
-                                        );
-                                    })
-                                }
-                            </form>
-                        );
+                                        }
+                                    </form>
+                                </div>
+                            );
+                        }
+                        if(abi.type === 'fallback') {
+                            return (
+                                <div class="fallback-container">
+                                    <form onSubmit={() => { this._handleFallback(abi) }} key={i}>
+                                        <button class="btn">fallback</button>
+                                        {
+                                            abi.payable === true &&
+                                            <input
+                                                class="call-button-values"
+                                                type="number"
+                                                placeholder="send ether to contract"
+                                                onChange={(event) => this._handlePayableValue(abi, event)}
+                                            />
+                                        }
+                                    </form>
+                                </div>
+                            );
+                        }
                     })
                 }
             </div>

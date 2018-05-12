@@ -32,7 +32,7 @@ highlightText; // intended to be used as a tagged template literal, where the in
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *  strict
  * @format
  */function highlightText(unhighlightedStrings, ...highlightedStrings) {let concattenated = '';const highlightedRanges = [];for (let i = 0; i < unhighlightedStrings.length; i++) {concattenated += unhighlightedStrings[i]; // the two lists of strings may be uneven by one
     if (highlightedStrings[i] != null) {const start = concattenated.length;concattenated += highlightedStrings[i];highlightedRanges.push([start, concattenated.length]);}

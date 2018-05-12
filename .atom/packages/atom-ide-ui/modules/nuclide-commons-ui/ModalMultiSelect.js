@@ -138,7 +138,6 @@ class ModalMultiSelect extends _react.Component {
             this._modal = c;
           },
           onDismiss: this._dismissModal },
-
         _react.createElement((_MultiSelectList || _load_MultiSelectList()).MultiSelectList, {
           commandScope: atom.views.getView(atom.workspace),
           value: this.state.activeValues,

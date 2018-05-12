@@ -20,33 +20,32 @@
 
 
 
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _promise;
-function _load_promise() {return _promise = require('nuclide-commons/promise');}var _createPackage;
-function _load_createPackage() {return _createPackage = _interopRequireDefault(require('nuclide-commons-atom/createPackage'));}var _ContextMenu;
-function _load_ContextMenu() {return _ContextMenu = _interopRequireDefault(require('nuclide-commons-atom/ContextMenu'));}var _mouseToPosition;
-function _load_mouseToPosition() {return _mouseToPosition = require('nuclide-commons-atom/mouse-to-position');}var _textEditor;
-function _load_textEditor() {return _textEditor = require('nuclide-commons-atom/text-editor');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _analytics;
-function _load_analytics() {return _analytics = _interopRequireDefault(require('nuclide-commons/analytics'));}var _FindReferencesViewModel;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../../../../nuclide-commons/nuclideUri'));}var _promise;
+function _load_promise() {return _promise = require('../../../../nuclide-commons/promise');}var _createPackage;
+function _load_createPackage() {return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));}var _ContextMenu;
+function _load_ContextMenu() {return _ContextMenu = _interopRequireDefault(require('../../../../nuclide-commons-atom/ContextMenu'));}var _mouseToPosition;
+function _load_mouseToPosition() {return _mouseToPosition = require('../../../../nuclide-commons-atom/mouse-to-position');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _analytics;
+function _load_analytics() {return _analytics = _interopRequireDefault(require('../../../../nuclide-commons/analytics'));}var _FindReferencesViewModel;
 function _load_FindReferencesViewModel() {return _FindReferencesViewModel = require('./FindReferencesViewModel');}var _log4js;
 function _load_log4js() {return _log4js = require('log4js');}var _FindReferencesModel;
-function _load_FindReferencesModel() {return _FindReferencesModel = _interopRequireDefault(require('./FindReferencesModel'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-function showWarning(message) {
-  atom.notifications.addWarning('Find References: ' + message, {
-    dismissable: true });
-
-} /**
-   * Copyright (c) 2017-present, Facebook, Inc.
-   * All rights reserved.
-   *
-   * This source code is licensed under the BSD-style license found in the
-   * LICENSE file in the root directory of this source tree. An additional grant
-   * of patent rights can be found in the PATENTS file in the same directory.
-   *
-   * 
-   * @format
-   */ /* global getSelection */function tryCreateView(data) {if (data == null) {showWarning('Symbol references are not available for this project.');} else if (data.type === 'error') {(_analytics || _load_analytics()).default.track('find-references:error', { message: data.message });showWarning(data.message);} else {const { baseUri, referencedSymbolName, references } = data; // Only record symbol name/uri if we actually found some references.
+function _load_FindReferencesModel() {return _FindReferencesModel = _interopRequireDefault(require('./FindReferencesModel'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
+                                                                                                                                                                                                                             * Copyright (c) 2017-present, Facebook, Inc.
+                                                                                                                                                                                                                             * All rights reserved.
+                                                                                                                                                                                                                             *
+                                                                                                                                                                                                                             * This source code is licensed under the BSD-style license found in the
+                                                                                                                                                                                                                             * LICENSE file in the root directory of this source tree. An additional grant
+                                                                                                                                                                                                                             * of patent rights can be found in the PATENTS file in the same directory.
+                                                                                                                                                                                                                             *
+                                                                                                                                                                                                                             * 
+                                                                                                                                                                                                                             * @format
+                                                                                                                                                                                                                             */ /* global getSelection */function showWarning(message) {atom.notifications.addWarning('Find References: ' + message, { dismissable: true });}function tryCreateView(data) {if (data == null) {showWarning('Symbol references are not available for this project.');
+  } else if (data.type === 'error') {
+    (_analytics || _load_analytics()).default.track('find-references:error', { message: data.message });
+    showWarning(data.message);
+  } else {
+    const { baseUri, referencedSymbolName, references } = data;
+    // Only record symbol name/uri if we actually found some references.
     const trackData = references.length ? { baseUri, referencedSymbolName } : {};
     (_analytics || _load_analytics()).default.track('find-references:success', Object.assign({
       resultCount: references.length.toString() },
@@ -85,7 +84,7 @@ function openViewModel(view) {
     }
   });
   // not a file URI
-  // eslint-disable-next-line rulesdir/atom-apis
+  // eslint-disable-next-line nuclide-internal/atom-apis
   atom.workspace.open(view.getURI());
   // The new tab opens instantly, so this is no longer needed.
   disposable.dispose();
@@ -183,7 +182,7 @@ class Activation {
 
     // Mark text editors with a working provider with a special CSS class.
     // This ensures the context menu option only appears in supported projects.
-    (0, (_textEditor || _load_textEditor()).observeTextEditors)((() => {var _ref3 = (0, _asyncToGenerator.default)(function* (editor) {
+    atom.workspace.observeTextEditors((() => {var _ref3 = (0, _asyncToGenerator.default)(function* (editor) {
         const path = editor.getPath();
         // flowlint-next-line sketchy-null-string:off
         if (!path || _this2._supportedProviders.get(editor)) {

@@ -16,10 +16,10 @@
 
 
 var _atom = require('atom');var _featureConfig;
-function _load_featureConfig() {return _featureConfig = _interopRequireDefault(require('nuclide-commons-atom/feature-config'));}var _range;
-function _load_range() {return _range = require('nuclide-commons-atom/range');}var _range2;
-function _load_range2() {return _range2 = require('nuclide-commons/range');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _showTriggerConflictWarning;
+function _load_featureConfig() {return _featureConfig = _interopRequireDefault(require('../../../../nuclide-commons-atom/feature-config'));}var _range;
+function _load_range() {return _range = require('../../../../nuclide-commons-atom/range');}var _range2;
+function _load_range2() {return _range2 = require('../../../../nuclide-commons/range');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _showTriggerConflictWarning;
 function _load_showTriggerConflictWarning() {return _showTriggerConflictWarning = _interopRequireDefault(require('./showTriggerConflictWarning'));}
 
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _log4js;

@@ -16,27 +16,26 @@ function _load_HyperclickForTextEditor() {return _HyperclickForTextEditor = _int
 function _load_SuggestionList() {return _SuggestionList = _interopRequireDefault(require('./SuggestionList'));}var _UniversalDisposable;
 
 
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _ProviderRegistry;
-function _load_ProviderRegistry() {return _ProviderRegistry = _interopRequireDefault(require('nuclide-commons-atom/ProviderRegistry'));}var _textEditor;
-function _load_textEditor() {return _textEditor = require('nuclide-commons-atom/text-editor');}var _range;
-function _load_range() {return _range = require('nuclide-commons-atom/range');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _ProviderRegistry;
+function _load_ProviderRegistry() {return _ProviderRegistry = _interopRequireDefault(require('../../../../nuclide-commons-atom/ProviderRegistry'));}var _range;
+function _load_range() {return _range = require('../../../../nuclide-commons-atom/range');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 /**
-                                                                                                                                                                              * Construct this object to enable Hyperclick in the Atom workspace.
-                                                                                                                                                                              * Call `dispose` to disable the feature.
-                                                                                                                                                                              */
-class Hyperclick {
-
-
-
-
-
-  constructor() {
-    this._providers = new (_ProviderRegistry || _load_ProviderRegistry()).default();
-
-    this._suggestionList = new (_SuggestionList || _load_SuggestionList()).default();
+                                                                                                                                                                                          * Construct this object to enable Hyperclick in the Atom workspace.
+                                                                                                                                                                                          * Call `dispose` to disable the feature.
+                                                                                                                                                                                          */ /**
+                                                                                                                                                                                              * Copyright (c) 2017-present, Facebook, Inc.
+                                                                                                                                                                                              * All rights reserved.
+                                                                                                                                                                                              *
+                                                                                                                                                                                              * This source code is licensed under the BSD-style license found in the
+                                                                                                                                                                                              * LICENSE file in the root directory of this source tree. An additional grant
+                                                                                                                                                                                              * of patent rights can be found in the PATENTS file in the same directory.
+                                                                                                                                                                                              *
+                                                                                                                                                                                              *  strict-local
+                                                                                                                                                                                              * @format
+                                                                                                                                                                                              */class Hyperclick {constructor() {this._providers = new (_ProviderRegistry || _load_ProviderRegistry()).default();this._suggestionList = new (_SuggestionList || _load_SuggestionList()).default();
     this._hyperclickForTextEditors = new Set();
-    this._textEditorSubscription = (0, (_textEditor || _load_textEditor()).observeTextEditors)(
+    this._textEditorSubscription = atom.workspace.observeTextEditors(
     this.observeTextEditor.bind(this));
 
   }
@@ -118,14 +117,4 @@ class Hyperclick {
   suggestion)
   {
     this._suggestionList.show(textEditor, suggestion);
-  }}exports.default = Hyperclick; /**
-                                   * Copyright (c) 2017-present, Facebook, Inc.
-                                   * All rights reserved.
-                                   *
-                                   * This source code is licensed under the BSD-style license found in the
-                                   * LICENSE file in the root directory of this source tree. An additional grant
-                                   * of patent rights can be found in the PATENTS file in the same directory.
-                                   *
-                                   * 
-                                   * @format
-                                   */
+  }}exports.default = Hyperclick;

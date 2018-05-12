@@ -39,7 +39,7 @@ const LoadingSpinnerSizes = exports.LoadingSpinnerSizes = Object.freeze({
                       * LICENSE file in the root directory of this source tree. An additional grant
                       * of patent rights can be found in the PATENTS file in the same directory.
                       *
-                      * 
+                      *  strict-local
                       * @format
                       */const LoadingSpinnerClassnames = Object.freeze({ EXTRA_SMALL: 'loading-spinner-tiny', SMALL: 'loading-spinner-small', MEDIUM: 'loading-spinner-medium', LARGE: 'loading-spinner-large' }); /**
                                                                                                                                                                                                                     * Shows an indefinite, animated LoadingSpinner.
@@ -86,7 +86,7 @@ class LoadingSpinner extends _react.Component
     return (
       _react.createElement('div', {
         className: newClassName
-        // eslint-disable-next-line rulesdir/jsx-simple-callback-refs
+        // eslint-disable-next-line nuclide-internal/jsx-simple-callback-refs
         , ref: ref }));
 
 

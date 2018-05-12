@@ -13,8 +13,8 @@
 
 
 
-function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('nuclide-commons/nuclideUri'));}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}var _dedent;
+function _load_nuclideUri() {return _nuclideUri = _interopRequireDefault(require('../nuclide-commons/nuclideUri'));}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));}var _dedent;
 function _load_dedent() {return _dedent = _interopRequireDefault(require('dedent'));}
 var _fs = _interopRequireDefault(require('fs'));var _nullthrows;
 function _load_nullthrows() {return _nullthrows = _interopRequireDefault(require('nullthrows'));}
@@ -31,7 +31,7 @@ var _path = _interopRequireDefault(require('path'));function _interopRequireDefa
                                                                                                                                                    * @format
                                                                                                                                                    */ // Requiring this module will load all stylesheets in styles/.
 // The exported value can be disposed to remove the stylesheets.
-const ttfUri = (_nuclideUri || _load_nuclideUri()).default.nuclideUriToUri(_path.default.join(__dirname, 'styles', 'nuclicons.ttf')); // eslint-disable-next-line rulesdir/prefer-nuclide-uri
+const ttfUri = (_nuclideUri || _load_nuclideUri()).default.nuclideUriToUri(_path.default.join(__dirname, 'styles', 'nuclicons.ttf')); // eslint-disable-next-line nuclide-internal/prefer-nuclide-uri
 const newStyle = document.createElement('style');newStyle.appendChild(document.createTextNode((_dedent || _load_dedent()).default`
     @font-face {
       font-family: 'nuclicons';
@@ -46,4 +46,4 @@ map(file => atom.themes.requireStylesheet(_path.default.join(styleDir, file))),
 () => newStyle.remove());
 
 
-module.exports = styleDisposables; // eslint-disable-line rulesdir/no-commonjs
+module.exports = styleDisposables; // eslint-disable-line nuclide-internal/no-commonjs

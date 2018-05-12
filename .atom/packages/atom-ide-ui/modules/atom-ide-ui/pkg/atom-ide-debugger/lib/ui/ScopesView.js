@@ -12,8 +12,8 @@
 
 
 
-function _load_event() {return _event = require('nuclide-commons/event');}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('nuclide-commons/UniversalDisposable'));}
+function _load_event() {return _event = require('../../../../../nuclide-commons/event');}var _UniversalDisposable;
+function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}
 var _react = _interopRequireWildcard(require('react'));var _classnames;
 function _load_classnames() {return _classnames = _interopRequireDefault(require('classnames'));}var _ScopesComponent;
 function _load_ScopesComponent() {return _ScopesComponent = _interopRequireDefault(require('./ScopesComponent'));}var _constants;

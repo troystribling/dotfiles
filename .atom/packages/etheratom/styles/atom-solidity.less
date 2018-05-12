@@ -17,15 +17,17 @@
 	display: flex;
 	flex-direction: row;
 	height: 100%;
-	max-width: 550px;
+	max-width: 50vw;
+	width: 27vw;
+	min-width: 20vw;
 	overflow: scroll;
 	&-resize-handle {
-		flex: 0 0 0.2em;
+		flex: 0 0 0.3em;
 		height: initial;
 		right: auto;
 		bottom: 0;
 		cursor: col-resize;
-		background-color: #282c34;
+		background-color: #353b45;
 	}
 }
 
@@ -106,9 +108,19 @@
 		}
 	}
 
-	#compiler-options {
+	#client-options {
 		text-align: center;
 		display: block;
+		.client-select {
+			form {
+				.clients {
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+					align-items: center;
+				}
+			}
+		}
 	}
 
 	#common-buttons {
@@ -118,6 +130,18 @@
 	#compiled-error {
 		ul {
 			list-style: none;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: flex-start;
+		}
+	}
+	#NodeControl {
+		.list-group {
+			.list-item {
+				margin-top: 2px;
+				margin-bottom: 2px;
+			}
 		}
 	}
 
@@ -197,6 +221,13 @@
 		flex-direction: row;
 		justify-content: space-between;
 	}
+
+	.gas-estimate-form {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+	}
 }
 .red-message {
 	color: @text-color-error;
@@ -218,10 +249,66 @@
 }
 
 // Tab view styling
-.tab_btns {
+.vertical-tabs {
 	display: flex;
 	flex-direction: row;
-	list-style: none;
+	align-items: flex-start;
+
+	.vertical {
+		rotate: -90deg;
+	}
+	.tab_btns {
+		display: flex;
+		flex-direction: row-reverse;
+		list-style: none;
+	}
+	.tablist {
+		width: 0;
+		margin-top: 30vh;
+	}
+	.react-tabs__tab-panel--selected {
+		width: 90%;
+	}
+	.react-tabs__tab--selected {
+		.btn {
+			color: white;
+			background-color: #21252b;
+			background-image: linear-gradient(#2c313a, #21252b);
+		}
+	}
+}
+
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
+}
+
+.tx-list-container {
+	height: 300px;
+}
+
+.tx-list-item {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.event-collapse-label {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.notify-badge {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.no-header {
+	text-align: center;
 }

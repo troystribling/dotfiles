@@ -31,6 +31,6 @@ function _load_nullthrows() {return _nullthrows = _interopRequireDefault(require
   render() {
     const _props = this.props,{ className } = _props,props = _objectWithoutProperties(_props, ['className']);
     const classes = (0, (_classnames || _load_classnames()).default)('nuclide-ui-unstyled-button', className);
-    // eslint-disable-next-line rulesdir/use-nuclide-ui-components
+    // eslint-disable-next-line nuclide-internal/use-nuclide-ui-components
     return _react.default.createElement('button', Object.assign({ className: classes, ref: this._setRef }, props));
   }}exports.default = UnstyledButton;
