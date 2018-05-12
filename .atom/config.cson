@@ -11,6 +11,7 @@
     disabledPackages: [
       "wrap-guide"
       "linter"
+      "etheratom"
     ]
     ignoredNames: [
       ".git"
@@ -37,6 +38,7 @@
   "ide-python":
     pylsPlugins:
       pycodestyle:
+        enabled: false
         maxLineLength: 250
       pyflakes:
         enabled: false

@@ -1,15 +1,17 @@
 /* @flow */
 /* eslint-disable import/no-duplicates */
 
+import ConfigFile from 'sb-config-file'
 import { Emitter, CompositeDisposable } from 'atom'
 import type { TextEditor, Disposable } from 'atom'
 
 import * as Helpers from './helpers'
 import * as Validate from './validate'
-import { $version, $activated, $requestLatest, $requestLastReceived } from './helpers'
+import { $version, $activated, $requestLatest, $requestLastReceived, getConfigFile } from './helpers'
 import type { Linter } from './types'
 
-class LinterRegistry {
+export default class LinterRegistry {
+  config: ?ConfigFile;
   emitter: Emitter;
   linters: Set<Linter>;
   lintOnChange: boolean;
@@ -17,9 +19,9 @@ class LinterRegistry {
   ignoreGlob: string;
   lintPreviewTabs: boolean;
   subscriptions: CompositeDisposable;
-  disabledProviders: Array<string>;
 
   constructor() {
+    this.config = null
     this.emitter = new Emitter()
     this.linters = new Set()
     this.subscriptions = new CompositeDisposable()
@@ -35,9 +37,6 @@ class LinterRegistry {
     }))
     this.subscriptions.add(atom.config.observe('linter.lintPreviewTabs', (lintPreviewTabs) => {
       this.lintPreviewTabs = lintPreviewTabs
-    }))
-    this.subscriptions.add(atom.config.observe('linter.disabledProviders', (disabledProviders) => {
-      this.disabledProviders = disabledProviders
     }))
     this.subscriptions.add(this.emitter)
   }
@@ -59,7 +58,7 @@ class LinterRegistry {
     linter[$version] = version
     this.linters.add(linter)
   }
-  getProviders(): Array<Linter> {
+  getLinters(): Array<Linter> {
     return Array.from(this.linters)
   }
   deleteLinter(linter: Linter) {
@@ -68,6 +67,12 @@ class LinterRegistry {
     }
     linter[$activated] = false
     this.linters.delete(linter)
+  }
+  async getConfig(): Promise<ConfigFile> {
+    if (!this.config) {
+      this.config = await getConfigFile()
+    }
+    return this.config
   }
   async lint({ onChange, editor } : { onChange: boolean, editor: TextEditor }): Promise<boolean> {
     const filePath = editor.getPath()
@@ -82,13 +87,15 @@ class LinterRegistry {
     }
 
     const scopes = Helpers.getEditorCursorScopes(editor)
+    const config = await this.getConfig()
+    const disabled = await config.get('disabled')
 
     const promises = []
     for (const linter of this.linters) {
       if (!Helpers.shouldTriggerLinter(linter, onChange, scopes)) {
         continue
       }
-      if (this.disabledProviders.includes(linter.name)) {
+      if (disabled.includes(linter.name)) {
         continue
       }
       const number = ++linter[$requestLatest]
@@ -132,7 +139,7 @@ class LinterRegistry {
       }, (error) => {
         this.emitter.emit('did-finish-linting', { number, linter, filePath: statusFilePath })
         atom.notifications.addError(`[Linter] Error running ${linter.name}`, {
-          detail: 'See Console for more info. (Open View -> Developer -> Toggle Developer Tools)',
+          detail: 'See console for more info',
         })
         console.error(`[Linter] Error running ${linter.name}`, error)
       }))
@@ -155,5 +162,3 @@ class LinterRegistry {
     this.subscriptions.dispose()
   }
 }
-
-module.exports = LinterRegistry

@@ -7,7 +7,7 @@ import IndieDelegate from './indie-delegate'
 import { indie as validateIndie } from './validate'
 import type { Indie } from './types'
 
-class IndieRegistry {
+export default class IndieRegistry {
   emitter: Emitter;
   delegates: Set<IndieDelegate>;
   subscriptions: CompositeDisposable;
@@ -19,12 +19,11 @@ class IndieRegistry {
 
     this.subscriptions.add(this.emitter)
   }
-  // Public method
-  register(config: Indie, version: 1 | 2): IndieDelegate {
+  register(config: Indie): IndieDelegate {
     if (!validateIndie(config)) {
       throw new Error('Error registering Indie Linter')
     }
-    const indieLinter = new IndieDelegate(config, version)
+    const indieLinter = new IndieDelegate(config)
     this.delegates.add(indieLinter)
     indieLinter.onDidDestroy(() => {
       this.delegates.delete(indieLinter)
@@ -35,9 +34,6 @@ class IndieRegistry {
     this.emitter.emit('observe', indieLinter)
 
     return indieLinter
-  }
-  getProviders() {
-    return Array.from(this.delegates)
   }
   observe(callback: Function): Disposable {
     this.delegates.forEach(callback)
@@ -53,5 +49,3 @@ class IndieRegistry {
     this.subscriptions.dispose()
   }
 }
-
-module.exports = IndieRegistry

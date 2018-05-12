@@ -4,7 +4,7 @@ import { CompositeDisposable } from 'atom'
 import { ui as validateUI } from './validate'
 import type { Linter, UI, MessagesPatch } from './types'
 
-class UIRegistry {
+export default class UIRegistry {
   providers: Set<UI>;
   subscriptions: CompositeDisposable;
 
@@ -23,9 +23,6 @@ class UIRegistry {
       provider.dispose()
       this.providers.delete(provider)
     }
-  }
-  getProviders(): Array<UI> {
-    return Array.from(this.providers)
   }
   render(messages: MessagesPatch) {
     this.providers.forEach(function(provider) {
@@ -47,5 +44,3 @@ class UIRegistry {
     this.subscriptions.dispose()
   }
 }
-
-module.exports = UIRegistry

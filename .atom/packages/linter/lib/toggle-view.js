@@ -1,45 +1,54 @@
 /* @flow */
 
+import ConfigFile from 'sb-config-file'
 import SelectListView from 'atom-select-list'
 import { CompositeDisposable, Emitter, Disposable } from 'atom'
+import { getConfigFile } from './helpers'
 
 type ToggleAction = 'enable' | 'disable'
 
-class ToggleProviders {
+export default class ToggleProviders {
   action: ToggleAction;
+  config: ConfigFile;
   emitter: Emitter;
   providers: Array<string>;
   subscriptions: CompositeDisposable;
-  disabledProviders: Array<string>;
 
   constructor(action: ToggleAction, providers: Array<string>) {
     this.action = action
+    this.config = null
     this.emitter = new Emitter()
     this.providers = providers
     this.subscriptions = new CompositeDisposable()
 
     this.subscriptions.add(this.emitter)
-    this.subscriptions.add(atom.config.observe('linter.disabledProviders', (disabledProviders) => {
-      this.disabledProviders = disabledProviders
-    }))
+  }
+  async getConfig(): Promise<ConfigFile> {
+    if (!this.config) {
+      this.config = await getConfigFile()
+    }
+    return this.config
   }
   async getItems(): Promise<Array<string>> {
+    const disabled = await (await this.getConfig()).get('disabled')
     if (this.action === 'disable') {
-      return this.providers.filter(name => !this.disabledProviders.includes(name))
+      return this.providers.filter(name => !disabled.includes(name))
     }
-    return this.disabledProviders
+    return disabled
   }
   async process(name: string): Promise<void> {
+    const config = await this.getConfig()
+    const disabled: Array<string> = await config.get('disabled')
     if (this.action === 'disable') {
-      this.disabledProviders.push(name)
+      disabled.push(name)
       this.emitter.emit('did-disable', name)
     } else {
-      const index = this.disabledProviders.indexOf(name)
+      const index = disabled.indexOf(name)
       if (index !== -1) {
-        this.disabledProviders.splice(index, 1)
+        disabled.splice(index, 1)
       }
     }
-    atom.config.set('linter.disabledProviders', this.disabledProviders)
+    await this.config.set('disabled', disabled)
   }
   async show() {
     const selectListView = new SelectListView({
@@ -76,5 +85,3 @@ class ToggleProviders {
     this.subscriptions.dispose()
   }
 }
-
-module.exports = ToggleProviders
