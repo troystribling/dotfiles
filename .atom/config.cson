@@ -11,6 +11,8 @@
     disabledPackages: [
       "wrap-guide"
       "linter"
+      "linter-solidity"
+      "autocomplete-solidity"
       "etheratom"
     ]
     ignoredNames: [
