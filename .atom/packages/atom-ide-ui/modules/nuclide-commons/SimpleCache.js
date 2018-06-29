@@ -1,44 +1,17 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });
+"use strict";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 class SimpleCache {
 
+  constructor(config = {}) {
+    this.store = new Map();
 
-
-
-  constructor(config = {}) {this.store = new Map();
     if (config.dispose != null) {
       this._dispose = config.dispose;
     }
-    this._keyFactory =
-    config.keyFactory != null ?
-    config.keyFactory :
-    keyArgs => keyArgs;
+    this._keyFactory = config.keyFactory != null ? config.keyFactory : keyArgs => keyArgs;
   }
 
   _getUnsafe(key) {
@@ -90,18 +63,23 @@ class SimpleCache {
 
   keyForArgs(keyArgs) {
     return this._keyFactory(keyArgs);
-  }}exports.SimpleCache = SimpleCache; /**
-                                        * Copyright (c) 2017-present, Facebook, Inc.
-                                        * All rights reserved.
-                                        *
-                                        * This source code is licensed under the BSD-style license found in the
-                                        * LICENSE file in the root directory of this source tree. An additional grant
-                                        * of patent rights can be found in the PATENTS file in the same directory.
-                                        *
-                                        * 
-                                        * @format
-                                        */ // TODO: Merge this class with nuclide-commons/cache.js because they probably do
+  }
+}
+exports.SimpleCache = SimpleCache; /**
+                                    * Copyright (c) 2017-present, Facebook, Inc.
+                                    * All rights reserved.
+                                    *
+                                    * This source code is licensed under the BSD-style license found in the
+                                    * LICENSE file in the root directory of this source tree. An additional grant
+                                    * of patent rights can be found in the PATENTS file in the same directory.
+                                    *
+                                    * 
+                                    * @format
+                                    */
+
+// TODO: Merge this class with nuclide-commons/cache.js because they probably do
 //   very similar things
+
 /**
  * Tiny class that is useful to cache simple values.
  * It's quite useful for promises with a SimpleCache<Promise<T>> which allows reusing the same promise.

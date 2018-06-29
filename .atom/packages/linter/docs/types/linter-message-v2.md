@@ -1,7 +1,7 @@
 # Linter Message v2
 
 This document describes the type of Linter Message v2. It's supported in
-[`Indie Linter v2`][] and [`Standard Linter v2`][].
+[Indie Linter v2][] and [Standard Linter v2][].
 
 ## Type
 
@@ -44,12 +44,13 @@ type Message = {
   description?: string | (() => Promise<string> | string)
   // ^ Markdown long description of the error, accepts callback so you can do
   // http requests etc.
+  linterName?: string,
+  // ^ Optionally override the displayed linter name. Defaults to provider name.
 
   // NOTE: DO NOT SPECIFY THESE IN PROVIDER
   // Automatically added by base linter for UI consumers
   key: string,
   version: 2,
-  linterName: string,
 }
 ```
 
@@ -82,8 +83,8 @@ the same message.
 
 **A**: These are references to built in [`Point`][] and [`Range`][] classes.
 
-[`Indie Linter v2`]: indie-linter-v2.md
-[`Standard Linter v2`]: standard-linter-v2.md
+[Indie Linter v2]: indie-linter-v2.md
+[Standard Linter v2]: standard-linter-v2.md
 [`flowtype`]: https://flowtype.org/
 [Intentions]: https://atom.io/packages/intentions
 [`Point`]: https://atom.io/docs/api/latest/Point

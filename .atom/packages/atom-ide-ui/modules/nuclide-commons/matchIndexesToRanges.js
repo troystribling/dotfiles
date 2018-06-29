@@ -1,20 +1,10 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.default =
+"use strict";
 
-
-
-
-
-
-
-
-
-
-
-
-
-matchIndexesToRanges;function matchIndexesToRanges(
-matchIndexes)
-{
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = matchIndexesToRanges;
+function matchIndexesToRanges(matchIndexes) {
   let streakOngoing = false;
   let start = 0;
   const ranges = [];

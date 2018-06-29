@@ -1,22 +1,9 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });
+"use strict";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 class FocusBoomerang {
-
 
   recordFocus() {
     if (this._focus != null) {
@@ -25,8 +12,8 @@ class FocusBoomerang {
 
     this._focus = {
       node: document.activeElement,
-      pane: atom.workspace.getActivePane() };
-
+      pane: atom.workspace.getActivePane()
+    };
   }
 
   returnFocus() {
@@ -41,14 +28,16 @@ class FocusBoomerang {
     if (pane != null) {
       pane.activate();
     }
-  }}exports.default = FocusBoomerang; /**
-                                       * Copyright (c) 2017-present, Facebook, Inc.
-                                       * All rights reserved.
-                                       *
-                                       * This source code is licensed under the BSD-style license found in the
-                                       * LICENSE file in the root directory of this source tree. An additional grant
-                                       * of patent rights can be found in the PATENTS file in the same directory.
-                                       *
-                                       *  strict
-                                       * @format
-                                       */
+  }
+}
+exports.default = FocusBoomerang; /**
+                                   * Copyright (c) 2017-present, Facebook, Inc.
+                                   * All rights reserved.
+                                   *
+                                   * This source code is licensed under the BSD-style license found in the
+                                   * LICENSE file in the root directory of this source tree. An additional grant
+                                   * of patent rights can be found in the PATENTS file in the same directory.
+                                   *
+                                   *  strict
+                                   * @format
+                                   */

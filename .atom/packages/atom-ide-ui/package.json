@@ -2,47 +2,46 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6073-1y9uxwo.dcjtmuc8fr/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6073-1y9uxwo.dcjtmuc8fr/package.tgz",
-        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6073-1y9uxwo.dcjtmuc8fr/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-118412-6073-vkm0e0.4fv7a54s4i"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118522-1666-ojam0c.5c23xr"
     ]
   ],
-  "_from": "../d-118412-6073-1y9uxwo.dcjtmuc8fr/package.tgz",
-  "_id": "atom-ide-ui@0.11.2",
+  "_from": "../d-118522-1666-13wq315.s9mx3whfr/package.tgz",
+  "_id": "atom-ide-ui@0.12.0",
   "_inCache": true,
   "_location": "/atom-ide-ui",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6073-1y9uxwo.dcjtmuc8fr/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6073-1y9uxwo.dcjtmuc8fr/package.tgz",
-    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6073-1y9uxwo.dcjtmuc8fr/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-118412-6073-1y9uxwo.dcjtmuc8fr/package.tgz",
-  "_shasum": "2053888c6174e238175fc116b6e0d1512df2990b",
+  "_resolved": "file:../d-118522-1666-13wq315.s9mx3whfr/package.tgz",
+  "_shasum": "7ffa9e7aa31ef4b113ad4b4cdb04b0d67f664429",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6073-1y9uxwo.dcjtmuc8fr/package.tgz",
-  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-118412-6073-vkm0e0.4fv7a54s4i",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118522-1666-ojam0c.5c23xr",
   "bugs": {
     "url": "https://github.com/facebook-atom/atom-ide-ui/issues"
   },
   "dependencies": {
     "anser": "1.4.6",
-    "async-to-generator": "1.1.0",
     "classnames": "2.2.5",
-    "dedent": "0.6.0",
+    "dedent": "0.7.0",
     "domexception": "1.0.1",
     "dompurify": "1.0.3",
     "escape-carriage": "1.2.0",
@@ -63,10 +62,10 @@
     "mime-types": "2.1.16",
     "mkdirp": "0.5.1",
     "mv": "2.1.1",
-    "nuclide-prebuilt-libs": "0.4.2",
+    "nuclide-prebuilt-libs": "0.5.1",
     "nullthrows": "1.0.0",
-    "react": "16.2.0",
-    "react-dom": "16.2.0",
+    "react": "16.3.2",
+    "react-dom": "16.3.2",
     "react-virtualized": "9.13.0",
     "redux": "3.6.0",
     "redux-logger": "3.0.6",
@@ -100,7 +99,7 @@
     "prettier": "1.12.1"
   },
   "engines": {
-    "atom": ">= 1.19.0"
+    "atom": ">= 1.25.0"
   },
   "homepage": "https://github.com/facebook-atom/atom-ide-ui#readme",
   "keywords": [],
@@ -121,7 +120,7 @@
     "release-transpile": "./modules/nuclide-node-transpiler/bin/release-transpile.js",
     "test": "npm run flow && npm run lint-all && ./scripts/test.js"
   },
-  "version": "0.11.2",
+  "version": "0.12.0",
   "workspaces": [
     "modules/*"
   ]

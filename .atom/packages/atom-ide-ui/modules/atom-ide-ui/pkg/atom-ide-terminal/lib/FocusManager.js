@@ -1,18 +1,27 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.FocusManager = exports.LastItemManager = undefined;var _terminalView;
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FocusManager = exports.LastItemManager = undefined;
 
+var _terminalView;
 
+function _load_terminalView() {
+  return _terminalView = require('./terminal-view.js');
+}
 
+var _log4js;
 
+function _load_log4js() {
+  return _log4js = require('log4js');
+}
 
+var _analytics;
 
-
-
-
-
-function _load_terminalView() {return _terminalView = require('./terminal-view.js');}var _log4js;
-function _load_log4js() {return _log4js = require('log4js');}var _analytics;
-function _load_analytics() {return _analytics = require('../../../../nuclide-commons/analytics');}
+function _load_analytics() {
+  return _analytics = require('../../../../nuclide-commons/analytics');
+}
 
 const logger = (0, (_log4js || _load_log4js()).getLogger)('terminal-focus-manager');
 
@@ -28,7 +37,16 @@ const logger = (0, (_log4js || _load_log4js()).getLogger)('terminal-focus-manage
  *
  * 
  * @format
- */class LastItemManager {constructor() {this._last = null;}dispose() {if (this._last != null) {this._last.onWillRemoveSubscription.dispose();
+ */
+
+class LastItemManager {
+  constructor() {
+    this._last = null;
+  }
+
+  dispose() {
+    if (this._last != null) {
+      this._last.onWillRemoveSubscription.dispose();
     }
   }
 
@@ -62,22 +80,18 @@ const logger = (0, (_log4js || _load_log4js()).getLogger)('terminal-focus-manage
       }
     });
     this._last = { item, onWillRemoveSubscription };
-  }}exports.LastItemManager = LastItemManager;
+  }
+}
 
-
+exports.LastItemManager = LastItemManager;
 class FocusManager {
 
+  constructor() {
+    this._lastTerminal = new LastItemManager();
+    this._lastEditor = new LastItemManager();
 
-
-
-
-  constructor() {this._lastTerminal = new LastItemManager();this._lastEditor = new LastItemManager();
-    this._observeActivePaneItemSubscription = atom.workspace.observeActivePaneItem(
-    this._onActivePaneItem.bind(this));
-
-    this._observeActiveTextEditorSubscription = atom.workspace.observeActiveTextEditor(
-    this._onActiveTextEditor.bind(this));
-
+    this._observeActivePaneItemSubscription = atom.workspace.observeActivePaneItem(this._onActivePaneItem.bind(this));
+    this._observeActiveTextEditorSubscription = atom.workspace.observeActiveTextEditor(this._onActiveTextEditor.bind(this));
   }
 
   dispose() {
@@ -128,10 +142,11 @@ class FocusManager {
     // TODO(mbolin): Decide whether to open a local or remote terminal.
     // Base it on the path of the active text editor?
     atom.notifications.addInfo('No terminal found.');
-  }}exports.FocusManager = FocusManager;
+  }
+}
 
+exports.FocusManager = FocusManager; /** Focus the specified Terminal. */
 
-/** Focus the specified Terminal. */
 function focus(item) {
   const pane = atom.workspace.paneForItem(item);
   if (pane == null) {
@@ -145,9 +160,9 @@ function focus(item) {
 }
 
 /**
-   * Traverses the panes and pane items and returns the first TerminalView it
-   * finds, if any.
-   */
+ * Traverses the panes and pane items and returns the first TerminalView it
+ * finds, if any.
+ */
 function findTerminal() {
   for (const pane of atom.workspace.getPanes()) {
     for (const item of pane.getItems()) {

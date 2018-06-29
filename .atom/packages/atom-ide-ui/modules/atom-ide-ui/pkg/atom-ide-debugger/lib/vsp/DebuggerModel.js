@@ -1,120 +1,138 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.Model = exports.ExceptionBreakpoint = exports.FunctionBreakpoint = exports.Breakpoint = exports.Process = exports.Thread = exports.StackFrame = exports.Scope = exports.Variable = exports.Expression = exports.Source = undefined;var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));var _vscodeDebugprotocol;
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Model = exports.ExceptionBreakpoint = exports.FunctionBreakpoint = exports.Breakpoint = exports.Process = exports.Thread = exports.StackFrame = exports.Scope = exports.Variable = exports.Expression = exports.Source = undefined;
 
+var _vscodeDebugprotocol;
 
+function _load_vscodeDebugprotocol() {
+  return _vscodeDebugprotocol = _interopRequireWildcard(require('vscode-debugprotocol'));
+}
 
+var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
+var _uuid;
 
+function _load_uuid() {
+  return _uuid = _interopRequireDefault(require('uuid'));
+}
 
+var _nullthrows;
 
+function _load_nullthrows() {
+  return _nullthrows = _interopRequireDefault(require('nullthrows'));
+}
 
+var _atom = require('atom');
 
+var _UniversalDisposable;
 
+function _load_UniversalDisposable() {
+  return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));
+}
 
+var _analytics;
 
+function _load_analytics() {
+  return _analytics = require('../../../../../nuclide-commons/analytics');
+}
 
+var _constants;
 
+function _load_constants() {
+  return _constants = require('../constants');
+}
 
+var _utils;
 
+function _load_utils() {
+  return _utils = require('../utils');
+}
 
+var _collection;
 
+function _load_collection() {
+  return _collection = require('../../../../../nuclide-commons/collection');
+}
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 
+/**
+The following debug model implementation was ported from VSCode's debugger implementation
+in https://github.com/Microsoft/vscode/tree/master/src/vs/workbench/parts/debug
 
+MIT License
 
+Copyright (c) 2015 - present Microsoft Corporation
 
+All rights reserved.
 
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function _load_vscodeDebugprotocol() {return _vscodeDebugprotocol = _interopRequireWildcard(require('vscode-debugprotocol'));}
-
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _uuid;
-function _load_uuid() {return _uuid = _interopRequireDefault(require('uuid'));}var _nullthrows;
-function _load_nullthrows() {return _nullthrows = _interopRequireDefault(require('nullthrows'));}
-
-var _atom = require('atom');var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));}var _analytics;
-function _load_analytics() {return _analytics = require('../../../../../nuclide-commons/analytics');}var _constants;
-function _load_constants() {return _constants = require('../constants');}var _utils;
-function _load_utils() {return _utils = require('../utils');}var _collection;
-function _load_collection() {return _collection = require('../../../../../nuclide-commons/collection');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * All rights reserved.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * This source code is licensed under the BSD-style license found in the
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * @format
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */ /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The following debug model implementation was ported from VSCode's debugger implementation
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          in https://github.com/Microsoft/vscode/tree/master/src/vs/workbench/parts/debug
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          MIT License
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Copyright (c) 2015 - present Microsoft Corporation
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          All rights reserved.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Permission is hereby granted, free of charge, to any person obtaining a copy
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          of this software and associated documentation files (the "Software"), to deal
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          in the Software without restriction, including without limitation the rights
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          copies of the Software, and to permit persons to whom the Software is
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          furnished to do so, subject to the following conditions:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The above copyright notice and this permission notice shall be included in all
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          copies or substantial portions of the Software.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          SOFTWARE.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */class Source {constructor(raw, sessionId) {if (raw == null) {this._raw = { name: (_constants || _load_constants()).UNKNOWN_SOURCE };} else {this._raw = raw;}this.available = this._raw.name !== (_constants || _load_constants()).UNKNOWN_SOURCE;if (this._raw.sourceReference != null && this._raw.sourceReference > 0) {this.uri = `${(_constants || _load_constants()).DEBUG_SOURCES_URI}/${sessionId}/${this._raw.sourceReference}/${this._raw.name == null ? (_constants || _load_constants()).UNKNOWN_SOURCE : this._raw.name}`;} else {this.uri = this._raw.path || '';}}get name() {return this._raw.name;}get origin() {return this._raw.origin;}get presentationHint() {return this._raw.presentationHint;}get raw() {return this._raw;}
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+class Source {
+
+  constructor(raw, sessionId) {
+    if (raw == null) {
+      this._raw = { name: (_constants || _load_constants()).UNKNOWN_SOURCE };
+    } else {
+      this._raw = raw;
+    }
+    this.available = this._raw.name !== (_constants || _load_constants()).UNKNOWN_SOURCE;
+    if (this._raw.sourceReference != null && this._raw.sourceReference > 0) {
+      this.uri = `${(_constants || _load_constants()).DEBUG_SOURCES_URI}/${sessionId}/${this._raw.sourceReference}/${this._raw.name == null ? (_constants || _load_constants()).UNKNOWN_SOURCE : this._raw.name}`;
+    } else {
+      this.uri = this._raw.path || '';
+    }
+  }
+
+  get name() {
+    return this._raw.name;
+  }
+
+  get origin() {
+    return this._raw.origin;
+  }
+
+  get presentationHint() {
+    return this._raw.presentationHint;
+  }
+
+  get raw() {
+    return this._raw;
+  }
 
   get reference() {
     return this._raw.sourceReference;
@@ -128,40 +146,24 @@ function _load_collection() {return _collection = require('../../../../../nuclid
     // eslint-disable-next-line nuclide-internal/atom-apis
     return atom.workspace.open(this.uri, {
       searchAllPanes: true,
-      pending: true });
+      pending: true
+    });
+  }
+}
 
-  }}exports.Source = Source;
-
-
+exports.Source = Source;
 class ExpressionContainer {
 
-
-
-
-
-
-
-
-
-
-
-
-
-  constructor(
-  process,
-  reference,
-  id,
-  namedVariables,
-  indexedVariables,
-  startOfVariables)
-  {
+  constructor(process, reference, id, namedVariables, indexedVariables, startOfVariables) {
     this.process = process;
     this._reference = reference;
     this._id = id;
     this._namedVariables = namedVariables || 0;
     this._indexedVariables = indexedVariables || 0;
     this._startOfVariables = startOfVariables || 0;
-  } // Use chunks to support variable paging #9537
+  }
+  // Use chunks to support variable paging #9537
+
 
   get reference() {
     return this._reference;
@@ -180,67 +182,42 @@ class ExpressionContainer {
     return this._children;
   }
 
-  _doGetChildren() {var _this = this;return (0, _asyncToGenerator.default)(function* () {
-      if (!_this.hasChildren()) {
-        return [];
+  async _doGetChildren() {
+    if (!this.hasChildren()) {
+      return [];
+    }
+
+    if (!this.getChildrenInChunks) {
+      const variables = await this._fetchVariables();
+      return variables;
+    }
+
+    // Check if object has named variables, fetch them independent from indexed variables #9670
+    let childrenArray = [];
+    if (Boolean(this._namedVariables)) {
+      childrenArray = await this._fetchVariables(undefined, undefined, 'named');
+    }
+
+    // Use a dynamic chunk size based on the number of elements #9774
+    let chunkSize = ExpressionContainer.BASE_CHUNK_SIZE;
+    while (this._indexedVariables > chunkSize * ExpressionContainer.BASE_CHUNK_SIZE) {
+      chunkSize *= ExpressionContainer.BASE_CHUNK_SIZE;
+    }
+
+    if (this._indexedVariables > chunkSize) {
+      // There are a lot of children, create fake intermediate values that represent chunks #9537
+      const numberOfChunks = Math.ceil(this._indexedVariables / chunkSize);
+      for (let i = 0; i < numberOfChunks; i++) {
+        const start = this._startOfVariables + i * chunkSize;
+        const count = Math.min(chunkSize, this._indexedVariables - i * chunkSize);
+        childrenArray.push(new Variable(this.process, this, this.reference, `[${start}..${start + count - 1}]`, '', '', null, count, { kind: 'virtual' }, null, true, start));
       }
 
-      if (!_this.getChildrenInChunks) {
-        const variables = yield _this._fetchVariables();
-        return variables;
-      }
+      return childrenArray;
+    }
 
-      // Check if object has named variables, fetch them independent from indexed variables #9670
-      let childrenArray = [];
-      if (Boolean(_this._namedVariables)) {
-        childrenArray = yield _this._fetchVariables(undefined, undefined, 'named');
-      }
-
-      // Use a dynamic chunk size based on the number of elements #9774
-      let chunkSize = ExpressionContainer.BASE_CHUNK_SIZE;
-      while (
-      _this._indexedVariables >
-      chunkSize * ExpressionContainer.BASE_CHUNK_SIZE)
-      {
-        chunkSize *= ExpressionContainer.BASE_CHUNK_SIZE;
-      }
-
-      if (_this._indexedVariables > chunkSize) {
-        // There are a lot of children, create fake intermediate values that represent chunks #9537
-        const numberOfChunks = Math.ceil(_this._indexedVariables / chunkSize);
-        for (let i = 0; i < numberOfChunks; i++) {
-          const start = _this._startOfVariables + i * chunkSize;
-          const count = Math.min(
-          chunkSize,
-          _this._indexedVariables - i * chunkSize);
-
-          childrenArray.push(
-          new Variable(
-          _this.process, _this,
-
-          _this.reference,
-          `[${start}..${start + count - 1}]`,
-          '',
-          '',
-          null,
-          count,
-          { kind: 'virtual' },
-          null,
-          true,
-          start));
-
-
-        }
-
-        return childrenArray;
-      }
-
-      const variables = yield _this._fetchVariables(
-      _this._startOfVariables,
-      _this._indexedVariables,
-      'indexed');
-
-      return childrenArray.concat(variables);})();
+    const variables = await this._fetchVariables(this._startOfVariables, this._indexedVariables, 'indexed');
+    return childrenArray.concat(variables);
   }
 
   getId() {
@@ -256,58 +233,25 @@ class ExpressionContainer {
     return this.reference > 0;
   }
 
-  _fetchVariables(
-  start,
-  count,
-  filter)
-  {var _this2 = this;return (0, _asyncToGenerator.default)(function* () {
-      const process = _this2.process;if (!
-      process) {throw new Error('Invariant violation: "process"');}
-      try {
-        const response = yield process.session.variables(
-        {
-          variablesReference: _this2.reference,
-          start,
-          count,
-          filter });
+  async _fetchVariables(start, count, filter) {
+    const process = this.process;
 
+    if (!process) {
+      throw new Error('Invariant violation: "process"');
+    }
 
-        const variables = (0, (_collection || _load_collection()).distinct)(
-        response.body.variables.filter(function (v) {return v != null && v.name;}),
-        function (v) {return v.name;});
-
-        return variables.map(
-        function (v) {return (
-            new Variable(
-            _this2.process, _this2,
-
-            v.variablesReference,
-            v.name,
-            v.evaluateName,
-            v.value,
-            v.namedVariables,
-            v.indexedVariables,
-            v.presentationHint,
-            v.type));});
-
-
-      } catch (e) {
-        return [
-        new Variable(
-        _this2.process, _this2,
-
-        0,
-        null,
-        e.message,
-        '',
-        0,
-        0,
-        { kind: 'virtual' },
-        null,
-        false)];
-
-
-      }})();
+    try {
+      const response = await process.session.variables({
+        variablesReference: this.reference,
+        start,
+        count,
+        filter
+      });
+      const variables = (0, (_collection || _load_collection()).distinct)(response.body.variables.filter(v => v != null && v.name), v => v.name);
+      return variables.map(v => new Variable(this.process, this, v.variablesReference, v.name, v.evaluateName, v.value, v.namedVariables, v.indexedVariables, v.presentationHint, v.type));
+    } catch (e) {
+      return [new Variable(this.process, this, 0, null, e.message, '', 0, 0, { kind: 'virtual' }, null, false)];
+    }
   }
 
   // The adapter explicitly sents the children count of an expression only if there are lots of children which should be chunked.
@@ -322,16 +266,12 @@ class ExpressionContainer {
 
   toString() {
     return this._value;
-  }}ExpressionContainer.allValues = new Map();ExpressionContainer.BASE_CHUNK_SIZE = 100;
+  }
+}
 
-
-class Expression extends ExpressionContainer
-{
-
-
-
-
-
+ExpressionContainer.allValues = new Map();
+ExpressionContainer.BASE_CHUNK_SIZE = 100;
+class Expression extends ExpressionContainer {
 
   constructor(name, id = (_uuid || _load_uuid()).default.v4()) {
     super(null, 0, id);
@@ -349,84 +289,50 @@ class Expression extends ExpressionContainer
     return this._type;
   }
 
-  evaluate(
-  process,
-  stackFrame,
-  context)
-  {var _this3 = this;return (0, _asyncToGenerator.default)(function* () {
-      if (process == null || stackFrame == null && context !== 'repl') {
-        _this3._value =
-        context === 'repl' ?
-        'Please start a debug session to evaluate' :
-        Expression.DEFAULT_VALUE;
-        _this3.available = false;
-        _this3.reference = 0;
-        return;
+  async evaluate(process, stackFrame, context) {
+    if (process == null || stackFrame == null && context !== 'repl') {
+      this._value = context === 'repl' ? 'Please start a debug session to evaluate' : Expression.DEFAULT_VALUE;
+      this.available = false;
+      this.reference = 0;
+      return;
+    }
+
+    this.process = process;
+    try {
+      const response = await process.session.evaluate({
+        expression: this.name,
+        frameId: stackFrame ? stackFrame.frameId : undefined,
+        context
+      });
+
+      this.available = response != null && response.body != null;
+      if (response && response.body) {
+        this._value = response.body.result;
+        this.reference = response.body.variablesReference || 0;
+        this._namedVariables = response.body.namedVariables || 0;
+        this._indexedVariables = response.body.indexedVariables || 0;
+        this._type = response.body.type;
       }
-
-      _this3.process = process;
-      try {
-        const response = yield process.session.evaluate(
-        {
-          expression: _this3.name,
-          frameId: stackFrame ? stackFrame.frameId : undefined,
-          context });
-
-
-
-        _this3.available = response != null && response.body != null;
-        if (response && response.body) {
-          _this3._value = response.body.result;
-          _this3.reference = response.body.variablesReference || 0;
-          _this3._namedVariables = response.body.namedVariables || 0;
-          _this3._indexedVariables = response.body.indexedVariables || 0;
-          _this3._type = response.body.type;
-        }
-      } catch (err) {
-        _this3._value = err.message;
-        _this3.available = false;
-        _this3.reference = 0;
-      }})();
+    } catch (err) {
+      this._value = err.message;
+      this.available = false;
+      this.reference = 0;
+    }
   }
 
   toString() {
     return `${this.name}\n${this._value}`;
-  }}exports.Expression = Expression;Expression.DEFAULT_VALUE = 'not available';
+  }
+}
 
-
+exports.Expression = Expression;
+Expression.DEFAULT_VALUE = 'not available';
 class Variable extends ExpressionContainer {
 
-
-
-
-
-
-
-
-
-  constructor(
-  process,
-  parent,
-  reference,
-  name,
-  evaluateName,
-  value,
-  namedVariables,
-  indexedVariables,
-  presentationHint,
-  type,
-  available = true,
-  _startOfVariables)
-  {
-    super(
-    process,
-    reference,
+  constructor(process, parent, reference, name, evaluateName, value, namedVariables, indexedVariables, presentationHint, type, available = true, _startOfVariables) {
+    super(process, reference,
     // flowlint-next-line sketchy-null-string:off
-    `variable:${parent.getId()}:${name || 'no_name'}`,
-    namedVariables,
-    indexedVariables,
-    _startOfVariables);
-
+    `variable:${parent.getId()}:${name || 'no_name'}`, namedVariables, indexedVariables, _startOfVariables);
     this.parent = parent;
     this.name = name == null ? 'no_name' : name;
     this.evaluateName = evaluateName;
@@ -434,88 +340,57 @@ class Variable extends ExpressionContainer {
     this._type = type;
     this.available = available;
     this._value = value;
-  } // Used to show the error message coming from the adapter when setting the value #7807
+  }
+  // Used to show the error message coming from the adapter when setting the value #7807
+
 
   get type() {
     return this._type;
   }
 
-  setVariable(value) {var _this4 = this;return (0, _asyncToGenerator.default)(function* () {
-      const process = (0, (_nullthrows || _load_nullthrows()).default)(_this4.process);
-      (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_EDIT_VARIABLE, {
-        language: process.configuration.adapterType });
-
-      try {
-        const response = yield process.session.setVariable({
-          name: (0, (_nullthrows || _load_nullthrows()).default)(_this4.name),
-          value,
-          variablesReference: _this4.parent.reference });
-
-        if (response && response.body) {
-          _this4._value = response.body.value;
-          _this4._type =
-          response.body.type == null ? _this4._type : response.body.type;
-          _this4.reference = response.body.variablesReference || 0;
-          _this4._namedVariables = response.body.namedVariables || 0;
-          _this4._indexedVariables = response.body.indexedVariables || 0;
-        }
-      } catch (err) {
-        _this4.errorMessage = err.message;
-      }})();
+  async setVariable(value) {
+    const process = (0, (_nullthrows || _load_nullthrows()).default)(this.process);
+    (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_EDIT_VARIABLE, {
+      language: process.configuration.adapterType
+    });
+    try {
+      const response = await process.session.setVariable({
+        name: (0, (_nullthrows || _load_nullthrows()).default)(this.name),
+        value,
+        variablesReference: this.parent.reference
+      });
+      if (response && response.body) {
+        this._value = response.body.value;
+        this._type = response.body.type == null ? this._type : response.body.type;
+        this.reference = response.body.variablesReference || 0;
+        this._namedVariables = response.body.namedVariables || 0;
+        this._indexedVariables = response.body.indexedVariables || 0;
+      }
+    } catch (err) {
+      this.errorMessage = err.message;
+    }
   }
 
   toString() {
     return `${this.name}: ${this._value}`;
-  }}exports.Variable = Variable;
+  }
+}
 
-
+exports.Variable = Variable;
 class Scope extends ExpressionContainer {
 
-
-
-
-  constructor(
-  stackFrame,
-  index,
-  name,
-  reference,
-  expensive,
-  namedVariables,
-  indexedVariables,
-  range)
-  {
-    super(
-    stackFrame.thread.process,
-    reference,
-    `scope:${stackFrame.getId()}:${name}:${index}`,
-    namedVariables,
-    indexedVariables);
-
+  constructor(stackFrame, index, name, reference, expensive, namedVariables, indexedVariables, range) {
+    super(stackFrame.thread.process, reference, `scope:${stackFrame.getId()}:${name}:${index}`, namedVariables, indexedVariables);
     this.name = name;
     this.expensive = expensive;
     this.range = range;
-  }}exports.Scope = Scope;
+  }
+}
 
-
+exports.Scope = Scope;
 class StackFrame {
 
-
-
-
-
-
-
-
-
-  constructor(
-  thread,
-  frameId,
-  source,
-  name,
-  presentationHint,
-  range,
-  index)
-  {
+  constructor(thread, frameId, source, name, presentationHint, range, index) {
     this.thread = thread;
     this.frameId = frameId;
     this.source = source;
@@ -530,97 +405,61 @@ class StackFrame {
     return `stackframe:${this.thread.getId()}:${this.frameId}:${this.index}`;
   }
 
-  getScopes() {var _this5 = this;return (0, _asyncToGenerator.default)(function* () {
-      if (_this5.scopes == null) {
-        _this5.scopes = _this5._getScopesImpl();
-      }
-      return _this5.scopes;})();
+  async getScopes() {
+    if (this.scopes == null) {
+      this.scopes = this._getScopesImpl();
+    }
+    return this.scopes;
   }
 
-  _getScopesImpl() {var _this6 = this;return (0, _asyncToGenerator.default)(function* () {
-      try {
-        const {
-          body: { scopes } } =
-        yield _this6.thread.process.session.scopes({
-          frameId: _this6.frameId });
-
-        return scopes.map(
-        function (rs, index) {return (
-            new Scope(_this6,
-
-            index,
-            rs.name,
-            rs.variablesReference,
-            rs.expensive,
-            rs.namedVariables,
-            rs.indexedVariables,
-            rs.line != null ?
-            new _atom.Range(
-            [rs.line - 1, (rs.column != null ? rs.column : 1) - 1],
-            [
-            (rs.endLine != null ? rs.endLine : rs.line) - 1,
-            (rs.endColumn != null ? rs.endColumn : 1) - 1]) :
-
-
-            null));});
-
-
-      } catch (err) {
-        return [];
-      }})();
-  }
-
-  getMostSpecificScopes(range) {var _this7 = this;return (0, _asyncToGenerator.default)(function* () {
-      const scopes = (yield _this7.getScopes()).filter(
-      function (s) {return !s.expensive;});
-
-      const haveRangeInfo = scopes.some(function (s) {return s.range != null;});
-      if (!haveRangeInfo) {
-        return scopes;
-      }
-
-      const scopesContainingRange = scopes.
-      filter(function (scope) {return scope.range != null && scope.range.containsRange(range);}).
-      sort(function (first, second) {
-        const firstRange = (0, (_nullthrows || _load_nullthrows()).default)(first.range);
-        const secondRange = (0, (_nullthrows || _load_nullthrows()).default)(second.range);
-        // prettier-ignore
-        return firstRange.end.row - firstRange.start.row - (
-        secondRange.end.row - secondRange.end.row);
+  async _getScopesImpl() {
+    try {
+      const {
+        body: { scopes }
+      } = await this.thread.process.session.scopes({
+        frameId: this.frameId
       });
-      return scopesContainingRange.length ? scopesContainingRange : scopes;})();
+      return scopes.map((rs, index) => new Scope(this, index, rs.name, rs.variablesReference, rs.expensive, rs.namedVariables, rs.indexedVariables, rs.line != null ? new _atom.Range([rs.line - 1, (rs.column != null ? rs.column : 1) - 1], [(rs.endLine != null ? rs.endLine : rs.line) - 1, (rs.endColumn != null ? rs.endColumn : 1) - 1]) : null));
+    } catch (err) {
+      return [];
+    }
   }
 
-  restart() {var _this8 = this;return (0, _asyncToGenerator.default)(function* () {
-      yield _this8.thread.process.session.restartFrame(
-      { frameId: _this8.frameId },
-      _this8.thread.threadId);})();
+  async getMostSpecificScopes(range) {
+    const scopes = (await this.getScopes()).filter(s => !s.expensive);
+    const haveRangeInfo = scopes.some(s => s.range != null);
+    if (!haveRangeInfo) {
+      return scopes;
+    }
 
+    const scopesContainingRange = scopes.filter(scope => scope.range != null && scope.range.containsRange(range)).sort((first, second) => {
+      const firstRange = (0, (_nullthrows || _load_nullthrows()).default)(first.range);
+      const secondRange = (0, (_nullthrows || _load_nullthrows()).default)(second.range);
+      // prettier-ignore
+      return firstRange.end.row - firstRange.start.row - (secondRange.end.row - secondRange.end.row);
+    });
+    return scopesContainingRange.length ? scopesContainingRange : scopes;
+  }
+
+  async restart() {
+    await this.thread.process.session.restartFrame({ frameId: this.frameId }, this.thread.threadId);
   }
 
   toString() {
-    return `${this.name} (${
-    this.source.inMemory ? (0, (_nullthrows || _load_nullthrows()).default)(this.source.name) : this.source.uri
-    }:${this.range.start.row})`;
+    return `${this.name} (${this.source.inMemory ? (0, (_nullthrows || _load_nullthrows()).default)(this.source.name) : this.source.uri}:${this.range.start.row})`;
   }
 
-  openInEditor() {var _this9 = this;return (0, _asyncToGenerator.default)(function* () {
-      if (_this9.source.available) {
-        return (0, (_utils || _load_utils()).openSourceLocation)(_this9.source.uri, _this9.range.start.row);
-      } else {
-        return null;
-      }})();
-  }}exports.StackFrame = StackFrame;
+  async openInEditor() {
+    if (this.source.available) {
+      return (0, (_utils || _load_utils()).openSourceLocation)(this.source.uri, this.range.start.row);
+    } else {
+      return null;
+    }
+  }
+}
 
-
+exports.StackFrame = StackFrame;
 class Thread {
-
-
-
-
-
-
-
 
   constructor(process, name, threadId) {
     this.process = process;
@@ -652,150 +491,124 @@ class Thread {
   }
 
   /**
-     * Queries the debug adapter for the callstack and returns a promise
-     * which completes once the call stack has been retrieved.
-     * If the thread is not stopped, it returns a promise to an empty array.
-     * Only fetches the first stack frame for performance reasons. Calling this method consecutive times
-     * gets the remainder of the call stack.
-     */
-  fetchCallStack(levels = 20) {var _this10 = this;return (0, _asyncToGenerator.default)(function* () {
-      if (!_this10.stopped) {
-        return;
-      }
+   * Queries the debug adapter for the callstack and returns a promise
+   * which completes once the call stack has been retrieved.
+   * If the thread is not stopped, it returns a promise to an empty array.
+   * Only fetches the first stack frame for performance reasons. Calling this method consecutive times
+   * gets the remainder of the call stack.
+   */
+  async fetchCallStack(levels = 20) {
+    if (!this.stopped) {
+      return;
+    }
 
-      const start = _this10._callStack.length;
-      const callStack = yield _this10._getCallStackImpl(start, levels);
-      if (start < _this10._callStack.length) {
-        // Set the stack frames for exact position we requested. To make sure no concurrent requests create duplicate stack frames #30660
-        _this10._callStack.splice(start, _this10._callStack.length - start);
-      }
-      _this10._callStack = _this10._callStack.concat(callStack || []);})();
+    const start = this._callStack.length;
+    const callStack = await this._getCallStackImpl(start, levels);
+    if (start < this._callStack.length) {
+      // Set the stack frames for exact position we requested. To make sure no concurrent requests create duplicate stack frames #30660
+      this._callStack.splice(start, this._callStack.length - start);
+    }
+    this._callStack = this._callStack.concat(callStack || []);
   }
 
-  _getCallStackImpl(
-  startFrame,
-  levels)
-  {var _this11 = this;return (0, _asyncToGenerator.default)(function* () {
-      try {
-        const response = yield _this11.process.session.stackTrace(
-        {
-          threadId: _this11.threadId,
-          startFrame,
-          levels });
-
-
-        if (response == null || response.body == null) {
-          return [];
-        }
-        if (_this11.stoppedDetails != null) {
-          _this11.stoppedDetails.totalFrames = response.body.totalFrames;
-        }
-
-        return response.body.stackFrames.map(function (rsf, index) {
-          const source = _this11.process.getSource(rsf.source);
-
-          return new StackFrame(_this11,
-
-          rsf.id,
-          source,
-          rsf.name,
-          rsf.presentationHint,
-          // The UI is 0-based while VSP is 1-based.
-          new _atom.Range(
-          [rsf.line - 1, (rsf.column || 1) - 1],
-          [
-          (rsf.endLine != null ? rsf.endLine : rsf.line) - 1,
-          (rsf.endColumn != null ? rsf.endColumn : 1) - 1]),
-
-
-          startFrame + index);
-
-        });
-      } catch (err) {
-        if (_this11.stoppedDetails != null) {
-          _this11.stoppedDetails.framesErrorMessage = err.message;
-        }
-
+  async _getCallStackImpl(startFrame, levels) {
+    try {
+      const response = await this.process.session.stackTrace({
+        threadId: this.threadId,
+        startFrame,
+        levels
+      });
+      if (response == null || response.body == null) {
         return [];
-      }})();
+      }
+      if (this.stoppedDetails != null) {
+        this.stoppedDetails.totalFrames = response.body.totalFrames;
+      }
+
+      return response.body.stackFrames.map((rsf, index) => {
+        const source = this.process.getSource(rsf.source);
+
+        return new StackFrame(this, rsf.id, source, rsf.name, rsf.presentationHint,
+        // The UI is 0-based while VSP is 1-based.
+        new _atom.Range([rsf.line - 1, (rsf.column || 1) - 1], [(rsf.endLine != null ? rsf.endLine : rsf.line) - 1, (rsf.endColumn != null ? rsf.endColumn : 1) - 1]), startFrame + index);
+      });
+    } catch (err) {
+      if (this.stoppedDetails != null) {
+        this.stoppedDetails.framesErrorMessage = err.message;
+      }
+
+      return [];
+    }
   }
 
   /**
-     * Returns exception info promise if the exception was thrown, otherwise null
-     */
-  exceptionInfo() {var _this12 = this;return (0, _asyncToGenerator.default)(function* () {
-      const session = _this12.process.session;
-      if (
-      _this12.stoppedDetails == null ||
-      _this12.stoppedDetails.reason !== 'exception')
-      {
-        return null;
-      }
-      const stoppedDetails = _this12.stoppedDetails;
-      if (!session.capabilities.supportsExceptionInfoRequest) {
-        return {
-          id: null,
-          details: null,
-          description: stoppedDetails.description,
-          breakMode: null };
-
-      }
-
-      const exception = yield session.exceptionInfo(
-      { threadId: _this12.threadId });
-
-      if (exception == null) {
-        return null;
-      }
-
+   * Returns exception info promise if the exception was thrown, otherwise null
+   */
+  async exceptionInfo() {
+    const session = this.process.session;
+    if (this.stoppedDetails == null || this.stoppedDetails.reason !== 'exception') {
+      return null;
+    }
+    const stoppedDetails = this.stoppedDetails;
+    if (!session.capabilities.supportsExceptionInfoRequest) {
       return {
-        id: exception.body.exceptionId,
-        description: exception.body.description,
-        breakMode: exception.body.breakMode,
-        details: exception.body.details };})();
+        id: null,
+        details: null,
+        description: stoppedDetails.description,
+        breakMode: null
+      };
+    }
 
+    const exception = await session.exceptionInfo({ threadId: this.threadId });
+    if (exception == null) {
+      return null;
+    }
+
+    return {
+      id: exception.body.exceptionId,
+      description: exception.body.description,
+      breakMode: exception.body.breakMode,
+      details: exception.body.details
+    };
   }
 
-  next() {var _this13 = this;return (0, _asyncToGenerator.default)(function* () {
-      (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_OVER);
-      yield _this13.process.session.next({ threadId: _this13.threadId });})();
+  async next() {
+    (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_OVER);
+    await this.process.session.next({ threadId: this.threadId });
   }
 
-  stepIn() {var _this14 = this;return (0, _asyncToGenerator.default)(function* () {
-      (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_INTO);
-      yield _this14.process.session.stepIn({ threadId: _this14.threadId });})();
+  async stepIn() {
+    (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_INTO);
+    await this.process.session.stepIn({ threadId: this.threadId });
   }
 
-  stepOut() {var _this15 = this;return (0, _asyncToGenerator.default)(function* () {
-      (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_OUT);
-      yield _this15.process.session.stepOut({ threadId: _this15.threadId });})();
+  async stepOut() {
+    (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_OUT);
+    await this.process.session.stepOut({ threadId: this.threadId });
   }
 
-  stepBack() {var _this16 = this;return (0, _asyncToGenerator.default)(function* () {
-      (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_BACK);
-      yield _this16.process.session.stepBack({ threadId: _this16.threadId });})();
+  async stepBack() {
+    (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_BACK);
+    await this.process.session.stepBack({ threadId: this.threadId });
   }
 
-  continue() {var _this17 = this;return (0, _asyncToGenerator.default)(function* () {
-      (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_CONTINUE);
-      yield _this17.process.session.continue({ threadId: _this17.threadId });})();
+  async continue() {
+    (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_CONTINUE);
+    await this.process.session.continue({ threadId: this.threadId });
   }
 
-  pause() {var _this18 = this;return (0, _asyncToGenerator.default)(function* () {
-      (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_PAUSE);
-      yield _this18.process.session.pause({ threadId: _this18.threadId });})();
+  async pause() {
+    (0, (_analytics || _load_analytics()).track)((_constants || _load_constants()).AnalyticsEvents.DEBUGGER_STEP_PAUSE);
+    await this.process.session.pause({ threadId: this.threadId });
   }
 
-  reverseContinue() {var _this19 = this;return (0, _asyncToGenerator.default)(function* () {
-      yield _this19.process.session.reverseContinue({ threadId: _this19.threadId });})();
-  }}exports.Thread = Thread;
+  async reverseContinue() {
+    await this.process.session.reverseContinue({ threadId: this.threadId });
+  }
+}
 
-
+exports.Thread = Thread;
 class Process {
-
-
-
-
 
   constructor(configuration, session) {
     this._configuration = configuration;
@@ -852,8 +665,7 @@ class Process {
     // whether the thread is stopped or not
     if (stoppedDetails.allThreadsStopped) {
       this._threads.forEach(thread => {
-        thread.stoppedDetails =
-        thread.threadId === threadId ? stoppedDetails : thread.stoppedDetails;
+        thread.stoppedDetails = thread.threadId === threadId ? stoppedDetails : thread.stoppedDetails;
         thread.stopped = true;
         thread.clearCallStack();
       });
@@ -903,57 +715,32 @@ class Process {
     }
   }
 
-  completions(
-  frameId,
-  text,
-  position,
-  overwriteBefore)
-  {var _this20 = this;return (0, _asyncToGenerator.default)(function* () {
-      if (!_this20._session.capabilities.supportsCompletionsRequest) {
+  async completions(frameId, text, position, overwriteBefore) {
+    if (!this._session.capabilities.supportsCompletionsRequest) {
+      return [];
+    }
+    try {
+      const response = await this._session.completions({
+        frameId,
+        text,
+        column: position.column,
+        line: position.row
+      });
+      if (response && response.body && response.body.targets) {
+        return response.body.targets;
+      } else {
         return [];
       }
-      try {
-        const response = yield _this20._session.completions({
-          frameId,
-          text,
-          column: position.column,
-          line: position.row });
+    } catch (error) {
+      return [];
+    }
+  }
+}
 
-        if (response && response.body && response.body.targets) {
-          return response.body.targets;
-        } else {
-          return [];
-        }
-      } catch (error) {
-        return [];
-      }})();
-  }}exports.Process = Process;
-
-
+exports.Process = Process;
 class Breakpoint {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  constructor(
-  uri,
-  line,
-  column,
-  enabled,
-  condition,
-  hitCondition,
-  adapterData)
-  {
+  constructor(uri, line, column, enabled, condition, hitCondition, adapterData) {
     this.uri = uri;
     this.line = line;
     this.column = column == null ? 1 : column;
@@ -968,17 +755,11 @@ class Breakpoint {
 
   getId() {
     return this.id;
-  }}exports.Breakpoint = Breakpoint;
+  }
+}
 
-
+exports.Breakpoint = Breakpoint;
 class FunctionBreakpoint {
-
-
-
-
-
-
-
 
   constructor(name, enabled, hitCondition) {
     this.name = name;
@@ -992,14 +773,11 @@ class FunctionBreakpoint {
 
   getId() {
     return this.id;
-  }}exports.FunctionBreakpoint = FunctionBreakpoint;
+  }
+}
 
-
+exports.FunctionBreakpoint = FunctionBreakpoint;
 class ExceptionBreakpoint {
-
-
-
-
 
   constructor(filter, label, enabled) {
     this.filter = filter;
@@ -1010,31 +788,17 @@ class ExceptionBreakpoint {
 
   getId() {
     return this._id;
-  }}exports.ExceptionBreakpoint = ExceptionBreakpoint;
+  }
+}
 
-
+exports.ExceptionBreakpoint = ExceptionBreakpoint;
 const BREAKPOINTS_CHANGED = 'BREAKPOINTS_CHANGED';
 const CALLSTACK_CHANGED = 'CALLSTACK_CHANGED';
 const WATCH_EXPRESSIONS_CHANGED = 'WATCH_EXPRESSIONS_CHANGED';
 
 class Model {
 
-
-
-
-
-
-
-
-
-
-  constructor(
-  breakpoints,
-  breakpointsActivated,
-  functionBreakpoints,
-  exceptionBreakpoints,
-  watchExpressions)
-  {
+  constructor(breakpoints, breakpointsActivated, functionBreakpoints, exceptionBreakpoints, watchExpressions) {
     this._processes = [];
     this._schedulers = new Map();
     this._breakpoints = breakpoints;
@@ -1054,10 +818,7 @@ class Model {
     return this._processes;
   }
 
-  addProcess(
-  configuration,
-  session)
-  {
+  addProcess(configuration, session) {
     const process = new Process(configuration, session);
     this._processes.push(process);
     return process;
@@ -1068,9 +829,7 @@ class Model {
     this._emitter.emit(CALLSTACK_CHANGED);
   }
 
-  onDidChangeBreakpoints(
-  callback)
-  {
+  onDidChangeBreakpoints(callback) {
     return this._emitter.on(BREAKPOINTS_CHANGED, callback);
   }
 
@@ -1078,16 +837,12 @@ class Model {
     return this._emitter.on(CALLSTACK_CHANGED, callback);
   }
 
-  onDidChangeWatchExpressions(
-  callback)
-  {
+  onDidChangeWatchExpressions(callback) {
     return this._emitter.on(WATCH_EXPRESSIONS_CHANGED, callback);
   }
 
   rawUpdate(data) {
-    const process = this._processes.
-    filter(p => p.getId() === data.sessionId).
-    pop();
+    const process = this._processes.filter(p => p.getId() === data.sessionId).pop();
     if (process == null) {
       return;
     }
@@ -1111,33 +866,23 @@ class Model {
     }
   }
 
-  fetchCallStack(threadI) {var _this21 = this;return (0, _asyncToGenerator.default)(function* () {
-      const thread = threadI;
-      if (
-      // $FlowFixMe(>=0.68.0) Flow suppress (T27187857)
-      (0, (_nullthrows || _load_nullthrows()).default)(thread.process).session.capabilities.
-      supportsDelayedStackTraceLoading)
-      {
-        // For improved performance load the first stack frame and then load the rest async.
-        yield thread.fetchCallStack(1);
-        if (!_this21._schedulers.has(thread.getId())) {
-          _this21._schedulers.set(
-          thread.getId(),
-          _rxjsBundlesRxMinJs.Observable.timer(500).subscribe(function () {
-            thread.
-            fetchCallStack(19).
-            then(
-            function () {return _this21._emitter.emit(CALLSTACK_CHANGED);}, (_utils || _load_utils()).onUnexpectedError);
-
-
-          }));
-
-        }
-      } else {
-        thread.clearCallStack();
-        yield thread.fetchCallStack();
+  async fetchCallStack(threadI) {
+    const thread = threadI;
+    if (
+    // $FlowFixMe(>=0.68.0) Flow suppress (T27187857)
+    (0, (_nullthrows || _load_nullthrows()).default)(thread.process).session.capabilities.supportsDelayedStackTraceLoading) {
+      // For improved performance load the first stack frame and then load the rest async.
+      await thread.fetchCallStack(1);
+      if (!this._schedulers.has(thread.getId())) {
+        this._schedulers.set(thread.getId(), _rxjsBundlesRxMinJs.Observable.timer(500).subscribe(() => {
+          thread.fetchCallStack(19).then(() => this._emitter.emit(CALLSTACK_CHANGED), (_utils || _load_utils()).onUnexpectedError);
+        }));
       }
-      _this21._emitter.emit(CALLSTACK_CHANGED);})();
+    } else {
+      thread.clearCallStack();
+      await thread.fetchCallStack();
+    }
+    this._emitter.emit(CALLSTACK_CHANGED);
   }
 
   getBreakpoints() {
@@ -1160,18 +905,10 @@ class Model {
     return this._exceptionBreakpoints;
   }
 
-  setExceptionBreakpoints(
-  data)
-  {
+  setExceptionBreakpoints(data) {
     this._exceptionBreakpoints = data.map(d => {
-      const ebp = this._exceptionBreakpoints.
-      filter(bp => bp.filter === d.filter).
-      pop();
-      return new ExceptionBreakpoint(
-      d.filter,
-      d.label,
-      ebp ? ebp.enabled : d.default);
-
+      const ebp = this._exceptionBreakpoints.filter(bp => bp.filter === d.filter).pop();
+      return new ExceptionBreakpoint(d.filter, d.label, ebp ? ebp.enabled : d.default);
     });
     this._emitter.emit(BREAKPOINTS_CHANGED);
   }
@@ -1185,22 +922,8 @@ class Model {
     this._emitter.emit(BREAKPOINTS_CHANGED);
   }
 
-  addBreakpoints(
-  uri,
-  rawData,
-  fireEvent = true)
-  {
-    const newBreakpoints = rawData.map(
-    rawBp =>
-    new Breakpoint(
-    uri,
-    rawBp.line,
-    rawBp.column,
-    rawBp.enabled,
-    rawBp.condition,
-    rawBp.hitCondition));
-
-
+  addBreakpoints(uri, rawData, fireEvent = true) {
+    const newBreakpoints = rawData.map(rawBp => new Breakpoint(uri, rawBp.line, rawBp.column, rawBp.enabled, rawBp.condition, rawBp.hitCondition));
     this._breakpoints = this._breakpoints.concat(newBreakpoints);
     this._breakpointsActivated = true;
     this._sortAndDeDup();
@@ -1213,9 +936,7 @@ class Model {
   }
 
   removeBreakpoints(toRemove) {
-    this._breakpoints = this._breakpoints.filter(
-    bp => !toRemove.some(r => r.getId() === bp.getId()));
-
+    this._breakpoints = this._breakpoints.filter(bp => !toRemove.some(r => r.getId() === bp.getId()));
     this._emitter.emit(BREAKPOINTS_CHANGED, { removed: toRemove });
   }
 
@@ -1231,9 +952,7 @@ class Model {
         bp.verified = bpData.verified != null ? bpData.verified : bp.verified;
         bp.idFromAdapter = bpData.id;
         bp.message = bpData.message;
-        bp.adapterData = bpData.source ?
-        bpData.source.adapterData :
-        bp.adapterData;
+        bp.adapterData = bpData.source ? bpData.source.adapterData : bp.adapterData;
         updated.push(bp);
       }
     });
@@ -1252,18 +971,12 @@ class Model {
 
       return first.line - second.line;
     });
-    this._breakpoints = (0, (_collection || _load_collection()).distinct)(
-    this._breakpoints,
-    bp => `${bp.uri}:${bp.line}:${bp.column}`);
-
+    this._breakpoints = (0, (_collection || _load_collection()).distinct)(this._breakpoints, bp => `${bp.uri}:${bp.line}:${bp.column}`);
   }
 
   setEnablement(element, enable) {
     const changed = [];
-    if (
-    element.enabled !== enable && (
-    element instanceof Breakpoint || element instanceof FunctionBreakpoint))
-    {
+    if (element.enabled !== enable && (element instanceof Breakpoint || element instanceof FunctionBreakpoint)) {
       changed.push(element);
     }
 
@@ -1297,24 +1010,13 @@ class Model {
   }
 
   addFunctionBreakpoint(functionName) {
-    const newFunctionBreakpoint = new FunctionBreakpoint(
-    functionName,
-    true,
-    null);
-
+    const newFunctionBreakpoint = new FunctionBreakpoint(functionName, true, null);
     this._functionBreakpoints.push(newFunctionBreakpoint);
     this._emitter.emit(BREAKPOINTS_CHANGED, { added: [newFunctionBreakpoint] });
     return newFunctionBreakpoint;
   }
 
-  updateFunctionBreakpoints(data)
-
-
-
-
-
-
-  {
+  updateFunctionBreakpoints(data) {
     const changed = [];
 
     this._functionBreakpoints.forEach(fbp => {
@@ -1336,9 +1038,7 @@ class Model {
     let removed;
     if (id != null) {
       removed = this._functionBreakpoints.filter(fbp => fbp.getId() === id);
-      this._functionBreakpoints = this._functionBreakpoints.filter(
-      fbp => fbp.getId() !== id);
-
+      this._functionBreakpoints = this._functionBreakpoints.filter(fbp => fbp.getId() !== id);
     } else {
       removed = this._functionBreakpoints;
       this._functionBreakpoints = [];
@@ -1365,8 +1065,7 @@ class Model {
   }
 
   removeWatchExpressions(id) {
-    this._watchExpressions =
-    id != null ? this._watchExpressions.filter(we => we.getId() !== id) : [];
+    this._watchExpressions = id != null ? this._watchExpressions.filter(we => we.getId() !== id) : [];
     this._emitter.emit(WATCH_EXPRESSIONS_CHANGED);
   }
 
@@ -1381,4 +1080,6 @@ class Model {
 
   dispose() {
     this._disposables.dispose();
-  }}exports.Model = Model;
+  }
+}
+exports.Model = Model;

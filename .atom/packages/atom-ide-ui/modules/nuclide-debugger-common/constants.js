@@ -1,17 +1,8 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
 
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 const VsAdapterTypes = exports.VsAdapterTypes = Object.freeze({
   HHVM: 'hhvm',
   PYTHON: 'python',
@@ -22,8 +13,8 @@ const VsAdapterTypes = exports.VsAdapterTypes = Object.freeze({
   OCAML: 'ocaml',
   MOBILEJS: 'mobilejs',
   NATIVE_GDB: 'native_gdb',
-  NATIVE_LLDB: 'native_lldb' });
-
+  NATIVE_LLDB: 'native_lldb'
+});
 
 // This is to work around flow's missing support of enums.
 /**
@@ -36,4 +27,6 @@ const VsAdapterTypes = exports.VsAdapterTypes = Object.freeze({
  *
  *  strict-local
  * @format
- */VsAdapterTypes;
+ */
+
+VsAdapterTypes;

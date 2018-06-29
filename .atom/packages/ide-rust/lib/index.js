@@ -1,16 +1,17 @@
 const cp = require("child_process")
 const os = require("os")
 const path = require("path")
-const _ = require('underscore-plus')
-const { CompositeDisposable, Disposable } = require('atom')
+const _ = require("underscore-plus")
+const { CompositeDisposable, Disposable } = require("atom")
 const { AutoLanguageClient } = require("atom-languageclient")
-const RlsProject = require('./rls-project.js')
+const RlsProject = require("./rls-project.js")
 const {
   fetchLatestDist,
   checkHasRls,
   suggestChannelOrDated,
   DATED_REGEX,
-} = require('./dist-fetch')
+} = require("./dist-fetch")
+const { showConflictingPackageWarnings } = require("./competition.js")
 
 /** @type {number} interval between toolchain update checks, milliseconds */
 const PERIODIC_UPDATE_CHECK_MILLIS = 6 * 60 * 60 * 1000
@@ -90,8 +91,20 @@ function installCompiler() {
  * @return {Promise<string>} `rustc --print sysroot` stdout
  */
 async function rustcSysroot(toolchain) {
-  let { stdout } = await exec(`rustup run ${toolchain} rustc --print sysroot`)
-  return stdout.trim()
+  try {
+    let { stdout } = await exec(`rustup run ${toolchain} rustc --print sysroot`)
+    return stdout.trim()
+  }
+  catch (e) {
+    // make an attempt to use system rustc
+    try {
+      let { stdout } = await exec(`rustc --print sysroot`)
+      return stdout.trim()
+    }
+    catch (sys_e) {
+      throw e
+    }
+  }
 }
 
 /** @return {string} environment variable path */
@@ -268,7 +281,7 @@ class RustLanguageClient extends AutoLanguageClient {
           },
           clippyPreference: {
             title: "Clippy Preference",
-            description: 'Controls eagerness of clippy diagnostics. `Opt-in` requires each crate specifying `#![warn(clippy)]. Note clippy is only available on Rls releases that have it enabled at compile time.',
+            description: 'Controls eagerness of clippy diagnostics. **Opt-in** requires each crate specifying `#![warn(clippy)]`. Note clippy is only available on Rls releases that have it enabled at compile time.',
             type: "string",
             default: "Rls Default",
             order: 2,
@@ -483,6 +496,11 @@ class RustLanguageClient extends AutoLanguageClient {
     // Watch config toolchain changes -> switch, install & update toolchains, restart servers
     this.disposables.add(atom.config.onDidChange('ide-rust.rlsToolchain',
       _.debounce(({ newValue }) => {
+        if (rlsCommandOverride()) {
+          // don't bother checking toolchain if an override is being used
+          return
+        }
+
         return this._checkToolchain()
           .then(() => checkRls(this.busySignalService))
           .then(() => this._restartLanguageServers(`Switched Rls toolchain to \`${newValue}\``))
@@ -570,6 +588,11 @@ class RustLanguageClient extends AutoLanguageClient {
       }))
       this._periodicUpdateChecking = true
       periodicUpdate().catch(logErr)
+    }
+    if (!this._conflictingPackageChecking) {
+      showConflictingPackageWarnings()
+      this.disposables.add(atom.packages.onDidActivatePackage(showConflictingPackageWarnings))
+      this._conflictingPackageChecking = true
     }
 
     let cmdOverride = rlsCommandOverride()

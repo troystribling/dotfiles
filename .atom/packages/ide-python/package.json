@@ -2,49 +2,49 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64464-1hb1pz.7qqdtxzuxr/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1764-t49lot.64aq0k9/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64464-1hb1pz.7qqdtxzuxr/package.tgz",
-        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64464-1hb1pz.7qqdtxzuxr/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1764-t49lot.64aq0k9/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1764-t49lot.64aq0k9/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118330-64464-5gr4hy.onpv7bke29"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118522-1764-1nx4n5.j5hv20rudi"
     ]
   ],
-  "_from": "../d-118330-64464-1hb1pz.7qqdtxzuxr/package.tgz",
-  "_id": "ide-python@0.9.2",
+  "_from": "../d-118522-1764-t49lot.64aq0k9/package.tgz",
+  "_id": "ide-python@1.0.0",
   "_inCache": true,
   "_location": "/ide-python",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64464-1hb1pz.7qqdtxzuxr/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1764-t49lot.64aq0k9/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64464-1hb1pz.7qqdtxzuxr/package.tgz",
-    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64464-1hb1pz.7qqdtxzuxr/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1764-t49lot.64aq0k9/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1764-t49lot.64aq0k9/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-118330-64464-1hb1pz.7qqdtxzuxr/package.tgz",
-  "_shasum": "bf5fbfb50e1fd804a438fa3c17cd91272c073bb6",
+  "_resolved": "file:../d-118522-1764-t49lot.64aq0k9/package.tgz",
+  "_shasum": "8eafefc72a0279aaeb59060c1e1ee64cdb9d22b0",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-64464-1hb1pz.7qqdtxzuxr/package.tgz",
-  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118330-64464-5gr4hy.onpv7bke29",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1764-t49lot.64aq0k9/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118522-1764-1nx4n5.j5hv20rudi",
   "bugs": {
     "url": "https://github.com/lgeiger/ide-python/issues"
   },
   "configSchema": {
-    "pylsPath": {
-      "title": "Python Language Server Path",
+    "python": {
+      "title": "Python Executable",
       "order": 1,
       "type": "string",
-      "default": "pyls",
-      "description": "Absolute path to `pyls` executable."
+      "default": "python",
+      "description": "Absolute path of your Python binary. This is used to launch the Python language server. Make sure to install `pyls` for this version of Python. Changes will take effect after a restart of the language server."
     },
     "pylsConfigurationSources": {
       "order": 2,
@@ -53,7 +53,7 @@
         "pycodestyle",
         "flake8"
       ],
-      "description": "List of configuration sources to use. Requires `pyls` 0.12.1+",
+      "description": "List of configuration sources to use.",
       "items": {
         "type": "string",
         "enum": [
@@ -66,7 +66,7 @@
       "order": 3,
       "type": "string",
       "default": ".ropeproject",
-      "description": "The name of the folder in which rope stores project configurations and data. Pass `null` for not using such a folder at all. Requires `pyls` 0.17+"
+      "description": "The name of the folder in which rope stores project configurations and data. Pass `null` for not using such a folder at all."
     },
     "pylsPlugins": {
       "title": "Python Language Server Plugins",
@@ -147,7 +147,7 @@
               "title": "All Scopes",
               "type": "boolean",
               "default": true,
-              "description": "If enabled lists the names of all scopes instead of only the module namespace. Requires `pyls` 0.7+"
+              "description": "If enabled lists the names of all scopes instead of only the module namespace."
             }
           }
         },
@@ -188,7 +188,7 @@
                 "type": "string"
               },
               "default": [],
-              "description": "Select errors and warnings. Requires `pyls` 0.14+"
+              "description": "Select errors and warnings."
             },
             "ignore": {
               "order": 3,
@@ -206,21 +206,21 @@
               "items": {
                 "type": "string"
               },
-              "description": "Ignore errors and warnings. Requires `pyls` 0.14+"
+              "description": "Ignore errors and warnings."
             },
             "hangClosing": {
               "order": 4,
               "title": "Hang Closing",
               "type": "boolean",
               "default": false,
-              "description": "Hang closing bracket instead of matching indentation of opening bracket's line. Requires `pyls` 0.12.1+"
+              "description": "Hang closing bracket instead of matching indentation of opening bracket's line."
             },
             "maxLineLength": {
               "order": 5,
               "title": "Max Line Length",
               "type": "number",
               "default": 79,
-              "description": "Set maximum allowed line length. Requires `pyls` 0.12.1+"
+              "description": "Set maximum allowed line length."
             }
           }
         },
@@ -240,14 +240,14 @@
               "title": "Match",
               "type": "string",
               "default": "(?!test_).*\\.py",
-              "description": "Check only files that exactly match the given regular expression; default is to match files that don't start with 'test_' but end with '.py'. Requires `pyls` 0.17+"
+              "description": "Check only files that exactly match the given regular expression; default is to match files that don't start with 'test_' but end with '.py'."
             },
             "matchDir": {
               "order": 3,
               "title": "Match Dir",
               "type": "string",
               "default": "[^\\.].*",
-              "description": "Search only dirs that exactly match the given regular expression; default is to match dirs which do not begin with a dot. Requires `pyls` 0.17+"
+              "description": "Search only dirs that exactly match the given regular expression; default is to match dirs which do not begin with a dot."
             },
             "select": {
               "order": 4,
@@ -257,7 +257,7 @@
               "items": {
                 "type": "string"
               },
-              "description": "Select errors and warnings Requires `pyls` 0.17+"
+              "description": "Select errors and warnings"
             },
             "ignore": {
               "order": 5,
@@ -267,7 +267,7 @@
               "items": {
                 "type": "string"
               },
-              "description": "Ignore errors and warnings Requires `pyls` 0.17+"
+              "description": "Ignore errors and warnings"
             },
             "convention": {
               "order": 6,
@@ -279,7 +279,7 @@
                 ""
               ],
               "default": "",
-              "description": "Choose the basic list of checked errors by specifying an existing convention. Requires `pyls` 0.17+"
+              "description": "Choose the basic list of checked errors by specifying an existing convention."
             },
             "addSelect": {
               "order": 7,
@@ -289,7 +289,7 @@
               "items": {
                 "type": "string"
               },
-              "description": "Select errors and warnings in addition to the specified convention. Requires `pyls` 0.17+"
+              "description": "Select errors and warnings in addition to the specified convention."
             },
             "addIgnore": {
               "order": 8,
@@ -299,7 +299,7 @@
               "items": {
                 "type": "string"
               },
-              "description": "Ignore errors and warnings in addition to the specified convention. Requires `pyls` 0.17+"
+              "description": "Ignore errors and warnings in addition to the specified convention."
             }
           }
         },
@@ -323,7 +323,7 @@
               "title": "Enabled",
               "type": "boolean",
               "default": false,
-              "description": "Enable or disable the plugin. Requires `pyls` 0.12.1+"
+              "description": "Enable or disable the plugin."
             }
           }
         },
@@ -347,7 +347,7 @@
               "title": "Enabled",
               "type": "boolean",
               "default": true,
-              "description": "Enable or disable autopep8. Formats code according to PyCodeStyle config. Requires `pyls` 0.17+"
+              "description": "Enable or disable autopep8. Formats code according to PyCodeStyle config."
             }
           }
         }
@@ -415,6 +415,11 @@
         "2.0.0": "provideAutocomplete"
       }
     },
+    "code-highlight": {
+      "versions": {
+        "0.1.0": "provideCodeHighlight"
+      }
+    },
     "code-format.range": {
       "versions": {
         "0.1.0": "provideCodeFormat"
@@ -436,11 +441,11 @@
       }
     }
   },
-  "readme": "# IDE-python package\n\n[![Greenkeeper badge](https://badges.greenkeeper.io/lgeiger/ide-python.svg)](https://greenkeeper.io/)\n\nPython language support for [Atom-IDE](https://ide.atom.io/), powered by the [Python language server](https://github.com/palantir/python-language-server).\n\n![ide-python](https://user-images.githubusercontent.com/13285808/30352538-b9687a76-9820-11e7-8876-c22751645d36.png)\n\n## Requirements\n\n[`ide-python`](https://atom.io/packages/ide-python) requires [Atom `1.21+`](https://atom.io/), [Python language server 0.17+`](https://github.com/palantir/python-language-server) and the [`atom-ide-ui`](https://atom.io/packages/atom-ide-ui) package to expose the functionality within Atom.\n\n## Feature Providers\n\n* [Jedi](https://github.com/davidhalter/jedi) for Completions, Definitions, Hover, References, Signature Help, and Symbols\n* [Rope](https://github.com/python-rope/rope) for Completions and renaming\n* [Pyflakes](https://github.com/PyCQA/pyflakes) linter to detect various errors\n* [McCabe](https://github.com/PyCQA/mccabe) linter for complexity checking\n* [pycodestyle](https://github.com/PyCQA/pycodestyle) linter for style checking\n* [pydocstyle](https://github.com/PyCQA/pydocstyle) linter for docstring style checking\n* [autopep8](https://github.com/hhatto/autopep8) for code formatting (preferred over YAPF)\n* [YAPF](https://github.com/google/yapf) for code formatting\n\n## Installation\n\n### Language Server\n\nInstall the language server (we recommend version 0.17.0 or newer) with:\n\n```bash\npip install 'python-language-server[all]'\n```\n\nThis command will install the language server and all supported feature providers, which can be enabled or disabled in the settings. Checkout the [official installation instructions](https://github.com/palantir/python-language-server#installation) on how to install only the providers you need.\n\nVerify that everything is correctly installed and `pyls` is on your `PATH` by running `pyls --help` from the command line.\nIt should return\n\n```bash\nusage: pyls [-h] [--tcp] [--host HOST] [--port PORT]\n            [--log-config LOG_CONFIG | --log-file LOG_FILE] [-v]\n\nPython Language Server\n...\n```\n\nDepending on your Python setup `pyls` may be installed in a non default folder. In this case either add the directory to your `PATH` or edit the \"Python Language Server Path\" setting of `ide-python` to point to the `pyls` executable.\n\n### Atom Package\n\nInstall `ide-python` and [`atom-ide-ui`](https://atom.io/packages/atom-ide-ui) from _Install_ in Atom's settings or run:\n\n```bash\napm install atom-ide-ui\napm install ide-python\n```\n\n## Configuration\n\nConfiguration is loaded from zero or more configuration sources.\n\n* `pycodestyle`: discovered in `~/.config/pycodestyle`, `setup.cfg`, `tox.ini` and `pycodestyle.cfg`\n* `flake8`: discovered in `~/.config/flake8`, `setup.cfg`, `tox.ini` and `flake8.cfg`\n\nOverall configuration is computed first from user configuration (in home directory), overridden by configuration in the `ide-python` settings, and then overridden by configuration discovered in the current project.\n\n## Contributing\n\nAlways feel free to help out! Whether it's [filing bugs and feature requests](https://github.com/lgeiger/ide-python/issues/new) or working on some of the [open issues](https://github.com/lgeiger/ide-python/issues), Atom's [guide for contributing to packages](https://github.com/atom/atom/blob/master/docs/contributing-to-packages.md) will help get you started.\n\n## License\n\nMIT License. See [the license](LICENSE.md) for more details.\n",
+  "readme": "# IDE-python package\n\n[![Greenkeeper badge](https://badges.greenkeeper.io/lgeiger/ide-python.svg)](https://greenkeeper.io/)\n\nPython language support for [Atom-IDE](https://ide.atom.io/), powered by the [Python language server](https://github.com/palantir/python-language-server).\n\n![ide-python](https://user-images.githubusercontent.com/13285808/30352538-b9687a76-9820-11e7-8876-c22751645d36.png)\n\n## Requirements\n\n[`ide-python`](https://atom.io/packages/ide-python) requires [Atom `1.21+`](https://atom.io/), [Python language server `0.19+`](https://github.com/palantir/python-language-server) and the [`atom-ide-ui`](https://atom.io/packages/atom-ide-ui) package to expose the functionality within Atom.\n\n## Feature Providers\n\n* [Jedi](https://github.com/davidhalter/jedi) for Completions, Definitions, Hover, References, Signature Help, and Symbols\n* [Rope](https://github.com/python-rope/rope) for Completions and renaming\n* [Pyflakes](https://github.com/PyCQA/pyflakes) linter to detect various errors\n* [McCabe](https://github.com/PyCQA/mccabe) linter for complexity checking\n* [pycodestyle](https://github.com/PyCQA/pycodestyle) linter for style checking\n* [pydocstyle](https://github.com/PyCQA/pydocstyle) linter for docstring style checking\n* [autopep8](https://github.com/hhatto/autopep8) for code formatting (preferred over YAPF)\n* [YAPF](https://github.com/google/yapf) for code formatting\n\n## Installation\n\n### Language Server\n\nInstall the language server (0.19.0 or newer) with:\n\n```bash\npython -m pip install 'python-language-server[all]'\n```\n\nThis command will install the language server and all supported feature providers, which can be enabled or disabled in the settings. Checkout the [official installation instructions](https://github.com/palantir/python-language-server#installation) on how to install only the providers you need.\n\nYou can verify that everything is correctly installed by running `python -m pyls --help` from the command line.\nIt should return\n\n```bash\nusage: pyls [-h] [--tcp] [--host HOST] [--port PORT]\n            [--log-config LOG_CONFIG | --log-file LOG_FILE] [-v]\n\nPython Language Server\n...\n```\n\nIf you have installed `pyls` using a non default installation of Python, you can add modify the *Python Executable* config in the `ide-python` settings.\n\n### Atom Package\n\nInstall `ide-python` and [`atom-ide-ui`](https://atom.io/packages/atom-ide-ui) from _Install_ in Atom's settings or run:\n\n```bash\napm install atom-ide-ui\napm install ide-python\n```\n\n## Configuration\n\nConfiguration is loaded from zero or more configuration sources.\n\n* `pycodestyle`: discovered in `~/.config/pycodestyle`, `setup.cfg`, `tox.ini` and `pycodestyle.cfg`\n* `flake8`: discovered in `~/.config/flake8`, `setup.cfg`, `tox.ini` and `flake8.cfg`\n\nOverall configuration is computed first from user configuration (in home directory), overridden by configuration in the `ide-python` settings, and then overridden by configuration discovered in the current project.\n\n## Contributing\n\nAlways feel free to help out! Whether it's [filing bugs and feature requests](https://github.com/lgeiger/ide-python/issues/new) or working on some of the [open issues](https://github.com/lgeiger/ide-python/issues), Atom's [guide for contributing to packages](https://github.com/atom/atom/blob/master/docs/contributing-to-packages.md) will help get you started.\n\n## License\n\nMIT License. See [the license](LICENSE.md) for more details.\n",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lgeiger/ide-python.git"
   },
-  "version": "0.9.2"
+  "version": "1.0.0"
 }

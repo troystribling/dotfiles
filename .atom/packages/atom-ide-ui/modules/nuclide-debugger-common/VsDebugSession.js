@@ -1,96 +1,73 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));var _vscodeDebugprotocol;
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
+var _vscodeDebugprotocol;
 
+function _load_vscodeDebugprotocol() {
+  return _vscodeDebugprotocol = _interopRequireWildcard(require('vscode-debugprotocol'));
+}
 
+var _VsAdapterSpawner;
 
+function _load_VsAdapterSpawner() {
+  return _VsAdapterSpawner = _interopRequireDefault(require('./VsAdapterSpawner'));
+}
 
+var _V8Protocol;
 
+function _load_V8Protocol() {
+  return _V8Protocol = _interopRequireDefault(require('./V8Protocol'));
+}
 
+var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
+var _idx;
 
+function _load_idx() {
+  return _idx = _interopRequireDefault(require('idx'));
+}
 
-function _load_vscodeDebugprotocol() {return _vscodeDebugprotocol = _interopRequireWildcard(require('vscode-debugprotocol'));}var _VsAdapterSpawner;
+var _analytics;
 
+function _load_analytics() {
+  return _analytics = require('../nuclide-commons/analytics');
+}
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-
-
-
-function _load_VsAdapterSpawner() {return _VsAdapterSpawner = _interopRequireDefault(require('./VsAdapterSpawner'));}var _V8Protocol;
-function _load_V8Protocol() {return _V8Protocol = _interopRequireDefault(require('./V8Protocol'));}
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');var _idx;
-function _load_idx() {return _idx = _interopRequireDefault(require('idx'));}var _analytics;
-
-function _load_analytics() {return _analytics = require('../nuclide-commons/analytics');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        * All rights reserved.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        * This source code is licensed under the BSD-style license found in the
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        * 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        * @format
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        */
-
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 
 function raiseAdapterExitedEvent(exitCode) {
   return {
     seq: 0,
     type: 'event',
     event: 'adapter-exited',
-    body: { exitCode } };
-
+    body: { exitCode }
+  };
 }
 
-
-
-
-
 /**
-   * Use V8 JSON-RPC protocol to send & receive messages
-   * (requests, responses & events) over `stdio` of adapter child processes.
-   */
+ * Use V8 JSON-RPC protocol to send & receive messages
+ * (requests, responses & events) over `stdio` of adapter child processes.
+ */
 class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  constructor(
-  id,
-  logger,
-  adapterExecutable,
-  adapterAnalyticsExtras,
-  spawner,
-  sendPreprocessors = [],
-  receivePreprocessors = [],
-  runInTerminalHandler)
-  {
+  constructor(id, logger, adapterExecutable, adapterAnalyticsExtras, spawner, sendPreprocessors = [], receivePreprocessors = [], runInTerminalHandler) {
     super(id, logger, sendPreprocessors, receivePreprocessors);
     this._adapterExecutable = adapterExecutable;
     this._logger = logger;
@@ -186,35 +163,23 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
 
     const operation = () => {
       // Babel Bug: `super` isn't working with `async`
-      return super.send(command, args).then(
-      response => {
+      return super.send(command, args).then(response => {
         this._logger.info('Received response:', response);
         return response;
-      },
-      errorResponse => {var _ref, _ref2, _ref3, _ref4;
-        let formattedError =
-        ((_ref = errorResponse) != null ? (_ref2 = _ref.body) != null ? (_ref3 = _ref2.error) != null ? _ref3.format : _ref3 : _ref2 : _ref) || ((_ref4 =
-        errorResponse) != null ? _ref4.message : _ref4);
+      }, errorResponse => {
+        var _ref, _ref2, _ref3, _ref4;
+
+        let formattedError = ((_ref = errorResponse) != null ? (_ref2 = _ref.body) != null ? (_ref3 = _ref2.error) != null ? _ref3.format : _ref3 : _ref2 : _ref) || ((_ref4 = errorResponse) != null ? _ref4.message : _ref4);
         if (formattedError === '{_stack}') {
           formattedError = JSON.stringify(errorResponse.body.error);
         } else if (formattedError == null) {
-          formattedError = [
-          `command: ${command}`,
-          `args: ${JSON.stringify(args)}`,
-          `response: ${JSON.stringify(errorResponse)}`,
-          `adapterExecutable: , ${JSON.stringify(this._adapterExecutable)}`].
-          join(', ');
+          formattedError = [`command: ${command}`, `args: ${JSON.stringify(args)}`, `response: ${JSON.stringify(errorResponse)}`, `adapterExecutable: , ${JSON.stringify(this._adapterExecutable)}`].join(', ');
         }
         throw new Error(formattedError);
       });
-
     };
 
-    return (0, (_analytics || _load_analytics()).trackTiming)(
-    `vs-debug-session:${command}`,
-    operation,
-    this._adapterAnalyticsExtras);
-
+    return (0, (_analytics || _load_analytics()).trackTiming)(`vs-debug-session:${command}`, operation, this._adapterAnalyticsExtras);
   }
 
   onEvent(event) {
@@ -266,43 +231,34 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
       default:
         this._onDidCustom.next(event);
         this._logger.info('Custom event type:', event);
-        break;}
-
+        break;
+    }
   }
 
   getCapabilities() {
     return this.capabilities;
   }
 
-  initialize(
-  args)
-  {var _this = this;return (0, _asyncToGenerator.default)(function* () {
-      const response = yield _this.send('initialize', args);
-      return _this._readCapabilities(response);})();
+  async initialize(args) {
+    const response = await this.send('initialize', args);
+    return this._readCapabilities(response);
   }
 
   _readCapabilities(response) {
     if (response) {
-      this.capabilities = Object.assign({},
-      this.capabilities,
-      response.body);
-
+      this.capabilities = Object.assign({}, this.capabilities, response.body);
     }
     return response;
   }
 
-  launch(
-  args)
-  {var _this2 = this;return (0, _asyncToGenerator.default)(function* () {
-      const response = yield _this2.send('launch', args);
-      return _this2._readCapabilities(response);})();
+  async launch(args) {
+    const response = await this.send('launch', args);
+    return this._readCapabilities(response);
   }
 
-  attach(
-  args)
-  {var _this3 = this;return (0, _asyncToGenerator.default)(function* () {
-      const response = yield _this3.send('attach', args);
-      return _this3._readCapabilities(response);})();
+  async attach(args) {
+    const response = await this.send('attach', args);
+    return this._readCapabilities(response);
   }
 
   next(args) {
@@ -310,85 +266,61 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
     return this.send('next', args);
   }
 
-  stepIn(
-  args)
-  {
+  stepIn(args) {
     this._fireFakeContinued(args.threadId);
     return this.send('stepIn', args);
   }
 
-  stepOut(
-  args)
-  {
+  stepOut(args) {
     this._fireFakeContinued(args.threadId);
     return this.send('stepOut', args);
   }
 
-  continue(
-  args)
-  {
+  continue(args) {
     this._fireFakeContinued(args.threadId);
     return this.send('continue', args);
   }
 
-  pause(
-  args)
-  {
+  pause(args) {
     return this.send('pause', args);
   }
 
-  setVariable(
-  args)
-  {
+  setVariable(args) {
     return this.send('setVariable', args);
   }
 
-  restartFrame(
-  args,
-  threadId)
-  {
+  restartFrame(args, threadId) {
     this._fireFakeContinued(threadId);
     return this.send('restartFrame', args);
   }
 
-  completions(
-  args)
-  {
+  completions(args) {
     return this.send('completions', args);
   }
 
-  disconnect(
-  restart = false,
-  force = false)
-  {var _this4 = this;return (0, _asyncToGenerator.default)(function* () {
-      if (_this4._disconnected && force) {
-        _this4._stopServer();
-        return;
-      }
+  async disconnect(restart = false, force = false) {
+    if (this._disconnected && force) {
+      this._stopServer();
+      return;
+    }
 
-      if (_this4._adapterProcessSubscription != null && !_this4._disconnected) {
-        // point of no return: from now on don't report any errors
-        _this4._disconnected = true;
-        yield _this4.send('disconnect', { restart });
-        _this4._stopServer();
-      }})();
+    if (this._adapterProcessSubscription != null && !this._disconnected) {
+      // point of no return: from now on don't report any errors
+      this._disconnected = true;
+      await this.send('disconnect', { restart });
+      this._stopServer();
+    }
   }
 
-  setBreakpoints(
-  args)
-  {
+  setBreakpoints(args) {
     return this.send('setBreakpoints', args);
   }
 
-  setFunctionBreakpoints(
-  args)
-  {
+  setFunctionBreakpoints(args) {
     return this.send('setFunctionBreakpoints', args);
   }
 
-  setExceptionBreakpoints(
-  args)
-  {
+  setExceptionBreakpoints(args) {
     return this.send('setExceptionBreakpoints', args);
   }
 
@@ -396,33 +328,23 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
     return this.send('configurationDone', null);
   }
 
-  stackTrace(
-  args)
-  {
+  stackTrace(args) {
     return this.send('stackTrace', args);
   }
 
-  exceptionInfo(
-  args)
-  {
+  exceptionInfo(args) {
     return this.send('exceptionInfo', args);
   }
 
-  scopes(
-  args)
-  {
+  scopes(args) {
     return this.send('scopes', args);
   }
 
-  variables(
-  args)
-  {
+  variables(args) {
     return this.send('variables', args);
   }
 
-  source(
-  args)
-  {
+  source(args) {
     return this.send('source', args);
   }
 
@@ -430,29 +352,21 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
     return this.send('threads', null);
   }
 
-  evaluate(
-  args)
-  {
+  evaluate(args) {
     return this.send('evaluate', args);
   }
 
-  stepBack(
-  args)
-  {
+  stepBack(args) {
     this._fireFakeContinued(args.threadId);
     return this.send('stepBack', args);
   }
 
-  reverseContinue(
-  args)
-  {
+  reverseContinue(args) {
     this._fireFakeContinued(args.threadId);
     return this.send('reverseContinue', args);
   }
 
-  nuclide_continueToLocation(
-  args)
-  {
+  nuclide_continueToLocation(args) {
     return this.custom('nuclide_continueToLocation', args);
   }
 
@@ -460,59 +374,46 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
     return (new Date().getTime() - this._startTime) / 1000;
   }
 
-  dispatchRequest(
-  request,
-  response)
-  {var _this5 = this;return (0, _asyncToGenerator.default)(function* () {
-      if (request.command === 'runInTerminal') {
-        const runInTerminalHandler = _this5._runInTerminalHandler;
-        if (runInTerminalHandler == null) {
-          _this5._logger.error(
-          "'runInTerminal' isn't supported for this debug session",
-          request);
-
-          return;
-        }
-        try {
-          yield runInTerminalHandler(request.arguments);
-        } catch (error) {
-          response.success = false;
-          response.message = error.message;
-        }
-        _this5.sendResponse(response);
-      } else if (request.command === 'handshake') {
-        _this5._logger.error('TODO: handshake', request);
-      } else {
+  async dispatchRequest(request, response) {
+    if (request.command === 'runInTerminal') {
+      const runInTerminalHandler = this._runInTerminalHandler;
+      if (runInTerminalHandler == null) {
+        this._logger.error("'runInTerminal' isn't supported for this debug session", request);
+        return;
+      }
+      try {
+        await runInTerminalHandler(request.arguments);
+      } catch (error) {
         response.success = false;
-        response.message = `unknown request '${request.command}'`;
-        _this5.sendResponse(response);
-      }})();
+        response.message = error.message;
+      }
+      this.sendResponse(response);
+    } else if (request.command === 'handshake') {
+      this._logger.error('TODO: handshake', request);
+    } else {
+      response.success = false;
+      response.message = `unknown request '${request.command}'`;
+      this.sendResponse(response);
+    }
   }
 
-  _fireFakeContinued(
-  threadId,
-  allThreadsContinued = false)
-  {
+  _fireFakeContinued(threadId, allThreadsContinued = false) {
     const event = {
       type: 'event',
       event: 'continued',
       body: {
         threadId,
         // $FlowFixMe
-        allThreadsContinued },
-
-      seq: 0 };
-
+        allThreadsContinued
+      },
+      seq: 0
+    };
     this._onDidContinued.next(event);
     this._onDidEvent.next(event);
   }
 
   _startServer() {
-    this._adapterProcessSubscription = this._spawner.
-    spawnAdapter(this._adapterExecutable).
-    refCount().
-    subscribe(
-    message => {
+    this._adapterProcessSubscription = this._spawner.spawnAdapter(this._adapterExecutable).refCount().subscribe(message => {
       if (message.kind === 'stdout') {
         this.handleData(new Buffer(message.data));
       } else if (message.kind === 'stderr') {
@@ -521,22 +422,23 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
           event: 'output',
           body: {
             category: 'stderr',
-            output: message.data },
-
-          seq: 0 };
-
+            output: message.data
+          },
+          seq: 0
+        };
         this._onDidOutput.next(event);
         this._onDidEvent.next(event);
         this._logger.error(`adapter stderr: ${message.data}`);
-      } else {if (!(
-        message.kind === 'exit')) {throw new Error('Invariant violation: "message.kind === \'exit\'"');}
+      } else {
+        if (!(message.kind === 'exit')) {
+          throw new Error('Invariant violation: "message.kind === \'exit\'"');
+        }
+
         this.onServerExit(message.exitCode || 0);
       }
-    },
-    err => {
+    }, err => {
       this.onServerError(err);
     });
-
 
     this.setOutput(this._spawner.write.bind(this._spawner));
   }
@@ -579,9 +481,7 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
       this._adapterProcessSubscription = null;
     }
     if (!this._disconnected) {
-      this._logger.error(
-      `Debug adapter process has terminated unexpectedly ${code}`);
-
+      this._logger.error(`Debug adapter process has terminated unexpectedly ${code}`);
     }
     this.onEvent(raiseAdapterExitedEvent(code));
   }
@@ -596,4 +496,6 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
 
   dispose() {
     this.disconnect();
-  }}exports.default = VsDebugSession;
+  }
+}
+exports.default = VsDebugSession;

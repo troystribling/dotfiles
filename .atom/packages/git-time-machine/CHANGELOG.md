@@ -1,16 +1,27 @@
+## [2.1.0](https://github.com/littlebee/git-time-machine/compare/v2.0.1...v2.1.0) - (2018-06-03)
+### Zoom
+Adds a zoom level selector that allows zoom up to 8x
+### New Features
+* [9de595a](https://github.com/littlebee/git-time-machine/commit/9de595a472e332544e44c5c8e6fd2ee78083477f)  zoom, zoom
+
+### Other Commits
+* [1225eeb](https://github.com/littlebee/git-time-machine/commit/1225eeb2a9820f821298701e946ca012996caaeb) add additional zoom levels up to 8x
+* [18c7671](https://github.com/littlebee/git-time-machine/commit/18c76713a59a77e3f7c2c6b5ddd4fdf7baac4d6e) clicking on the hzscroller left and right indicators should scroll far left and far right respectively
+* [6795594](https://github.com/littlebee/git-time-machine/commit/67955945166132bc8d05a36417e7e54ebf6dda23) zoom should try to preserve scroll when zooming
+
 
 <a name="1.2.3"></a>
 ## [2.0.0](https://github.com/littlebee/git-time-machine/compare/1.5.9...2.0.0) (2018-05-130)
-Big changes for V2:
+### Big changes for V2:
 
-    Oldest rev should open to the left of newer rev because, as we all know, time travels from left to right :)
+- Oldest rev should open to the left of newer rev because, as we all know, time travels from left to right :)
 
-New Features
+### New Features
 
-    Ability to compare any two points in time. Click on time plot or in hover popup to set the revision displayed in the left editor. Shift click on the time plot or in the hover popup will set the right editor version.
-    Ability to step back in time. git-time-machine adds a revision display and selector to the split-diff control bar to allow you to step forward and backward 1 step at a time
+- Ability to compare any two points in time. Click on time plot or in hover popup to set the revision displayed in the left editor. Shift click on the time plot or in the hover popup will set the right editor version.
+- Ability to step back in time. git-time-machine adds a revision display and selector to the split-diff control bar to allow you to step forward and backward 1 step at a time
 
-Plus a bunch of love
+### Plus a bunch of love
 
 Thank you to everyone who contributed to this release @mupchrch, @waldnzwrld, @chimit, @cbeninati, @UziTech, @Alhadis, @apetro, @maskott, @DSpeckhals, @stevelacy, @melvinsh
 

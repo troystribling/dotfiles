@@ -1,4 +1,4 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });
 
 
 
@@ -87,38 +87,38 @@ class AtomTestWorker {
     this._runningTests = new Map();
   }
 
-  start() {var _this = this;return (0, _asyncToGenerator.default)(function* () {
-      const { _serverID: serverID, _ipcServer: ipcServer } = _this;
-      return new Promise(function (resolve) {
-        createDummyPackageJson();
-        const workerID = _this._workerID;
-        const atomPathArg = _path.default.resolve(
-        TMP_DIR,
-        (0, (_utils || _load_utils()).mergeIPCIDs)({ serverID, workerID }));
+  async start() {
+    const { _serverID: serverID, _ipcServer: ipcServer } = this;
+    return new Promise(resolve => {
+      createDummyPackageJson();
+      const workerID = this._workerID;
+      const atomPathArg = _path.default.resolve(
+      TMP_DIR,
+      (0, (_utils || _load_utils()).mergeIPCIDs)({ serverID, workerID }));
 
 
-        let firstMessage = false;
-        ipcServer.on(workerID, function (message, socket) {
-          const { messageType, data } = (0, (_utils || _load_utils()).parseMessage)(message);
-          if (!firstMessage) {
-            firstMessage = true;
-            _this._alive = true;
-            _this._socket = socket;
-            resolve();
-          } else {
-            _this._onMessage(messageType, data);
-          }
-        });
+      let firstMessage = false;
+      ipcServer.on(workerID, (message, socket) => {
+        const { messageType, data } = (0, (_utils || _load_utils()).parseMessage)(message);
+        if (!firstMessage) {
+          firstMessage = true;
+          this._alive = true;
+          this._socket = socket;
+          resolve();
+        } else {
+          this._onMessage(messageType, data);
+        }
+      });
 
-        _this._childProcess = (0, _child_process.spawn)('atom', ['-t', atomPathArg], {
-          stdio: ['inherit', 'inherit', 'inherit'] });
+      this._childProcess = (0, _child_process.spawn)('atom', ['-t', atomPathArg], {
+        stdio: ['inherit', 'inherit', 'inherit'] });
 
-      });})();
+    });
   }
 
-  stop() {var _this2 = this;return (0, _asyncToGenerator.default)(function* () {
-      _this2.send((0, (_utils || _load_utils()).makeMessage)({ messageType: (_utils || _load_utils()).MESSAGE_TYPES.SHUT_DOWN }));
-      _this2._childProcess.kill('SIGTERM');})();
+  async stop() {
+    this.send((0, (_utils || _load_utils()).makeMessage)({ messageType: (_utils || _load_utils()).MESSAGE_TYPES.SHUT_DOWN }));
+    this._childProcess.kill('SIGTERM');
   }
 
   send(message) {

@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6051-b0qa2o.h70tn5qaor/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1746-dnfjaj.c54wkoi529/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6051-b0qa2o.h70tn5qaor/package.tgz",
-        "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6051-b0qa2o.h70tn5qaor/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1746-dnfjaj.c54wkoi529/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1746-dnfjaj.c54wkoi529/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-118412-6051-1vot7bh.tdys24kj4i"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118522-1746-1rd279w.lzxb6gvi"
     ]
   ],
-  "_from": "../d-118412-6051-b0qa2o.h70tn5qaor/package.tgz",
-  "_id": "Hydrogen@2.5.0",
+  "_from": "../d-118522-1746-dnfjaj.c54wkoi529/package.tgz",
+  "_id": "Hydrogen@2.5.1",
   "_inCache": true,
   "_location": "/Hydrogen",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6051-b0qa2o.h70tn5qaor/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1746-dnfjaj.c54wkoi529/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6051-b0qa2o.h70tn5qaor/package.tgz",
-    "spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6051-b0qa2o.h70tn5qaor/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1746-dnfjaj.c54wkoi529/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1746-dnfjaj.c54wkoi529/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-118412-6051-b0qa2o.h70tn5qaor/package.tgz",
-  "_shasum": "a19108f30af92f5f409eeba785d51a7376d8f343",
+  "_resolved": "file:../d-118522-1746-dnfjaj.c54wkoi529/package.tgz",
+  "_shasum": "9a5a49c18e4d5bf976987c5896297c06bf6e047e",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/d-118412-6051-b0qa2o.h70tn5qaor/package.tgz",
-  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-118412-6051-1vot7bh.tdys24kj4i",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1746-dnfjaj.c54wkoi529/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118522-1746-1rd279w.lzxb6gvi",
   "activationCommands": {
     "atom-text-editor": [
       "hydrogen:start-local-kernel",
@@ -81,6 +81,7 @@
     "mobx-react": "^5.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-hot-loader": "^4.3.3",
     "react-rangeslider": "^2.1.0",
     "spawnteract": "^4.0.0",
     "tildify": "^1.2.0",
@@ -154,5 +155,5 @@
     "precommit": "lint-staged",
     "prettier": "prettier --write 'lib/**/*.js' 'spec/**/*.js'"
   },
-  "version": "2.5.0"
+  "version": "2.5.1"
 }

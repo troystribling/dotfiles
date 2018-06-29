@@ -1,52 +1,13 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.serializeDebuggerConfig = serializeDebuggerConfig;
+exports.deserializeDebuggerConfig = deserializeDebuggerConfig;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-serializeDebuggerConfig = serializeDebuggerConfig;exports.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-deserializeDebuggerConfig = deserializeDebuggerConfig; // transientSettings will matinain configuration that should be persisted for the
+// transientSettings will matinain configuration that should be persisted for the
 // duration of the current Nunclide session (so preserved across the configuration dialog
 // closing and re-opening), but not preserved if Nuclide is restarted.
 const transientSettings = {}; /**
@@ -59,6 +20,35 @@ const transientSettings = {}; /**
                                *
                                * 
                                * @format
-                               */ /* global localStorage */function _getStorageKey(host, action, debuggerName) {return 'NUCLIDE_DEBUGGER_CONFIG_' + host + '_' + action + '_' + debuggerName;}function serializeDebuggerConfig(host, action, debuggerName, persistent, transient) {if (global.localStorage == null) {throw new Error('localStorage is not available in this runtime');}const key = _getStorageKey(host, action, debuggerName);localStorage.setItem(key, JSON.stringify(persistent));if (transient == null) {delete transientSettings[key];} else {transientSettings[key] = transient;}}function deserializeDebuggerConfig(host, action, debuggerName, callback) {if (global.localStorage == null) {throw new Error('localStorage is not available in this runtime');}const key = _getStorageKey(host, action, debuggerName);const val = localStorage.getItem(key);try {const persistedSettings = val != null ? JSON.parse(val) : {};callback(transientSettings[key] || {}, persistedSettings);
+                               */
+/* global localStorage */
+
+function _getStorageKey(host, action, debuggerName) {
+  return 'NUCLIDE_DEBUGGER_CONFIG_' + host + '_' + action + '_' + debuggerName;
+}
+
+function serializeDebuggerConfig(host, action, debuggerName, persistent, transient) {
+  if (global.localStorage == null) {
+    throw new Error('localStorage is not available in this runtime');
+  }
+  const key = _getStorageKey(host, action, debuggerName);
+  localStorage.setItem(key, JSON.stringify(persistent));
+
+  if (transient == null) {
+    delete transientSettings[key];
+  } else {
+    transientSettings[key] = transient;
+  }
+}
+
+function deserializeDebuggerConfig(host, action, debuggerName, callback) {
+  if (global.localStorage == null) {
+    throw new Error('localStorage is not available in this runtime');
+  }
+  const key = _getStorageKey(host, action, debuggerName);
+  const val = localStorage.getItem(key);
+  try {
+    const persistedSettings = val != null ? JSON.parse(val) : {};
+    callback(transientSettings[key] || {}, persistedSettings);
   } catch (err) {}
 }

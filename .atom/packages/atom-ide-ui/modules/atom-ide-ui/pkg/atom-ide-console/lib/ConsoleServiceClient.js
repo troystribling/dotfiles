@@ -1,22 +1,10 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.default =
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function (send, eventsFromService) {
+exports.default = function (send, eventsFromService) {
   return {
     // TODO: Update these to be `(object: any, ...objects: Array<any>): void` to allow for logging objects.
     log(...args) {
@@ -33,15 +21,15 @@ function (send, eventsFromService) {
     },
     success(...args) {
       send(createMessageEvent('success', args));
-    } };
-
+    }
+  };
 };
 
 function createMessageEvent(level, args) {
   return {
     type: 'message',
-    data: { level, args } };
-
+    data: { level, args }
+  };
 } /**
    * Copyright (c) 2017-present, Facebook, Inc.
    * All rights reserved.

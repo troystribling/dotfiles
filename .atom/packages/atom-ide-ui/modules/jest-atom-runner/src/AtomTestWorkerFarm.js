@@ -1,4 +1,4 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));var _AtomTestWorker;
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _AtomTestWorker;
 
 
 
@@ -53,14 +53,14 @@ function _load_AtomTestWorker() {return _AtomTestWorker = _interopRequireDefault
     }
   }
 
-  start() {var _this = this;return (0, _asyncToGenerator.default)(function* () {
-      yield Promise.all(_this._workers.map(function (w) {return w.start();})).then(function (results) {return (
-          results.forEach(function () {return _this._processNext();}));});})();
+  async start() {
+    await Promise.all(this._workers.map(w => w.start())).then(results =>
+    results.forEach(() => this._processNext()));
 
   }
 
-  stop() {var _this2 = this;return (0, _asyncToGenerator.default)(function* () {
-      yield Promise.all(_this2._workers.map(function (w) {return w.stop();}));})();
+  async stop() {
+    await Promise.all(this._workers.map(w => w.stop()));
   }
 
   _processNext() {

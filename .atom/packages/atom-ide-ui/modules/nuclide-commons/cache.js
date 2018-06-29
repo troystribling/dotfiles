@@ -1,28 +1,16 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.DISPOSE_VALUE = exports.Cache = undefined;
+'use strict';
 
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DISPOSE_VALUE = exports.Cache = undefined;
 
 var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
 
 // A Cache mapping keys to values which creates entries as they are requested.
 class Cache {
 
-
-
-
-
-  constructor(
-  factory,
-  disposeValue = value => {})
-  {
+  constructor(factory, disposeValue = value => {}) {
     this._values = new Map();
     this._factory = factory;
     this._disposeValue = disposeValue;
@@ -77,10 +65,7 @@ class Cache {
   }
 
   observeEntries() {
-    return _rxjsBundlesRxMinJs.Observable.concat(
-    _rxjsBundlesRxMinJs.Observable.from(this._values.entries()),
-    this._entriesSubject);
-
+    return _rxjsBundlesRxMinJs.Observable.concat(_rxjsBundlesRxMinJs.Observable.from(this._values.entries()), this._entriesSubject);
   }
 
   observeKeys() {
@@ -110,10 +95,10 @@ class Cache {
   dispose() {
     this.clear();
     this._entriesSubject.complete();
-  }}exports.Cache = Cache;
+  }
+}
 
-
-// Useful for optional second parameter to Cache constructor.
+exports.Cache = Cache; // Useful for optional second parameter to Cache constructor.
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -124,4 +109,8 @@ class Cache {
  *
  * 
  * @format
- */const DISPOSE_VALUE = exports.DISPOSE_VALUE = value => {value.dispose();};
+ */
+
+const DISPOSE_VALUE = exports.DISPOSE_VALUE = value => {
+  value.dispose();
+};
