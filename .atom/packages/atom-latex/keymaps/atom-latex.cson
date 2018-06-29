@@ -1,0 +1,21 @@
+'atom-text-editor[data-grammar~="latex"]':
+  'ctrl-l ctrl-b': 'atom-latex:build'
+  'ctrl-l ctrl-h': 'atom-latex:build-here'
+  'ctrl-l ctrl-c': 'atom-latex:clean'
+  'ctrl-l ctrl-p': 'atom-latex:preview'
+  'ctrl-l ctrl-t': 'atom-latex:preview-tab'
+  'ctrl-l ctrl-k': 'atom-latex:kill'
+  'ctrl-l ctrl-s': 'atom-latex:synctex'
+  'ctrl-l ctrl-l': 'atom-latex:toggle-panel'
+  '"' : 'atom-latex:tools-doublequote'
+
+'body.platform-darwin atom-text-editor[data-grammar~="latex"]':
+  'cmd-l cmd-b': 'atom-latex:build'
+  'cmd-l cmd-h': 'atom-latex:build-here'
+  'cmd-l cmd-c': 'atom-latex:clean'
+  'cmd-l cmd-p': 'atom-latex:preview'
+  'cmd-l cmd-t': 'atom-latex:preview-tab'
+  'cmd-l cmd-k': 'atom-latex:kill'
+  'cmd-l cmd-s': 'atom-latex:synctex'
+  'cmd-l cmd-l': 'atom-latex:show-log'
+  '"' : 'atom-latex:tools-doublequote'

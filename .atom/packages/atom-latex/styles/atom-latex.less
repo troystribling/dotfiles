@@ -1,0 +1,102 @@
+// The ui-variables file is provided by base themes provided by Atom.
+//
+// See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
+// for a full listing of what's available.
+@import "ui-variables";
+
+@font-face {
+  font-family: 'FontAwesome';
+  font-weight: normal;
+  font-style: normal;
+  src: url(atom://atom-latex/fonts/fontawesome-webfont.woff2);
+}
+
+.fa {
+  font-family: 'FontAwesome';
+}
+
+.atom-latex-parser-message {
+  margin-right: 3px;
+}
+
+#atom-latex-status-bar {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+#atom-latex-status-bar .inline-block {
+  margin-right: 5px;
+}
+
+.atom-latex-control-icon {
+  font-size: 18px !important;
+  margin: 4px 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.atom-latex-control-separator, #atom-latex-root-text {
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: text-bottom;
+  margin-left: 5px;
+  margin-right: 3px;
+}
+
+#atom-latex-root-text {
+  margin-left: -4px;
+}
+
+#atom-latex-panel-resizer {
+  height: 10px;
+  cursor: s-resize;
+  position: absolute;
+  width: 100%;
+}
+
+#atom-latex-logs {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  max-height: 120px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.atom-latex-log-message {
+  font-size: 14px;
+}
+
+.atom-latex-log-clickable {
+  cursor: pointer;
+}
+
+.atom-latex-log-icon {
+  font-size: 14px !important;
+  margin: 4px 6px;
+  display: inline-block;
+}
+
+.atom-latex-dimmed {
+  opacity: 0.3;
+}
+
+.atom-latex-log-icon.fa-times-circle, #atom-latex-status-bar-icon.fa-times-circle {
+  color: red;
+}
+
+.atom-latex-log-icon.fa-exclamation-circle, #atom-latex-status-bar-icon.fa-exclamation-circle, #atom-latex-status-bar-icon.fa-cog {
+  color: orange;
+}
+
+.atom-latex-log-icon.fa-question-circle, #atom-latex-status-bar-icon.fa-question-circle {
+  color: cyan;
+}
+
+#atom-latex-status-bar-icon.atom-latex-latexmk-skipped {
+  color: orange;
+}
+
+#atom-latex-status-bar-icon.fa-check-circle {
+  color: green;
+}
