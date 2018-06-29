@@ -3,6 +3,7 @@
     debug: true
   "atom-ide-ui":
     use: {}
+  "atom-latex": {}
   "autocomplete-python":
     useKite: false
   autosave:
