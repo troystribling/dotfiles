@@ -3,7 +3,10 @@
     debug: true
   "atom-ide-ui":
     use: {}
-  "atom-latex": {}
+  "atom-latex":
+    build_after_save: false
+    custom_toolchain: "%TEX %ARG %DOC"
+    toolchain: "custom toolchain"
   "autocomplete-python":
     useKite: false
   autosave:
@@ -15,7 +18,6 @@
       "linter"
       "linter-solidity"
       "autocomplete-solidity"
-      "etheratom"
     ]
     ignoredNames: [
       ".git"
@@ -50,6 +52,7 @@
     panelHeight: 399
   "markdown-writer":
     fileExtension: ".md"
+  "spell-check": {}
   "split-diff":
     diffWords: true
     ignoreWhitespace: true
