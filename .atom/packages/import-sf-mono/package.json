@@ -1,0 +1,60 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-118610-22038-fevg5m.wdpor8jjor/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-118610-22038-fevg5m.wdpor8jjor/package.tgz",
+        "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-118610-22038-fevg5m.wdpor8jjor/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-118610-22038-ktr872.jqiulbx1or"
+    ]
+  ],
+  "_from": "../d-118610-22038-fevg5m.wdpor8jjor/package.tgz",
+  "_id": "import-sf-mono@1.0.1",
+  "_inCache": true,
+  "_location": "/import-sf-mono",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-118610-22038-fevg5m.wdpor8jjor/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-118610-22038-fevg5m.wdpor8jjor/package.tgz",
+    "spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-118610-22038-fevg5m.wdpor8jjor/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-118610-22038-fevg5m.wdpor8jjor/package.tgz",
+  "_shasum": "98fe4eee4392df6675db9e6bd9b1ad94aaeb1995",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/d-118610-22038-fevg5m.wdpor8jjor/package.tgz",
+  "_where": "/private/var/folders/yy/_89bmmc93s19ddmj035tt75xvs915f/T/apm-install-dir-118610-22038-ktr872.jqiulbx1or",
+  "bugs": {
+    "url": "https://github.com/dtinth/atom-import-sf-mono/issues"
+  },
+  "dependencies": {},
+  "description": "Use the SF Mono font in Atom by importing it from Terminal.app",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/dtinth/atom-import-sf-mono#readme",
+  "keywords": [],
+  "license": "MIT",
+  "main": "./lib/import-sf-mono",
+  "name": "import-sf-mono",
+  "optionalDependencies": {},
+  "readme": "# import-sf-mono\n\n[New San Francisco Monospaced font is gorgeous!](https://www.reddit.com/r/apple/comments/4o23fm/new_san_francisco_monospaced_font_is_gorgeous/) Unfortunately, it’s only available inside `Terminal.app` (and `Xcode.app`).\n\nThis Atom package imports the “SF Mono” font directly from `Terminal.app`, which allows you to use this font in Atom.\n\n__Usage:__\n\n1. Get a Mac and install Mac OS X Sierra.\n\n2. Install this Atom package.\n\n3. Configure your font in Atom to \"SF Mono\".\n\n4. Gorgeous.\n\n__Note:__ This package does not contain the fonts file. It only references the font files located in your system. Here is the full package code:\n\n```less\n@font-face { font-family: \"SF Mono\"; font-weight: 200; font-style: normal; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-Light.otf); }\n@font-face { font-family: \"SF Mono\"; font-weight: 200; font-style: italic; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-LightItalic.otf); }\n@font-face { font-family: \"SF Mono\"; font-weight: 400; font-style: normal; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-Regular.otf); }\n@font-face { font-family: \"SF Mono\"; font-weight: 400; font-style: italic; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-RegularItalic.otf); }\n@font-face { font-family: \"SF Mono\"; font-weight: 500; font-style: normal; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-Medium.otf); }\n@font-face { font-family: \"SF Mono\"; font-weight: 500; font-style: italic; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-MediumItalic.otf); }\n@font-face { font-family: \"SF Mono\"; font-weight: 600; font-style: normal; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-Semibold.otf); }\n@font-face { font-family: \"SF Mono\"; font-weight: 600; font-style: italic; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-SemiboldItalic.otf); }\n@font-face { font-family: \"SF Mono\"; font-weight: 700; font-style: normal; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-Bold.otf); }\n@font-face { font-family: \"SF Mono\"; font-weight: 700; font-style: italic; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-BoldItalic.otf); }\n@font-face { font-family: \"SF Mono\"; font-weight: 800; font-style: normal; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-Heavy.otf); }\n@font-face { font-family: \"SF Mono\"; font-weight: 800; font-style: italic; src: url(file:///Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-HeavyItalic.otf); }\n```\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dtinth/atom-import-sf-mono.git"
+  },
+  "version": "1.0.1"
+}

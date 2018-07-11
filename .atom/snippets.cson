@@ -19,3 +19,29 @@
 # If you are unfamiliar with CSON, you can read more about it in the
 # Atom Flight Manual:
 # http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
+
+'.source.gfm':
+  'katex':
+    'prefix': 'inline katex'
+    'body': '{% katex %}$1{% endkatex}'
+  'dkatex':
+    'prefix': 'display katex'
+    'body': '''
+    {% katex display %}
+    $1
+    {% endkatex}
+    '''
+  'dnkatex':
+    'prefix': 'display katex with numbers'
+    'body': '''
+    {% katex display %}
+    $1 \ \ \ \ \ ($2)
+    {% endkatex}
+    '''
+  'cimg':
+    'prefix': 'centered image'
+    'body': '''
+    <div style="text-align:center;">
+      <img src="$1">
+    </div>
+    '''

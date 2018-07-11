@@ -32,4 +32,4 @@
 # http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
 '.platform-darwin atom-workspace':
   'alt-cmd-r': 'hydrogen:restart-kernel'
-  
+  'alt-shift-s': 'snippets:available'

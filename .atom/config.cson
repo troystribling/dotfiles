@@ -36,11 +36,14 @@
     telemetryConsent: "limited"
     themes: [
       "one-light-ui"
-      "one-dark-syntax"
+      "one-light-syntax"
     ]
-  editor: {}
+  editor:
+    fontFamily: "SF Mono"
   "exception-reporting":
     userId: "491ad535-da31-48a5-ae92-ebfdd48bacc8"
+  fonts:
+    fontFamily: "FiraCode"
   "ide-python":
     pylsPlugins:
       pycodestyle:
@@ -48,8 +51,12 @@
         maxLineLength: 250
       pyflakes:
         enabled: false
+  latex:
+    enableShellEscape: true
+    openResultAfterBuild: false
+    openResultInBackground: false
   "linter-ui-default":
-    panelHeight: 399
+    panelHeight: 474
   "markdown-writer":
     fileExtension: ".md"
   "spell-check": {}
@@ -64,3 +71,6 @@
   "tree-view":
     hideIgnoredNames: true
     hideVcsIgnoredFiles: true
+".gfm.source":
+  editor:
+    tabType: "soft"
