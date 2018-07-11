@@ -23,20 +23,20 @@
 '.source.gfm':
   'katex':
     'prefix': 'inline katex'
-    'body': '{% katex %}$1{% endkatex}'
+    'body': '{% katex %}$1{% endkatex %}'
   'dkatex':
     'prefix': 'display katex'
     'body': '''
     {% katex display %}
     $1
-    {% endkatex}
+    {% endkatex %}
     '''
   'dnkatex':
     'prefix': 'display katex with numbers'
     'body': '''
     {% katex display %}
     $1 \ \ \ \ \ ($2)
-    {% endkatex}
+    {% endkatex %}
     '''
   'cimg':
     'prefix': 'centered image'
