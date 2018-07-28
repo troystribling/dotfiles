@@ -31,13 +31,6 @@
     $1
     {% endkatex %}
     '''
-  'dnkatex':
-    'prefix': 'display katex with numbers'
-    'body': '''
-    {% katex display %}
-    $1 \ \ \ \ \ ($2)
-    {% endkatex %}
-    '''
   'cimg':
     'prefix': 'centered image'
     'body': '''
