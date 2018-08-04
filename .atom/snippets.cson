@@ -31,6 +31,29 @@
     $1
     {% endkatex %}
     '''
+  'alignedkatex':
+    'prefix': 'aligned display katex'
+    'body': '''
+    {% katex display %}
+    \\\\begin{aligned}
+    $1
+    \\\\end{aligned}
+    {% endkatex %}
+    '''
+  'caseskatex':
+    'prefix': 'cases katex'
+    'body': '''
+    \\\\begin{cases}
+    $1
+    \\\\end{cases}
+    '''
+  'pmatrixkatex':
+    'prefix': 'pmatrix katex'
+    'body': '''
+    \\\\begin{pmatrix}
+    $1
+    \\\\end{pmatrix}
+    '''
   'cimg':
     'prefix': 'centered image'
     'body': '''

@@ -71,6 +71,14 @@
       "leq"
       "forall"
       "infty"
+      "ldots"
+      "i,j"
+      "Diagonalization"
+      "diagonalization"
+      "vdots"
+      "pmatrix"
+      "cdots"
+      "ddots"
     ]
   "split-diff":
     diffWords: true
