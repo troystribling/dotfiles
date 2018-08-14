@@ -35,6 +35,6 @@
     'prefix': 'centered image'
     'body': '''
     <div style="text-align:center;">
-      <img src="$1">
+      <img class="post-image" src="$1">
     </div>
     '''
