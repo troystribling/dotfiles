@@ -36,7 +36,7 @@
     telemetryConsent: "limited"
     themes: [
       "atom-light-ui"
-      "one-dark-syntax"
+      "atom-light-syntax"
     ]
   editor:
     fontFamily: "SF Mono"
