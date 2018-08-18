@@ -79,6 +79,9 @@
       "pmatrix"
       "cdots"
       "ddots"
+      "mathbb"
+      "varepsilon"
+      "AR"
     ]
   "split-diff":
     diffWords: true
