@@ -1,44 +1,65 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _vscodeDebugprotocol;
+function DebugProtocol() {
+  const data = _interopRequireWildcard(require("vscode-debugprotocol"));
 
-function _load_vscodeDebugprotocol() {
-  return _vscodeDebugprotocol = _interopRequireWildcard(require('vscode-debugprotocol'));
+  DebugProtocol = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _VsAdapterSpawner;
+function _VsAdapterSpawner() {
+  const data = _interopRequireDefault(require("./VsAdapterSpawner"));
 
-function _load_VsAdapterSpawner() {
-  return _VsAdapterSpawner = _interopRequireDefault(require('./VsAdapterSpawner'));
+  _VsAdapterSpawner = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _V8Protocol;
+function _V8Protocol() {
+  const data = _interopRequireDefault(require("./V8Protocol"));
 
-function _load_V8Protocol() {
-  return _V8Protocol = _interopRequireDefault(require('./V8Protocol'));
+  _V8Protocol = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
-var _idx;
+function _analytics() {
+  const data = require("../nuclide-commons/analytics");
 
-function _load_idx() {
-  return _idx = _interopRequireDefault(require('idx'));
+  _analytics = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _analytics;
+function _uuid() {
+  const data = _interopRequireDefault(require("uuid"));
 
-function _load_analytics() {
-  return _analytics = require('../nuclide-commons/analytics');
+  _uuid = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -51,13 +72,14 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * 
  * @format
  */
-
 function raiseAdapterExitedEvent(exitCode) {
   return {
     seq: 0,
     type: 'event',
     event: 'adapter-exited',
-    body: { exitCode }
+    body: {
+      exitCode
+    }
   };
 }
 
@@ -65,29 +87,31 @@ function raiseAdapterExitedEvent(exitCode) {
  * Use V8 JSON-RPC protocol to send & receive messages
  * (requests, responses & events) over `stdio` of adapter child processes.
  */
-class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
-
+class VsDebugSession extends _V8Protocol().default {
   constructor(id, logger, adapterExecutable, adapterAnalyticsExtras, spawner, sendPreprocessors = [], receivePreprocessors = [], runInTerminalHandler) {
     super(id, logger, sendPreprocessors, receivePreprocessors);
     this._adapterExecutable = adapterExecutable;
     this._logger = logger;
     this._readyForBreakpoints = false;
-    this._spawner = spawner == null ? new (_VsAdapterSpawner || _load_VsAdapterSpawner()).default() : spawner;
-    this._adapterAnalyticsExtras = Object.assign({}, adapterAnalyticsExtras);
-
-    this._onDidInitialize = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidStop = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidContinued = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidTerminateDebugee = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidExitDebugee = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidExitAdapter = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidThread = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidOutput = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidBreakpoint = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidModule = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidLoadSource = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidCustom = new _rxjsBundlesRxMinJs.Subject();
-    this._onDidEvent = new _rxjsBundlesRxMinJs.Subject();
+    this._spawner = spawner == null ? new (_VsAdapterSpawner().default)() : spawner;
+    this._adapterAnalyticsExtras = Object.assign({}, adapterAnalyticsExtras, {
+      // $FlowFixMe flow doesn't consider uuid callable, but it is
+      debuggerSessionId: (0, _uuid().default)()
+    });
+    this._adapterErrorOutput = '';
+    this._onDidInitialize = new _RxMin.Subject();
+    this._onDidStop = new _RxMin.Subject();
+    this._onDidContinued = new _RxMin.Subject();
+    this._onDidTerminateDebugee = new _RxMin.Subject();
+    this._onDidExitDebugee = new _RxMin.Subject();
+    this._onDidExitAdapter = new _RxMin.Subject();
+    this._onDidThread = new _RxMin.Subject();
+    this._onDidOutput = new _RxMin.Subject();
+    this._onDidBreakpoint = new _RxMin.Subject();
+    this._onDidModule = new _RxMin.Subject();
+    this._onDidLoadSource = new _RxMin.Subject();
+    this._onDidCustom = new _RxMin.Subject();
+    this._onDidEvent = new _RxMin.Subject();
     this.capabilities = {};
     this._runInTerminalHandler = runInTerminalHandler || null;
   }
@@ -150,6 +174,7 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
     }
 
     this._startServer();
+
     this._startTime = new Date().getTime();
   }
 
@@ -159,27 +184,89 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
 
   send(command, args) {
     this._logger.info('Send request:', command, args);
+
     this._initServer();
 
     const operation = () => {
       // Babel Bug: `super` isn't working with `async`
       return super.send(command, args).then(response => {
-        this._logger.info('Received response:', response);
+        const sanitizedResponse = this._sanitizeResponse(response);
+
+        this._logger.info('Received response:', sanitizedResponse);
+
+        (0, _analytics().track)('vs-debug-session:transaction', Object.assign({}, this._adapterAnalyticsExtras, {
+          request: {
+            command,
+            arguments: args
+          },
+          response: sanitizedResponse
+        }));
         return response;
       }, errorResponse => {
-        var _ref, _ref2, _ref3, _ref4;
+        var _ref, _ref2;
 
-        let formattedError = ((_ref = errorResponse) != null ? (_ref2 = _ref.body) != null ? (_ref3 = _ref2.error) != null ? _ref3.format : _ref3 : _ref2 : _ref) || ((_ref4 = errorResponse) != null ? _ref4.message : _ref4);
+        let formattedError = ((_ref = errorResponse) != null ? (_ref = _ref.body) != null ? (_ref = _ref.error) != null ? _ref.format : _ref : _ref : _ref) || ((_ref2 = errorResponse) != null ? _ref2.message : _ref2);
+
         if (formattedError === '{_stack}') {
           formattedError = JSON.stringify(errorResponse.body.error);
         } else if (formattedError == null) {
           formattedError = [`command: ${command}`, `args: ${JSON.stringify(args)}`, `response: ${JSON.stringify(errorResponse)}`, `adapterExecutable: , ${JSON.stringify(this._adapterExecutable)}`].join(', ');
         }
+
+        (0, _analytics().track)('vs-debug-session:transaction', Object.assign({}, this._adapterAnalyticsExtras, {
+          request: {
+            command,
+            arguments: args
+          },
+          response: errorResponse
+        }));
         throw new Error(formattedError);
       });
     };
 
-    return (0, (_analytics || _load_analytics()).trackTiming)(`vs-debug-session:${command}`, operation, this._adapterAnalyticsExtras);
+    return (0, _analytics().trackTiming)(`vs-debug-session:${command}`, operation, this._adapterAnalyticsExtras);
+  }
+
+  _sanitizeResponse(response) {
+    try {
+      if (response.command === 'variables') {
+        const varResponse = response;
+        const sanResponse = Object.assign({}, varResponse, {
+          body: Object.assign({}, varResponse.body, {
+            variables: varResponse.body.variables.map(v => Object.assign({}, v, {
+              value: '<elided>'
+            }))
+          })
+        }); // $FlowFixMe flow isn't recognizing that ...varResponse is filling in needed members
+
+        return sanResponse;
+      }
+
+      if (response.command === 'evaluate') {
+        const evalResponse = response;
+        const sanResponse = Object.assign({}, evalResponse, {
+          body: Object.assign({}, evalResponse.body, {
+            result: '<elided>'
+          })
+        }); // $FlowFixMe flow isn't recognizing that ...evalResponse is filling in needed members
+
+        return sanResponse;
+      }
+
+      return response;
+    } catch (e) {
+      // Don't let a malformed response prevent the response from bubbling up
+      // to the debugger
+      return {
+        type: 'response',
+        seq: response.seq,
+        request_seq: response.request_seq,
+        success: false,
+        command: response.command,
+        error: 'Error sanitizing response.',
+        message: e.message
+      };
+    }
   }
 
   onEvent(event) {
@@ -188,49 +275,80 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
       event.body.sessionId = this.getId();
     } else {
       // $FlowFixMe `event.body` type def.
-      event.body = { sessionId: this.getId() };
+      event.body = {
+        sessionId: this.getId()
+      };
     }
+
+    (0, _analytics().track)('vs-debug-session:transaction', Object.assign({}, this._adapterAnalyticsExtras, {
+      event
+    }));
 
     this._onDidEvent.next(event);
 
     switch (event.event) {
       case 'initialized':
         this._readyForBreakpoints = true;
+
         this._onDidInitialize.next(event);
+
         break;
+
       case 'stopped':
         this._onDidStop.next(event);
+
         break;
+
       case 'continued':
         this._onDidContinued.next(event);
+
         break;
+
       case 'thread':
         this._onDidThread.next(event);
+
         break;
+
       case 'output':
         this._onDidOutput.next(event);
+
         break;
+
       case 'breakpoint':
         this._onDidBreakpoint.next(event);
+
         break;
+
       case 'terminated':
         this._onDidTerminateDebugee.next(event);
+
         break;
+
       case 'exited':
         this._onDidExitDebugee.next(event);
+
         break;
+
       case 'adapter-exited':
         this._onDidExitAdapter.next(event);
+
         break;
+
       case 'module':
         this._onDidModule.next(event);
+
         break;
+
       case 'loadedSource':
         this._onDidLoadSource.next(event);
+
         break;
+
       default:
         this._onDidCustom.next(event);
+
         this._logger.info('Custom event type:', event);
+
         break;
     }
   }
@@ -248,6 +366,7 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
     if (response) {
       this.capabilities = Object.assign({}, this.capabilities, response.body);
     }
+
     return response;
   }
 
@@ -263,21 +382,25 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
 
   next(args) {
     this._fireFakeContinued(args.threadId);
+
     return this.send('next', args);
   }
 
   stepIn(args) {
     this._fireFakeContinued(args.threadId);
+
     return this.send('stepIn', args);
   }
 
   stepOut(args) {
     this._fireFakeContinued(args.threadId);
+
     return this.send('stepOut', args);
   }
 
   continue(args) {
     this._fireFakeContinued(args.threadId);
+
     return this.send('continue', args);
   }
 
@@ -291,6 +414,7 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
 
   restartFrame(args, threadId) {
     this._fireFakeContinued(threadId);
+
     return this.send('restartFrame', args);
   }
 
@@ -301,13 +425,17 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
   async disconnect(restart = false, force = false) {
     if (this._disconnected && force) {
       this._stopServer();
+
       return;
     }
 
     if (this._adapterProcessSubscription != null && !this._disconnected) {
       // point of no return: from now on don't report any errors
       this._disconnected = true;
-      await this.send('disconnect', { restart });
+      await this.send('disconnect', {
+        restart
+      });
+
       this._stopServer();
     }
   }
@@ -358,11 +486,13 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
 
   stepBack(args) {
     this._fireFakeContinued(args.threadId);
+
     return this.send('stepBack', args);
   }
 
   reverseContinue(args) {
     this._fireFakeContinued(args.threadId);
+
     return this.send('reverseContinue', args);
   }
 
@@ -377,16 +507,20 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
   async dispatchRequest(request, response) {
     if (request.command === 'runInTerminal') {
       const runInTerminalHandler = this._runInTerminalHandler;
+
       if (runInTerminalHandler == null) {
         this._logger.error("'runInTerminal' isn't supported for this debug session", request);
+
         return;
       }
+
       try {
         await runInTerminalHandler(request.arguments);
       } catch (error) {
         response.success = false;
         response.message = error.message;
       }
+
       this.sendResponse(response);
     } else if (request.command === 'handshake') {
       this._logger.error('TODO: handshake', request);
@@ -408,7 +542,9 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
       },
       seq: 0
     };
+
     this._onDidContinued.next(event);
+
     this._onDidEvent.next(event);
   }
 
@@ -426,12 +562,17 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
           },
           seq: 0
         };
+
         this._onDidOutput.next(event);
+
         this._onDidEvent.next(event);
+
         this._logger.error(`adapter stderr: ${message.data}`);
+
+        this._adapterErrorOutput = this._adapterErrorOutput + message.data;
       } else {
         if (!(message.kind === 'exit')) {
-          throw new Error('Invariant violation: "message.kind === \'exit\'"');
+          throw new Error("Invariant violation: \"message.kind === 'exit'\"");
         }
 
         this.onServerExit(message.exitCode || 0);
@@ -439,50 +580,68 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
     }, err => {
       this.onServerError(err);
     });
-
     this.setOutput(this._spawner.write.bind(this._spawner));
   }
 
   _stopServer() {
     this.onEvent(raiseAdapterExitedEvent(0));
+
     if (this._adapterProcessSubscription == null) {
       return;
     }
 
     this._disconnected = true;
+
     this._adapterProcessSubscription.unsubscribe();
+
     this._endHandlers();
   }
 
   _endHandlers() {
     this._onDidInitialize.complete();
+
     this._onDidStop.complete();
+
     this._onDidContinued.complete();
+
     this._onDidTerminateDebugee.complete();
+
     this._onDidExitDebugee.complete();
+
     this._onDidExitAdapter.complete();
+
     this._onDidThread.complete();
+
     this._onDidOutput.complete();
+
     this._onDidBreakpoint.complete();
+
     this._onDidModule.complete();
+
     this._onDidLoadSource.complete();
+
     this._onDidCustom.complete();
+
     this._onDidEvent.complete();
   }
 
   onServerError(error) {
     this._logger.error('Adapter error:', error);
+
     this._stopServer();
   }
 
   onServerExit(code) {
     if (this._adapterProcessSubscription != null) {
       this._adapterProcessSubscription.unsubscribe();
+
       this._adapterProcessSubscription = null;
     }
+
     if (!this._disconnected) {
       this._logger.error(`Debug adapter process has terminated unexpectedly ${code}`);
     }
+
     this.onEvent(raiseAdapterExitedEvent(code));
   }
 
@@ -495,7 +654,15 @@ class VsDebugSession extends (_V8Protocol || _load_V8Protocol()).default {
   }
 
   dispose() {
+    if (this._adapterErrorOutput) {
+      (0, _analytics().track)('vs-debug-session:transaction', Object.assign({}, this._adapterAnalyticsExtras, {
+        response: this._adapterErrorOutput
+      }));
+    }
+
     this.disconnect();
   }
+
 }
+
 exports.default = VsDebugSession;

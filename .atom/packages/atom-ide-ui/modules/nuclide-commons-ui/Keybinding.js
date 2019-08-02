@@ -1,16 +1,20 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = Keybinding;
 
-var _react = _interopRequireDefault(require('react'));
+var _react = _interopRequireDefault(require("react"));
 
-var _humanizeKeystroke;
+function _humanizeKeystroke() {
+  const data = _interopRequireDefault(require("../nuclide-commons/humanizeKeystroke"));
 
-function _load_humanizeKeystroke() {
-  return _humanizeKeystroke = _interopRequireDefault(require('../nuclide-commons/humanizeKeystroke'));
+  _humanizeKeystroke = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -26,11 +30,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  strict
  * @format
  */
-
-function Keybinding({ keystrokes }) {
-  return _react.default.createElement(
-    'kbd',
-    { className: 'key-binding' },
-    (0, (_humanizeKeystroke || _load_humanizeKeystroke()).default)(keystrokes, process.platform)
-  );
+function Keybinding({
+  keystrokes
+}) {
+  return _react.default.createElement("kbd", {
+    className: "key-binding"
+  }, (0, _humanizeKeystroke().default)(keystrokes, process.platform));
 }

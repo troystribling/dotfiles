@@ -1,9 +1,8 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.loggedCalls = exports.ProcessLoggingEvent = exports.ProcessTimeoutError = exports.MaxBufferExceededError = exports.ProcessSystemError = exports.ProcessExitError = exports.LOG_CATEGORY = undefined;
 exports.runCommand = runCommand;
 exports.observeProcess = observeProcess;
 exports.runCommandDetailed = runCommandDetailed;
@@ -22,88 +21,119 @@ exports.parsePsOutput = parsePsOutput;
 exports.memoryUsagePerPid = memoryUsagePerPid;
 exports.preventStreamsFromThrowing = preventStreamsFromThrowing;
 exports.logStreamErrors = logStreamErrors;
+exports.getAbsoluteBinaryPathForPid = getAbsoluteBinaryPathForPid;
 exports.killUnixProcessTree = killUnixProcessTree;
+exports.loggedCalls = exports.ProcessLoggingEvent = exports.ProcessTimeoutError = exports.MaxBufferExceededError = exports.ProcessSystemError = exports.ProcessExitError = exports.LOG_CATEGORY = void 0;
 
-var _child_process = _interopRequireDefault(require('child_process'));
+var _child_process = _interopRequireDefault(require("child_process"));
 
-var _idx;
+function _log4js() {
+  const data = require("log4js");
 
-function _load_idx() {
-  return _idx = _interopRequireDefault(require('idx'));
+  _log4js = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _log4js;
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
-function _load_log4js() {
-  return _log4js = require('log4js');
+var _util = _interopRequireDefault(require("util"));
+
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("./UniversalDisposable"));
+
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+function _nuclideUri() {
+  const data = _interopRequireDefault(require("./nuclideUri"));
 
-var _util = _interopRequireDefault(require('util'));
+  _nuclideUri = function () {
+    return data;
+  };
 
-var _UniversalDisposable;
-
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('./UniversalDisposable'));
+  return data;
 }
 
-var _nuclideUri;
+function _performanceNow() {
+  const data = _interopRequireDefault(require("./performanceNow"));
 
-function _load_nuclideUri() {
-  return _nuclideUri = _interopRequireDefault(require('./nuclideUri'));
+  _performanceNow = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _performanceNow;
+function _collection() {
+  const data = require("./collection");
 
-function _load_performanceNow() {
-  return _performanceNow = _interopRequireDefault(require('./performanceNow'));
+  _collection = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _collection;
+function _event() {
+  const data = require("./event");
 
-function _load_collection() {
-  return _collection = require('./collection');
+  _event = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _event;
+function _stream() {
+  const data = require("./stream");
 
-function _load_event() {
-  return _event = require('./event');
+  _stream = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _stream;
+function _observable() {
+  const data = require("./observable");
 
-function _load_stream() {
-  return _stream = require('./stream');
+  _observable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _observable;
+function _string() {
+  const data = require("./string");
 
-function _load_observable() {
-  return _observable = require('./observable');
-}
+  _string = function () {
+    return data;
+  };
 
-var _string;
-
-function _load_string() {
-  return _string = require('./string');
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const LOG_CATEGORY = exports.LOG_CATEGORY = 'nuclide-commons/process'; /**
-                                                                        * Copyright (c) 2017-present, Facebook, Inc.
-                                                                        * All rights reserved.
-                                                                        *
-                                                                        * This source code is licensed under the BSD-style license found in the
-                                                                        * LICENSE file in the root directory of this source tree. An additional grant
-                                                                        * of patent rights can be found in the PATENTS file in the same directory.
-                                                                        *
-                                                                        * 
-                                                                        * @format
-                                                                        */
-
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 //
 //                 __   __   __   __   ___  __   __         __
 //                |__) |__) /  \ /  ` |__  /__` /__`     | /__`
@@ -141,9 +171,10 @@ const LOG_CATEGORY = exports.LOG_CATEGORY = 'nuclide-commons/process'; /**
 //   operators accidentally.
 //
 // [RxJS]: http://reactivex.io/rxjs/
-
-const logger = (0, (_log4js || _load_log4js()).getLogger)(LOG_CATEGORY);
-
+const LOG_CATEGORY = 'nuclide-commons/process';
+exports.LOG_CATEGORY = LOG_CATEGORY;
+const NUCLIDE_DO_NOT_LOG = global.NUCLIDE_DO_NOT_LOG;
+const logger = (0, _log4js().getLogger)(LOG_CATEGORY);
 /**
  * Run a command, accumulate the output. Errors are surfaced as stream errors and unsubscribing will
  * kill the process. In addition to the options accepted by Node's [`child_process.spawn()`][1]
@@ -197,10 +228,10 @@ const logger = (0, (_log4js || _load_log4js()).getLogger)(LOG_CATEGORY);
  * [1]: https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options
  * [2]: https://nodejs.org/api/errors.html#errors_class_system_error
  */
+
 function runCommand(command, args = [], options = {}, rest) {
   return runCommandDetailed(command, args, options).map(event => event.stdout);
 }
-
 /**
  * Returns an observable that spawns a process and emits events on stdout, stderr and exit. Output
  * is buffered by line. Unsubscribing before the observable completes will kill the process. This
@@ -227,6 +258,8 @@ function runCommand(command, args = [], options = {}, rest) {
  *   });
  * ```
  */
+
+
 function observeProcess(command, args, options) {
   return spawn(command, args, options).flatMap(proc => getOutputStream(proc, options));
 }
@@ -243,38 +276,61 @@ function runCommandDetailed(command, args = [], options = {}, rest) {
   var _ref;
 
   const maxBuffer = ((_ref = options) != null ? _ref.maxBuffer : _ref) || DEFAULT_MAX_BUFFER;
-  return observeProcess(command, args, Object.assign({}, options, { maxBuffer })).catch(error => {
+  return observeProcess(command, args, Object.assign({}, options, {
+    maxBuffer
+  })).catch(error => {
     // Catch ProcessExitErrors so that we can add stdout to them.
     if (error instanceof ProcessExitError) {
-      return _rxjsBundlesRxMinJs.Observable.of({ kind: 'process-exit-error', error });
+      return _RxMin.Observable.of({
+        kind: 'process-exit-error',
+        error
+      });
     }
+
     throw error;
   }).reduce((acc, event) => {
     switch (event.kind) {
       case 'stdout':
-        return Object.assign({}, acc, { stdout: acc.stdout + event.data });
+        return Object.assign({}, acc, {
+          stdout: acc.stdout + event.data
+        });
+
       case 'stderr':
-        return Object.assign({}, acc, { stderr: acc.stderr + event.data });
+        return Object.assign({}, acc, {
+          stderr: acc.stderr + event.data
+        });
+
       case 'exit':
-        return Object.assign({}, acc, { exitCode: event.exitCode });
+        return Object.assign({}, acc, {
+          exitCode: event.exitCode
+        });
+
       case 'process-exit-error':
-        const { error } = event;
+        const {
+          error
+        } = event;
         throw new ProcessExitError(error.exitCode, error.signal, error.process, acc.stderr, acc.stdout);
+
       default:
         event.kind;
         throw new Error(`Invalid event kind: ${event.kind}`);
     }
-  }, { stdout: '', stderr: '', exitCode: null });
+  }, {
+    stdout: '',
+    stderr: '',
+    exitCode: null
+  });
 }
-
 /**
  * Identical to `observeProcess()`, but doesn't buffer by line.
  */
-function observeProcessRaw(command, args, options) {
-  return spawn(command, args, options).flatMap(proc => getOutputStream(proc, Object.assign({}, options, { splitByLines: false })));
-}
 
-//
+
+function observeProcessRaw(command, args, options) {
+  return spawn(command, args, options).flatMap(proc => getOutputStream(proc, Object.assign({}, options, {
+    splitByLines: false
+  })));
+} //
 // # Lower-level APIs
 //
 // The following functions are used to create the higher-level APIs above. It's rare that you'll
@@ -307,17 +363,19 @@ function observeProcessRaw(command, args, options) {
  *   });
  * ```
  */
+
+
 function spawn(command, args, options) {
   return createProcessStream('spawn', command, args, options);
 }
-
 /**
  * Identical to `spawn()` (above), but uses `child_process.fork()` to create the process.
  */
+
+
 function fork(modulePath, args, options) {
   return createProcessStream('fork', modulePath, args, options);
 }
-
 /**
  * Creates a stream of sensibly-ordered stdout, stdin, and exit messages from a process. Generally,
  * you shouldn't use this function and should instead use `observeProcess()` (which makes use of
@@ -329,25 +387,30 @@ function fork(modulePath, args, options) {
  * This function intentionally does not close the process when you unsubscribe. It's usually used in
  * conjunction with `spawn()` which does that already.
  */
+
+
 function getOutputStream(proc, options, rest) {
   var _ref2, _ref3, _ref4, _ref5;
 
-  const chunk = ((_ref2 = options) != null ? _ref2.splitByLines : _ref2) === false ? x => x : (_observable || _load_observable()).splitStream;
+  const chunk = ((_ref2 = options) != null ? _ref2.splitByLines : _ref2) === false ? x => x : _observable().splitStream;
   const maxBuffer = (_ref3 = options) != null ? _ref3.maxBuffer : _ref3;
   const isExitError = ((_ref4 = options) != null ? _ref4.isExitError : _ref4) || isExitErrorDefault;
   const exitErrorBufferSize = ((_ref5 = options) != null ? _ref5.exitErrorBufferSize : _ref5) || 2000;
-  return _rxjsBundlesRxMinJs.Observable.defer(() => {
-    const stdoutEvents = chunk(limitBufferSize((0, (_stream || _load_stream()).observeStream)(proc.stdout), maxBuffer, 'stdout')).map(data => ({ kind: 'stdout', data }));
-    const stderrEvents = chunk(limitBufferSize((0, (_stream || _load_stream()).observeStream)(proc.stderr), maxBuffer, 'stderr')).map(data => ({ kind: 'stderr', data })).share();
-
-    // Accumulate the first `exitErrorBufferSize` bytes of stderr so that we can give feedback about
+  return _RxMin.Observable.defer(() => {
+    const stdoutEvents = chunk(limitBufferSize((0, _stream().observeStream)(proc.stdout), maxBuffer, 'stdout')).map(data => ({
+      kind: 'stdout',
+      data
+    }));
+    const stderrEvents = chunk(limitBufferSize((0, _stream().observeStream)(proc.stderr), maxBuffer, 'stderr')).map(data => ({
+      kind: 'stderr',
+      data
+    })).share(); // Accumulate the first `exitErrorBufferSize` bytes of stderr so that we can give feedback about
     // about exit errors (then stop so we don't fill up memory with it).
-    const accumulatedStderr = stderrEvents.scan((acc, event) => (acc + event.data).slice(0, exitErrorBufferSize), '').startWith('').let((0, (_observable || _load_observable()).takeWhileInclusive)(acc => acc.length < exitErrorBufferSize));
 
-    // We need to start listening for the exit event immediately, but defer emitting it until the
+    const accumulatedStderr = stderrEvents.scan((acc, event) => (acc + event.data).slice(0, exitErrorBufferSize), '').startWith('').let((0, _observable().takeWhileInclusive)(acc => acc.length < exitErrorBufferSize)); // We need to start listening for the exit event immediately, but defer emitting it until the
     // (buffered) output streams end.
-    const closeEvents = _rxjsBundlesRxMinJs.Observable.fromEvent(proc,
-    // We listen to the "close" event instead of "exit" because we want to get all of the stdout
+
+    const closeEvents = _RxMin.Observable.fromEvent(proc, // We listen to the "close" event instead of "exit" because we want to get all of the stdout
     // and stderr.
     'close', (exitCode, signal) => ({
       kind: 'exit',
@@ -357,17 +420,16 @@ function getOutputStream(proc, options, rest) {
       if (isExitError(event)) {
         throw new ProcessExitError(event.exitCode, event.signal, proc, stderr);
       }
+
       return event;
     }).publishReplay();
-    const exitSub = closeEvents.connect();
 
-    return _rxjsBundlesRxMinJs.Observable.merge(stdoutEvents, stderrEvents).concat(closeEvents).let((0, (_observable || _load_observable()).takeWhileInclusive)(event => event.kind !== 'error' && event.kind !== 'exit')).finally(() => {
+    const exitSub = closeEvents.connect();
+    return _RxMin.Observable.merge(stdoutEvents, stderrEvents).concat(closeEvents).let((0, _observable().takeWhileInclusive)(event => event.kind !== 'error' && event.kind !== 'exit')).finally(() => {
       exitSub.unsubscribe();
     });
   });
-}
-
-//
+} //
 // # Miscellaneous Utilities
 //
 // The following utilities don't spawn processes or necessarily use observables. Instead, they're
@@ -386,6 +448,8 @@ function getOutputStream(proc, options, rest) {
  *
  * See also `nicifyCommand()` which does a similar thing but for `nice`.
  */
+
+
 function scriptifyCommand(command, args = [], options) {
   if (process.platform === 'darwin') {
     // On OS X, script takes the program to run and its arguments as varargs at the end.
@@ -393,30 +457,35 @@ function scriptifyCommand(command, args = [], options) {
   } else {
     // On Linux, script takes the command to run as the -c parameter so we have to combine all of
     // the arguments into a single string.
-    const joined = (0, (_string || _load_string()).shellQuote)([command, ...args]);
-    // flowlint-next-line sketchy-null-mixed:off
-    const opts = options || {};
-    // flowlint-next-line sketchy-null-mixed:off
+    const joined = (0, _string().shellQuote)([command, ...args]); // flowlint-next-line sketchy-null-mixed:off
+
+    const opts = options || {}; // flowlint-next-line sketchy-null-mixed:off
+
     const env = opts.env || {};
-    return ['script', ['-q', '/dev/null', '-c', joined],
-    // `script` will use `SHELL`, but shells have different behaviors with regard to escaping. To
+    return ['script', ['-q', '/dev/null', '-c', joined], // `script` will use `SHELL`, but shells have different behaviors with regard to escaping. To
     // make sure that out escaping is correct, we need to force a particular shell.
-    Object.assign({}, opts, { env: Object.assign({}, env, { SHELL: '/bin/bash' }) })];
+    Object.assign({}, opts, {
+      env: Object.assign({}, env, {
+        SHELL: '/bin/bash'
+      })
+    })];
   }
 }
-
 /**
  * Kills a process and, optionally, its descendants.
  */
-function killProcess(proc, killTree) {
-  _killProcess(proc, killTree).then(() => {}, error => {
+
+
+function killProcess(proc, killTree, killTreeSignal) {
+  _killProcess(proc, killTree, killTreeSignal).then(() => {}, error => {
     logger.error(`Killing process ${proc.pid} failed`, error);
   });
 }
-
 /**
  * Kill the process with the provided pid.
  */
+
+
 function killPid(pid) {
   try {
     process.kill(pid);
@@ -425,49 +494,59 @@ function killPid(pid) {
       throw err;
     }
   }
-}
-
-// If provided, read the original environment from NUCLIDE_ORIGINAL_ENV.
+} // If provided, read the original environment from NUCLIDE_ORIGINAL_ENV.
 // This should contain the base64-encoded output of `env -0`.
+
+
 let cachedOriginalEnvironment = null;
+
 async function getOriginalEnvironment() {
   await new Promise(resolve => {
     whenShellEnvironmentLoaded(resolve);
   });
+
   if (cachedOriginalEnvironment != null) {
     return cachedOriginalEnvironment;
   }
 
-  const { NUCLIDE_ORIGINAL_ENV } = process.env;
+  const {
+    NUCLIDE_ORIGINAL_ENV
+  } = process.env;
+
   if (NUCLIDE_ORIGINAL_ENV != null && NUCLIDE_ORIGINAL_ENV.trim() !== '') {
     const envString = new Buffer(NUCLIDE_ORIGINAL_ENV, 'base64').toString();
     cachedOriginalEnvironment = {};
+
     for (const envVar of envString.split('\0')) {
       // envVar should look like A=value_of_A
       const equalIndex = envVar.indexOf('=');
+
       if (equalIndex !== -1) {
         cachedOriginalEnvironment[envVar.substring(0, equalIndex)] = envVar.substring(equalIndex + 1);
       }
-    }
-    // Guard against invalid original environments.
+    } // Guard against invalid original environments.
+
+
     if (!Object.keys(cachedOriginalEnvironment).length) {
       cachedOriginalEnvironment = process.env;
     }
   } else {
     cachedOriginalEnvironment = process.env;
   }
+
   return cachedOriginalEnvironment;
 }
-
 /**
  * Returns a string suitable for including in displayed error messages.
  */
+
+
 function exitEventToMessage(event) {
   if (event.exitCode != null) {
     return `exit code ${event.exitCode}`;
   } else {
     if (!(event.signal != null)) {
-      throw new Error('Invariant violation: "event.signal != null"');
+      throw new Error("Invariant violation: \"event.signal != null\"");
     }
 
     return `signal ${event.signal}`;
@@ -476,31 +555,33 @@ function exitEventToMessage(event) {
 
 async function getChildrenOfProcess(processId) {
   const processes = await psTree();
-
   return processes.filter(processInfo => processInfo.parentPid === processId);
 }
-
 /**
  * Get a list of descendants, sorted by increasing depth (including the one with the provided pid).
  */
+
+
 async function getDescendantsOfProcess(pid) {
   const processes = await psTree();
   let rootProcessInfo;
-  const pidToChildren = new (_collection || _load_collection()).MultiMap();
+  const pidToChildren = new (_collection().MultiMap)();
   processes.forEach(info => {
     if (info.pid === pid) {
       rootProcessInfo = info;
     }
+
     pidToChildren.add(info.parentPid, info);
   });
-  const descendants = rootProcessInfo == null ? [] : [rootProcessInfo];
-  // Walk through the array, adding the children of the current element to the end. This
+  const descendants = rootProcessInfo == null ? [] : [rootProcessInfo]; // Walk through the array, adding the children of the current element to the end. This
   // breadth-first traversal means that the elements will be sorted by depth.
+
   for (let i = 0; i < descendants.length; i++) {
     const info = descendants[i];
     const children = pidToChildren.get(info.pid);
     descendants.push(...Array.from(children));
   }
+
   return descendants;
 }
 
@@ -508,8 +589,8 @@ async function psTree() {
   if (isWindowsPlatform()) {
     return psTreeWindows();
   }
-  const [commands, withArgs] = await Promise.all([runCommand('ps', ['-A', '-o', 'ppid,pid,comm']).toPromise(), runCommand('ps', ['-A', '-ww', '-o', 'pid,args']).toPromise()]);
 
+  const [commands, withArgs] = await Promise.all([runCommand('ps', ['-A', '-o', 'ppid,pid,comm']).toPromise(), runCommand('ps', ['-A', '-ww', '-o', 'pid,args']).toPromise()]);
   return parsePsOutput(commands, withArgs);
 }
 
@@ -521,8 +602,8 @@ async function psTreeWindows() {
 function parsePsOutput(psOutput, argsOutput) {
   // Remove the first header line.
   const lines = psOutput.trim().split(/\n|\r\n/).slice(1);
-
   let withArgs = new Map();
+
   if (argsOutput != null) {
     withArgs = new Map(argsOutput.trim().split(/\n|\r\n/).slice(1).map(line => {
       const columns = line.trim().split(/\s+/);
@@ -538,7 +619,6 @@ function parsePsOutput(psOutput, argsOutput) {
     const pid = parseInt(pidStr, 10);
     const command = columns.slice(2).join(' ');
     const commandWithArgs = withArgs.get(pid);
-
     return {
       command,
       parentPid: parseInt(parentPid, 10),
@@ -546,55 +626,52 @@ function parsePsOutput(psOutput, argsOutput) {
       commandWithArgs: commandWithArgs == null ? command : commandWithArgs
     };
   });
-}
+} // Use `ps` to get memory usage in kb for an array of process id's as a map.
 
-// Use `ps` to get memory usage for an array of process id's as a map.
+
 async function memoryUsagePerPid(pids) {
   const usage = new Map();
+
   if (pids.length >= 1) {
     try {
       const stdout = await runCommand('ps', ['-p', pids.join(','), '-o', 'pid=', '-o', 'rss=']).toPromise();
       stdout.split('\n').forEach(line => {
         const parts = line.trim().split(/\s+/);
+
         if (parts.length === 2) {
           const [pid, rss] = parts.map(x => parseInt(x, 10));
           usage.set(pid, rss);
         }
       });
-    } catch (err) {
-      // Ignore errors.
+    } catch (err) {// Ignore errors.
     }
   }
+
   return usage;
 }
-
 /**
  * Add no-op error handlers to the process's streams so that Node doesn't throw them.
  */
-function preventStreamsFromThrowing(proc) {
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(getStreamErrorEvents(proc).subscribe());
-}
 
+
+function preventStreamsFromThrowing(proc) {
+  return new (_UniversalDisposable().default)(getStreamErrorEvents(proc).subscribe());
+}
 /**
  * Log errors from a process's streams. This function returns an `rxjs$ISubscription` so that it
  * can easily be used with `Observable.using()`.
  */
+
+
 function logStreamErrors(proc, command, args, options) {
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(getStreamErrorEvents(proc).do(([err, streamName]) => {
+  return new (_UniversalDisposable().default)(getStreamErrorEvents(proc).do(([err, streamName]) => {
     logger.error(`stream error on stream ${streamName} with command:`, command, args, options, 'error:', err);
   }).subscribe());
-}
-
-//
+} //
 // Types
 //
-
 // Exactly one of exitCode and signal will be non-null.
 // Killing a process will result in a null exitCode but a non-null signal.
-
-
-// In older versions of process.js, errors were emitted as messages instead of errors. This type
-// exists to support the transition, but no new usages should be added.
 
 
 //
@@ -611,10 +688,11 @@ function logStreamErrors(proc, command, args, options) {
  * error is thrown by output-accumulating functions. For others, it will always be `null`.
  */
 class ProcessExitError extends Error {
-
   constructor(exitCode, signal, proc, stderr, stdout) {
     // $FlowIssue: This isn't typed in the Flow node type defs
-    const { spawnargs } = proc;
+    const {
+      spawnargs
+    } = proc;
     const argsAndCommand = spawnargs[0] === process.execPath ? spawnargs.slice(1) : spawnargs;
     const [command, ...args] = argsAndCommand;
     super(`"${command}" failed with ${exitEventToMessage({
@@ -630,15 +708,17 @@ class ProcessExitError extends Error {
     this.args = args;
     this.process = proc;
   }
-}
 
-exports.ProcessExitError = ProcessExitError; /**
-                                              * Process system errors are just augmented Error objects. We wrap the errors and expose the process
-                                              * since our utilities throw the errors before returning the process.
-                                              */
+}
+/**
+ * Process system errors are just augmented Error objects. We wrap the errors and expose the process
+ * since our utilities throw the errors before returning the process.
+ */
+
+
+exports.ProcessExitError = ProcessExitError;
 
 class ProcessSystemError extends Error {
-
   constructor(err, proc) {
     super(err.message);
     this.name = 'ProcessSystemError';
@@ -648,65 +728,73 @@ class ProcessSystemError extends Error {
     this.syscall = err.syscall;
     this.process = proc;
   }
+
 }
 
 exports.ProcessSystemError = ProcessSystemError;
+
 class MaxBufferExceededError extends Error {
   constructor(streamName) {
     super(`${streamName} maxBuffer exceeded`);
     this.name = 'MaxBufferExceededError';
   }
+
 }
 
 exports.MaxBufferExceededError = MaxBufferExceededError;
+
 class ProcessTimeoutError extends Error {
   constructor(timeout, proc) {
     // $FlowIssue: This isn't typed in the Flow node type defs
-    const { spawnargs } = proc;
+    const {
+      spawnargs
+    } = proc;
     const commandName = spawnargs[0] === process.execPath ? spawnargs[1] : spawnargs[0];
     super(`"${commandName}" timed out after ${timeout}ms`);
     this.name = 'ProcessTimeoutError';
   }
-}
 
-exports.ProcessTimeoutError = ProcessTimeoutError; //
+} //
 // Internal Stuff
 //
 // Pay no attention! This is just stuff that's used internally to implement the good stuff.
 //
-
 // Node crashes if we allow buffers that are too large.
 
-const DEFAULT_MAX_BUFFER = 100 * 1024 * 1024;
 
+exports.ProcessTimeoutError = ProcessTimeoutError;
+const DEFAULT_MAX_BUFFER = 100 * 1024 * 1024;
 const MAX_LOGGED_CALLS = 100;
 const NUM_PRESERVED_HISTORY_CALLS = 50;
-
-const noopDisposable = { dispose: () => {} };
+const noopDisposable = {
+  dispose: () => {}
+};
 const whenShellEnvironmentLoaded = typeof atom !== 'undefined' && !atom.inSpecMode() ? atom.whenShellEnvironmentLoaded.bind(atom) : cb => {
   cb();
   return noopDisposable;
 };
-
 /**
  * Log custom events to log4js so that we can easily hook into process events
  * using a custom log4js appender (e.g. for analytics purposes).
  */
-class ProcessLoggingEvent {
 
+class ProcessLoggingEvent {
   constructor(command, duration) {
     this.command = command;
-    this.duration = duration;
-    // log4js uses util.inspect to convert log arguments to strings.
+    this.duration = duration; // log4js uses util.inspect to convert log arguments to strings.
     // Note: computed property methods aren't supported by Flow yet.
+
     this[_util.default.inspect.custom] = () => {
       return `${this.duration}ms: ${this.command}`;
     };
   }
+
 }
 
 exports.ProcessLoggingEvent = ProcessLoggingEvent;
-const loggedCalls = exports.loggedCalls = [];
+const loggedCalls = [];
+exports.loggedCalls = loggedCalls;
+
 function logCall(duration, command, args) {
   // Trim the history once in a while, to avoid doing expensive array
   // manipulation all the time after we reached the end of the history
@@ -718,7 +806,7 @@ function logCall(duration, command, args) {
     });
   }
 
-  const fullCommand = (0, (_string || _load_string()).shellQuote)([command, ...args]);
+  const fullCommand = (0, _string().shellQuote)([command, ...args]);
   loggedCalls.push({
     command: fullCommand,
     duration,
@@ -726,7 +814,41 @@ function logCall(duration, command, args) {
   });
   logger.info(new ProcessLoggingEvent(fullCommand, duration));
 }
+/**
+ * Attempt to get the fully qualified binary name from a process id. This is
+ * surprisingly tricky. 'ps' only reports the path as invoked, and in some cases
+ * not even that.
+ *
+ * On Linux, the /proc filesystem can be used to find it.
+ * macOS doesn't have /proc, so we rely on the fact that the process holds
+ * an open FD to the executable. This can fail for various reasons (mostly
+ * not having permissions to execute lsof on the pid.)
+ */
 
+
+async function getAbsoluteBinaryPathForPid(pid) {
+  if (process.platform === 'linux') {
+    return _getLinuxBinaryPathForPid(pid);
+  }
+
+  if (process.platform === 'darwin') {
+    return _getDarwinBinaryPathForPid(pid);
+  }
+
+  return null;
+}
+
+async function _getLinuxBinaryPathForPid(pid) {
+  const exeLink = `/proc/${pid}/exe`; // /proc/xxx/exe is a symlink to the real binary in the file system.
+
+  return runCommand('/bin/realpath', ['-q', '-e', exeLink]).catch(_ => _RxMin.Observable.of(null)).toPromise();
+}
+
+async function _getDarwinBinaryPathForPid(pid) {
+  return runCommand('/usr/sbin/lsof', ['-p', `${pid}`]).catch(_ => {
+    return _RxMin.Observable.of(null);
+  }).map(stdout => stdout == null ? null : stdout.split('\n').map(line => line.trim().split(/\s+/)).filter(line => line[3] === 'txt').map(line => line[8])[0]).take(1).toPromise();
+}
 /**
  * Creates an observable with the following properties:
  *
@@ -739,53 +861,60 @@ function logCall(duration, command, args) {
  *
  * IMPORTANT: The exit event does NOT mean that all stdout and stderr events have been received.
  */
+
+
 function createProcessStream(type = 'spawn', commandOrModulePath, args = [], options = {}) {
   const inputOption = options.input;
   let input;
+
   if (inputOption != null) {
-    input = typeof inputOption === 'string' ? _rxjsBundlesRxMinJs.Observable.of(inputOption) : inputOption;
+    input = typeof inputOption === 'string' ? _RxMin.Observable.of(inputOption) : inputOption;
   }
 
-  return (0, (_event || _load_event()).observableFromSubscribeFunction)(whenShellEnvironmentLoaded).take(1).switchMap(() => {
-    const { dontLogInNuclide, killTreeWhenDone, timeout } = options;
-    // flowlint-next-line sketchy-null-number:off
-    const enforceTimeout = timeout ? x => x.timeoutWith(timeout, _rxjsBundlesRxMinJs.Observable.throw(new ProcessTimeoutError(timeout, proc))) : x => x;
-    const proc = _child_process.default[type]((_nuclideUri || _load_nuclideUri()).default.expandHomeDir(commandOrModulePath), args,
-    // $FlowFixMe: child_process$spawnOpts and child_process$forkOpts have incompatible stdio types.
-    Object.assign({}, options));
+  return (0, _event().observableFromSubscribeFunction)(whenShellEnvironmentLoaded).take(1).switchMap(() => {
+    const {
+      dontLogInNuclide,
+      killTreeWhenDone,
+      killTreeSignal,
+      timeout
+    } = options; // flowlint-next-line sketchy-null-number:off
 
-    // Don't let Node throw stream errors and crash the process. Note that we never dispose of
+    const enforceTimeout = timeout ? x => x.timeoutWith(timeout, _RxMin.Observable.throw(new ProcessTimeoutError(timeout, proc))) : x => x;
+
+    const proc = _child_process.default[type](_nuclideUri().default.expandHomeDir(commandOrModulePath), args, // $FlowFixMe: child_process$spawnOpts and child_process$forkOpts have incompatible stdio types.
+    Object.assign({}, options)); // Don't let Node throw stream errors and crash the process. Note that we never dispose of
     // this because stream errors can still occur after the user unsubscribes from our process
     // observable. That's okay; when the streams close, the listeners will be removed.
-    preventStreamsFromThrowing(proc);
 
-    // If we were to connect the error handler as part of the returned observable, unsubscribing
+
+    preventStreamsFromThrowing(proc); // If we were to connect the error handler as part of the returned observable, unsubscribing
     // would cause it to be removed. That would leave no attached error handler, so node would
     // throw, triggering Atom's uncaught exception handler.
-    const errors = _rxjsBundlesRxMinJs.Observable.fromEvent(proc, 'error').flatMap(_rxjsBundlesRxMinJs.Observable.throw).publish();
+
+    const errors = _RxMin.Observable.fromEvent(proc, 'error').flatMap(_RxMin.Observable.throw).publish();
+
     errors.connect();
 
-    const exitEvents = _rxjsBundlesRxMinJs.Observable.fromEvent(proc, 'exit', (exitCode, signal) => ({
+    const exitEvents = _RxMin.Observable.fromEvent(proc, 'exit', (exitCode, signal) => ({
       kind: 'exit',
       exitCode,
       signal
     })).filter(isRealExit).take(1);
 
-    if (dontLogInNuclide !== true) {
+    if (dontLogInNuclide !== true && NUCLIDE_DO_NOT_LOG !== true) {
       // Log the completion of the process. Note that we intentionally don't merge this with the
       // returned observable because we don't want to cancel the side-effect when the user
       // unsubscribes or when the process exits ("close" events come after "exit" events).
-      const now = (0, (_performanceNow || _load_performanceNow()).default)();
-      _rxjsBundlesRxMinJs.Observable.fromEvent(proc, 'close').do(() => {
-        logCall(Math.round((0, (_performanceNow || _load_performanceNow()).default)() - now), commandOrModulePath, args);
+      const now = (0, _performanceNow().default)();
+
+      _RxMin.Observable.fromEvent(proc, 'close').do(() => {
+        logCall(Math.round((0, _performanceNow().default)() - now), commandOrModulePath, args);
       }).subscribe();
     }
 
     let finished = false;
-    return enforceTimeout(_rxjsBundlesRxMinJs.Observable.using(
-    // Log stream errors, but only for as long as you're subscribed to the process observable.
-    () => logStreamErrors(proc, commandOrModulePath, args, options), () => _rxjsBundlesRxMinJs.Observable.merge(
-    // Node [delays the emission of process errors][1] by a tick in order to give
+    return enforceTimeout(_RxMin.Observable.using( // Log stream errors, but only for as long as you're subscribed to the process observable.
+    () => logStreamErrors(proc, commandOrModulePath, args, options), () => _RxMin.Observable.merge( // Node [delays the emission of process errors][1] by a tick in order to give
     // consumers a chance to subscribe to the error event. This means that our observable
     // would normally emit the process and then, a tick later, error. However, it's more
     // convenient to never emit the process if there was an error. Although observables
@@ -794,11 +923,10 @@ function createProcessStream(type = 'spawn', commandOrModulePath, args = [], opt
     // that an error is forthcoming.
     //
     // [1]: https://github.com/nodejs/node/blob/v7.10.0/lib/internal/child_process.js#L301
-    proc.pid == null ? _rxjsBundlesRxMinJs.Observable.empty() : _rxjsBundlesRxMinJs.Observable.of(proc), _rxjsBundlesRxMinJs.Observable.never() // Don't complete until we say so!
-    )).merge(
-    // Write any input to stdin. This is just for the side-effect. We merge it here to
+    proc.pid == null ? _RxMin.Observable.empty() : _RxMin.Observable.of(proc), _RxMin.Observable.never() // Don't complete until we say so!
+    )).merge( // Write any input to stdin. This is just for the side-effect. We merge it here to
     // ensure that writing to the stdin stream happens after our event listeners are added.
-    input == null ? _rxjsBundlesRxMinJs.Observable.empty() : input.do({
+    input == null ? _RxMin.Observable.empty() : input.do({
       next: str => {
         proc.stdin.write(str);
       },
@@ -818,11 +946,12 @@ function createProcessStream(type = 'spawn', commandOrModulePath, args = [], opt
       if (err instanceof Error && err.name === 'Error' && 'errno' in err) {
         throw new ProcessSystemError(err, proc);
       }
+
       throw err;
     }).finally(() => {
       // $FlowFixMe(>=0.68.0) Flow suppress (T27187857)
       if (!proc.wasKilled && !finished) {
-        killProcess(proc, Boolean(killTreeWhenDone));
+        killProcess(proc, Boolean(killTreeWhenDone), killTreeSignal);
       }
     });
   });
@@ -833,12 +962,19 @@ function isRealExit(event) {
   return event.signal !== 'SIGUSR1';
 }
 
-async function _killProcess(proc, killTree) {
+async function _killProcess(proc, killTree, killTreeSignal) {
   proc.wasKilled = true;
+
   if (!killTree) {
-    proc.kill();
+    if (killTreeSignal != null && killTreeSignal !== '') {
+      proc.kill(killTreeSignal);
+    } else {
+      proc.kill();
+    }
+
     return;
   }
+
   if (/^win/.test(process.platform)) {
     await killWindowsProcessTree(proc.pid);
   } else {
@@ -859,8 +995,8 @@ function killWindowsProcessTree(pid) {
 }
 
 async function killUnixProcessTree(proc) {
-  const descendants = await getDescendantsOfProcess(proc.pid);
-  // Kill the processes, starting with those of greatest depth.
+  const descendants = await getDescendantsOfProcess(proc.pid); // Kill the processes, starting with those of greatest depth.
+
   for (const info of descendants.reverse()) {
     killPid(info.pid);
   }
@@ -871,30 +1007,32 @@ function isExitErrorDefault(exit) {
 }
 
 function isWindowsPlatform() {
-  return (/^win/.test(process.platform)
-  );
+  return /^win/.test(process.platform);
 }
 
 function limitBufferSize(stream, maxBuffer, streamName) {
   if (maxBuffer == null) {
     return stream;
   }
-  return _rxjsBundlesRxMinJs.Observable.defer(() => {
+
+  return _RxMin.Observable.defer(() => {
     let totalSize = 0;
     return stream.do(data => {
       totalSize += data.length;
+
       if (totalSize > maxBuffer) {
         throw new MaxBufferExceededError(streamName);
       }
     });
   });
 }
-
 /**
  * Get an observable of error events for a process's streams. Note that these are represented as
  * normal elements, not observable errors.
  */
+
+
 function getStreamErrorEvents(proc) {
   const streams = [['stdin', proc.stdin], ['stdout', proc.stdout], ['stderr', proc.stderr]];
-  return _rxjsBundlesRxMinJs.Observable.merge(...streams.map(([name, stream]) => stream == null ? _rxjsBundlesRxMinJs.Observable.empty() : _rxjsBundlesRxMinJs.Observable.fromEvent(stream, 'error').map(err => [err, name])));
+  return _RxMin.Observable.merge(...streams.map(([name, stream]) => stream == null ? _RxMin.Observable.empty() : _RxMin.Observable.fromEvent(stream, 'error').map(err => [err, name])));
 }

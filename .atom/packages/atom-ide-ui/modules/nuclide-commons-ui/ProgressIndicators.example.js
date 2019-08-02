@@ -1,31 +1,43 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ProgressIndicatorExamples = undefined;
+exports.ProgressIndicatorExamples = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _Block;
+function _Block() {
+  const data = require("./Block");
 
-function _load_Block() {
-  return _Block = require('./Block');
+  _Block = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _ProgressBar;
+function _ProgressBar() {
+  const data = require("./ProgressBar");
 
-function _load_ProgressBar() {
-  return _ProgressBar = require('./ProgressBar');
+  _ProgressBar = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _LoadingSpinner;
+function _LoadingSpinner() {
+  const data = require("./LoadingSpinner");
 
-function _load_LoadingSpinner() {
-  return _LoadingSpinner = require('./LoadingSpinner');
+  _LoadingSpinner = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -38,58 +50,28 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * 
  * @format
  */
+const ProgressBarExample = () => React.createElement("div", null, React.createElement(_Block().Block, null, React.createElement(_ProgressBar().ProgressBar, null)), React.createElement(_Block().Block, null, React.createElement(_ProgressBar().ProgressBar, {
+  max: 100,
+  value: 0
+})), React.createElement(_Block().Block, null, React.createElement(_ProgressBar().ProgressBar, {
+  max: 100,
+  value: 50
+})), React.createElement(_Block().Block, null, React.createElement(_ProgressBar().ProgressBar, {
+  max: 100,
+  value: 100
+})));
 
-const ProgressBarExample = () => _react.createElement(
-  'div',
-  null,
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement((_ProgressBar || _load_ProgressBar()).ProgressBar, null)
-  ),
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement((_ProgressBar || _load_ProgressBar()).ProgressBar, { max: 100, value: 0 })
-  ),
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement((_ProgressBar || _load_ProgressBar()).ProgressBar, { max: 100, value: 50 })
-  ),
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement((_ProgressBar || _load_ProgressBar()).ProgressBar, { max: 100, value: 100 })
-  )
-);
+const LoadingSpinnerExample = () => React.createElement("div", null, React.createElement(_Block().Block, null, React.createElement(_LoadingSpinner().LoadingSpinner, {
+  size: "EXTRA_SMALL"
+})), React.createElement(_Block().Block, null, React.createElement(_LoadingSpinner().LoadingSpinner, {
+  size: "SMALL"
+})), React.createElement(_Block().Block, null, React.createElement(_LoadingSpinner().LoadingSpinner, {
+  size: "MEDIUM"
+})), React.createElement(_Block().Block, null, React.createElement(_LoadingSpinner().LoadingSpinner, {
+  size: "LARGE"
+})));
 
-const LoadingSpinnerExample = () => _react.createElement(
-  'div',
-  null,
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement((_LoadingSpinner || _load_LoadingSpinner()).LoadingSpinner, { size: 'EXTRA_SMALL' })
-  ),
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement((_LoadingSpinner || _load_LoadingSpinner()).LoadingSpinner, { size: 'SMALL' })
-  ),
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement((_LoadingSpinner || _load_LoadingSpinner()).LoadingSpinner, { size: 'MEDIUM' })
-  ),
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement((_LoadingSpinner || _load_LoadingSpinner()).LoadingSpinner, { size: 'LARGE' })
-  )
-);
-
-const ProgressIndicatorExamples = exports.ProgressIndicatorExamples = {
+const ProgressIndicatorExamples = {
   sectionName: 'Progress Indicators',
   description: 'Show that work is being performed. Consider using one of these for any work > 1s.',
   examples: [{
@@ -100,3 +82,4 @@ const ProgressIndicatorExamples = exports.ProgressIndicatorExamples = {
     component: LoadingSpinnerExample
   }]
 };
+exports.ProgressIndicatorExamples = ProgressIndicatorExamples;

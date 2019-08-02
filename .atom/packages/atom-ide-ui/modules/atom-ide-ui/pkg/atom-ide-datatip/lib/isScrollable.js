@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = isScrollable;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -15,14 +16,16 @@ exports.default = isScrollable;
  * 
  * @format
  */
-
 function isScrollable(element, wheelEvent) {
   let node = wheelEvent.target;
+
   while (node != null && node !== element) {
     if (node.scrollHeight > node.clientHeight || node.scrollWidth > node.clientWidth) {
       return true;
     }
+
     node = node.parentNode;
   }
+
   return false;
 }

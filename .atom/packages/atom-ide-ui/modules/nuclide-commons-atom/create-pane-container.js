@@ -1,9 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = createPaneContainer;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -15,7 +16,6 @@ exports.default = createPaneContainer;
  * 
  * @format
  */
-
 function createPaneContainer() {
   const instance = typeof atom.workspace.getCenter === 'function' ? atom.workspace.getCenter().paneContainer : atom.workspace.paneContainer;
   const PaneContainer = instance.constructor;

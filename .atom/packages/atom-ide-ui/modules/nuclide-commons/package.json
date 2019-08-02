@@ -8,10 +8,11 @@
   "repository": "https://github.com/facebook/nuclide/tree/master/modules/nuclide-commons",
   "scripts": {
     "prepublish": "../scripts/prepublish.sh",
-    "test": "node ../nuclide-jasmine/bin/jasmine-node-transpiled spec"
+    "test": "true"
   },
   "dependencies": {
     "domexception": "1.0.1",
+    "dompurify": "1.0.3",
     "event-kit": "2.2.0",
     "event-target-shim": "3.0.1",
     "fs-plus": "2.9.3",

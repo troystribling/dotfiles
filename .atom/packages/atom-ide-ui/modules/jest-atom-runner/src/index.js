@@ -1,33 +1,37 @@
-'use strict';var _ipcServer;
+"use strict";
 
+function _ipcServer() {
+  const data = require("./ipc-server");
 
+  _ipcServer = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _utils() {
+  const data = require("./utils");
 
+  _utils = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _AtomTestWorkerFarm() {
+  const data = _interopRequireDefault(require("./AtomTestWorkerFarm"));
 
+  _AtomTestWorkerFarm = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-
-
-
-
-
-
-
-
-
-
-function _load_ipcServer() {return _ipcServer = require('./ipc-server');}var _utils;
-function _load_utils() {return _utils = require('./utils');}var _AtomTestWorkerFarm;
-
-function _load_AtomTestWorkerFarm() {return _AtomTestWorkerFarm = _interopRequireDefault(require('./AtomTestWorkerFarm'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-// Share ipc server and farm between multiple runs, so we don't restart
-// the whole thing in watch mode every time. (it steals window focus when
-// atom launches)
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -38,37 +42,44 @@ function _load_AtomTestWorkerFarm() {return _AtomTestWorkerFarm = _interopRequir
  *
  *  strict-local
  * @format
- */ /* This is the main file that Jest will specify in its config as
-     * 'runner': 'path/to/this/file'
-     */ /* eslint-disable nuclide-internal/no-commonjs */let ipcServerPromise;let serverID;let farm;let cleanupRegistered = false;class TestRunner {constructor(globalConfig) {this._globalConfig = globalConfig;serverID = serverID || (serverID = (0, (_utils || _load_utils()).makeUniqServerId)());
-    ipcServerPromise || (
-    ipcServerPromise = (0, (_ipcServer || _load_ipcServer()).startServer)({
-      serverID: this._serverID }));
+ */
 
+/* This is the main file that Jest will specify in its config as
+ * 'runner': 'path/to/this/file'
+ */
+
+/* eslint-disable nuclide-internal/no-commonjs */
+// Share ipc server and farm between multiple runs, so we don't restart
+// the whole thing in watch mode every time. (it steals window focus when
+// atom launches)
+let ipcServerPromise;
+let serverID;
+let farm;
+let cleanupRegistered = false;
+
+class TestRunner {
+  constructor(globalConfig) {
+    this._globalConfig = globalConfig;
+    serverID = serverID || (serverID = (0, _utils().makeUniqServerId)());
+    ipcServerPromise || (ipcServerPromise = (0, _ipcServer().startServer)({
+      serverID: this._serverID
+    }));
   }
 
-  async runTests(
-  tests,
-  watcher,
-  onStart,
-  onResult,
-  onFailure,
-  options)
-  {
+  async runTests(tests, watcher, onStart, onResult, onFailure, options) {
     const isWatch = this._globalConfig.watch || this._globalConfig.watchAll;
-    const concurrency = isWatch ?
-    // spawning multiple atoms in watch mode is weird,
+    const concurrency = isWatch ? // spawning multiple atoms in watch mode is weird,
     // they all try to steal focus from the current window
-    1 :
-    Math.min(tests.length, this._globalConfig.maxWorkers);
+    1 : Math.min(tests.length, this._globalConfig.maxWorkers);
     const ipcServer = await ipcServerPromise;
+
     if (!farm) {
-      farm = new (_AtomTestWorkerFarm || _load_AtomTestWorkerFarm()).default({
+      farm = new (_AtomTestWorkerFarm().default)({
         serverID: this._serverID,
         ipcServer: await ipcServer,
         globalConfig: this._globalConfig,
-        concurrency });
-
+        concurrency
+      });
       await farm.start();
     }
 
@@ -86,19 +97,15 @@ function _load_AtomTestWorkerFarm() {return _AtomTestWorkerFarm = _interopRequir
       process.on('uncaughtException', cleanup);
     }
 
-    await Promise.all(
-    tests.map(test => {
-      return farm.
-      runTest(test, onStart).
-      then(testResult => onResult(test, testResult)).
-      catch(error => onFailure(test, error));
+    await Promise.all(tests.map(test => {
+      return farm.runTest(test, onStart).then(testResult => onResult(test, testResult)).catch(error => onFailure(test, error));
     }));
-
 
     if (!isWatch) {
       cleanup();
     }
-  }}
+  }
 
+}
 
 module.exports = TestRunner;

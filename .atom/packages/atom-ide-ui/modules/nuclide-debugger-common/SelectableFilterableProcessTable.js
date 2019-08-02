@@ -1,46 +1,67 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _debugAdapterService;
+function _debugAdapterService() {
+  const data = require("./debug-adapter-service");
 
-function _load_debugAdapterService() {
-  return _debugAdapterService = require('./debug-adapter-service');
+  _debugAdapterService = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _AtomInput;
+function _AtomInput() {
+  const data = require("../nuclide-commons-ui/AtomInput");
 
-function _load_AtomInput() {
-  return _AtomInput = require('../nuclide-commons-ui/AtomInput');
+  _AtomInput = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Table;
+function _Table() {
+  const data = require("../nuclide-commons-ui/Table");
 
-function _load_Table() {
-  return _Table = require('../nuclide-commons-ui/Table');
+  _Table = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _nuclideUri;
+function _nuclideUri() {
+  const data = _interopRequireDefault(require("../nuclide-commons/nuclideUri"));
 
-function _load_nuclideUri() {
-  return _nuclideUri = _interopRequireDefault(require('../nuclide-commons/nuclideUri'));
+  _nuclideUri = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -53,9 +74,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * 
  * @format
  */
-
 const PROCESS_UPDATES_INTERVAL_MS = 2000;
-
 const COLUMNS = [{
   title: 'Process Binary',
   key: 'process',
@@ -78,34 +97,39 @@ function getCompareFunction(sortedColumn, sortDescending) {
         const second = sortDescending ? target1.process : target2.process;
         return first.toLowerCase().localeCompare(second.toLowerCase());
       };
+
     case 'pid':
       const order = sortDescending ? -1 : 1;
       return (target1, target2) => order * (target1.pid - target2.pid);
+
     case 'command':
       return (target1, target2) => {
         const first = sortDescending ? target2.command : target1.command;
         const second = sortDescending ? target1.command : target2.command;
         return first.toLowerCase().localeCompare(second.toLowerCase());
       };
+
     default:
       break;
   }
+
   return () => 0;
 }
 
 function filterProcesses(processes, filterText) {
   // Show all results if invalid regex
   let filterRegex;
+
   try {
     filterRegex = new RegExp(filterText, 'i');
   } catch (e) {
     return processes;
   }
+
   return processes.filter(item => filterRegex.test(item.process) || filterRegex.test(item.pid.toString()) || filterRegex.test(item.command));
 }
 
-class SelectableFilterableProcessTable extends _react.Component {
-
+class SelectableFilterableProcessTable extends React.Component {
   constructor(props) {
     super(props);
 
@@ -116,12 +140,15 @@ class SelectableFilterableProcessTable extends _react.Component {
       // some of the contain literal slashes) so handle them as a special
       // case.
       const noargsRegex = /^\[(.*)\]$/;
+
       const commandName = (name, withArgs) => {
         const match = withArgs.match(noargsRegex);
+
         if (match != null) {
           return match[1];
         }
-        return (_nuclideUri || _load_nuclideUri()).default.basename(name);
+
+        return _nuclideUri().default.basename(name);
       };
 
       const processList = processes.map(process => {
@@ -131,14 +158,19 @@ class SelectableFilterableProcessTable extends _react.Component {
           command: process.commandWithArgs
         };
       });
-
-      this.setState({ processList });
+      this.setState({
+        processList
+      });
     };
 
     this._handleFilterTextChange = filterText => {
       // Check if we've filtered down to one option and select if so
-      const filteredProcesses = filterProcesses(this.state.processList, filterText);
+      const filteredProcesses = filterProcesses(this.state.processList, filterText); // TODO: (wbinnssmith) T30771435 this setState depends on current state
+      // and should use an updater function rather than an object
+      // eslint-disable-next-line react/no-access-state-in-setstate
+
       let selectedProcess = this.state.selectedProcess;
+
       if (filteredProcesses.length === 1) {
         // Check if we've filtered down to one option and select if so
         selectedProcess = filteredProcesses[0];
@@ -155,7 +187,9 @@ class SelectableFilterableProcessTable extends _react.Component {
     };
 
     this._handleSelectTableRow = (selectedProcess, selectedIndex) => {
-      this.setState({ selectedProcess });
+      this.setState({
+        selectedProcess
+      });
     };
 
     this._handleSort = (sortedColumn, sortDescending) => {
@@ -165,7 +199,7 @@ class SelectableFilterableProcessTable extends _react.Component {
       });
     };
 
-    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();
+    this._disposables = new (_UniversalDisposable().default)();
     this.state = {
       processList: [],
       selectedProcess: null,
@@ -176,7 +210,7 @@ class SelectableFilterableProcessTable extends _react.Component {
   }
 
   componentDidMount() {
-    this._disposables.add(_rxjsBundlesRxMinJs.Observable.interval(PROCESS_UPDATES_INTERVAL_MS).startWith(0).flatMap(_ => (0, (_debugAdapterService || _load_debugAdapterService()).getVSCodeDebuggerAdapterServiceByNuclideUri)(this.props.targetUri).getProcessTree()).subscribe(this._updateList));
+    this._disposables.add(_RxMin.Observable.interval(PROCESS_UPDATES_INTERVAL_MS).startWith(0).flatMap(_ => (0, _debugAdapterService().getVSCodeDebuggerAdapterServiceByNuclideUri)(this.props.targetUri).getProcessTree()).subscribe(this._updateList));
   }
 
   componentWillUnmount() {
@@ -185,8 +219,8 @@ class SelectableFilterableProcessTable extends _react.Component {
 
   setState(newState) {
     const onSelect = this.props.onSelect != null ? this.props.onSelect : _ => {};
-
     let changedSelectedProcess = false;
+
     if (newState.selectedProcess != null) {
       if (this.state.selectedProcess != null) {
         changedSelectedProcess = newState.selectedProcess.pid !== this.state.selectedProcess.pid;
@@ -215,7 +249,6 @@ class SelectableFilterableProcessTable extends _react.Component {
     } = this.state;
     const sortFunction = getCompareFunction(sortedColumn, sortDescending);
     let selectedIndex = null;
-
     const rows = filterProcesses(processList, filterText).sort(sortFunction).map((process, index) => {
       const row = {
         data: process
@@ -227,37 +260,30 @@ class SelectableFilterableProcessTable extends _react.Component {
 
       return row;
     });
-
-    return _react.createElement(
-      'div',
-      { className: 'block' },
-      _react.createElement(
-        'p',
-        null,
-        'Attach to a running native process'
-      ),
-      _react.createElement((_AtomInput || _load_AtomInput()).AtomInput, {
-        placeholderText: 'Search...',
-        value: this.state.filterText,
-        onDidChange: this._handleFilterTextChange,
-        size: 'sm',
-        autofocus: true
-      }),
-      _react.createElement((_Table || _load_Table()).Table, {
-        columns: COLUMNS,
-        fixedHeader: true,
-        maxBodyHeight: '30em',
-        rows: rows,
-        sortable: true,
-        onSort: this._handleSort,
-        sortedColumn: this.state.sortedColumn,
-        sortDescending: this.state.sortDescending,
-        selectable: true,
-        selectedIndex: selectedIndex,
-        onSelect: this._handleSelectTableRow,
-        collapsable: true
-      })
-    );
+    return React.createElement("div", {
+      className: "block"
+    }, React.createElement("p", null, "Attach to a running native process"), React.createElement(_AtomInput().AtomInput, {
+      placeholderText: "Search...",
+      value: this.state.filterText,
+      onDidChange: this._handleFilterTextChange,
+      size: "sm",
+      autofocus: true
+    }), React.createElement(_Table().Table, {
+      columns: COLUMNS,
+      fixedHeader: true,
+      maxBodyHeight: "30em",
+      rows: rows,
+      sortable: true,
+      onSort: this._handleSort,
+      sortedColumn: this.state.sortedColumn,
+      sortDescending: this.state.sortDescending,
+      selectable: true,
+      selectedIndex: selectedIndex,
+      onSelect: this._handleSelectTableRow,
+      collapsable: true
+    }));
   }
+
 }
+
 exports.default = SelectableFilterableProcessTable;

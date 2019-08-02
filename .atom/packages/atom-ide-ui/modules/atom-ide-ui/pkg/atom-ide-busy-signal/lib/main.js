@@ -1,33 +1,53 @@
-'use strict';
+"use strict";
 
-var _createPackage;
+function _createPackage() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/createPackage"));
 
-function _load_createPackage() {
-  return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));
+  _createPackage = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _BusySignalSingleton;
+function _BusySignalSingleton() {
+  const data = _interopRequireDefault(require("./BusySignalSingleton"));
 
-function _load_BusySignalSingleton() {
-  return _BusySignalSingleton = _interopRequireDefault(require('./BusySignalSingleton'));
+  _BusySignalSingleton = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _MessageStore;
+function _MessageStore() {
+  const data = require("./MessageStore");
 
-function _load_MessageStore() {
-  return _MessageStore = require('./MessageStore');
+  _MessageStore = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _StatusBarTile;
+function _StatusBarTile() {
+  const data = _interopRequireDefault(require("./StatusBarTile"));
 
-function _load_StatusBarTile() {
-  return _StatusBarTile = _interopRequireDefault(require('./StatusBarTile'));
+  _StatusBarTile = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -43,13 +63,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  strict-local
  * @format
  */
-
 class Activation {
-
   constructor() {
-    this._messageStore = new (_MessageStore || _load_MessageStore()).MessageStore();
-    this._service = new (_BusySignalSingleton || _load_BusySignalSingleton()).default(this._messageStore);
-    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(this._messageStore);
+    this._messageStore = new (_MessageStore().MessageStore)();
+    this._service = new (_BusySignalSingleton().default)(this._messageStore);
+    this._disposables = new (_UniversalDisposable().default)(this._messageStore);
   }
 
   dispose() {
@@ -58,14 +76,17 @@ class Activation {
 
   consumeStatusBar(statusBar) {
     // Avoid retaining StatusBarTile by wrapping it.
-    const disposable = new (_UniversalDisposable || _load_UniversalDisposable()).default(new (_StatusBarTile || _load_StatusBarTile()).default(statusBar, this._messageStore.getMessageStream()));
+    const disposable = new (_UniversalDisposable().default)(new (_StatusBarTile().default)(statusBar, this._messageStore.getMessageStream()));
+
     this._disposables.add(disposable);
+
     return disposable;
   }
 
   provideBusySignal() {
     return this._service;
   }
+
 }
 
-(0, (_createPackage || _load_createPackage()).default)(module.exports, Activation);
+(0, _createPackage().default)(module.exports, Activation);

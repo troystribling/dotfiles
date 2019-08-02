@@ -1,38 +1,55 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _event;
+function _event() {
+  const data = require("../../../../../nuclide-commons/event");
 
-function _load_event() {
-  return _event = require('../../../../../nuclide-commons/event');
+  _event = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _LoadingSpinner;
+function _LoadingSpinner() {
+  const data = require("../../../../../nuclide-commons-ui/LoadingSpinner");
 
-function _load_LoadingSpinner() {
-  return _LoadingSpinner = require('../../../../../nuclide-commons-ui/LoadingSpinner');
+  _LoadingSpinner = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _constants;
+function _constants() {
+  const data = require("../constants");
 
-function _load_constants() {
-  return _constants = require('../constants');
+  _constants = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -45,17 +62,18 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  *  strict-local
  * @format
  */
-
-class DebuggerControllerView extends _react.Component {
-
+class DebuggerControllerView extends React.Component {
   constructor(props) {
     super(props);
-    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();
+    this._disposables = new (_UniversalDisposable().default)();
   }
 
   componentDidMount() {
-    const { service } = this.props;
-    this._disposables.add((0, (_event || _load_event()).observableFromSubscribeFunction)(service.onDidChangeMode.bind(service)).subscribe(mode => this.forceUpdate()));
+    const {
+      service
+    } = this.props;
+
+    this._disposables.add((0, _event().observableFromSubscribeFunction)(service.onDidChangeMode.bind(service)).subscribe(mode => this.forceUpdate()));
   }
 
   componentWillUnmount() {
@@ -63,23 +81,20 @@ class DebuggerControllerView extends _react.Component {
   }
 
   render() {
-    if (this.props.service.getDebuggerMode() === (_constants || _load_constants()).DebuggerMode.STARTING) {
-      return _react.createElement(
-        'div',
-        { className: 'debugger-starting-message' },
-        _react.createElement(
-          'div',
-          null,
-          _react.createElement(
-            'span',
-            { className: 'inline-block' },
-            'Starting Debugger...'
-          ),
-          _react.createElement((_LoadingSpinner || _load_LoadingSpinner()).LoadingSpinner, { className: 'inline-block', size: 'EXTRA_SMALL' })
-        )
-      );
+    if (this.props.service.getDebuggerMode() === _constants().DebuggerMode.STARTING) {
+      return React.createElement("div", {
+        className: "debugger-starting-message"
+      }, React.createElement("div", null, React.createElement("span", {
+        className: "inline-block"
+      }, "Starting Debugger..."), React.createElement(_LoadingSpinner().LoadingSpinner, {
+        className: "inline-block",
+        size: "EXTRA_SMALL"
+      })));
     }
+
     return null;
   }
+
 }
+
 exports.default = DebuggerControllerView;

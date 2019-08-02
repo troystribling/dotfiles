@@ -1,71 +1,115 @@
-'use strict';
+"use strict";
 
-var _destroyItemWhere;
+function _destroyItemWhere() {
+  const data = require("../../../../nuclide-commons-atom/destroyItemWhere");
 
-function _load_destroyItemWhere() {
-  return _destroyItemWhere = require('../../../../nuclide-commons-atom/destroyItemWhere');
+  _destroyItemWhere = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _os = _interopRequireDefault(require('os'));
+var _os = _interopRequireDefault(require("os"));
 
-var _nullthrows;
+function _nullthrows() {
+  const data = _interopRequireDefault(require("nullthrows"));
 
-function _load_nullthrows() {
-  return _nullthrows = _interopRequireDefault(require('nullthrows'));
+  _nullthrows = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _createPackage;
+function _createPackage() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/createPackage"));
 
-function _load_createPackage() {
-  return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));
+  _createPackage = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _getElementFilePath;
+function _getElementFilePath() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/getElementFilePath"));
 
-function _load_getElementFilePath() {
-  return _getElementFilePath = _interopRequireDefault(require('../../../../nuclide-commons-atom/getElementFilePath'));
+  _getElementFilePath = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _goToLocation;
+function _goToLocation() {
+  const data = require("../../../../nuclide-commons-atom/go-to-location");
 
-function _load_goToLocation() {
-  return _goToLocation = require('../../../../nuclide-commons-atom/go-to-location');
+  _goToLocation = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _nuclideUri;
+function _nuclideUri() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/nuclideUri"));
 
-function _load_nuclideUri() {
-  return _nuclideUri = _interopRequireDefault(require('../../../../nuclide-commons/nuclideUri'));
+  _nuclideUri = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _AtomServiceContainer;
+function _AtomServiceContainer() {
+  const data = require("./AtomServiceContainer");
 
-function _load_AtomServiceContainer() {
-  return _AtomServiceContainer = require('./AtomServiceContainer');
+  _AtomServiceContainer = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _terminalView;
+function _terminalView() {
+  const data = require("./terminal-view");
 
-function _load_terminalView() {
-  return _terminalView = require('./terminal-view');
+  _terminalView = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _nuclideTerminalUri;
+function _nuclideTerminalUri() {
+  const data = require("./nuclide-terminal-uri");
 
-function _load_nuclideTerminalUri() {
-  return _nuclideTerminalUri = require('./nuclide-terminal-uri');
+  _nuclideTerminalUri = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _FocusManager;
+function _FocusManager() {
+  const data = require("./FocusManager");
 
-function _load_FocusManager() {
-  return _FocusManager = require('./FocusManager');
+  _FocusManager = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -81,43 +125,49 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
+// for homedir
 class Activation {
-
   constructor() {
-    const focusManager = new (_FocusManager || _load_FocusManager()).FocusManager();
-    this._subscriptions = new (_UniversalDisposable || _load_UniversalDisposable()).default(focusManager, atom.workspace.addOpener(uri => {
-      if (uri.startsWith((_nuclideTerminalUri || _load_nuclideTerminalUri()).URI_PREFIX)) {
-        return new (_terminalView || _load_terminalView()).TerminalView(uri);
+    const focusManager = new (_FocusManager().FocusManager)();
+    this._subscriptions = new (_UniversalDisposable().default)(focusManager, atom.workspace.addOpener(uri => {
+      if (uri.startsWith(_nuclideTerminalUri().URI_PREFIX)) {
+        return new (_terminalView().TerminalView)(uri);
       }
     }), atom.commands.add('atom-workspace', 'atom-ide-terminal:new-terminal', event => {
       const cwd = this._getPathOrCwd(event);
-      const uri = cwd != null ? (0, (_nuclideTerminalUri || _load_nuclideTerminalUri()).uriFromInfo)({ cwd }) : (0, (_nuclideTerminalUri || _load_nuclideTerminalUri()).uriFromInfo)({});
-      (0, (_goToLocation || _load_goToLocation()).goToLocation)(uri);
+
+      const uri = cwd != null ? (0, _nuclideTerminalUri().uriFromInfo)({
+        cwd
+      }) : (0, _nuclideTerminalUri().uriFromInfo)({});
+      (0, _goToLocation().goToLocation)(uri);
     }), atom.commands.add('atom-workspace', 'atom-ide-terminal:new-local-terminal', event => {
-      const uri = (0, (_nuclideTerminalUri || _load_nuclideTerminalUri()).uriFromInfo)({ cwd: _os.default.homedir() });
-      (0, (_goToLocation || _load_goToLocation()).goToLocation)(uri);
+      const uri = (0, _nuclideTerminalUri().uriFromInfo)({
+        cwd: _os.default.homedir()
+      });
+      (0, _goToLocation().goToLocation)(uri);
     }), atom.commands.add('atom-workspace', 'atom-ide-terminal:toggle-terminal-focus', () => focusManager.toggleFocus()));
   }
 
   provideTerminal() {
     return {
       open: info => {
-        const terminalView = (0, (_goToLocation || _load_goToLocation()).goToLocation)((0, (_nuclideTerminalUri || _load_nuclideTerminalUri()).uriFromInfo)(info));
+        const terminalView = (0, _goToLocation().goToLocation)((0, _nuclideTerminalUri().uriFromInfo)(info));
         return terminalView;
       },
       close: key => {
-        (0, (_destroyItemWhere || _load_destroyItemWhere()).destroyItemWhere)(item => {
+        (0, _destroyItemWhere().destroyItemWhere)(item => {
           if (item.getURI == null || item.getURI() == null) {
             return false;
           }
 
-          const uri = (0, (_nullthrows || _load_nullthrows()).default)(item.getURI());
+          const uri = (0, _nullthrows().default)(item.getURI());
+
           try {
             // Only close terminal tabs with the same unique key.
-            const otherInfo = (0, (_nuclideTerminalUri || _load_nuclideTerminalUri()).infoFromUri)(uri);
+            const otherInfo = (0, _nuclideTerminalUri().infoFromUri)(uri);
             return otherInfo.key === key;
           } catch (e) {}
+
           return false;
         });
       }
@@ -128,11 +178,30 @@ class Activation {
     this._subscriptions.dispose();
   }
 
+  consumeToolBar(getToolBar) {
+    const toolBar = getToolBar('nuclide-terminal');
+    toolBar.addButton({
+      icon: 'terminal',
+      callback: 'atom-ide-terminal:new-terminal',
+      tooltip: 'New Terminal',
+      priority: 700
+    });
+    const disposable = new (_UniversalDisposable().default)(() => {
+      toolBar.removeItems();
+    });
+
+    this._subscriptions.add(disposable);
+
+    return disposable;
+  }
+
   consumePasteProvider(provider) {
     const createPaste = provider.createPaste;
-    const disposable = new (_UniversalDisposable || _load_UniversalDisposable()).default(atom.commands.add('.terminal-pane', 'atom-ide-terminal:create-paste', async event => {
+    const disposable = new (_UniversalDisposable().default)(atom.commands.add('.terminal-pane', 'atom-ide-terminal:create-paste', async event => {
       const {
-        currentTarget: { terminal }
+        currentTarget: {
+          terminal
+        }
       } = event;
       const uri = await createPaste(terminal.getSelection(), {
         title: 'Paste from Atom IDE Terminal'
@@ -144,40 +213,51 @@ class Activation {
         command: 'atom-ide-terminal:create-paste',
         shouldDisplay: event => {
           const div = event.target.closest('.terminal-pane');
+
           if (div == null) {
             return false;
           }
-          const { terminal } = div;
+
+          const {
+            terminal
+          } = div;
+
           if (terminal == null) {
             return false;
           }
+
           return terminal.hasSelection();
         }
-      }, { type: 'separator' }]
+      }, {
+        type: 'separator'
+      }]
     }));
+
     this._subscriptions.add(disposable);
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+
+    return new (_UniversalDisposable().default)(() => {
       disposable.dispose();
+
       this._subscriptions.remove(disposable);
     });
   }
 
   initializeCwdApi(cwd) {
     this._cwd = cwd;
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+    return new (_UniversalDisposable().default)(() => {
       this._cwd = null;
     });
   }
 
   consumeRpcService(rpcService) {
-    return (0, (_AtomServiceContainer || _load_AtomServiceContainer()).setRpcService)(rpcService);
+    return (0, _AtomServiceContainer().setRpcService)(rpcService);
   }
 
   _getPathOrCwd(event) {
-    const editorPath = (0, (_getElementFilePath || _load_getElementFilePath()).default)(event.target, true);
+    const editorPath = (0, _getElementFilePath().default)(event.target, true);
 
     if (editorPath != null) {
-      return (_nuclideUri || _load_nuclideUri()).default.endsWithSeparator(editorPath) ? editorPath : (_nuclideUri || _load_nuclideUri()).default.dirname(editorPath);
+      return _nuclideUri().default.endsWithSeparator(editorPath) ? editorPath : _nuclideUri().default.dirname(editorPath);
     }
 
     if (this._cwd != null) {
@@ -186,14 +266,12 @@ class Activation {
 
     return null;
   }
-}
 
-// eslint-disable-next-line nuclide-internal/no-commonjs
+} // eslint-disable-next-line nuclide-internal/no-commonjs
 
-// for homedir
+
 module.exports = {
   // exported for package.json entry
-  deserializeTerminalView: (_terminalView || _load_terminalView()).deserializeTerminalView
+  deserializeTerminalView: _terminalView().deserializeTerminalView
 };
-
-(0, (_createPackage || _load_createPackage()).default)(module.exports, Activation);
+(0, _createPackage().default)(module.exports, Activation);

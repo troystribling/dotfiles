@@ -1,29 +1,64 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.VsRawAdapterSpawnerService = undefined;
 exports.createVsRawAdapterSpawnerService = createVsRawAdapterSpawnerService;
 exports.getProcessTree = getProcessTree;
+exports.getBuckRootFromUri = getBuckRootFromUri;
+exports.getBuckRootFromPid = getBuckRootFromPid;
+exports.realpath = realpath;
 exports.getAdapterExecutableInfo = getAdapterExecutableInfo;
+exports.VsRawAdapterSpawnerService = void 0;
 
-var _process;
+function _process() {
+  const data = require("../nuclide-commons/process");
 
-function _load_process() {
-  return _process = require('../nuclide-commons/process');
+  _process = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _VsAdapterSpawner;
+function _VsAdapterSpawner() {
+  const data = _interopRequireDefault(require("./VsAdapterSpawner"));
 
-function _load_VsAdapterSpawner() {
-  return _VsAdapterSpawner = _interopRequireDefault(require('./VsAdapterSpawner'));
+  _VsAdapterSpawner = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _debuggerRegistry;
+function _debuggerRegistry() {
+  const data = require("./debugger-registry");
 
-function _load_debuggerRegistry() {
-  return _debuggerRegistry = require('./debugger-registry');
+  _debuggerRegistry = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _nuclideUri() {
+  const data = _interopRequireDefault(require("../nuclide-commons/nuclideUri"));
+
+  _nuclideUri = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _fsPromise() {
+  const data = _interopRequireDefault(require("../nuclide-commons/fsPromise"));
+
+  _fsPromise = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -39,8 +74,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  strict-local
  * @format
  */
-
-class VsRawAdapterSpawnerService extends (_VsAdapterSpawner || _load_VsAdapterSpawner()).default {
+class VsRawAdapterSpawnerService extends _VsAdapterSpawner().default {
   spawnAdapter(adapter) {
     return super.spawnAdapter(adapter);
   }
@@ -52,17 +86,60 @@ class VsRawAdapterSpawnerService extends (_VsAdapterSpawner || _load_VsAdapterSp
   dispose() {
     return super.dispose();
   }
+
 }
 
 exports.VsRawAdapterSpawnerService = VsRawAdapterSpawnerService;
+
 async function createVsRawAdapterSpawnerService() {
   return new VsRawAdapterSpawnerService();
 }
 
 async function getProcessTree() {
-  return (0, (_process || _load_process()).psTree)();
+  return (0, _process().psTree)();
+}
+
+async function getBuckRootFromUri(uri) {
+  if (!_nuclideUri().default.isAbsolute(uri)) {
+    return null;
+  }
+
+  let path = uri;
+
+  while (true) {
+    const rootTest = _nuclideUri().default.join(path, '.buckconfig'); // eslint-disable-next-line no-await-in-loop
+
+
+    if (await _fsPromise().default.exists(rootTest)) {
+      return path;
+    }
+
+    const newPath = _nuclideUri().default.getParent(path);
+
+    if (newPath === path) {
+      break;
+    }
+
+    path = newPath;
+  }
+
+  return null;
+}
+
+async function getBuckRootFromPid(pid) {
+  const path = await (0, _process().getAbsoluteBinaryPathForPid)(pid);
+
+  if (path == null) {
+    return null;
+  }
+
+  return getBuckRootFromUri(path);
+}
+
+async function realpath(path) {
+  return _fsPromise().default.realpath(path);
 }
 
 async function getAdapterExecutableInfo(adapterType) {
-  return (0, (_debuggerRegistry || _load_debuggerRegistry()).getAdapterExecutable)(adapterType);
+  return (0, _debuggerRegistry().getAdapterExecutable)(adapterType);
 }

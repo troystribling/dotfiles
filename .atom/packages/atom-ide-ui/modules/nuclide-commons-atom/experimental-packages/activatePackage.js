@@ -1,9 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = activatePackage;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -15,24 +16,35 @@ exports.default = activatePackage;
  * 
  * @format
  */
-
-function activatePackage({ main, providedServices, consumedServices }, messageRouter) {
+function activatePackage({
+  main,
+  providedServices,
+  consumedServices
+}, messageRouter) {
   const connections = Object.create(null);
   Object.keys(providedServices).forEach(key => {
-    const { rawConnections } = providedServices[key];
-    connections[key] = rawConnections.map(({ socket, config }) => messageRouter.createConnection(socket, config));
-  });
+    const {
+      rawConnections
+    } = providedServices[key];
+    connections[key] = rawConnections.map(({
+      socket,
+      config
+    }) => messageRouter.createConnection(socket, config));
+  }); // Create clients for each consumed service.
 
-  // Create clients for each consumed service.
   const clients = Object.create(null);
   Object.keys(consumedServices).forEach(key => {
-    const { socket, client } = consumedServices[key];
-    // $FlowIgnore
-    const clientClass = require(client).default;
-    clients[key] = new clientClass(messageRouter.createConnection(socket));
-  });
+    const {
+      socket,
+      client
+    } = consumedServices[key]; // $FlowIgnore
 
-  // $FlowIgnore
+    const clientClass = require(client).default;
+
+    clients[key] = new clientClass(messageRouter.createConnection(socket));
+  }); // $FlowIgnore
+
   const packageClass = require(main).default;
+
   return new packageClass(clients, connections);
 }

@@ -5,16 +5,14 @@ import store from "./store";
 import _ from "lodash";
 import tildify from "tildify";
 
-import WSKernel from "./ws-kernel";
 import { kernelSpecProvidesGrammar } from "./utils";
 
 import type Kernel from "./kernel";
 
 function getName(kernel: Kernel) {
-  const prefix =
-    kernel.transport instanceof WSKernel
-      ? `${kernel.transport.gatewayName}: `
-      : "";
+  const prefix = kernel.transport.gatewayName
+    ? `${kernel.transport.gatewayName}: `
+    : "";
   return (
     prefix +
     kernel.displayName +
@@ -85,7 +83,8 @@ export default class ExistingKernelPicker {
           kernelSpecProvidesGrammar(kernel.kernelSpec, store.grammar)
         )
       });
-      store.markers.clear();
+      const markers = store.markers;
+      if (markers) markers.clear();
       this.attach();
     }
   }

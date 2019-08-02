@@ -2,46 +2,48 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14218-9frxpa.6e43kawcdi/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
-        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14218-9frxpa.6e43kawcdi/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14218-9frxpa.6e43kawcdi/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118522-1666-ojam0c.5c23xr"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-1181016-14218-1qarvxy.l8hfv9rudi"
     ]
   ],
-  "_from": "../d-118522-1666-13wq315.s9mx3whfr/package.tgz",
-  "_id": "atom-ide-ui@0.12.0",
+  "_from": "../d-1181016-14218-9frxpa.6e43kawcdi/package.tgz",
+  "_id": "atom-ide-ui@0.13.0",
   "_inCache": true,
   "_location": "/atom-ide-ui",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14218-9frxpa.6e43kawcdi/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
-    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14218-9frxpa.6e43kawcdi/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14218-9frxpa.6e43kawcdi/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-118522-1666-13wq315.s9mx3whfr/package.tgz",
-  "_shasum": "7ffa9e7aa31ef4b113ad4b4cdb04b0d67f664429",
+  "_resolved": "file:../d-1181016-14218-9frxpa.6e43kawcdi/package.tgz",
+  "_shasum": "d246871622a3d003ed33ca39d55499bc30a23f36",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118522-1666-13wq315.s9mx3whfr/package.tgz",
-  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118522-1666-ojam0c.5c23xr",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14218-9frxpa.6e43kawcdi/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-1181016-14218-1qarvxy.l8hfv9rudi",
   "bugs": {
     "url": "https://github.com/facebook-atom/atom-ide-ui/issues"
   },
   "dependencies": {
     "anser": "1.4.6",
     "classnames": "2.2.5",
+    "decoders": "1.6.1",
     "dedent": "0.7.0",
+    "diffparser": "1.1.0",
     "domexception": "1.0.1",
     "dompurify": "1.0.3",
     "escape-carriage": "1.2.0",
@@ -52,37 +54,41 @@
     "fs-plus": "2.9.3",
     "fuzzaldrin-plus": "0.4.1",
     "glob": "7.1.1",
+    "heap": "0.2.6",
+    "idb-keyval": "2.3.0",
     "idx": "1.2.0",
     "immutable": "4.0.0-rc.9",
     "invariant": "2.2.2",
-    "lodash": "4.17.4",
+    "lodash": "4.17.10",
     "log4js": "1.1.1",
     "lru-cache": "4.0.2",
     "marked": "0.3.9",
     "mime-types": "2.1.16",
     "mkdirp": "0.5.1",
     "mv": "2.1.1",
-    "nuclide-prebuilt-libs": "0.5.1",
+    "nuclide-prebuilt-libs": "0.5.2",
     "nullthrows": "1.0.0",
-    "react": "16.3.2",
-    "react-dom": "16.3.2",
-    "react-virtualized": "9.13.0",
+    "react": "16.4.1",
+    "react-dom": "16.4.1",
+    "react-virtualized": "9.18.5",
     "redux": "3.6.0",
     "redux-logger": "3.0.6",
     "reselect": "3.0.1",
     "rimraf": "2.6.2",
     "rxjs": "5.5.5",
+    "season": "6.0.2",
     "semver": "5.3.0",
     "shallowequal": "0.2.2",
     "shell-quote": "1.6.1",
     "strip-ansi": "3.0.1",
     "tabbable": "1.1.0",
     "temp": "0.8.3",
+    "toml": "2.3.3",
     "uuid": "3.0.1",
     "vscode-debugprotocol": "1.24.0",
     "vscode-jsonrpc": "3.3.0",
     "vscode-uri": "1.0.1",
-    "xterm": "3.1.0"
+    "xterm": "3.5.1"
   },
   "description": "A collection of Atom UIs to support language services.",
   "devDependencies": {
@@ -93,10 +99,11 @@
     "eslint-plugin-jsx-a11y": "6.0.2",
     "eslint-plugin-prefer-object-spread": "1.2.1",
     "eslint-plugin-prettier": "2.3.1",
-    "eslint-plugin-react": "7.4.0",
-    "flow-bin": "0.71.0",
+    "eslint-plugin-react": "7.9.1",
+    "eslint-plugin-unicorn": "4.0.3",
+    "flow-bin": "0.75.0",
     "nyc": "11.2.1",
-    "prettier": "1.12.1"
+    "prettier": "1.13.6"
   },
   "engines": {
     "atom": ">= 1.25.0"
@@ -120,7 +127,7 @@
     "release-transpile": "./modules/nuclide-node-transpiler/bin/release-transpile.js",
     "test": "npm run flow && npm run lint-all && ./scripts/test.js"
   },
-  "version": "0.12.0",
+  "version": "0.13.0",
   "workspaces": [
     "modules/*"
   ]

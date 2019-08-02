@@ -1,26 +1,41 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _constants;
+function _constants() {
+  const data = require("../constants");
 
-function _load_constants() {
-  return _constants = require('../constants');
+  _constants = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 // A model that will serve as the view model for all debugger panes. We must provide
 // a unique instance of a view model for each pane, which Atom can destroy when the
 // pane that contains it is destroyed. We therefore cannot give it the actual debugger
 // model directly, since there is only one and its lifetime is tied to the lifetime
 // of the debugging session.
 class DebuggerPaneViewModel {
-
   constructor(config, isLifetimeView, paneDestroyed, preferredWidth) {
     this._config = config;
     this._isLifetimeView = isLifetimeView;
@@ -42,7 +57,7 @@ class DebuggerPaneViewModel {
   }
 
   getDefaultLocation() {
-    return (_constants || _load_constants()).DEBUGGER_PANELS_DEFAULT_LOCATION;
+    return _constants().DEBUGGER_PANELS_DEFAULT_LOCATION;
   }
 
   getURI() {
@@ -50,13 +65,14 @@ class DebuggerPaneViewModel {
   }
 
   getPreferredWidth() {
-    return this._preferredWidth == null ? (_constants || _load_constants()).DEBUGGER_PANELS_DEFAULT_WIDTH_PX : this._preferredWidth;
+    return this._preferredWidth == null ? _constants().DEBUGGER_PANELS_DEFAULT_WIDTH_PX : this._preferredWidth;
   }
 
   createView() {
     if (this._config.previousLocation != null) {
       this._config.previousLocation.userHidden = false;
     }
+
     return this._config.createView();
   }
 
@@ -70,9 +86,9 @@ class DebuggerPaneViewModel {
 
   setRemovedFromLayout(removed) {
     this._removedFromLayout = removed;
-  }
+  } // Atom view needs to provide this, otherwise Atom throws an exception splitting panes for the view.
 
-  // Atom view needs to provide this, otherwise Atom throws an exception splitting panes for the view.
+
   serialize() {
     return {};
   }
@@ -80,15 +96,7 @@ class DebuggerPaneViewModel {
   copy() {
     return false;
   }
+
 }
-exports.default = DebuggerPaneViewModel; /**
-                                          * Copyright (c) 2017-present, Facebook, Inc.
-                                          * All rights reserved.
-                                          *
-                                          * This source code is licensed under the BSD-style license found in the
-                                          * LICENSE file in the root directory of this source tree. An additional grant
-                                          * of patent rights can be found in the PATENTS file in the same directory.
-                                          *
-                                          * 
-                                          * @format
-                                          */
+
+exports.default = DebuggerPaneViewModel;

@@ -1,90 +1,156 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _analytics;
+function _analytics() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons/analytics"));
 
-function _load_analytics() {
-  return _analytics = _interopRequireDefault(require('../../../../../nuclide-commons/analytics'));
+  _analytics = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _DiagnosticsTable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_DiagnosticsTable() {
-  return _DiagnosticsTable = _interopRequireDefault(require('./DiagnosticsTable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _showModal;
+function _DiagnosticsTable() {
+  const data = _interopRequireDefault(require("./DiagnosticsTable"));
 
-function _load_showModal() {
-  return _showModal = _interopRequireDefault(require('../../../../../nuclide-commons-ui/showModal'));
+  _DiagnosticsTable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Toggle;
+function _nullthrows() {
+  const data = _interopRequireDefault(require("nullthrows"));
 
-function _load_Toggle() {
-  return _Toggle = require('../../../../../nuclide-commons-ui/Toggle');
+  _nullthrows = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Toolbar;
+function _showModal() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons-ui/showModal"));
 
-function _load_Toolbar() {
-  return _Toolbar = require('../../../../../nuclide-commons-ui/Toolbar');
+  _showModal = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _ToolbarLeft;
+function _Toggle() {
+  const data = require("../../../../../nuclide-commons-ui/Toggle");
 
-function _load_ToolbarLeft() {
-  return _ToolbarLeft = require('../../../../../nuclide-commons-ui/ToolbarLeft');
+  _Toggle = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _ToolbarRight;
+function _Toolbar() {
+  const data = require("../../../../../nuclide-commons-ui/Toolbar");
 
-function _load_ToolbarRight() {
-  return _ToolbarRight = require('../../../../../nuclide-commons-ui/ToolbarRight');
+  _Toolbar = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireWildcard(require('react'));
+function _ToolbarLeft() {
+  const data = require("../../../../../nuclide-commons-ui/ToolbarLeft");
 
-var _Button;
+  _ToolbarLeft = function () {
+    return data;
+  };
 
-function _load_Button() {
-  return _Button = require('../../../../../nuclide-commons-ui/Button');
+  return data;
 }
 
-var _ButtonGroup;
+function _ToolbarRight() {
+  const data = require("../../../../../nuclide-commons-ui/ToolbarRight");
 
-function _load_ButtonGroup() {
-  return _ButtonGroup = require('../../../../../nuclide-commons-ui/ButtonGroup');
+  _ToolbarRight = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _FilterButton;
+var React = _interopRequireWildcard(require("react"));
 
-function _load_FilterButton() {
-  return _FilterButton = _interopRequireDefault(require('./FilterButton'));
+function _Button() {
+  const data = require("../../../../../nuclide-commons-ui/Button");
+
+  _Button = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _RegExpFilter;
+function _ButtonGroup() {
+  const data = require("../../../../../nuclide-commons-ui/ButtonGroup");
 
-function _load_RegExpFilter() {
-  return _RegExpFilter = _interopRequireDefault(require('../../../../../nuclide-commons-ui/RegExpFilter'));
+  _ButtonGroup = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _SettingsModal;
+function _FilterButton() {
+  const data = _interopRequireDefault(require("./FilterButton"));
 
-function _load_SettingsModal() {
-  return _SettingsModal = _interopRequireDefault(require('./SettingsModal'));
+  _FilterButton = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _RegExpFilter() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons-ui/RegExpFilter"));
+
+  _RegExpFilter = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _SettingsModal() {
+  const data = _interopRequireDefault(require("./SettingsModal"));
+
+  _SettingsModal = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Dismissable panel that displays the diagnostics from nuclide-diagnostics-store.
- */
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -97,21 +163,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @format
  */
 
-class DiagnosticsView extends _react.Component {
+/**
+ * Dismissable panel that displays the diagnostics from nuclide-diagnostics-store.
+ */
+class DiagnosticsView extends React.Component {
   constructor(...args) {
     var _temp;
 
     return _temp = super(...args), this._showSettings = () => {
-      (0, (_showModal || _load_showModal()).default)(() => _react.createElement((_SettingsModal || _load_SettingsModal()).default, { config: this.props.uiConfig }));
+      (0, _showModal().default)(() => React.createElement(_SettingsModal().default, {
+        config: this.props.uiConfig
+      }));
     }, this._handleShowTracesChange = isChecked => {
-      (_analytics || _load_analytics()).default.track('diagnostics-panel-toggle-show-traces', {
+      _analytics().default.track('diagnostics-panel-toggle-show-traces', {
         isChecked: isChecked.toString()
       });
+
       this.props.onShowTracesChange.call(null, isChecked);
     }, this._handleFilterByActiveTextEditorChange = shouldFilter => {
-      (_analytics || _load_analytics()).default.track('diagnostics-panel-toggle-current-file', {
+      _analytics().default.track('diagnostics-panel-toggle-current-file', {
         isChecked: shouldFilter.toString()
       });
+
       this.props.onFilterByActiveTextEditorChange.call(null, shouldFilter);
     }, this._openAllFilesWithErrors = () => {
       atom.commands.dispatch(atom.views.getView(atom.workspace), 'diagnostics:open-all-files-with-errors');
@@ -119,13 +192,17 @@ class DiagnosticsView extends _react.Component {
       if (this._table == null) {
         return;
       }
+
       let el = event.target;
+
       while (el != null) {
         if (el.tagName === 'INPUT' || el.tagName === 'BUTTON') {
           return;
         }
+
         el = el.parentElement;
       }
+
       this._table.focus();
     }, _temp;
   }
@@ -134,101 +211,103 @@ class DiagnosticsView extends _react.Component {
     return nextProps.isVisible;
   }
 
-  render() {
-    const { diagnostics, showDirectoryColumn, showTraces } = this.props;
+  componentDidMount() {
+    this._disposables = new (_UniversalDisposable().default)(atom.commands.add((0, _nullthrows().default)(this._diagnosticsTableWrapperEl), 'atom-ide:filter', () => this._focusFilter()));
+  }
 
+  componentWillUnmount() {
+    (0, _nullthrows().default)(this._disposables).dispose();
+  }
+
+  render() {
+    const {
+      diagnostics,
+      showDirectoryColumn,
+      showTraces
+    } = this.props;
     const groups = ['errors', 'warnings', 'info'];
+
     if (this.props.supportedMessageKinds.has('review')) {
       groups.push('review');
     }
+
     if (this.props.supportedMessageKinds.has('action')) {
       groups.push('action');
     }
 
-    const showFullDescriptionToggle = diagnostics.find(diagnostic =>
-    // flowlint-next-line sketchy-null-string:off
+    const showFullDescriptionToggle = diagnostics.find(diagnostic => // flowlint-next-line sketchy-null-string:off
     diagnostic.trace || diagnostic.text && diagnostic.text.includes('\n'));
+    return React.createElement("div", {
+      onFocus: this._handleFocus,
+      tabIndex: -1,
+      style: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        width: '100%'
+      }
+    }, React.createElement(_Toolbar().Toolbar, {
+      location: "top"
+    }, React.createElement(_ToolbarLeft().ToolbarLeft, null, React.createElement(_ButtonGroup().ButtonGroup, {
+      className: "inline-block"
+    }, groups.map(group => React.createElement(_FilterButton().default, {
+      key: group,
+      group: group,
+      selected: !this.props.hiddenGroups.has(group),
+      onClick: () => {
+        this.props.onTypeFilterChange(group);
+      }
+    }))), React.createElement(_RegExpFilter().default, {
+      ref: component => this._filterComponent = component,
+      value: this.props.textFilter,
+      onChange: this.props.onTextFilterChange
+    }), React.createElement(_Toggle().Toggle, {
+      className: "inline-block",
+      onChange: this._handleFilterByActiveTextEditorChange,
+      toggled: this.props.filterByActiveTextEditor,
+      label: "Current File Only"
+    })), React.createElement(_ToolbarRight().ToolbarRight, null, showFullDescriptionToggle ? React.createElement(_Toggle().Toggle, {
+      className: "inline-block",
+      onChange: this._handleShowTracesChange,
+      toggled: this.props.showTraces,
+      label: "Full Description"
+    }) : null, React.createElement(_Button().Button, {
+      onClick: this._openAllFilesWithErrors,
+      size: _Button().ButtonSizes.SMALL,
+      disabled: diagnostics.length === 0,
+      className: "inline-block",
+      title: "Open All"
+    }, "Open All"), React.createElement(_Button().Button, {
+      icon: "gear",
+      size: _Button().ButtonSizes.SMALL,
+      onClick: this._showSettings
+    }))), React.createElement("div", {
+      className: "atom-ide-filterable",
+      ref: el => this._diagnosticsTableWrapperEl = el,
+      style: {
+        display: 'flex',
+        flexDirection: 'column'
+      }
+    }, React.createElement(_DiagnosticsTable().default, {
+      ref: table => {
+        this._table = table;
+      },
+      showFileName: !this.props.filterByActiveTextEditor,
+      diagnostics: diagnostics,
+      showDirectoryColumn: showDirectoryColumn,
+      showTraces: showTraces,
+      selectedMessage: this.props.selectedMessage,
+      selectMessage: this.props.selectMessage,
+      gotoMessageLocation: this.props.gotoMessageLocation
+    })));
+  }
 
-    return _react.createElement(
-      'div',
-      {
-        onFocus: this._handleFocus,
-        tabIndex: -1,
-        style: {
-          display: 'flex',
-          flex: 1,
-          flexDirection: 'column',
-          width: '100%'
-        } },
-      _react.createElement(
-        (_Toolbar || _load_Toolbar()).Toolbar,
-        { location: 'top' },
-        _react.createElement(
-          (_ToolbarLeft || _load_ToolbarLeft()).ToolbarLeft,
-          null,
-          _react.createElement(
-            (_ButtonGroup || _load_ButtonGroup()).ButtonGroup,
-            { className: 'inline-block' },
-            groups.map(group => _react.createElement((_FilterButton || _load_FilterButton()).default, {
-              key: group,
-              group: group,
-              selected: !this.props.hiddenGroups.has(group),
-              onClick: () => {
-                this.props.onTypeFilterChange(group);
-              }
-            }))
-          ),
-          _react.createElement((_RegExpFilter || _load_RegExpFilter()).default, {
-            value: this.props.textFilter,
-            onChange: this.props.onTextFilterChange
-          }),
-          _react.createElement((_Toggle || _load_Toggle()).Toggle, {
-            className: 'inline-block',
-            onChange: this._handleFilterByActiveTextEditorChange,
-            toggled: this.props.filterByActiveTextEditor,
-            label: 'Current File Only'
-          })
-        ),
-        _react.createElement(
-          (_ToolbarRight || _load_ToolbarRight()).ToolbarRight,
-          null,
-          showFullDescriptionToggle ? _react.createElement((_Toggle || _load_Toggle()).Toggle, {
-            className: 'inline-block',
-            onChange: this._handleShowTracesChange,
-            toggled: this.props.showTraces,
-            label: 'Full Description'
-          }) : null,
-          _react.createElement(
-            (_Button || _load_Button()).Button,
-            {
-              onClick: this._openAllFilesWithErrors,
-              size: (_Button || _load_Button()).ButtonSizes.SMALL,
-              disabled: diagnostics.length === 0,
-              className: 'inline-block',
-              title: 'Open All' },
-            'Open All'
-          ),
-          _react.createElement((_Button || _load_Button()).Button, {
-            icon: 'gear',
-            size: (_Button || _load_Button()).ButtonSizes.SMALL,
-            onClick: this._showSettings
-          })
-        )
-      ),
-      _react.createElement((_DiagnosticsTable || _load_DiagnosticsTable()).default, {
-        ref: table => {
-          this._table = table;
-        },
-        showFileName: !this.props.filterByActiveTextEditor,
-        diagnostics: diagnostics,
-        showDirectoryColumn: showDirectoryColumn,
-        showTraces: showTraces,
-        selectedMessage: this.props.selectedMessage,
-        selectMessage: this.props.selectMessage,
-        gotoMessageLocation: this.props.gotoMessageLocation
-      })
-    );
+  _focusFilter() {
+    if (this._filterComponent != null) {
+      this._filterComponent.focus();
+    }
   }
 
 }
+
 exports.default = DiagnosticsView;

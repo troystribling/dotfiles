@@ -27,7 +27,7 @@ import WatchesPane from "./panes/watches";
 import OutputPane from "./panes/output-area";
 import KernelMonitorPane from "./panes/kernel-monitor";
 
-import { toggleInspector } from "./commands";
+import { toggleInspector, toggleOutputMode } from "./commands";
 
 import store from "./store";
 import OutputStore from "./store/output";
@@ -55,6 +55,7 @@ import {
 } from "./utils";
 
 import exportNotebook from "./export-notebook";
+import { importNotebook, ipynbOpener } from "./import-notebook";
 
 const Hydrogen = {
   config: Config.schema,
@@ -109,10 +110,13 @@ const Hydrogen = {
         "hydrogen:run-cell": () => this.runCell(),
         "hydrogen:run-cell-and-move-down": () => this.runCell(true),
         "hydrogen:toggle-watches": () => atom.workspace.toggle(WATCHES_URI),
-        "hydrogen:toggle-output-area": () =>
-          atom.workspace.toggle(OUTPUT_AREA_URI),
-        "hydrogen:toggle-kernel-monitor": () =>
-          atom.workspace.toggle(KERNEL_MONITOR_URI),
+        "hydrogen:toggle-output-area": () => toggleOutputMode(),
+        "hydrogen:toggle-kernel-monitor": async () => {
+          const lastItem = atom.workspace.getActivePaneItem();
+          const lastPane = atom.workspace.paneForItem(lastItem);
+          await atom.workspace.toggle(KERNEL_MONITOR_URI);
+          if (lastPane) lastPane.activate();
+        },
         "hydrogen:start-local-kernel": () => this.startZMQKernel(),
         "hydrogen:connect-to-remote-kernel": () => this.connectToWSKernel(),
         "hydrogen:connect-to-existing-kernel": () =>
@@ -135,22 +139,24 @@ const Hydrogen = {
           this.handleKernelCommand({ command: "interrupt-kernel" }),
         "hydrogen:restart-kernel": () =>
           this.handleKernelCommand({ command: "restart-kernel" }),
-        "hydrogen:restart-kernel-and-re-evaluate-bubbles": () =>
-          this.restartKernelAndReEvaluateBubbles(),
         "hydrogen:shutdown-kernel": () =>
           this.handleKernelCommand({ command: "shutdown-kernel" }),
-        "hydrogen:toggle-bubble": () => this.toggleBubble(),
-        "hydrogen:export-notebook": () => exportNotebook()
+        "hydrogen:clear-result": () => this.clearResult(),
+        "hydrogen:export-notebook": () => exportNotebook(),
+        "hydrogen:fold-current-cell": () => this.foldCurrentCell(),
+        "hydrogen:fold-all-but-current-cell": () => this.foldAllButCurrentCell()
       })
     );
 
     store.subscriptions.add(
       atom.commands.add("atom-workspace", {
         "hydrogen:clear-results": () => {
-          store.markers.clear();
-          if (!store.kernel) return;
-          store.kernel.outputStore.clear();
-        }
+          const { kernel, markers } = store;
+          if (markers) markers.clear();
+          if (!kernel) return;
+          kernel.outputStore.clear();
+        },
+        "hydrogen:import-notebook": importNotebook
       })
     );
 
@@ -217,6 +223,7 @@ const Hydrogen = {
         }
       })
     );
+    store.subscriptions.add(atom.workspace.addOpener(ipynbOpener));
 
     store.subscriptions.add(
       // Destroy any Panes when the package is deactivated.
@@ -255,7 +262,7 @@ const Hydrogen = {
 
   consumeStatusBar(statusBar: atom$StatusBar) {
     const statusBarElement = document.createElement("div");
-    statusBarElement.className = "inline-block";
+    statusBarElement.classList.add("inline-block", "hydrogen");
 
     statusBar.addLeftTile({
       item: statusBarElement,
@@ -305,7 +312,7 @@ const Hydrogen = {
   }) {
     log("handleKernelCommand:", arguments);
 
-    const { kernel, grammar } = store;
+    const { kernel, grammar, markers } = store;
 
     if (!grammar) {
       atom.notifications.addError("Undefined grammar");
@@ -323,7 +330,7 @@ const Hydrogen = {
     } else if (command === "restart-kernel") {
       kernel.restart();
     } else if (command === "shutdown-kernel") {
-      store.markers.clear();
+      if (markers) markers.clear();
       // Note that destroy alone does not shut down a WSKernel
       kernel.shutdown();
       kernel.destroy();
@@ -333,22 +340,25 @@ const Hydrogen = {
     ) {
       kernel.transport.promptRename();
     } else if (command === "disconnect-kernel") {
-      store.markers.clear();
+      if (markers) markers.clear();
       kernel.destroy();
     }
   },
 
-  createResultBubble(editor: atom$TextEditor, code: string, row: number) {
+  createResultBubble(
+    editor: atom$TextEditor,
+    codeBlock: { code: string, row: number, cellType: HydrogenCellType }
+  ) {
     const { grammar, filePath, kernel } = store;
 
     if (!filePath || !grammar) {
       return atom.notifications.addError(
-        "Your file must be saved in order to start a kernel"
+        "The language grammar must be set in order to start a kernel. The easiest way to do this is to save the file."
       );
     }
 
     if (kernel) {
-      this._createResultBubble(editor, kernel, code, row);
+      this._createResultBubble(editor, kernel, codeBlock);
       return;
     }
 
@@ -357,7 +367,7 @@ const Hydrogen = {
       editor,
       filePath,
       (kernel: ZMQKernel) => {
-        this._createResultBubble(editor, kernel, code, row);
+        this._createResultBubble(editor, kernel, codeBlock);
       }
     );
   },
@@ -365,8 +375,7 @@ const Hydrogen = {
   _createResultBubble(
     editor: atom$TextEditor,
     kernel: Kernel,
-    code: string,
-    row: number
+    codeBlock: { code: string, row: number, cellType: HydrogenCellType }
   ) {
     if (atom.workspace.getActivePaneItem() instanceof WatchesPane) {
       kernel.watchesStore.run();
@@ -379,72 +388,71 @@ const Hydrogen = {
         : null;
 
     if (globalOutputStore) openOrShowDock(OUTPUT_AREA_URI);
+    const { markers } = store;
+    if (!markers) return;
 
     const { outputStore } = new ResultView(
-      store.markers,
+      markers,
       kernel,
       editor,
-      row,
-      !globalOutputStore
+      codeBlock.row,
+      !globalOutputStore || codeBlock.cellType == "markdown"
     );
-
-    kernel.execute(code, result => {
-      outputStore.appendOutput(result);
-      if (globalOutputStore) globalOutputStore.appendOutput(result);
-    });
-  },
-
-  restartKernelAndReEvaluateBubbles() {
-    const { editor, kernel, markers } = store;
-
-    let breakpoints = [];
-    markers.markers.forEach((bubble: ResultView) => {
-      breakpoints.push(bubble.marker.getBufferRange().start);
-    });
-    store.markers.clear();
-
-    if (!editor || !kernel) {
-      this.runAll(breakpoints);
+    if (codeBlock.code.search(/[\S]/) != -1) {
+      switch (codeBlock.cellType) {
+        case "markdown":
+          outputStore.appendOutput({
+            output_type: "display_data",
+            data: {
+              "text/markdown": codeBlock.code
+            },
+            metadata: {}
+          });
+          outputStore.appendOutput({ data: "ok", stream: "status" });
+          break;
+        case "codecell":
+          kernel.execute(codeBlock.code, result => {
+            outputStore.appendOutput(result);
+            if (globalOutputStore) globalOutputStore.appendOutput(result);
+          });
+          break;
+      }
     } else {
-      kernel.restart(() => this.runAll(breakpoints));
+      outputStore.appendOutput({ data: "ok", stream: "status" });
     }
   },
 
-  toggleBubble() {
+  clearResult() {
     const { editor, kernel, markers } = store;
-    if (!editor) return;
+    if (!editor || !markers) return;
     const [startRow, endRow] = editor.getLastSelection().getBufferRowRange();
 
     for (let row = startRow; row <= endRow; row++) {
-      const destroyed = markers.clearOnRow(row);
-
-      if (!destroyed) {
-        const { outputStore } = new ResultView(
-          markers,
-          kernel,
-          editor,
-          row,
-          true
-        );
-        outputStore.status = "empty";
-      }
+      markers.clearOnRow(row);
     }
   },
 
   run(moveDown: boolean = false) {
     const editor = store.editor;
     if (!editor) return;
+    // https://github.com/nteract/hydrogen/issues/1452
+    atom.commands.dispatch(editor.element, "autocomplete-plus:cancel");
     const codeBlock = codeManager.findCodeBlock(editor);
     if (!codeBlock) {
       return;
     }
 
-    const [code, row] = codeBlock;
-    if (code) {
+    const { row } = codeBlock;
+    let { code } = codeBlock;
+    const cellType = codeManager.getMetadataForRow(editor, new Point(row, 0));
+    if (code || code === "") {
+      if (cellType === "markdown") {
+        code = codeManager.removeCommentsMarkdownCell(editor, code);
+      }
       if (moveDown === true) {
         codeManager.moveDown(editor, row);
       }
-      this.createResultBubble(editor, code, row);
+      this.createResultBubble(editor, { code, row, cellType });
     }
   },
 
@@ -479,19 +487,27 @@ const Hydrogen = {
     breakpoints?: Array<atom$Point>
   ) {
     let cells = codeManager.getCells(editor, breakpoints);
-    _.forEach(
-      cells,
-      ({ start, end }: { start: atom$Point, end: atom$Point }) => {
-        const code = codeManager.getTextInRange(editor, start, end);
-        const endRow = codeManager.escapeBlankRows(editor, start.row, end.row);
-        this._createResultBubble(editor, kernel, code, endRow);
+    for (const cell of cells) {
+      const { start, end } = cell;
+      let code = codeManager.getTextInRange(editor, start, end);
+      const row = codeManager.escapeBlankRows(
+        editor,
+        start.row,
+        end.row == editor.getLastBufferRow() ? end.row : end.row - 1
+      );
+      const cellType = codeManager.getMetadataForRow(editor, start);
+      if (code || code === "") {
+        if (cellType === "markdown") {
+          code = codeManager.removeCommentsMarkdownCell(editor, code);
+        }
+        this._createResultBubble(editor, kernel, { code, row, cellType });
       }
-    );
+    }
   },
 
   runAllAbove() {
-    const editor = store.editor; // to make flow happy
-    if (!editor) return;
+    const { editor, kernel, grammar, filePath } = store;
+    if (!editor || !grammar || !filePath) return;
     if (isMultilanguageGrammar(editor.getGrammar())) {
       atom.notifications.addError(
         '"Run All Above" is not supported for this file type!'
@@ -499,28 +515,82 @@ const Hydrogen = {
       return;
     }
 
-    const cursor = editor.getLastCursor();
-    const row = codeManager.escapeBlankRows(editor, 0, cursor.getBufferRow());
-    const code = codeManager.getRows(editor, 0, row);
+    if (editor && kernel) {
+      this._runAllAbove(editor, kernel);
+      return;
+    }
 
-    if (code) {
-      this.createResultBubble(editor, code, row);
+    kernelManager.startKernelFor(
+      grammar,
+      editor,
+      filePath,
+      (kernel: ZMQKernel) => {
+        this._runAllAbove(editor, kernel);
+      }
+    );
+  },
+
+  _runAllAbove(editor: atom$TextEditor, kernel: Kernel) {
+    const cursor = editor.getCursorBufferPosition();
+    cursor.column = editor.getBuffer().lineLengthForRow(cursor.row);
+    const breakpoints = codeManager.getBreakpoints(editor);
+    breakpoints.push(cursor);
+    const cells = codeManager.getCells(editor, breakpoints);
+    for (const cell of cells) {
+      const { start, end } = cell;
+      let code = codeManager.getTextInRange(editor, start, end);
+      const row = codeManager.escapeBlankRows(
+        editor,
+        start.row,
+        end.row == editor.getLastBufferRow() ? end.row : end.row - 1
+      );
+      const cellType = codeManager.getMetadataForRow(editor, start);
+      if (code || code === "") {
+        if (cellType === "markdown") {
+          code = codeManager.removeCommentsMarkdownCell(editor, code);
+        }
+        this.createResultBubble(editor, { code, row, cellType });
+      }
+      if (cell.containsPoint(cursor)) {
+        break;
+      }
     }
   },
 
   runCell(moveDown: boolean = false) {
     const editor = store.editor;
     if (!editor) return;
+    // https://github.com/nteract/hydrogen/issues/1452
+    atom.commands.dispatch(editor.element, "autocomplete-plus:cancel");
     const { start, end } = codeManager.getCurrentCell(editor);
-    const code = codeManager.getTextInRange(editor, start, end);
-    const endRow = codeManager.escapeBlankRows(editor, start.row, end.row);
-
-    if (code) {
-      if (moveDown === true) {
-        codeManager.moveDown(editor, endRow);
+    let code = codeManager.getTextInRange(editor, start, end);
+    const row = codeManager.escapeBlankRows(
+      editor,
+      start.row,
+      end.row == editor.getLastBufferRow() ? end.row : end.row - 1
+    );
+    const cellType = codeManager.getMetadataForRow(editor, start);
+    if (code || code === "") {
+      if (cellType === "markdown") {
+        code = codeManager.removeCommentsMarkdownCell(editor, code);
       }
-      this.createResultBubble(editor, code, endRow);
+      if (moveDown === true) {
+        codeManager.moveDown(editor, row);
+      }
+      this.createResultBubble(editor, { code, row, cellType });
     }
+  },
+
+  foldCurrentCell() {
+    const editor = store.editor;
+    if (!editor) return;
+    codeManager.foldCurrentCell(editor);
+  },
+
+  foldAllButCurrentCell() {
+    const editor = store.editor;
+    if (!editor) return;
+    codeManager.foldAllButCurrentCell(editor);
   },
 
   startZMQKernel() {
@@ -533,9 +603,9 @@ const Hydrogen = {
           this.kernelPicker = new KernelPicker(kernelSpecs);
 
           this.kernelPicker.onConfirmed = (kernelSpec: Kernelspec) => {
-            const { editor, grammar, filePath } = store;
-            if (!editor || !grammar || !filePath) return;
-            store.markers.clear();
+            const { editor, grammar, filePath, markers } = store;
+            if (!editor || !grammar || !filePath || !markers) return;
+            markers.clear();
 
             kernelManager.startKernel(kernelSpec, grammar, editor, filePath);
           };
@@ -549,9 +619,9 @@ const Hydrogen = {
     if (!this.wsKernelPicker) {
       this.wsKernelPicker = new WSKernelPicker((transport: WSKernel) => {
         const kernel = new Kernel(transport);
-        store.markers.clear();
-        const { editor, grammar, filePath } = store;
-        if (!editor || !grammar || !filePath) return;
+        const { editor, grammar, filePath, markers } = store;
+        if (!editor || !grammar || !filePath || !markers) return;
+        markers.clear();
 
         if (kernel.transport instanceof ZMQKernel) kernel.destroy();
 

@@ -1,14 +1,31 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _collection;
+function _collection() {
+  const data = require("./collection");
 
-function _load_collection() {
-  return _collection = require('./collection');
+  _collection = function () {
+    return data;
+  };
+
+  return data;
 }
+
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 
 /**
  * Create a memoized version of the provided function that caches only the latest result. This is
@@ -47,19 +64,7 @@ function _load_collection() {
  *       }
  *     }
  */
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
-
-exports.default = (func, keySelector_, compareKeys_) => {
+var _default = (func, keySelector_, compareKeys_) => {
   if (!!(keySelector_ == null && compareKeys_ != null)) {
     throw new Error("You can't provide a compare function without also providing a key selector.");
   }
@@ -67,7 +72,9 @@ exports.default = (func, keySelector_, compareKeys_) => {
   let prevKey = null;
   let prevResult;
   const keySelector = keySelector_ || DEFAULT_KEY_SELECTOR;
-  const compareKeys = compareKeys_ || (_collection || _load_collection()).arrayEqual;
+
+  const compareKeys = compareKeys_ || _collection().arrayEqual;
+
   return function (...args) {
     const key = keySelector(...args);
 
@@ -79,8 +86,11 @@ exports.default = (func, keySelector_, compareKeys_) => {
       prevKey = key;
       prevResult = func.apply(this, args);
     }
+
     return prevResult;
   };
 };
+
+exports.default = _default;
 
 const DEFAULT_KEY_SELECTOR = (...args) => args;

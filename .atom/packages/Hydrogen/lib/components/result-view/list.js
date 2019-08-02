@@ -2,13 +2,9 @@
 
 import React from "react";
 import { observer } from "mobx-react";
-import { toJS } from "mobx";
-import { Display } from "@nteract/display-area";
-import { transforms, displayOrder } from "./transforms";
+import Display from "./display";
 
-import type { IObservableArray } from "mobx";
-
-type Props = { outputs: IObservableArray<Object> };
+type Props = { outputs: Array<Object> };
 
 @observer
 class ScrollList extends React.Component<Props> {
@@ -42,16 +38,11 @@ class ScrollList extends React.Component<Props> {
         ref={el => {
           this.el = el;
         }}
+        hydrogen-wrapOutput={atom.config.get(`Hydrogen.wrapOutput`).toString()}
       >
-        <Display
-          // $FlowFixMe
-          outputs={toJS(this.props.outputs)}
-          displayOrder={displayOrder}
-          transforms={transforms}
-          theme="light"
-          models={{}}
-          expanded={true}
-        />
+        {this.props.outputs.map((output, index) => (
+          <Display output={output} key={index} />
+        ))}
       </div>
     );
   }

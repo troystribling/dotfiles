@@ -1,128 +1,144 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.DiagnosticsPopup = undefined;
+exports.DiagnosticsPopup = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _classnames;
+function _classnames() {
+  const data = _interopRequireDefault(require("classnames"));
 
-function _load_classnames() {
-  return _classnames = _interopRequireDefault(require('classnames'));
+  _classnames = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _analytics;
+function _analytics() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons/analytics"));
 
-function _load_analytics() {
-  return _analytics = _interopRequireDefault(require('../../../../../nuclide-commons/analytics'));
+  _analytics = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _collection;
+function _collection() {
+  const data = require("../../../../../nuclide-commons/collection");
 
-function _load_collection() {
-  return _collection = require('../../../../../nuclide-commons/collection');
+  _collection = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _DiagnosticsMessage;
+function _DiagnosticsMessage() {
+  const data = require("./DiagnosticsMessage");
 
-function _load_DiagnosticsMessage() {
-  return _DiagnosticsMessage = require('./DiagnosticsMessage');
+  _DiagnosticsMessage = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _DiagnosticsCodeActions;
+function _DiagnosticsCodeActions() {
+  const data = _interopRequireDefault(require("./DiagnosticsCodeActions"));
 
-function _load_DiagnosticsCodeActions() {
-  return _DiagnosticsCodeActions = _interopRequireDefault(require('./DiagnosticsCodeActions'));
+  _DiagnosticsCodeActions = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; } /**
-                                                                                                                                                                                                                              * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                                                                                                              * All rights reserved.
-                                                                                                                                                                                                                              *
-                                                                                                                                                                                                                              * This source code is licensed under the BSD-style license found in the
-                                                                                                                                                                                                                              * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                                                                                                              * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                                                                                                              *
-                                                                                                                                                                                                                              * 
-                                                                                                                                                                                                                              * @format
-                                                                                                                                                                                                                              */
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
 function renderMessage(fixer, goToLocation, codeActionsForMessage, message, index) {
-  const className = (0, (_classnames || _load_classnames()).default)(
-  // native-key-bindings and tabIndex=-1 are both needed to allow copying the text in the popup.
+  const className = (0, _classnames().default)( // native-key-bindings and tabIndex=-1 are both needed to allow copying the text in the popup.
   'native-key-bindings', 'diagnostics-popup-diagnostic', {
     'diagnostics-popup-error': message.type === 'Error',
     'diagnostics-popup-warning': message.type === 'Warning',
     'diagnostics-popup-info': message.type === 'Info'
   });
   const codeActions = getCodeActions(message, codeActionsForMessage);
-  return _react.createElement(
-    'div',
-    { className: className, key: index, tabIndex: -1 },
-    _react.createElement(
-      (_DiagnosticsMessage || _load_DiagnosticsMessage()).DiagnosticsMessage,
-      {
-        fixer: fixer,
-        goToLocation: goToLocation,
-        message: message },
-      codeActions && codeActions.size ? _react.createElement((_DiagnosticsCodeActions || _load_DiagnosticsCodeActions()).default, { codeActions: codeActions }) : null
-    )
-  );
+  return React.createElement("div", {
+    className: className,
+    key: index,
+    tabIndex: -1
+  }, React.createElement(_DiagnosticsMessage().DiagnosticsMessage, {
+    fixer: fixer,
+    goToLocation: goToLocation,
+    message: message
+  }, codeActions && codeActions.size ? React.createElement(_DiagnosticsCodeActions().default, {
+    codeActions: codeActions
+  }) : null));
 }
 
 function getCodeActions(message, codeActionsForMessage) {
   const codeActionMaps = [];
+
   if (message.actions != null && message.actions.length > 0) {
     codeActionMaps.push(new Map(message.actions.map(action => {
       return [action.title, {
         async getTitle() {
           return action.title;
         },
+
         async apply() {
           action.apply();
         },
+
         dispose() {}
+
       }];
     })));
   }
+
   if (codeActionsForMessage) {
     const actions = codeActionsForMessage.get(message);
+
     if (actions != null) {
       codeActionMaps.push(actions);
     }
   }
-  return codeActionMaps.length > 0 ? (0, (_collection || _load_collection()).mapUnion)(...codeActionMaps) : null;
-}
 
-// TODO move LESS styles to nuclide-ui
-class DiagnosticsPopup extends _react.Component {
+  return codeActionMaps.length > 0 ? (0, _collection().mapUnion)(...codeActionMaps) : null;
+} // TODO move LESS styles to nuclide-ui
+
+
+class DiagnosticsPopup extends React.Component {
   componentDidMount() {
-    (_analytics || _load_analytics()).default.track('diagnostics-show-popup', {
+    _analytics().default.track('diagnostics-show-popup', {
       // Note: there could be multiple providers here (but it's less common).
       providerName: this.props.messages[0].providerName
     });
   }
 
   render() {
-    const _props = this.props,
+    const _this$props = this.props,
           {
       fixer,
       goToLocation,
       codeActionsForMessage,
       messages
-    } = _props,
-          rest = _objectWithoutProperties(_props, ['fixer', 'goToLocation', 'codeActionsForMessage', 'messages']);
-    return _react.createElement(
-      'div',
-      Object.assign({ className: 'diagnostics-popup' }, rest),
-      messages.map(renderMessage.bind(null, fixer, goToLocation, codeActionsForMessage))
-    );
+    } = _this$props,
+          rest = _objectWithoutProperties(_this$props, ["fixer", "goToLocation", "codeActionsForMessage", "messages"]);
+
+    return React.createElement("div", Object.assign({
+      className: "diagnostics-popup"
+    }, rest), messages.map(renderMessage.bind(null, fixer, goToLocation, codeActionsForMessage)));
   }
+
 }
+
 exports.DiagnosticsPopup = DiagnosticsPopup;

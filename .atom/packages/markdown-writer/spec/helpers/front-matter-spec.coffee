@@ -38,6 +38,22 @@ describe "FrontMatter", ->
       expect(frontMatter.isEmpty).toBe(true)
       expect(frontMatter.content).toEqual({})
 
+    it "is empty when editor has weird front matter", ->
+      editor.setText """
+        ---
+        1. [VLC media player](https://www.videolan.org/vlc/index.html) - VideoLAN, a project and a non-profit organization
+        2. [Inkscape](https://inkscape.org/en/) - free and open-source vector graphics editor
+        3. [GIMP](https://www.gimp.org/) -  GNU Image Manipulation Program) is a free and open-source raster graphics editor'
+        ---
+
+        some random text 1
+        some random text 2
+      """
+
+      frontMatter = new FrontMatter(editor)
+      expect(frontMatter.isEmpty).toBe(true)
+      expect(frontMatter.content).toEqual({})
+
   describe "editor with jekyll front matter", ->
     [editor, frontMatter] = []
 
@@ -75,6 +91,13 @@ describe "FrontMatter", ->
     it "set field value", ->
       frontMatter.set("title", "Markdown Writer")
       expect(frontMatter.get("title")).toBe("Markdown Writer")
+
+    it "set field value if exists", ->
+      frontMatter.setIfExists("unknown", "Markdown Writer")
+      expect(frontMatter.get("unknown")).toBe(undefined)
+
+      frontMatter.setIfExists("title", "Markdown Writer (Wow)")
+      expect(frontMatter.get("title")).toBe("Markdown Writer (Wow)")
 
     it "normalize field to an array", ->
       expect(frontMatter.normalizeField("field")).toEqual([])

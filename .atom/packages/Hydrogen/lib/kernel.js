@@ -23,6 +23,7 @@ import type {
 import InputView from "./input-view";
 import KernelTransport from "./kernel-transport";
 import type { ResultsCallback } from "./kernel-transport";
+import { executionTime } from "./utils";
 
 function protectFromInvalidMessages(
   onResults: ResultsCallback
@@ -184,7 +185,8 @@ class MiddlewareAdapter implements HydrogenKernelMiddlewareThunk {
 }
 
 export default class Kernel {
-  @observable inspector = { bundle: {} };
+  @observable
+  inspector = { bundle: {} };
   outputStore = new OutputStore();
 
   watchesStore: WatchesStore;
@@ -247,6 +249,24 @@ export default class Kernel {
     this.transport.setExecutionState(state);
   }
 
+  @computed
+  get executionCount(): number {
+    return this.transport.executionCount;
+  }
+
+  setExecutionCount(count: number) {
+    this.transport.setExecutionCount(count);
+  }
+
+  @computed
+  get lastExecutionTime(): string {
+    return this.transport.lastExecutionTime;
+  }
+
+  setLastExecutionTime(timeString: string) {
+    this.transport.setLastExecutionTime(timeString);
+  }
+
   @action
   async setInspectorResult(bundle: Object, editor: ?atom$TextEditor) {
     if (isEqual(this.inspector.bundle, bundle)) {
@@ -280,6 +300,8 @@ export default class Kernel {
 
   restart(onRestarted: ?Function) {
     this.firstMiddlewareAdapter.restart(onRestarted);
+    this.setExecutionCount(0);
+    this.setLastExecutionTime("No execution");
   }
 
   execute(code: string, onResults: Function) {
@@ -289,10 +311,23 @@ export default class Kernel {
       (message: Message, channel: string) => {
         wrappedOnResults(message, channel);
 
+        const { msg_type } = message.header;
+        if (msg_type === "execute_input") {
+          this.setLastExecutionTime("Running ...");
+        }
+
+        if (msg_type === "execute_reply") {
+          const count = message.content.execution_count;
+          this.setExecutionCount(count);
+          const timeString = executionTime(message);
+          this.setLastExecutionTime(timeString);
+        }
+
+        const { execution_state } = message.content;
         if (
           channel == "iopub" &&
-          message.header.msg_type === "status" &&
-          message.content.execution_state === "idle"
+          msg_type === "status" &&
+          execution_state === "idle"
         ) {
           this._callWatchCallbacks();
         }

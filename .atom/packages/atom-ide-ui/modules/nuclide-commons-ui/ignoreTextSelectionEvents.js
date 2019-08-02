@@ -1,8 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -33,11 +35,11 @@ Object.defineProperty(exports, "__esModule", {
  * To use it, just wrap your callback in a ignoreTextSelectionEvents call
  *   onClick={ignoreTextSelectionEvents(this._onClick)}
  */
-
 const ignoreTextSelectionEvents = cb => {
   return e => {
     // Ignore text selection
     const selection = getSelection();
+
     if (selection != null && selection.type === 'Range') {
       e.preventDefault();
       return;
@@ -47,4 +49,5 @@ const ignoreTextSelectionEvents = cb => {
   };
 };
 
-exports.default = ignoreTextSelectionEvents;
+var _default = ignoreTextSelectionEvents;
+exports.default = _default;

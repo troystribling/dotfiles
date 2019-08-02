@@ -1,41 +1,50 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TableExamples = undefined;
+exports.TableExamples = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _Block;
+function _Block() {
+  const data = require("./Block");
 
-function _load_Block() {
-  return _Block = require('./Block');
+  _Block = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Table;
+function _Table() {
+  const data = require("./Table");
 
-function _load_Table() {
-  return _Table = require('./Table');
+  _Table = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-const Highlight42Component = props => _react.createElement(
-  'div',
-  { style: props.data === 42 ? { fontWeight: 'bold' } : {} },
-  props.data
-); /**
-    * Copyright (c) 2017-present, Facebook, Inc.
-    * All rights reserved.
-    *
-    * This source code is licensed under the BSD-style license found in the
-    * LICENSE file in the root directory of this source tree. An additional grant
-    * of patent rights can be found in the PATENTS file in the same directory.
-    *
-    * 
-    * @format
-    */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+const Highlight42Component = props => React.createElement("div", {
+  style: props.data === 42 ? {
+    fontWeight: 'bold'
+  } : {}
+}, props.data);
 
 const TableExample = () => {
   const columns = [{
@@ -81,14 +90,14 @@ const TableExample = () => {
       fifth: 123
     }
   }];
-  return _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement((_Table || _load_Table()).Table, { columns: columns, rows: rows, selectable: true })
-  );
+  return React.createElement(_Block().Block, null, React.createElement(_Table().Table, {
+    columns: columns,
+    rows: rows,
+    selectable: true
+  }));
 };
 
-class SortableTableExample extends _react.Component {
+class SortableTableExample extends React.Component {
   constructor(props) {
     super(props);
     const rows = [{
@@ -120,6 +129,9 @@ class SortableTableExample extends _react.Component {
   }
 
   _handleSort(sortedColumn, sortDescending) {
+    // TODO: (wbinnssmith) T30771435 this setState depends on current state
+    // and should use an updater function rather than an object
+    // eslint-disable-next-line react/no-access-state-in-setstate
     const sortedRows = this.state.rows.sort((obj1, obj2) => {
       const order = sortDescending ? -1 : 1;
       return order * (obj1.data[sortedColumn] - obj2.data[sortedColumn]);
@@ -142,24 +154,17 @@ class SortableTableExample extends _react.Component {
       title: 'third',
       key: 'third'
     }];
-    return _react.createElement(
-      (_Block || _load_Block()).Block,
-      null,
-      _react.createElement((_Table || _load_Table()).Table, {
-        emptyComponent: () => _react.createElement(
-          'div',
-          null,
-          'An optional, custom "empty message" component.'
-        ),
-        columns: columns,
-        rows: this.state.rows,
-        sortable: true,
-        onSort: this._handleSort,
-        sortedColumn: this.state.sortedColumn,
-        sortDescending: this.state.sortDescending
-      })
-    );
+    return React.createElement(_Block().Block, null, React.createElement(_Table().Table, {
+      emptyComponent: () => React.createElement("div", null, "An optional, custom \"empty message\" component."),
+      columns: columns,
+      rows: this.state.rows,
+      sortable: true,
+      onSort: this._handleSort,
+      sortedColumn: this.state.sortedColumn,
+      sortDescending: this.state.sortDescending
+    }));
   }
+
 }
 
 const EmptyTableExample = () => {
@@ -174,14 +179,13 @@ const EmptyTableExample = () => {
     key: 'third'
   }];
   const rows = [];
-  return _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement((_Table || _load_Table()).Table, { columns: columns, rows: rows })
-  );
+  return React.createElement(_Block().Block, null, React.createElement(_Table().Table, {
+    columns: columns,
+    rows: rows
+  }));
 };
 
-const TableExamples = exports.TableExamples = {
+const TableExamples = {
   sectionName: 'Table',
   description: '',
   examples: [{
@@ -195,3 +199,4 @@ const TableExamples = exports.TableExamples = {
     component: EmptyTableExample
   }]
 };
+exports.TableExamples = TableExamples;

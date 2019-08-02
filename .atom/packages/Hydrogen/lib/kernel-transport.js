@@ -10,13 +10,23 @@ export type ResultsCallback = (
 ) => void;
 
 export default class KernelTransport {
-  @observable executionState = "loading";
-  @observable inspector = { bundle: {} };
+  @observable
+  executionState = "loading";
+  @observable
+  executionCount = 0;
+  @observable
+  lastExecutionTime = "No execution";
+  @observable
+  inspector = { bundle: {} };
 
   kernelSpec: Kernelspec;
   grammar: atom$Grammar;
   language: string;
   displayName: string;
+
+  // Only `WSKernel` would have `gatewayName` property and thus not initialize it here,
+  // still `KernelTransport` is better to have `gatewayName` property for code simplicity in the other parts of code
+  gatewayName: ?string;
 
   constructor(kernelSpec: Kernelspec, grammar: atom$Grammar) {
     this.kernelSpec = kernelSpec;
@@ -29,6 +39,16 @@ export default class KernelTransport {
   @action
   setExecutionState(state: string) {
     this.executionState = state;
+  }
+
+  @action
+  setExecutionCount(count: number) {
+    this.executionCount = count;
+  }
+
+  @action
+  setLastExecutionTime(timeString: string) {
+    this.lastExecutionTime = timeString;
   }
 
   interrupt() {

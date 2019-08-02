@@ -1,28 +1,40 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = installTextEditorStyles;
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _event;
+function _event() {
+  const data = require("../../../../../nuclide-commons/event");
 
-function _load_event() {
-  return _event = require('../../../../../nuclide-commons/event');
+  _event = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
-var _semver;
+function _semver() {
+  const data = _interopRequireDefault(require("semver"));
 
-function _load_semver() {
-  return _semver = _interopRequireDefault(require('semver'));
+  _semver = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -38,20 +50,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
 const DEFAULT_FONT_STACK = "Menlo, Consolas, 'DejaVu Sans Mono', monospace";
 
 function installTextEditorStyles() {
-  if ((_semver || _load_semver()).default.gte(atom.appVersion, '1.26.0')) {
+  if (_semver().default.gte(atom.appVersion, '1.26.0')) {
     // this behavior is part of 1.26 and greater
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default();
+    return new (_UniversalDisposable().default)();
   }
 
-  let styleSheetDisposable = new (_UniversalDisposable || _load_UniversalDisposable()).default();
-
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => styleSheetDisposable.dispose(), _rxjsBundlesRxMinJs.Observable.combineLatest((0, (_event || _load_event()).observableFromSubscribeFunction)(atom.config.observe.bind(atom.config, 'editor.fontSize')), (0, (_event || _load_event()).observableFromSubscribeFunction)(atom.config.observe.bind(atom.config, 'editor.fontFamily')), (0, (_event || _load_event()).observableFromSubscribeFunction)(atom.config.observe.bind(atom.config, 'editor.lineHeight'))).subscribe(([fontSize, fontFamily, lineHeight]) => {
+  let styleSheetDisposable = new (_UniversalDisposable().default)();
+  return new (_UniversalDisposable().default)(() => styleSheetDisposable.dispose(), _RxMin.Observable.combineLatest((0, _event().observableFromSubscribeFunction)(atom.config.observe.bind(atom.config, 'editor.fontSize')), (0, _event().observableFromSubscribeFunction)(atom.config.observe.bind(atom.config, 'editor.fontFamily')), (0, _event().observableFromSubscribeFunction)(atom.config.observe.bind(atom.config, 'editor.lineHeight'))).subscribe(([fontSize, fontFamily, lineHeight]) => {
     if (!(typeof fontSize === 'number' && typeof fontFamily === 'string' && typeof lineHeight === 'number')) {
-      throw new Error('Invariant violation: "typeof fontSize === \'number\' &&\\n          typeof fontFamily === \'string\' &&\\n          typeof lineHeight === \'number\'"');
+      throw new Error("Invariant violation: \"typeof fontSize === 'number' &&\\n          typeof fontFamily === 'string' &&\\n          typeof lineHeight === 'number'\"");
     }
 
     const styleSheetSource = `
@@ -61,9 +71,8 @@ function installTextEditorStyles() {
           --editor-line-height: ${lineHeight};
         }
       `;
+    styleSheetDisposable.dispose(); // $FlowIgnore
 
-    styleSheetDisposable.dispose();
-    // $FlowIgnore
     styleSheetDisposable = atom.workspace.styleManager.addStyleSheet(styleSheetSource, {
       sourcePath: 'text-editor-styles-backport',
       priority: -1

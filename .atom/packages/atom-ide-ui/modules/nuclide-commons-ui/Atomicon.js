@@ -1,36 +1,58 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _invert2;
-
-function _load_invert() {
-  return _invert2 = _interopRequireDefault(require('lodash/invert'));
-}
-
 exports.default = Atomicon;
 exports.getTypeFromIconName = getTypeFromIconName;
 
-var _react = _interopRequireWildcard(require('react'));
+function _invert2() {
+  const data = _interopRequireDefault(require("lodash/invert"));
 
-var _string;
+  _invert2 = function () {
+    return data;
+  };
 
-function _load_string() {
-  return _string = require('../nuclide-commons/string');
+  return data;
 }
 
-var _classnames;
+var React = _interopRequireWildcard(require("react"));
 
-function _load_classnames() {
-  return _classnames = _interopRequireDefault(require('classnames'));
+function _string() {
+  const data = require("../nuclide-commons/string");
+
+  _string = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _classnames() {
+  const data = _interopRequireDefault(require("classnames"));
+
+  _classnames = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 const TYPE_TO_ICON_NAME = {
   array: 'type-array',
   boolean: 'type-boolean',
@@ -50,25 +72,16 @@ const TYPE_TO_ICON_NAME = {
   property: 'type-property',
   string: 'type-string',
   variable: 'type-variable'
-}; /**
-    * Copyright (c) 2017-present, Facebook, Inc.
-    * All rights reserved.
-    *
-    * This source code is licensed under the BSD-style license found in the
-    * LICENSE file in the root directory of this source tree. An additional grant
-    * of patent rights can be found in the PATENTS file in the same directory.
-    *
-    * 
-    * @format
-    */
+};
+const ICON_NAME_TO_TYPE = (0, _invert2().default)(TYPE_TO_ICON_NAME);
 
-const ICON_NAME_TO_TYPE = (0, (_invert2 || _load_invert()).default)(TYPE_TO_ICON_NAME);
-
-function Atomicon({ type }) {
-  const displayName = (0, (_string || _load_string()).capitalize)(type);
-  return _react.createElement('span', {
-    className: (0, (_classnames || _load_classnames()).default)('icon', 'icon-' + TYPE_TO_ICON_NAME[type]),
-    role: 'presentation',
+function Atomicon({
+  type
+}) {
+  const displayName = (0, _string().capitalize)(type);
+  return React.createElement("span", {
+    className: (0, _classnames().default)('icon', 'icon-' + TYPE_TO_ICON_NAME[type]),
+    role: "presentation",
     title: displayName
   });
 }

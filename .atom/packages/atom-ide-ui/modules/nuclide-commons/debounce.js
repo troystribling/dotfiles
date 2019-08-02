@@ -1,9 +1,21 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = debounce;
+
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 function debounce(func, wait, immediate = false) {
   // Taken from: https://github.com/jashkenas/underscore/blob/b10b2e6d72/underscore.js#L815.
   let timeout;
@@ -19,12 +31,14 @@ function debounce(func, wait, immediate = false) {
       timeout = setTimeout(later, wait - last);
     } else {
       timeout = null;
+
       if (!immediate) {
         if (!(args != null)) {
-          throw new Error('Invariant violation: "args != null"');
+          throw new Error("Invariant violation: \"args != null\"");
         }
 
         result = func.apply(context, args);
+
         if (!timeout) {
           context = args = null;
         }
@@ -37,9 +51,11 @@ function debounce(func, wait, immediate = false) {
     args = args_;
     timestamp = Date.now();
     const callNow = immediate && !timeout;
+
     if (!timeout) {
       timeout = setTimeout(later, wait);
     }
+
     if (callNow) {
       result = func.apply(context, args);
       context = args = null;
@@ -56,14 +72,4 @@ function debounce(func, wait, immediate = false) {
   };
 
   return debounced;
-} /**
-   * Copyright (c) 2017-present, Facebook, Inc.
-   * All rights reserved.
-   *
-   * This source code is licensed under the BSD-style license found in the
-   * LICENSE file in the root directory of this source tree. An additional grant
-   * of patent rights can be found in the PATENTS file in the same directory.
-   *
-   * 
-   * @format
-   */
+}

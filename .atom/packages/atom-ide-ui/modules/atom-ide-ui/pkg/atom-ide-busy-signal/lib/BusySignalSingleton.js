@@ -1,8 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -14,9 +16,7 @@ Object.defineProperty(exports, "__esModule", {
  *  strict-local
  * @format
  */
-
 class BusySignalSingleton {
-
   constructor(messageStore) {
     this._messageStore = messageStore;
   }
@@ -26,7 +26,6 @@ class BusySignalSingleton {
   reportBusy(title, options) {
     return this._messageStore.add(title, options || {});
   }
-
   /**
    * Publishes a 'busy' message with the given string. Marks it as done when the
    * promise returned by the given function is resolved or rejected.
@@ -34,13 +33,18 @@ class BusySignalSingleton {
    * Used to indicate that some work is ongoing while the given asynchronous
    * function executes.
    */
+
+
   async reportBusyWhile(title, f, options) {
     const busySignal = this.reportBusy(title, options);
+
     try {
       return await f();
     } finally {
       busySignal.dispose();
     }
   }
+
 }
+
 exports.default = BusySignalSingleton;

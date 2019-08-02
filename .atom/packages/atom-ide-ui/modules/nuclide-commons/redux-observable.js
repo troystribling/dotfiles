@@ -1,35 +1,25 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ActionsObservable = undefined;
 exports.combineEpics = combineEpics;
 exports.createEpicMiddleware = createEpicMiddleware;
+exports.ActionsObservable = void 0;
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
-// This should be { type: readonly string } when we get readonly props. Because this is used with
-// disjoint unions we can't use `string` here due to mutation concerns. Flow doesn't know that we
-// aren't going to mutate the objects with a random string value so it can't allow us to pass a
-// specific action type into something of type { type: string }
-function combineEpics(...epics) {
-  return (actions, store, extra) => {
-    const streams = epics.map(epic => epic(actions, store, extra));
-    return _rxjsBundlesRxMinJs.Observable.merge(...streams);
-  };
-} /**
-   * Copyright (c) 2017-present, Facebook, Inc.
-   * All rights reserved.
-   *
-   * This source code is licensed under the BSD-style license found in the
-   * LICENSE file in the root directory of this source tree. An additional grant
-   * of patent rights can be found in the PATENTS file in the same directory.
-   *
-   * 
-   * @format
-   */
-
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 // Derived from <https://github.com/redux-observable/redux-observable/> because their version
 // imports an Rx operator module and we use a bundle. Original license follows:
 //
@@ -54,15 +44,21 @@ function combineEpics(...epics) {
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+function combineEpics(...epics) {
+  return (actions, store, extra) => {
+    const streams = epics.map(epic => epic(actions, store, extra));
+    return _RxMin.Observable.merge(...streams);
+  };
+}
 
 function createEpicMiddleware(rootEpic) {
-  const actions = new _rxjsBundlesRxMinJs.Subject();
+  const actions = new _RxMin.Subject();
   const actionsObs = new ActionsObservable(actions);
-
   return store => next => {
     if (rootEpic != null) {
       rootEpic(actionsObs, store).subscribe(store.dispatch);
     }
+
     return action => {
       const result = next(action);
       actions.next(action);
@@ -71,8 +67,7 @@ function createEpicMiddleware(rootEpic) {
   };
 }
 
-class ActionsObservable extends _rxjsBundlesRxMinJs.Observable {
-
+class ActionsObservable extends _RxMin.Observable {
   constructor(actionsSubject) {
     super();
     this.source = actionsSubject;
@@ -85,8 +80,11 @@ class ActionsObservable extends _rxjsBundlesRxMinJs.Observable {
   }
 
   ofType(...keys) {
-    const result = this.filter(({ type }) => {
+    const result = this.filter(({
+      type
+    }) => {
       const len = keys.length;
+
       if (len === 1) {
         return type === keys[0];
       } else {
@@ -96,9 +94,12 @@ class ActionsObservable extends _rxjsBundlesRxMinJs.Observable {
           }
         }
       }
+
       return false;
     });
     return result;
   }
+
 }
+
 exports.ActionsObservable = ActionsObservable;

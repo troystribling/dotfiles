@@ -1,32 +1,48 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ConfigCache = undefined;
+exports.ConfigCache = void 0;
 
-var _lruCache;
+function _lruCache() {
+  const data = _interopRequireDefault(require("lru-cache"));
 
-function _load_lruCache() {
-  return _lruCache = _interopRequireDefault(require('lru-cache'));
+  _lruCache = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _collection;
+function _collection() {
+  const data = require("./collection");
 
-function _load_collection() {
-  return _collection = require('./collection');
+  _collection = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _fsPromise;
+function _fsPromise() {
+  const data = _interopRequireDefault(require("./fsPromise"));
 
-function _load_fsPromise() {
-  return _fsPromise = _interopRequireDefault(require('./fsPromise'));
+  _fsPromise = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _nuclideUri;
+function _nuclideUri() {
+  const data = _interopRequireDefault(require("./nuclideUri"));
 
-function _load_nuclideUri() {
-  return _nuclideUri = _interopRequireDefault(require('./nuclideUri'));
+  _nuclideUri = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42,67 +58,98 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  strict-local
  * @format
  */
-
 class ConfigCache {
-
   constructor(configPatterns, searchStrategy = 'nearest') {
     this._configPatterns = configPatterns;
     this._searchStrategy = searchStrategy;
-    this._configCache = (0, (_lruCache || _load_lruCache()).default)({
-      max: 200, // Want this to exceed the maximum expected number of open files + dirs.
+    this._configCache = (0, _lruCache().default)({
+      max: 200,
+      // Want this to exceed the maximum expected number of open files + dirs.
       maxAge: 1000 * 30 // 30 seconds
+
     });
   }
 
   getConfigDir(path) {
     let result = this._configCache.get(path);
+
     if (result == null) {
       result = this._findConfigDir(path);
+
       this._configCache.set(path, result);
     }
+
     return result;
   }
 
   async _findConfigDir(path) {
-    const configDirs = await Promise.all(this._configPatterns.map(configFile => {
-      if (this._searchStrategy === 'furthest') {
-        return (_fsPromise || _load_fsPromise()).default.findFurthestFile(configFile, path);
-      } else {
-        return (_fsPromise || _load_fsPromise()).default.findNearestFile(configFile, path);
-      }
-    }));
-
-    if (this._searchStrategy === 'nearest') {
-      // Find the result with the greatest length (the closest match).
-      return configDirs.filter(Boolean).reduce((previous, configDir) => {
-        if (previous == null || configDir.length > previous.length) {
-          return configDir;
-        }
-        return previous;
-      }, null);
-    } else if (this._searchStrategy === 'furthest') {
+    if (this._searchStrategy === 'eclipse') {
+      const configDirs = await Promise.all(this._configPatterns.map(configFile => _fsPromise().default.findFurthestFile(configFile, path)));
       return configDirs.filter(Boolean).reduce((previous, configDir) => {
         if (previous == null || configDir.length < previous.length) {
           return configDir;
         }
+
         return previous;
       }, null);
-    } else if (this._searchStrategy === 'pathMatch') {
+    } else if (this._searchStrategy === 'thrift') {
       // Find the first occurrence of a config segment in the path.
-      const pathSplit = (_nuclideUri || _load_nuclideUri()).default.split(path);
+      const pathSplit = _nuclideUri().default.split(path);
+
       return this._configPatterns.map(configPattern => {
-        const configSplit = (_nuclideUri || _load_nuclideUri()).default.split(configPattern);
-        const foundIndex = (0, (_collection || _load_collection()).findSubArrayIndex)(pathSplit, configSplit);
-        return foundIndex !== -1 ? (_nuclideUri || _load_nuclideUri()).default.join(...pathSplit.slice(0, foundIndex + configSplit.length)) : null;
+        const configSplit = _nuclideUri().default.split(configPattern);
+
+        const foundIndex = (0, _collection().findSubArrayIndex)(pathSplit, configSplit);
+        return foundIndex !== -1 ? _nuclideUri().default.join(...pathSplit.slice(0, foundIndex + configSplit.length)) : null;
       }).find(Boolean);
+    } else if (this._searchStrategy === 'ocaml') {
+      // ocaml-language-server (the LSP server) is the same single LSP server binary
+      // for all ocaml projects and for all versions of merlin.
+      //
+      // It uses initializationOptions.path.ocamlmerlin from the initialize request
+      // (or just the string "ocamlmerlin" if that was absent) to determine what
+      // command to use for spawning merlin. (merlin itself has no notion of project root).
+      //
+      // It also uses projectRoot, but solely to customize which merlin binary to launch:
+      // if it finds projectRoot/node_modules/.cache/_esy/build/bin/command-exec[.bat]
+      // then it will launch "command-exec <ocamlmerlin>"; otherwise it just launches <ocamlmerlin>
+      // using projectRoot as the current working directory.
+      //
+      // Therefore: to find project root for a given file, we'll either use the nearest
+      // containing parent such that directory parent/node_modules/.cache/_esy/build/bin exists,
+      // or "/" otherwise.
+      let dir = _nuclideUri().default.dirname(path);
+
+      while (true) {
+        const wrapper = _nuclideUri().default.join(dir, 'node_modules', '.cache', '_esy', 'build', 'bin'); // eslint-disable-next-line no-await-in-loop
+
+
+        if (await _fsPromise().default.exists(wrapper)) {
+          return dir;
+        } else if (_nuclideUri().default.isRoot(dir)) {
+          return dir;
+        } else {
+          dir = _nuclideUri().default.dirname(dir);
+        }
+      }
     } else {
-      // Find the first match.
-      return configDirs.find(Boolean);
+      this._searchStrategy; // Find the result with the greatest length (the closest match).
+
+      const configDirs = await Promise.all(this._configPatterns.map(configFile => _fsPromise().default.findNearestFile(configFile, path)));
+      return configDirs.filter(Boolean).reduce((previous, configDir) => {
+        if (previous == null || configDir.length > previous.length) {
+          return configDir;
+        }
+
+        return previous;
+      }, null);
     }
   }
 
   dispose() {
     this._configCache.reset();
   }
+
 }
+
 exports.ConfigCache = ConfigCache;

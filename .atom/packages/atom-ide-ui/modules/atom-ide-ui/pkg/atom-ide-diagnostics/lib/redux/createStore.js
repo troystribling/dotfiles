@@ -1,55 +1,83 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = createStore;
 
-var _reduxObservable;
+function _reduxObservable() {
+  const data = require("../../../../../nuclide-commons/redux-observable");
 
-function _load_reduxObservable() {
-  return _reduxObservable = require('../../../../../nuclide-commons/redux-observable');
+  _reduxObservable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _collection;
+function _collection() {
+  const data = require("../../../../../nuclide-commons/collection");
 
-function _load_collection() {
-  return _collection = require('../../../../../nuclide-commons/collection');
+  _collection = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _observable;
+function _observable() {
+  const data = require("../../../../../nuclide-commons/observable");
 
-function _load_observable() {
-  return _observable = require('../../../../../nuclide-commons/observable');
+  _observable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Reducers;
+function Reducers() {
+  const data = _interopRequireWildcard(require("./Reducers"));
 
-function _load_Reducers() {
-  return _Reducers = _interopRequireWildcard(require('./Reducers'));
+  Reducers = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Epics;
+function Epics() {
+  const data = _interopRequireWildcard(require("./Epics"));
 
-function _load_Epics() {
-  return _Epics = _interopRequireWildcard(require('./Epics'));
+  Epics = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _log4js;
+function _log4js() {
+  const data = require("log4js");
 
-function _load_log4js() {
-  return _log4js = require('log4js');
+  _log4js = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _reduxMin;
+function _reduxMin() {
+  const data = require("redux/dist/redux.min.js");
 
-function _load_reduxMin() {
-  return _reduxMin = require('redux/dist/redux.min.js');
+  _reduxMin = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -62,28 +90,32 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * 
  * @format
  */
-
 function createStore(messageRangeTracker, initialState = INITIAL_STATE) {
-  const epics = Object.keys(_Epics || _load_Epics()).map(k => (_Epics || _load_Epics())[k]).filter(epic => typeof epic === 'function');
-  const rootEpic = (actions, store) => (0, (_reduxObservable || _load_reduxObservable()).combineEpics)(...epics)(actions, store, { messageRangeTracker })
-  // Log errors and continue.
+  const epics = Object.keys(Epics()).map(k => Epics()[k]).filter(epic => typeof epic === 'function');
+
+  const rootEpic = (actions, store) => (0, _reduxObservable().combineEpics)(...epics)(actions, store, {
+    messageRangeTracker
+  }) // Log errors and continue.
   .catch((err, stream) => {
-    (0, (_log4js || _load_log4js()).getLogger)('atom-ide-diagnostics').error(err);
+    (0, _log4js().getLogger)('atom-ide-diagnostics').error(err);
     return stream;
   });
-  const store = (0, (_reduxMin || _load_reduxMin()).createStore)((0, (_reduxMin || _load_reduxMin()).combineReducers)(_Reducers || _load_Reducers()), initialState, (0, (_reduxMin || _load_reduxMin()).applyMiddleware)((0, (_reduxObservable || _load_reduxObservable()).createEpicMiddleware)(rootEpic)));
 
-  // When we get new messages with fixes, track them.
-  const messagesWithFixes = getFileMessages(store).map(messageSet => (0, (_collection || _load_collection()).setFilter)(messageSet, message => message.fix != null)).filter(messageSet => messageSet.size > 0);
-  messagesWithFixes.let((0, (_observable || _load_observable()).diffSets)()).subscribe(({ added, removed }) => {
+  const store = (0, _reduxMin().createStore)((0, _reduxMin().combineReducers)(Reducers()), initialState, (0, _reduxMin().applyMiddleware)((0, _reduxObservable().createEpicMiddleware)(rootEpic))); // When we get new messages with fixes, track them.
+
+  const messagesWithFixes = getFileMessages(store).map(messageSet => (0, _collection().setFilter)(messageSet, message => message.fix != null)).filter(messageSet => messageSet.size > 0);
+  messagesWithFixes.let((0, _observable().diffSets)()).subscribe(({
+    added,
+    removed
+  }) => {
     if (added.size > 0) {
       messageRangeTracker.addFileMessages(added);
     }
+
     if (removed.size > 0) {
       messageRangeTracker.removeFileMessages(removed);
     }
   });
-
   return store;
 }
 
@@ -96,10 +128,11 @@ const INITIAL_STATE = {
 
 function getFileMessages(store) {
   // $FlowFixMe: Flow doesn't understand Symbol.observable.
-  const states = _rxjsBundlesRxMinJs.Observable.from(store);
+  const states = _RxMin.Observable.from(store);
+
   return states.map(state => state.messages).distinctUntilChanged().map(messages => {
     const pathsToFileMessages = [...messages.values()];
-    const allMessages = (0, (_collection || _load_collection()).arrayFlatten)(pathsToFileMessages.map(map => (0, (_collection || _load_collection()).arrayFlatten)([...map.values()])));
+    const allMessages = (0, _collection().arrayFlatten)(pathsToFileMessages.map(map => (0, _collection().arrayFlatten)([...map.values()])));
     return new Set(allMessages);
   });
 }

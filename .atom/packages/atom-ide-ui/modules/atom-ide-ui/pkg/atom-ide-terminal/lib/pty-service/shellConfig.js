@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,45 +6,60 @@ Object.defineProperty(exports, "__esModule", {
 exports.readConfig = readConfig;
 exports.parseConfig = parseConfig;
 
-var _os = _interopRequireDefault(require('os'));
+var _os = _interopRequireDefault(require("os"));
 
-var _fsPromise;
+function _fsPromise() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons/fsPromise"));
 
-function _load_fsPromise() {
-  return _fsPromise = _interopRequireDefault(require('../../../../../nuclide-commons/fsPromise'));
+  _fsPromise = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _nuclideUri;
+function _nuclideUri() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons/nuclideUri"));
 
-function _load_nuclideUri() {
-  return _nuclideUri = _interopRequireDefault(require('../../../../../nuclide-commons/nuclideUri'));
+  _nuclideUri = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _string;
+function _string() {
+  const data = require("../../../../../nuclide-commons/string");
 
-function _load_string() {
-  return _string = require('../../../../../nuclide-commons/string');
+  _string = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const CONFIG_BASENAME = '.nuclide-terminal.json'; /**
-                                                   * Copyright (c) 2017-present, Facebook, Inc.
-                                                   * All rights reserved.
-                                                   *
-                                                   * This source code is licensed under the BSD-style license found in the
-                                                   * LICENSE file in the root directory of this source tree. An additional grant
-                                                   * of patent rights can be found in the PATENTS file in the same directory.
-                                                   *
-                                                   * 
-                                                   * @format
-                                                   */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+const CONFIG_BASENAME = '.nuclide-terminal.json';
 
 async function readConfig() {
   let configContents = null;
+
   try {
-    const configFile = (_nuclideUri || _load_nuclideUri()).default.expandHomeDir(`~/${CONFIG_BASENAME}`);
-    configContents = await (_fsPromise || _load_fsPromise()).default.readFile(configFile, 'utf-8');
+    const configFile = _nuclideUri().default.expandHomeDir(`~/${CONFIG_BASENAME}`);
+
+    configContents = await _fsPromise().default.readFile(configFile, 'utf-8');
   } catch (error) {
     if (error.code === 'ENOENT') {
       // If the user has no config file, that is still success, just with empty result.
@@ -67,6 +82,7 @@ function parseConfig(configContents) {
   }
 
   let rawConfig = null;
+
   try {
     rawConfig = JSON.parse(configContents);
   } catch (e) {
@@ -78,19 +94,21 @@ function parseConfig(configContents) {
   }
 
   if (!(rawConfig != null)) {
-    throw new Error('Invariant violation: "rawConfig != null"');
+    throw new Error("Invariant violation: \"rawConfig != null\"");
   }
 
   let argv = null;
   const command = rawConfig.command;
+
   if (typeof command === 'string') {
-    argv = (0, (_string || _load_string()).shellParse)(command);
+    argv = (0, _string().shellParse)(command);
   } else if (Array.isArray(command)) {
     for (const arg of command) {
       if (typeof arg !== 'string') {
         throwError(`'args' must be strings, got ${arg}`);
       }
     }
+
     argv = command;
   } else {
     throw throwError('"command" must be a string or string array');

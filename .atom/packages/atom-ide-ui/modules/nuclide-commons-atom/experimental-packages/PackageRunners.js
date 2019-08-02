@@ -1,34 +1,50 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AtomPackageRunner = exports.ProcessPackageRunner = undefined;
+exports.AtomPackageRunner = exports.ProcessPackageRunner = void 0;
 
-var _process;
+function _process() {
+  const data = require("../../nuclide-commons/process");
 
-function _load_process() {
-  return _process = require('../../nuclide-commons/process');
+  _process = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
-var _MessageRouter;
+function _MessageRouter() {
+  const data = _interopRequireDefault(require("./MessageRouter"));
 
-function _load_MessageRouter() {
-  return _MessageRouter = _interopRequireDefault(require('./MessageRouter'));
+  _MessageRouter = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _activatePackage;
+function _activatePackage() {
+  const data = _interopRequireDefault(require("./activatePackage"));
 
-function _load_activatePackage() {
-  return _activatePackage = _interopRequireDefault(require('./activatePackage'));
+  _activatePackage = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -44,30 +60,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
 class ProcessPackageRunner {
-
   constructor(packages, messageRouter) {
-    this._disposed = new _rxjsBundlesRxMinJs.ReplaySubject(1);
-
-    this._processStream = (0, (_process || _load_process()).fork)(require.resolve('./run-package-entry.js'), [], {
+    this._disposed = new _RxMin.ReplaySubject(1);
+    this._processStream = (0, _process().fork)(require.resolve("./run-package-entry.js"), [], {
       silent: true
     }).takeUntil(this._disposed).do(proc => {
       proc.on('message', msg => {
         messageRouter.send(msg);
       });
       const exposedSockets = getExposedSockets(packages, messageRouter);
-      proc.send({ packages, exposedSockets });
+      proc.send({
+        packages,
+        exposedSockets
+      });
       exposedSockets.forEach(socket => {
         // Intercept incoming messages for each exposed socket.
         messageRouter.getMessages(messageRouter.reverseSocket(socket)).takeUntil(this._disposed).subscribe(msg => proc.send(msg));
       });
-    })
-    // TODO: Error on early completion.
-    .share().publishReplay(1);
+    }) // TODO: Error on early completion.
+    .share().publishReplay(1); // Note: this won't start emitting anything activate() gets called.
 
-    // Note: this won't start emitting anything activate() gets called.
-    this._outputStream = this._processStream.switchMap(proc => (0, (_process || _load_process()).getOutputStream)(proc)).publish();
+    this._outputStream = this._processStream.switchMap(proc => (0, _process().getOutputStream)(proc)).publish();
   }
 
   activate() {
@@ -75,7 +89,7 @@ class ProcessPackageRunner {
   }
 
   onDidError(callback) {
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default(this._outputStream.refCount().subscribe({
+    return new (_UniversalDisposable().default)(this._outputStream.refCount().subscribe({
       error: err => {
         callback(err);
       }
@@ -85,21 +99,22 @@ class ProcessPackageRunner {
   dispose() {
     this._disposed.next();
   }
-}
 
-exports.ProcessPackageRunner = ProcessPackageRunner; // Atom packages have to run in the same process.
+} // Atom packages have to run in the same process.
+
+
+exports.ProcessPackageRunner = ProcessPackageRunner;
 
 class AtomPackageRunner {
-
   constructor(packages, messageRouter) {
     this._packages = packages;
     this._messageRouter = messageRouter;
-    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();
+    this._disposables = new (_UniversalDisposable().default)();
   }
 
   activate() {
     this._disposables.add(...this._packages.map(params => {
-      const pkg = (0, (_activatePackage || _load_activatePackage()).default)(params, this._messageRouter);
+      const pkg = (0, _activatePackage().default)(params, this._messageRouter);
       return () => {
         if (pkg.dispose != null) {
           pkg.dispose();
@@ -113,11 +128,13 @@ class AtomPackageRunner {
   }
 
   onDidError(callback) {
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default();
+    return new (_UniversalDisposable().default)();
   }
+
 }
 
 exports.AtomPackageRunner = AtomPackageRunner;
+
 function getExposedSockets(packages, messageRouter) {
   // Exposed sockets are those that are either:
   // 1) provided here but not consumed
@@ -125,11 +142,15 @@ function getExposedSockets(packages, messageRouter) {
   const allSockets = new Set();
   packages.forEach(pkg => {
     Object.keys(pkg.consumedServices).forEach(key => {
-      const { socket } = pkg.consumedServices[key];
+      const {
+        socket
+      } = pkg.consumedServices[key];
       allSockets.add(socket);
     });
     Object.keys(pkg.providedServices).forEach(key => {
-      pkg.providedServices[key].rawConnections.forEach(({ socket }) => {
+      pkg.providedServices[key].rawConnections.forEach(({
+        socket
+      }) => {
         allSockets.add(socket);
       });
     });

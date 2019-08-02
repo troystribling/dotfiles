@@ -34,10 +34,6 @@
     ]
     openEmptyEditorOnStart: false
     telemetryConsent: "limited"
-    themes: [
-      "atom-light-ui"
-      "atom-light-syntax"
-    ]
   editor:
     fontFamily: "SF Mono"
   "exception-reporting":
@@ -51,6 +47,8 @@
         maxLineLength: 250
       pyflakes:
         enabled: false
+      pylint: {}
+      yapf: {}
   latex:
     enableShellEscape: true
     openResultAfterBuild: false
@@ -82,6 +80,7 @@
       "mathbb"
       "varepsilon"
       "AR"
+      "Jacobian"
     ]
   "split-diff":
     diffWords: true

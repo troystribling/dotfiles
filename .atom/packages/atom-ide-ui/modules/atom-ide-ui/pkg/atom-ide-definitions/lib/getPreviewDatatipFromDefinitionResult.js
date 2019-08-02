@@ -1,29 +1,49 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _analytics;
+function _analytics() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/analytics"));
 
-function _load_analytics() {
-  return _analytics = _interopRequireDefault(require('../../../../nuclide-commons/analytics'));
+  _analytics = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _symbolDefinitionPreview;
+function _symbolDefinitionPreview() {
+  const data = require("../../../../nuclide-commons/symbol-definition-preview");
 
-function _load_symbolDefinitionPreview() {
-  return _symbolDefinitionPreview = require('../../../../nuclide-commons/symbol-definition-preview');
+  _symbolDefinitionPreview = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireDefault(require('react'));
+var _react = _interopRequireDefault(require("react"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = async function getPreviewDatatipFromDefinition(range, definitions, definitionPreviewProvider, grammar) {
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ *  strict-local
+ * @format
+ */
+var getPreviewDatatipFromDefinition = async function getPreviewDatatipFromDefinition(range, definitions, definitionPreviewProvider, grammar) {
   if (definitions.length === 1) {
-    const definition = definitions[0];
-    // Some providers (e.g. Flow) return negative positions.
+    const definition = definitions[0]; // Some providers (e.g. Flow) return negative positions.
+
     if (definition.position.row < 0) {
       return null;
     }
@@ -32,18 +52,19 @@ exports.default = async function getPreviewDatatipFromDefinition(range, definiti
 
     if (definitionPreview == null) {
       return null;
-    }
-
-    // if mimetype is image return image component with base-64 encoded
+    } // if mimetype is image return image component with base-64 encoded
     //  image contents, otherwise use markedStrings
+
+
     if (definitionPreview.mime.startsWith('image/')) {
       return {
-        component: () => _react.default.createElement('img', {
+        component: () => _react.default.createElement("img", {
           src: `data:${definitionPreview.mime};${definitionPreview.encoding},${definitionPreview.contents}`
         }),
         range
       };
     }
+
     return {
       markedStrings: [{
         type: 'snippet',
@@ -62,25 +83,18 @@ exports.default = async function getPreviewDatatipFromDefinition(range, definiti
     }],
     range
   };
-}; /**
-    * Copyright (c) 2017-present, Facebook, Inc.
-    * All rights reserved.
-    *
-    * This source code is licensed under the BSD-style license found in the
-    * LICENSE file in the root directory of this source tree. An additional grant
-    * of patent rights can be found in the PATENTS file in the same directory.
-    *
-    *  strict-local
-    * @format
-    */
+};
+
+exports.default = getPreviewDatatipFromDefinition;
 
 async function getPreview(definition, definitionPreviewProvider) {
   let getDefinitionPreviewFn;
+
   if (definitionPreviewProvider == null) {
-    getDefinitionPreviewFn = (_symbolDefinitionPreview || _load_symbolDefinitionPreview()).getDefinitionPreview;
+    getDefinitionPreviewFn = _symbolDefinitionPreview().getDefinitionPreview;
   } else {
     getDefinitionPreviewFn = definitionPreviewProvider.getDefinitionPreview.bind(definitionPreviewProvider);
   }
 
-  return (_analytics || _load_analytics()).default.trackTiming('hyperclickPreview.getDefinitionPreview', () => getDefinitionPreviewFn(definition));
+  return _analytics().default.trackTiming('hyperclickPreview.getDefinitionPreview', () => getDefinitionPreviewFn(definition));
 }

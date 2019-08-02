@@ -1,26 +1,26 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.highlightOnUpdate = highlightOnUpdate;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _shallowequal;
+function _shallowequal() {
+  const data = _interopRequireDefault(require("shallowequal"));
 
-function _load_shallowequal() {
-  return _shallowequal = _interopRequireDefault(require('shallowequal'));
+  _shallowequal = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-/**
- * Wraps DecoratedComponent in a special `span` with a configurable classname whenever the
- * component's props change.
- */
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -33,11 +33,15 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * @format
  */
 
+/**
+ * Wraps DecoratedComponent in a special `span` with a configurable classname whenever the
+ * component's props change.
+ */
 function highlightOnUpdate(ComposedComponent,
 /**
  * The result of this function determines whether to apply the highlight or not.
  */
-arePropsEqual = (_shallowequal || _load_shallowequal()).default,
+arePropsEqual = _shallowequal().default,
 /**
  * className used in the wrapper. You can style both `className` and `<className>-highlight`.
  */
@@ -48,22 +52,23 @@ className = 'nuclide-ui-highlight-on-render',
  */
 unhighlightDelay = 200) {
   // $FlowIssue The return type is guaranteed to be the same as the type of ComposedComponent.
-  return class extends _react.Component {
-
+  return class extends React.Component {
     constructor(props) {
       super(props);
       this.showFlash = false;
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    UNSAFE_componentWillUpdate(nextProps, nextState) {
       if (arePropsEqual(nextProps, this.props)) {
         // Skip if prop values didn't actually change.
         return;
       }
+
       if (this.timeout != null || this.showFlash) {
         // Skip if already scheduled.
         return;
       }
+
       this.showFlash = true;
       this.timeout = setTimeout(() => {
         this.showFlash = false;
@@ -73,12 +78,10 @@ unhighlightDelay = 200) {
     }
 
     render() {
-      return _react.createElement(
-        'span',
-        {
-          className: `${className} ${this.showFlash ? className + '-highlight' : ''}` },
-        _react.createElement(ComposedComponent, this.props)
-      );
+      return React.createElement("span", {
+        className: `${className} ${this.showFlash ? className + '-highlight' : ''}`
+      }, React.createElement(ComposedComponent, this.props));
     }
+
   };
 }

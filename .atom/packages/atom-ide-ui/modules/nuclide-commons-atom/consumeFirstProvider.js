@@ -1,9 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = consumeFirstProvider;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -20,7 +21,6 @@ exports.default = consumeFirstProvider;
  * The module formerly known as "service-hub-plus". Provides a workaround for
  * https://github.com/atom/service-hub/issues/6
  */
-
 function consumeFirstProvider(keyPath, version = '0.0.0') {
   return new Promise((resolve, reject) => {
     const subscription = atom.packages.serviceHub.consume(keyPath, version, provider => {

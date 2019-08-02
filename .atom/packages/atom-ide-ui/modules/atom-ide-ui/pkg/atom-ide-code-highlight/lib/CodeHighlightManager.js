@@ -1,45 +1,70 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _log4js;
+function _log4js() {
+  const data = require("log4js");
 
-function _load_log4js() {
-  return _log4js = require('log4js');
+  _log4js = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
-var _event;
+function _event() {
+  const data = require("../../../../nuclide-commons/event");
 
-function _load_event() {
-  return _event = require('../../../../nuclide-commons/event');
+  _event = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _observable;
+function _observable() {
+  const data = require("../../../../nuclide-commons/observable");
 
-function _load_observable() {
-  return _observable = require('../../../../nuclide-commons/observable');
+  _observable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _ProviderRegistry;
+function _ProviderRegistry() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/ProviderRegistry"));
 
-function _load_ProviderRegistry() {
-  return _ProviderRegistry = _interopRequireDefault(require('../../../../nuclide-commons-atom/ProviderRegistry'));
+  _ProviderRegistry = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _debounced;
+function _debounced() {
+  const data = require("../../../../nuclide-commons-atom/debounced");
 
-function _load_debounced() {
-  return _debounced = require('../../../../nuclide-commons-atom/debounced');
+  _debounced = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -55,45 +80,44 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
+const CURSOR_DELAY_MS = 250; // Apply a much higher debounce to text changes to avoid disrupting the typing experience.
 
-const CURSOR_DELAY_MS = 250;
-// Apply a much higher debounce to text changes to avoid disrupting the typing experience.
 const CHANGE_TOGGLE_MS = 2500;
 
 class CodeHighlightManager {
-
   constructor() {
-    this._providers = new (_ProviderRegistry || _load_ProviderRegistry()).default();
+    this._providers = new (_ProviderRegistry().default)();
     this._markers = [];
-    this._subscriptions = new (_UniversalDisposable || _load_UniversalDisposable()).default(this._highlightEditors());
+    this._subscriptions = new (_UniversalDisposable().default)(this._highlightEditors());
   }
 
   _highlightEditors() {
-    return (0, (_debounced || _load_debounced()).observeActiveEditorsDebounced)(0).do(() => this._destroyMarkers()).switchMap(editor => {
+    return (0, _debounced().observeActiveEditorsDebounced)(0).do(() => this._destroyMarkers()).switchMap(editor => {
       if (editor == null) {
-        return _rxjsBundlesRxMinJs.Observable.empty();
+        return _RxMin.Observable.empty();
       }
-      const cursorPositions = (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidChangeCursorPosition.bind(editor)).filter(
-      // If we're moving around inside highlighted ranges, that's fine.
+
+      const cursorPositions = (0, _event().observableFromSubscribeFunction)(editor.onDidChangeCursorPosition.bind(editor)).filter( // If we're moving around inside highlighted ranges, that's fine.
       event => !this._isPositionInHighlightedRanges(editor, event.newBufferPosition)).do(() => this._destroyMarkers()) // Immediately clear previous markers.
-      .let((0, (_observable || _load_observable()).fastDebounce)(CURSOR_DELAY_MS)).startWith(null) // Immediately kick off a highlight event.
-      .map(() => editor.getCursorBufferPosition());
-
-      // Changing text triggers a CHANGE_TOGGLE_MS period in which cursor changes are ignored.
+      .let((0, _observable().fastDebounce)(CURSOR_DELAY_MS)).startWith(null) // Immediately kick off a highlight event.
+      .map(() => editor.getCursorBufferPosition()); // Changing text triggers a CHANGE_TOGGLE_MS period in which cursor changes are ignored.
       // We'll model this as one stream that emits 'false' and another that debounces 'true's.
-      const changeEvents = (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidChange.bind(editor)).do(() => this._destroyMarkers()).share();
 
-      const changeToggles = _rxjsBundlesRxMinJs.Observable.merge(_rxjsBundlesRxMinJs.Observable.of(true), changeEvents.mapTo(false), changeEvents.let((0, (_observable || _load_observable()).fastDebounce)(CHANGE_TOGGLE_MS)).mapTo(true));
+      const changeEvents = (0, _event().observableFromSubscribeFunction)(editor.onDidChange.bind(editor)).do(() => this._destroyMarkers()).share();
 
-      const destroyEvents = (0, (_event || _load_event()).observableFromSubscribeFunction)(editor.onDidDestroy.bind(editor));
+      const changeToggles = _RxMin.Observable.merge(_RxMin.Observable.of(true), changeEvents.mapTo(false), changeEvents.let((0, _observable().fastDebounce)(CHANGE_TOGGLE_MS)).mapTo(true));
 
-      return cursorPositions.let((0, (_observable || _load_observable()).toggle)(changeToggles)).switchMap(async position => {
+      const destroyEvents = (0, _event().observableFromSubscribeFunction)(editor.onDidDestroy.bind(editor));
+      return cursorPositions.let((0, _observable().toggle)(changeToggles)).switchMap(async position => {
         return {
           editor,
           ranges: await this._getHighlightedRanges(editor, position)
         };
       }).takeUntil(destroyEvents);
-    }).subscribe(({ editor, ranges }) => {
+    }).subscribe(({
+      editor,
+      ranges
+    }) => {
       if (ranges != null) {
         this._highlightRanges(editor, ranges);
       }
@@ -102,6 +126,7 @@ class CodeHighlightManager {
 
   async _getHighlightedRanges(editor, position) {
     const provider = this._providers.getProviderForEditor(editor);
+
     if (!provider) {
       return null;
     }
@@ -109,14 +134,16 @@ class CodeHighlightManager {
     try {
       return await provider.highlight(editor, position);
     } catch (e) {
-      (0, (_log4js || _load_log4js()).getLogger)('code-highlight').error('Error getting code highlights', e);
+      (0, _log4js().getLogger)('code-highlight').error('Error getting code highlights', e);
       return null;
     }
   }
 
   _highlightRanges(editor, ranges) {
     this._destroyMarkers();
+
     this._markers = ranges.map(range => editor.markBufferRange(range, {}));
+
     this._markers.forEach(marker => {
       editor.decorateMarker(marker, {
         type: 'highlight',
@@ -139,7 +166,10 @@ class CodeHighlightManager {
 
   dispose() {
     this._subscriptions.dispose();
+
     this._destroyMarkers();
   }
+
 }
+
 exports.default = CodeHighlightManager;

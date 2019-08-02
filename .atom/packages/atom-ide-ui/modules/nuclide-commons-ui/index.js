@@ -1,32 +1,48 @@
-'use strict';
+"use strict";
 
-var _nuclideUri;
+function _nuclideUri() {
+  const data = _interopRequireDefault(require("../nuclide-commons/nuclideUri"));
 
-function _load_nuclideUri() {
-  return _nuclideUri = _interopRequireDefault(require('../nuclide-commons/nuclideUri'));
+  _nuclideUri = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _dedent;
+function _dedent() {
+  const data = _interopRequireDefault(require("dedent"));
 
-function _load_dedent() {
-  return _dedent = _interopRequireDefault(require('dedent'));
+  _dedent = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _fs = _interopRequireDefault(require('fs'));
+var _fs = _interopRequireDefault(require("fs"));
 
-var _nullthrows;
+function _nullthrows() {
+  const data = _interopRequireDefault(require("nullthrows"));
 
-function _load_nullthrows() {
-  return _nullthrows = _interopRequireDefault(require('nullthrows'));
+  _nullthrows = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _path = _interopRequireDefault(require('path'));
+var _path = _interopRequireDefault(require("path"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41,15 +57,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
 // Requiring this module will load all stylesheets in styles/.
 // The exported value can be disposed to remove the stylesheets.
-
-const ttfUri = (_nuclideUri || _load_nuclideUri()).default.nuclideUriToUri(_path.default.join(__dirname, 'styles', 'nuclicons.ttf'));
 // eslint-disable-next-line nuclide-internal/prefer-nuclide-uri
+const ttfUri = _nuclideUri().default.nuclideUriToUri(_path.default.join(__dirname, 'styles', 'nuclicons.ttf'));
 
 const newStyle = document.createElement('style');
-newStyle.appendChild(document.createTextNode((_dedent || _load_dedent()).default`
+newStyle.appendChild(document.createTextNode(_dedent().default`
     @font-face {
       font-family: 'nuclicons';
       src: url('${ttfUri}') format('truetype');
@@ -57,9 +71,9 @@ newStyle.appendChild(document.createTextNode((_dedent || _load_dedent()).default
       font-style: normal;
     }
   `));
-(0, (_nullthrows || _load_nullthrows()).default)(document.head).appendChild(newStyle);
+(0, _nullthrows().default)(document.head).appendChild(newStyle);
 
 const styleDir = _path.default.join(__dirname, 'styles');
-const styleDisposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(..._fs.default.readdirSync(styleDir).filter(file => ['.less', '.css'].includes(_path.default.extname(file))).map(file => atom.themes.requireStylesheet(_path.default.join(styleDir, file))), () => newStyle.remove());
 
+const styleDisposables = new (_UniversalDisposable().default)(..._fs.default.readdirSync(styleDir).filter(file => ['.less', '.css'].includes(_path.default.extname(file))).map(file => atom.themes.requireStylesheet(_path.default.join(styleDir, file))), () => newStyle.remove());
 module.exports = styleDisposables; // eslint-disable-line nuclide-internal/no-commonjs

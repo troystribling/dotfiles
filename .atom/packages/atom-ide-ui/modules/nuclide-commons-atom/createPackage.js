@@ -1,10 +1,21 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = createPackage;
 
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 
 /**
  * Create an Atom package from an Activation constructor.
@@ -26,19 +37,21 @@ exports.default = createPackage;
  * CommonJS vs ES Modules.
  */
 function createPackage(moduleExports, Activation) {
-  let activation = null;
+  let activation = null; // Proxy method calls on the package to the activation object.
 
-  // Proxy method calls on the package to the activation object.
   for (const property of getPropertyList(Activation.prototype)) {
     if (typeof Activation.prototype[property] !== 'function') {
       continue;
     }
+
     if (property === 'constructor') {
       continue;
     }
+
     if (property === 'initialize') {
       throw new Error('Your activation class contains an "initialize" method, but that work should be done in the' + ' constructor.');
     }
+
     if (property === 'deactivate') {
       throw new Error('Your activation class contains an "deactivate" method. Please use "dispose" instead.');
     }
@@ -51,10 +64,11 @@ function createPackage(moduleExports, Activation) {
       return activation[property](...args);
     };
   }
-
   /**
    * Calling `initialize()` creates a new instance.
    */
+
+
   moduleExports.initialize = initialState => {
     if (!(activation == null)) {
       throw new Error('Package already initialized');
@@ -62,10 +76,11 @@ function createPackage(moduleExports, Activation) {
 
     activation = new Activation(initialState);
   };
-
   /**
    * The `deactivate()` method is special-cased to null our activation instance reference.
    */
+
+
   moduleExports.deactivate = () => {
     if (!(activation != null)) {
       throw new Error('Package not initialized');
@@ -74,43 +89,40 @@ function createPackage(moduleExports, Activation) {
     if (typeof activation.dispose === 'function') {
       activation.dispose();
     }
+
     activation = null;
   };
-} /**
-   * Copyright (c) 2017-present, Facebook, Inc.
-   * All rights reserved.
-   *
-   * This source code is licensed under the BSD-style license found in the
-   * LICENSE file in the root directory of this source tree. An additional grant
-   * of patent rights can be found in the PATENTS file in the same directory.
-   *
-   * 
-   * @format
-   */
+}
 
 function getPrototypeChain(prototype) {
   let currentPrototype = prototype;
   const prototypes = [];
+
   while (currentPrototype != null) {
     prototypes.push(currentPrototype);
     currentPrototype = Object.getPrototypeOf(currentPrototype);
   }
+
   return prototypes;
 }
-
 /**
  * List the properties (including inherited ones) of the provided prototype, excluding the ones
  * inherited from `Object`.
  */
+
+
 function getPropertyList(prototype) {
   const properties = [];
+
   for (const proto of getPrototypeChain(prototype)) {
     if (proto === Object.prototype) {
       break;
     }
+
     for (const property of Object.getOwnPropertyNames(proto)) {
       properties.push(property);
     }
   }
+
   return properties;
 }

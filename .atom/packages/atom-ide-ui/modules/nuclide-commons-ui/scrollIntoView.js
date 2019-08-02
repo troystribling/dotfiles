@@ -1,10 +1,11 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.scrollIntoView = scrollIntoView;
 exports.scrollIntoViewIfNeeded = scrollIntoViewIfNeeded;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -47,27 +48,30 @@ exports.scrollIntoViewIfNeeded = scrollIntoViewIfNeeded;
  * [1]: https://drafts.csswg.org/cssom-view/#element-scrolling-members
  * [2]: https://drafts.csswg.org/cssom-view/#scrolling-box
  */
-
 function scrollIntoView(el, alignToTop) {
   const scrollTops = getScrollTops(el);
   el.scrollIntoView(alignToTop); // eslint-disable-line nuclide-internal/dom-apis
+
   restoreOverflowHiddenScrollTops(scrollTops);
 }
 
 function scrollIntoViewIfNeeded(el, center) {
-  const scrollTops = getScrollTops(el);
-  // $FlowIgnore: This should be added to the element type.
+  const scrollTops = getScrollTops(el); // $FlowIgnore: This should be added to the element type.
+
   el.scrollIntoViewIfNeeded(center); // eslint-disable-line nuclide-internal/dom-apis
+
   restoreOverflowHiddenScrollTops(scrollTops);
 }
 
 function getScrollTops(el_) {
   let el = el_;
   const scrollTops = new Map();
+
   while (el != null) {
     scrollTops.set(el, el.scrollTop);
     el = el.parentElement;
   }
+
   return scrollTops;
 }
 

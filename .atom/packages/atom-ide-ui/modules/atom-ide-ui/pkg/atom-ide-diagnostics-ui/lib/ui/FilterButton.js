@@ -1,25 +1,33 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = FilterButton;
 
-var _Button;
+function _Button() {
+  const data = require("../../../../../nuclide-commons-ui/Button");
 
-function _load_Button() {
-  return _Button = require('../../../../../nuclide-commons-ui/Button');
+  _Button = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _GroupUtils;
+function GroupUtils() {
+  const data = _interopRequireWildcard(require("../GroupUtils"));
 
-function _load_GroupUtils() {
-  return _GroupUtils = _interopRequireWildcard(require('../GroupUtils'));
+  GroupUtils = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -32,16 +40,20 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * 
  * @format
  */
-
 function FilterButton(props) {
-  const { selected, group } = props;
-  const displayName = (_GroupUtils || _load_GroupUtils()).getDisplayName(group);
+  const {
+    selected,
+    group
+  } = props;
+  const displayName = GroupUtils().getDisplayName(group);
   const title = props.selected ? `Hide ${displayName}` : `Show ${displayName}`;
-  return _react.createElement((_Button || _load_Button()).Button, {
-    icon: (_GroupUtils || _load_GroupUtils()).getIcon(group),
-    size: (_Button || _load_Button()).ButtonSizes.SMALL,
+  return React.createElement(_Button().Button, {
+    icon: GroupUtils().getIcon(group),
+    size: _Button().ButtonSizes.SMALL,
     selected: selected,
     onClick: props.onClick,
-    tooltip: { title }
+    tooltip: {
+      title
+    }
   });
 }

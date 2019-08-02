@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-65019-bwifav.m918ht1emi/package.tgz",
+        "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14439-8suwhn.rc1tm4pldi/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-65019-bwifav.m918ht1emi/package.tgz",
-        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-65019-bwifav.m918ht1emi/package.tgz",
+        "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14439-8suwhn.rc1tm4pldi/package.tgz",
+        "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14439-8suwhn.rc1tm4pldi/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118330-65019-1lqvyci.fojq0k9"
+      "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-1181016-14439-5d4nrg.a4suu9pb9"
     ]
   ],
-  "_from": "../d-118330-65019-bwifav.m918ht1emi/package.tgz",
-  "_id": "tree-view-git-status@1.5.0",
+  "_from": "../d-1181016-14439-8suwhn.rc1tm4pldi/package.tgz",
+  "_id": "tree-view-git-status@1.5.2",
   "_inCache": true,
   "_location": "/tree-view-git-status",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-65019-bwifav.m918ht1emi/package.tgz",
+    "raw": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14439-8suwhn.rc1tm4pldi/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-65019-bwifav.m918ht1emi/package.tgz",
-    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-65019-bwifav.m918ht1emi/package.tgz",
+    "rawSpec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14439-8suwhn.rc1tm4pldi/package.tgz",
+    "spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14439-8suwhn.rc1tm4pldi/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-118330-65019-bwifav.m918ht1emi/package.tgz",
-  "_shasum": "2fe750cc81bb7e9563ec58cb790642bf265bc18e",
+  "_resolved": "file:../d-1181016-14439-8suwhn.rc1tm4pldi/package.tgz",
+  "_shasum": "a01a5c3b4e8ed9b02e8eff7ebae0aac9f2d6ec6c",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-118330-65019-bwifav.m918ht1emi/package.tgz",
-  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-118330-65019-1lqvyci.fojq0k9",
+  "_spec": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/d-1181016-14439-8suwhn.rc1tm4pldi/package.tgz",
+  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-1181016-14439-5d4nrg.a4suu9pb9",
   "bugs": {
     "url": "https://github.com/subesokun/atom-tree-view-git-status/issues"
   },
@@ -65,5 +65,5 @@
     "type": "git",
     "url": "git+https://github.com/subesokun/atom-tree-view-git-status.git"
   },
-  "version": "1.5.0"
+  "version": "1.5.2"
 }

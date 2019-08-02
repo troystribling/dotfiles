@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -7,23 +7,47 @@ exports.applyTextEditsForMultipleFiles = applyTextEditsForMultipleFiles;
 exports.applyTextEdits = applyTextEdits;
 exports.applyTextEditsToBuffer = applyTextEditsToBuffer;
 
-var _log4js;
+function _log4js() {
+  const data = require("log4js");
 
-function _load_log4js() {
-  return _log4js = require('log4js');
+  _log4js = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _textEditor;
+function _textEditor() {
+  const data = require("./text-editor");
 
-function _load_textEditor() {
-  return _textEditor = require('./text-editor');
+  _textEditor = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _goToLocation;
+function _goToLocation() {
+  const data = require("./go-to-location");
 
-function _load_goToLocation() {
-  return _goToLocation = require('./go-to-location');
+  _goToLocation = function () {
+    return data;
+  };
+
+  return data;
 }
+
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ *  strict-local
+ * @format
+ */
 
 /**
  * Attempts to apply the given patches for multiple files. Accepts a Map as input
@@ -43,15 +67,14 @@ function _load_goToLocation() {
  * the changes fail, for ANY file, then none of the changes are applied.
  */
 async function applyTextEditsForMultipleFiles(changes) {
-  const paths = Array.from(changes.keys());
-
-  // NOTE: There is a race here. If the file contents change while the
+  const paths = Array.from(changes.keys()); // NOTE: There is a race here. If the file contents change while the
   // editors are being opened, then the ranges of the TextEdits will be off.
   // However, currently this is only used to applyEdits to open files.
-  const editors = await Promise.all(paths.map(async path => (0, (_goToLocation || _load_goToLocation()).goToLocation)(path)));
+
+  const editors = await Promise.all(paths.map(async path => (0, _goToLocation().goToLocation)(path)));
   const checkpoints = editors.map(editor => {
     if (!(editor != null)) {
-      throw new Error('Invariant violation: "editor != null"');
+      throw new Error("Invariant violation: \"editor != null\"");
     }
 
     const buffer = editor.getBuffer();
@@ -61,15 +84,16 @@ async function applyTextEditsForMultipleFiles(changes) {
     const edits = changes.get(path);
     return successSoFar && edits != null && applyTextEdits(path, ...edits);
   }, true);
+
   if (!allOkay) {
     checkpoints.forEach(([buffer, checkPoint]) => {
       buffer.revertToCheckpoint(checkPoint);
       return false;
     });
   }
+
   return allOkay;
 }
-
 /**
  * Attempts to apply the given patches to the given file.
  *
@@ -82,24 +106,14 @@ async function applyTextEditsForMultipleFiles(changes) {
  * Returns true if the application was successful, otherwise false (e.g. if the oldText did not
  * match).
  */
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- *  strict-local
- * @format
- */
+
 
 function applyTextEdits(path, ...edits) {
   const sortedEdits = sortEdits(edits);
-  const editor = (0, (_textEditor || _load_textEditor()).existingEditorForUri)(path);
+  const editor = (0, _textEditor().existingEditorForUri)(path);
 
   if (!(editor != null)) {
-    throw new Error('Invariant violation: "editor != null"');
+    throw new Error("Invariant violation: \"editor != null\"");
   }
 
   return applySortedTextEditsToBuffer(editor.getBuffer(), sortedEdits);
@@ -113,25 +127,27 @@ function applySortedTextEditsToBuffer(buffer, edits) {
   // For every edit, the start of its range will be after the end of the
   // previous edit's range.
   if (editsOverlap(edits)) {
-    (0, (_log4js || _load_log4js()).getLogger)('text-edit').warn('applyTextEdits was called with overlapping edits.');
+    (0, _log4js().getLogger)('text-edit').warn('applyTextEdits was called with overlapping edits.');
     return false;
-  }
-  // Special-case whole-buffer changes to minimize disruption.
+  } // Special-case whole-buffer changes to minimize disruption.
+
+
   if (edits.length === 1 && edits[0].oldRange.isEqual(buffer.getRange())) {
     if (edits[0].oldText != null && edits[0].oldText !== buffer.getText()) {
       return false;
     }
+
     buffer.setTextViaDiff(edits[0].newText);
     return true;
   }
 
-  const checkpoint = buffer.createCheckpoint();
-
-  // Iterate through in reverse order. Edits earlier in the file can move around text later in the
+  const checkpoint = buffer.createCheckpoint(); // Iterate through in reverse order. Edits earlier in the file can move around text later in the
   // file, so to avoid conflicts edits should be applied last first.
+
   for (let i = edits.length - 1; i >= 0; i--) {
     const edit = edits[i];
     const success = applyToBuffer(buffer, edit);
+
     if (!success) {
       buffer.revertToCheckpoint(checkpoint);
       return false;
@@ -148,31 +164,36 @@ function applyToBuffer(buffer, edit) {
     // when the old range is empty so there is no old text for us to compare against. We can at
     // least abort if the line isn't long enough.
     const lineLength = buffer.lineLengthForRow(edit.oldRange.start.row);
+
     if (edit.oldRange.end.column > lineLength) {
       return false;
     }
   }
+
   if (edit.oldText != null) {
     const currentText = buffer.getTextInRange(edit.oldRange);
+
     if (currentText !== edit.oldText) {
       return false;
     }
   }
+
   buffer.setTextInRange(edit.oldRange, edit.newText);
   return true;
-}
+} // Returns whether an array of sorted TextEdits contain an overlapping range.
 
-// Returns whether an array of sorted TextEdits contain an overlapping range.
+
 function editsOverlap(sortedEdits) {
   for (let i = 0; i < sortedEdits.length - 1; i++) {
     if (sortedEdits[i].oldRange.end.isGreaterThan(sortedEdits[i + 1].oldRange.start)) {
       return true;
     }
   }
+
   return false;
 }
 
 function sortEdits(edits) {
   // stable sort (preserve order of edits starting in the same location)
-  return edits.map((edit, i) => [edit, i]).sort(([e1, i1], [e2, i2]) => e1.oldRange.compare(e2.oldRange) || i1 - i2).map(([edit]) => edit);
+  return edits.map((edit, i) => [edit, i]).sort(([e1, i1], [e2, i2]) => e1.oldRange.start.compare(e2.oldRange.start) || e1.oldRange.end.compare(e2.oldRange.end) || i1 - i2).map(([edit]) => edit);
 }

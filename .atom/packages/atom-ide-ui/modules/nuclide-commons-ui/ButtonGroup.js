@@ -1,19 +1,23 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ButtonGroup = exports.ButtonGroupSizes = undefined;
+exports.ButtonGroup = exports.ButtonGroupSizes = void 0;
 
-var _classnames;
+function _classnames() {
+  const data = _interopRequireDefault(require("classnames"));
 
-function _load_classnames() {
-  return _classnames = _interopRequireDefault(require('classnames'));
+  _classnames = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28,34 +32,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  strict
  * @format
  */
-
-const ButtonGroupSizes = exports.ButtonGroupSizes = Object.freeze({
+const ButtonGroupSizes = Object.freeze({
   EXTRA_SMALL: 'EXTRA_SMALL',
   SMALL: 'SMALL',
   LARGE: 'LARGE'
 });
-
+exports.ButtonGroupSizes = ButtonGroupSizes;
 const ButtonGroupSizeClassnames = Object.freeze({
   EXTRA_SMALL: 'btn-group-xs',
   SMALL: 'btn-group-sm',
   LARGE: 'btn-group-lg'
 });
-
 /**
  * Visually groups Buttons passed in as children.
  */
-const ButtonGroup = exports.ButtonGroup = props => {
-  const { size, children, className } = props;
+
+const ButtonGroup = props => {
+  const {
+    size,
+    children,
+    className
+  } = props;
   const sizeClassName = size == null ? '' : ButtonGroupSizeClassnames[size] || '';
-  const newClassName = (0, (_classnames || _load_classnames()).default)(className, 'btn-group', 'nuclide-btn-group', {
+  const newClassName = (0, _classnames().default)(className, 'btn-group', 'nuclide-btn-group', {
     [sizeClassName]: size != null
   });
-  return (
-    // $FlowFixMe(>=0.53.0) Flow suppress
-    _react.createElement(
-      'div',
-      { className: newClassName },
-      children
-    )
+  return (// $FlowFixMe(>=0.53.0) Flow suppress
+    React.createElement("div", {
+      className: newClassName
+    }, children)
   );
 };
+
+exports.ButtonGroup = ButtonGroup;

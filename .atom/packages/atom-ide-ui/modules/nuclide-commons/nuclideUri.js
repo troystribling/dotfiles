@@ -1,24 +1,32 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.__TEST__ = undefined;
+exports.__TEST__ = exports.default = void 0;
 
-var _vscodeUri;
+function _vscodeUri() {
+  const data = _interopRequireDefault(require("vscode-uri"));
 
-function _load_vscodeUri() {
-  return _vscodeUri = _interopRequireDefault(require('vscode-uri'));
+  _vscodeUri = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _path = _interopRequireDefault(require('path'));
+var _path = _interopRequireDefault(require("path"));
 
-var _os = _interopRequireDefault(require('os'));
+var _os = _interopRequireDefault(require("os"));
 
-var _string;
+function _string() {
+  const data = require("./string");
 
-function _load_string() {
-  return _string = require('./string');
+  _string = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -31,30 +39,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *  strict-local
  * @format
  */
-
 // NuclideUri's are either a local file path, or a URI
 // of the form nuclide://<host><path>
 //
 // This package creates, queries and decomposes NuclideUris.
-
-const ARCHIVE_SEPARATOR = '!';
 // eslint-disable-next-line nuclide-internal/prefer-nuclide-uri
-
+const ARCHIVE_SEPARATOR = '!';
 const KNOWN_ARCHIVE_EXTENSIONS = ['.jar', '.zip'];
-
-const REMOTE_PATH_URI_PREFIX = 'nuclide://';
-// TODO(ljw): following regex is incorrect. A URI scheme must start with
+const REMOTE_PATH_URI_PREFIX = 'nuclide://'; // TODO(ljw): following regex is incorrect. A URI scheme must start with
 // [A-Za-z] not [0-9_-]. Also, not all schemes require // after them.
+
 const URI_PREFIX_REGEX = /^[A-Za-z0-9_-]+:\/\/.*/;
 
 function isRemote(uri) {
   return uri.startsWith(REMOTE_PATH_URI_PREFIX);
-}
+} // Atom often puts its URIs in places where we'd expect to see Nuclide URIs (or plain paths)
 
-// Atom often puts its URIs in places where we'd expect to see Nuclide URIs (or plain paths)
+
 function isAtomUri(uri) {
   return uri.startsWith('atom://');
 }
@@ -79,11 +83,13 @@ function isInArchive(uri) {
   if (isAtomUri(uri) || uri.indexOf(ARCHIVE_SEPARATOR) < 0) {
     return false;
   }
+
   for (let i = uri.indexOf(ARCHIVE_SEPARATOR); i >= 0; i = uri.indexOf(ARCHIVE_SEPARATOR, i + 1)) {
     if (_isArchiveSeparator(uri, i)) {
       return true;
     }
   }
+
   return false;
 }
 
@@ -93,9 +99,9 @@ function ancestorOutsideArchive(uri) {
       return uri.substring(0, i);
     }
   }
+
   return uri;
 }
-
 /**
  * Parses valid Nuclide URIs into the hostname and path components.
  * Throws an Error on invalid URIs. Invalid URIs are:
@@ -105,6 +111,8 @@ function ancestorOutsideArchive(uri) {
  * Everything that does not contain a '://' is assumed to be a local path. Both POSIX and Windows
  * paths are legal
  */
+
+
 function parse(uri) {
   if (uri.startsWith(REMOTE_PATH_URI_PREFIX)) {
     const hostAndPath = uri.substr(REMOTE_PATH_URI_PREFIX.length);
@@ -126,29 +134,33 @@ function parse(uri) {
       throw new Error(`Path cannot end with archive separator. Failed to parse ${uri}`);
     }
 
-    return { hostname, path };
+    return {
+      hostname,
+      path
+    };
   }
 
   if (!!_endsWithArchiveSeparator(uri)) {
     throw new Error(`Path cannot end with archive separator. Failed to parse ${uri}`);
   }
 
-  return { hostname: null, path: uri };
+  return {
+    hostname: null,
+    path: uri
+  };
 }
 
 function parseRemoteUri(remoteUri) {
   if (!isRemote(remoteUri)) {
     throw new Error('Expected remote uri. Got ' + remoteUri);
   }
+
   const parsedUri = parse(remoteUri);
 
-  if (!
-  // flowlint-next-line sketchy-null-string:off
+  if (! // flowlint-next-line sketchy-null-string:off
   parsedUri.hostname) {
-    throw new Error(`Remote Nuclide URIs must contain hostnames, '${(0, (_string || _load_string()).maybeToString)(parsedUri.hostname)}' found while parsing '${remoteUri}'`);
-  }
-
-  // Explicitly copying object properties appeases Flow's "maybe" type handling. Using the `...`
+    throw new Error(`Remote Nuclide URIs must contain hostnames, '${(0, _string().maybeToString)(parsedUri.hostname)}' found while parsing '${remoteUri}'`);
+  } // Explicitly copying object properties appeases Flow's "maybe" type handling. Using the `...`
   // operator causes null/undefined errors, and `Object.assign` bypasses type checking.
 
 
@@ -175,34 +187,56 @@ function getHostnameOpt(remoteUri) {
 }
 
 function join(uri, ...relativePath) {
+  return joinArray(uri, relativePath);
+}
+
+function joinArray(uri, relativePath) {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
+
   if (isRemote(uri)) {
-    const { hostname, path } = parseRemoteUri(uri);
+    const {
+      hostname,
+      path
+    } = parseRemoteUri(uri);
     relativePath.splice(0, 0, path);
+
     _archiveEncodeArrayInPlace(uriPathModule, relativePath);
+
     return _archiveDecode(uriPathModule, createRemoteUri(hostname, uriPathModule.join.apply(null, relativePath)));
   } else {
     relativePath.splice(0, 0, uri);
+
     _archiveEncodeArrayInPlace(uriPathModule, relativePath);
+
     return _archiveDecode(uriPathModule, uriPathModule.join.apply(null, relativePath));
   }
 }
 
 function archiveJoin(uri, path) {
   _testForIllegalUri(uri);
+
   if (!KNOWN_ARCHIVE_EXTENSIONS.some(ext => uri.endsWith(ext))) {
     throw new Error(`Cannot archiveJoin with non-archive ${uri} and ${path}`);
   }
+
   return uri + ARCHIVE_SEPARATOR + path;
 }
 
 function normalize(uri) {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
+
   if (isRemote(uri)) {
-    const { hostname, path } = parseRemoteUri(uri);
+    const {
+      hostname,
+      path
+    } = parseRemoteUri(uri);
+
     const normal = _archiveDecode(uriPathModule, uriPathModule.normalize(_archiveEncode(uriPathModule, path)));
+
     return createRemoteUri(hostname, normal);
   } else {
     return _archiveDecode(uriPathModule, uriPathModule.normalize(_archiveEncode(uriPathModule, uri)));
@@ -220,27 +254,40 @@ function getParent(uri) {
 
 function relative(uri, other) {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
+
   const remote = isRemote(uri);
+
   if (remote !== isRemote(other) || remote && getHostname(uri) !== getHostname(other)) {
     throw new Error(`Cannot relative urls on different hosts: ${uri} and ${other}`);
   }
+
   const uriEncode = _archiveEncode(uriPathModule, remote ? getPath(uri) : uri);
+
   const otherEncode = _archiveEncode(uriPathModule, remote ? getPath(other) : other);
+
   return _archiveDecode(uriPathModule, uriPathModule.relative(_matchTrailingArchive(uriEncode, otherEncode), _matchTrailingArchive(otherEncode, uriEncode)));
 }
 
 function basename(uri, ext = '') {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
+
   return _archiveDecode(uriPathModule, uriPathModule.basename(_archiveEncode(uriPathModule, getPath(uri)), ext));
 }
 
 function dirname(uri) {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
+
   if (isRemote(uri)) {
-    const { hostname, path } = parseRemoteUri(uri);
+    const {
+      hostname,
+      path
+    } = parseRemoteUri(uri);
     return createRemoteUri(hostname, _archiveDecode(uriPathModule, uriPathModule.dirname(_archiveEncode(uriPathModule, path))));
   } else {
     return _archiveDecode(uriPathModule, uriPathModule.dirname(_archiveEncode(uriPathModule, uri)));
@@ -249,13 +296,17 @@ function dirname(uri) {
 
 function extname(uri) {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
+
   return _archiveDecode(uriPathModule, uriPathModule.extname(_archiveEncode(uriPathModule, getPath(uri))));
 }
 
 function stripExtension(uri) {
   _testForIllegalUri(uri);
+
   const ext = extname(uri);
+
   if (ext.length === 0) {
     return uri;
   }
@@ -269,6 +320,7 @@ function _isWindowsPath(path) {
 
 function _getWindowsPathFromWindowsFileUri(uri) {
   const prefix = 'file://';
+
   if (!uri.startsWith(prefix)) {
     return null;
   }
@@ -276,19 +328,21 @@ function _getWindowsPathFromWindowsFileUri(uri) {
   const path = uri.substr(prefix.length);
   return _isWindowsPath(path) ? path : null;
 }
-
 /**
  * uri is either a file: uri, or a nuclide: uri.
  * must convert file: uri's to just a path for atom.
  *
  * Returns null if not a valid file: URI.
  */
+
+
 function uriToNuclideUri(uri) {
   // TODO(ljw): the following check is incorrect. It's designed to support
   // two-slash file URLs of the form "file://c:\path". But those are invalid
   // file URLs, and indeed it fails to %-escape "file://c:\My%20Documents".
-  const windowsPathFromUri = _getWindowsPathFromWindowsFileUri(uri);
-  // flowlint-next-line sketchy-null-string:off
+  const windowsPathFromUri = _getWindowsPathFromWindowsFileUri(uri); // flowlint-next-line sketchy-null-string:off
+
+
   if (windowsPathFromUri) {
     // If the specified URI is a local file:// URI to a Windows path,
     // handle specially first. url.parse() gets confused by the "X:"
@@ -297,7 +351,7 @@ function uriToNuclideUri(uri) {
     return windowsPathFromUri;
   }
 
-  const lspUri = (_vscodeUri || _load_vscodeUri()).default.parse(uri);
+  const lspUri = _vscodeUri().default.parse(uri);
 
   if (lspUri.scheme === 'file' && lspUri.path) {
     // only handle real files for now.
@@ -308,27 +362,29 @@ function uriToNuclideUri(uri) {
     return null;
   }
 }
-
 /**
  * Converts local paths to file: URI's. Leaves remote URI's alone.
  */
+
+
 function nuclideUriToUri(uri) {
   _testForIllegalUri(uri);
+
   if (isRemote(uri)) {
     return uri;
   } else {
-    return (_vscodeUri || _load_vscodeUri()).default.file(uri).toString();
+    return _vscodeUri().default.file(uri).toString();
   }
 }
-
 /**
- * Returns true if child is equal to, or is a proper child of parent.
+ * Returns true if child is equal to, or is a proper descendant of parent.
  */
+
+
 function contains(parent, child) {
   _testForIllegalUri(parent);
-  _testForIllegalUri(child);
 
-  // Can't just do startsWith here. If this directory is "www" and you
+  _testForIllegalUri(child); // Can't just do startsWith here. If this directory is "www" and you
   // are trying to check "www-base", just using startsWith would return
   // true, even though "www-base" is at the same level as "Www", not
   // contained in it.
@@ -342,6 +398,7 @@ function contains(parent, child) {
   // Then check startsWith. If so, then if the two path lengths are
   // equal OR if the next character in the path to check is a path
   // separator, then we know the checked path is in this path.
+
 
   if (child.length < parent.length) {
     // A strong indication of false
@@ -366,20 +423,18 @@ function contains(parent, child) {
 
   return _isArchiveSeparator(child, parent.length) || child.slice(parent.length).startsWith(uriPathModule.sep);
 }
-
 /**
  * Filter an array of paths to contain only the collapsed root paths, e.g.
  * [a/b/c, a/, c/d/, c/d/e] collapses to [a/, c/d/]
  */
+
+
 function collapse(paths) {
   return paths.filter(p => !paths.some(fp => contains(fp, p) && fp !== p));
 }
 
-const hostFormatters = [];
-
-// A formatter which may shorten hostnames.
+const hostFormatters = []; // A formatter which may shorten hostnames.
 // Returns null if the formatter won't shorten the hostname.
-
 
 // Registers a host formatter for nuclideUriToDisplayString
 function registerHostnameFormatter(formatter) {
@@ -387,29 +442,34 @@ function registerHostnameFormatter(formatter) {
   return {
     dispose: () => {
       const index = hostFormatters.indexOf(formatter);
+
       if (index >= 0) {
         hostFormatters.splice(index, 1);
       }
     }
   };
 }
-
 /**
  * NuclideUris should never be shown to humans.
  * This function returns a human usable string.
  */
+
+
 function nuclideUriToDisplayString(uri) {
   _testForIllegalUri(uri);
+
   if (isRemote(uri)) {
     let hostname = getHostname(uri);
+
     for (const formatter of hostFormatters) {
-      const formattedHostname = formatter(hostname);
-      // flowlint-next-line sketchy-null-string:off
+      const formattedHostname = formatter(hostname); // flowlint-next-line sketchy-null-string:off
+
       if (formattedHostname) {
         hostname = formattedHostname;
         break;
       }
     }
+
     return `${hostname}:${getPath(uri)}`;
   } else {
     return uri;
@@ -418,7 +478,9 @@ function nuclideUriToDisplayString(uri) {
 
 function ensureTrailingSeparator(uri) {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
+
   if (uri.endsWith(uriPathModule.sep)) {
     return uri;
   }
@@ -428,7 +490,9 @@ function ensureTrailingSeparator(uri) {
 
 function trimTrailingSeparator(uri) {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
+
   let stripped = uri;
 
   while (stripped.endsWith(uriPathModule.sep) && !isRoot(stripped)) {
@@ -440,73 +504,89 @@ function trimTrailingSeparator(uri) {
 
 function endsWithSeparator(uri) {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
+
   return uri.endsWith(uriPathModule.sep);
 }
 
 function isAbsolute(uri) {
   _testForIllegalUri(uri);
+
   if (isRemote(uri)) {
     return true;
   } else {
     const uriPathModule = _pathModuleFor(uri);
+
     return uriPathModule.isAbsolute(uri);
   }
 }
 
 function resolve(uri, ...paths) {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
+
   if (isRemote(uri)) {
-    const { hostname, path } = parseRemoteUri(uri);
+    const {
+      hostname,
+      path
+    } = parseRemoteUri(uri);
     paths.splice(0, 0, path);
+
     _archiveEncodeArrayInPlace(uriPathModule, paths);
+
     return createRemoteUri(hostname, _archiveDecode(uriPathModule, uriPathModule.resolve.apply(null, paths)));
   } else {
     paths.splice(0, 0, uri);
+
     _archiveEncodeArrayInPlace(uriPathModule, paths);
+
     return _archiveDecode(uriPathModule, uriPathModule.resolve.apply(null, paths));
   }
 }
 
 function expandHomeDir(uri) {
-  _testForIllegalUri(uri);
+  _testForIllegalUri(uri); // Do not expand non home relative uris
 
-  // Do not expand non home relative uris
+
   if (!uri.startsWith('~')) {
     return uri;
-  }
-
-  // "home" on Windows is %UserProfile%. Note that Windows environment variables
+  } // "home" on Windows is %UserProfile%. Note that Windows environment variables
   // are NOT case sensitive, but process.env is a magic object that wraps GetEnvironmentVariableW
   // on Windows, so asking for any case is expected to work.
-  const { HOME, UserProfile } = process.env;
 
+
+  const {
+    HOME,
+    UserProfile
+  } = process.env;
   const isWindows = !isRemote(uri) && _os.default.platform() === 'win32';
   const homePath = isWindows ? UserProfile : HOME;
 
   if (!(homePath != null)) {
-    throw new Error('Invariant violation: "homePath != null"');
+    throw new Error("Invariant violation: \"homePath != null\"");
   }
 
   if (uri === '~') {
     return homePath;
-  }
+  } // Uris like ~abc should not be expanded
 
-  // Uris like ~abc should not be expanded
+
   if (!uri.startsWith('~/') && (!isWindows || !uri.startsWith('~\\'))) {
     return uri;
   }
 
   return _path.default.resolve(homePath, uri.replace('~', '.'));
 }
-
 /**
  * Splits a string containing local paths by an OS-specific path delimiter
  * Useful for splitting env variables such as PATH
  *
  * Since remote URI might contain the delimiter, only local paths are allowed.
  */
+
+
 function splitPathList(paths) {
   if (!(paths.indexOf(REMOTE_PATH_URI_PREFIX) < 0)) {
     throw new Error('Splitting remote URIs is not supported');
@@ -516,13 +596,14 @@ function splitPathList(paths) {
 
   return paths.split(uriPathModule.delimiter);
 }
-
 /**
  * Joins an array of local paths with an OS-specific path delimiter into a single string.
  * Useful for constructing env variables such as PATH
  *
  * Since remote URI might contain the delimiter, only local paths are allowed.
  */
+
+
 function joinPathList(paths) {
   if (paths.length === 0) {
     return '';
@@ -533,15 +614,18 @@ function joinPathList(paths) {
   }
 
   const uriPathModule = _pathModuleFor(paths[0]);
+
   return paths.join(uriPathModule.delimiter);
 }
-
 /**
  * This function prepends the given relative path with a "current-folder" prefix
  * which is `./` on *nix and .\ on Windows
  */
+
+
 function ensureLocalPrefix(uri) {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
 
   if (!!isRemote(uri)) {
@@ -553,6 +637,7 @@ function ensureLocalPrefix(uri) {
   }
 
   const localPrefix = `.${uriPathModule.sep}`;
+
   if (uri.startsWith(localPrefix)) {
     return uri;
   }
@@ -562,12 +647,15 @@ function ensureLocalPrefix(uri) {
 
 function isRoot(uri) {
   _testForIllegalUri(uri);
+
   return dirname(uri) === uri;
 }
 
 function parsePath(uri) {
   _testForIllegalUri(uri);
+
   const uriPathModule = _pathModuleFor(uri);
+
   if (!isInArchive(uri)) {
     return uriPathModule.parse(getPath(uri));
   } else {
@@ -593,7 +681,6 @@ function split(uri) {
 
   while (current !== parent) {
     parts.push(basename(current));
-
     current = parent;
     parent = dirname(current);
   }
@@ -601,6 +688,7 @@ function split(uri) {
   if (isAbsolute(uri)) {
     parts.push(parent);
   }
+
   parts.reverse();
   return parts;
 }
@@ -617,45 +705,49 @@ function _pathModuleFor(uri) {
   if (uri.startsWith(_path.default.posix.sep)) {
     return _path.default.posix;
   }
+
   if (uri.indexOf('://') > -1) {
     return _path.default.posix;
   }
+
   if (uri[1] === ':' && uri[2] === _path.default.win32.sep) {
     return _path.default.win32;
-  }
+  } // This little russian roulette here is blocking T29990593. I didn't
+  // clean it because we might see posix paths on windows and vice versa.
+
 
   if (uri.split(_path.default.win32.sep).length > uri.split(_path.default.posix.sep).length) {
     return _path.default.win32;
   } else {
     return _path.default.posix;
   }
-}
+} // Runs _archiveEncode in-place on array, and returns argument for convenience.
 
-// Runs _archiveEncode in-place on array, and returns argument for convenience.
+
 function _archiveEncodeArrayInPlace(uriPathModule, array) {
   array.forEach((uri, i, a) => a[i] = _archiveEncode(uriPathModule, uri));
   return array;
-}
-
-// This adds a native separator after every archive separator
+} // This adds a native separator after every archive separator
 // so that the native path handling code sees them.
+
+
 function _archiveEncode(uriPathModule, uri) {
   if (uri.indexOf(ARCHIVE_SEPARATOR) < 0) {
     return uri;
   }
-  return KNOWN_ARCHIVE_EXTENSIONS.reduce((acc, ext) => acc.replace(`${ext}${ARCHIVE_SEPARATOR}`, `${ext}${ARCHIVE_SEPARATOR}${uriPathModule.sep}`), uri);
-}
 
-// This is the inverse of `encodeArchiveSeparators()` to put things
+  return KNOWN_ARCHIVE_EXTENSIONS.reduce((acc, ext) => acc.replace(`${ext}${ARCHIVE_SEPARATOR}`, `${ext}${ARCHIVE_SEPARATOR}${uriPathModule.sep}`), uri);
+} // This is the inverse of `encodeArchiveSeparators()` to put things
 // back after the native path handler has run.
+
+
 function _archiveDecode(uriPathModule, uri) {
   if (uri.indexOf(ARCHIVE_SEPARATOR) < 0) {
     return uri;
   }
-  return _trimArchiveSuffix(KNOWN_ARCHIVE_EXTENSIONS.reduce((acc, ext) => acc.replace(`${ext}${ARCHIVE_SEPARATOR}${uriPathModule.sep}`, `${ext}${ARCHIVE_SEPARATOR}`), uri));
-}
 
-// When working with encoded uri's, the archive separator is part of the name
+  return _trimArchiveSuffix(KNOWN_ARCHIVE_EXTENSIONS.reduce((acc, ext) => acc.replace(`${ext}${ARCHIVE_SEPARATOR}${uriPathModule.sep}`, `${ext}${ARCHIVE_SEPARATOR}`), uri));
+} // When working with encoded uri's, the archive separator is part of the name
 // so we can manipulate paths with uriPathModule.  However, in `relative` if
 // one uri contains the other, we need the names seen by uriPathModule to agree
 // on whether there is an archive separator or not.  E.g. if we have:
@@ -666,6 +758,8 @@ function _archiveDecode(uriPathModule, uri) {
 //    /etc/file.zip!/abc
 // We need to add a trailing '!' to the first one so uriPathModule can see that
 // the first contains the second.
+
+
 function _matchTrailingArchive(uri, other) {
   if (uri.length < other.length && other.startsWith(uri) && _isArchiveSeparator(other, uri.length)) {
     return uri + ARCHIVE_SEPARATOR;
@@ -701,10 +795,9 @@ function _testForIllegalUri(uri) {
   }
 }
 
-const NUCLIDE_URI_TYPE_NAME = 'NuclideUri';
-
-// If mustBeRemote is present then remote-ness must match, otherwise remote-ness
+const NUCLIDE_URI_TYPE_NAME = 'NuclideUri'; // If mustBeRemote is present then remote-ness must match, otherwise remote-ness
 // is ignored.
+
 function validate(uri, mustBeRemote) {
   // Be a little extra paranoid to catch places where the type system may be weak.
   if (!(uri != null)) {
@@ -732,7 +825,17 @@ function validate(uri, mustBeRemote) {
   }
 }
 
-exports.default = {
+const IMAGE_EXTENSIONS = new Set(['.bmp', '.gif', '.ico', '.jpeg', '.jpg', '.png', '.webp']);
+/**
+ * Returns true if this filename looks like an image that Nuclide can open; otherwise false.
+ */
+
+function looksLikeImageUri(uri) {
+  const ext = extname(uri).toLowerCase();
+  return IMAGE_EXTENSIONS.has(ext);
+}
+
+var _default = {
   basename,
   dirname,
   extname,
@@ -749,8 +852,10 @@ exports.default = {
   getHostname,
   getHostnameOpt,
   join,
+  joinArray,
   archiveJoin,
   relative,
+  looksLikeImageUri,
   normalize,
   normalizeDir,
   getParent,
@@ -778,6 +883,8 @@ exports.default = {
   KNOWN_ARCHIVE_EXTENSIONS,
   NUCLIDE_URI_TYPE_NAME
 };
-const __TEST__ = exports.__TEST__ = {
+exports.default = _default;
+const __TEST__ = {
   _pathModuleFor
 };
+exports.__TEST__ = __TEST__;

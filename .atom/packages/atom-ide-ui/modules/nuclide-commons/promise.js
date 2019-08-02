@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -20,7 +20,19 @@ exports.asyncSome = asyncSome;
 exports.isPromise = isPromise;
 exports.lastly = lastly;
 exports.delayTime = delayTime;
+exports.PromiseWithState = exports.Deferred = exports.TimedOutError = exports.RequestSerializer = void 0;
 
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 
 /**
  * Allows a caller to ensure that the results it receives from consecutive
@@ -48,7 +60,6 @@ exports.delayTime = delayTime;
  * would receive an 'outdated' status.
  */
 class RequestSerializer {
-
   constructor() {
     this._lastDispatchedOp = 0;
     this._lastFinishedOp = 0;
@@ -61,8 +72,11 @@ class RequestSerializer {
     const thisOp = this._lastDispatchedOp + 1;
     this._lastDispatchedOp = thisOp;
     this._latestPromise = promise;
+
     this._waitResolve();
+
     const result = await promise;
+
     if (this._lastFinishedOp < thisOp) {
       this._lastFinishedOp = thisOp;
       return {
@@ -75,47 +89,43 @@ class RequestSerializer {
       };
     }
   }
-
   /**
    * Returns a Promise that resolves to the last result of `run`,
    * as soon as there are no more outstanding `run` calls.
    */
+
+
   async waitForLatestResult() {
     let lastPromise = null;
     let result = null;
+
     while (lastPromise !== this._latestPromise) {
-      lastPromise = this._latestPromise;
-      // Wait for the current last know promise to resolve, or a next run have started.
+      lastPromise = this._latestPromise; // Wait for the current last know promise to resolve, or a next run have started.
       // eslint-disable-next-line no-await-in-loop
+
       result = await new Promise((resolve, reject) => {
         this._waitResolve = resolve;
+
         this._latestPromise.then(resolve);
       });
     }
+
     return result;
   }
 
   isRunInProgress() {
     return this._lastDispatchedOp > this._lastFinishedOp;
   }
-}
 
-exports.RequestSerializer = RequestSerializer; /*
-                                                * Returns a promise that will resolve after `milliSeconds` milli seconds.
-                                                * this can be used to pause execution asynchronously.
-                                                * e.g. await sleep(1000), pauses the async flow execution for 1 second.
-                                                */
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
+}
+/*
+ * Returns a promise that will resolve after `milliSeconds` milli seconds.
+ * this can be used to pause execution asynchronously.
+ * e.g. await sleep(1000), pauses the async flow execution for 1 second.
  */
+
+
+exports.RequestSerializer = RequestSerializer;
 
 function sleep(milliSeconds) {
   return new Promise(resolve => {
@@ -128,7 +138,6 @@ function nextTick() {
     process.nextTick(resolve);
   });
 }
-
 /**
  * Executes a provided callback only if a promise takes longer than
  * `milliSeconds` milliseconds to resolve.
@@ -140,39 +149,46 @@ function nextTick() {
  * `milliSeconds` ms to resolve.
  * @param `cleanupFn` the cleanup function to execute after the promise resolves.
  */
+
+
 async function triggerAfterWait(promise, milliSeconds, timeoutFn, cleanupFn) {
   const timeout = setTimeout(timeoutFn, milliSeconds);
+
   try {
     return await promise;
   } finally {
     clearTimeout(timeout);
+
     if (cleanupFn) {
       cleanupFn();
     }
   }
 }
-
 /**
  * Thrown by `timeoutPromise` if the timer fires before the promise resolves/rejects.
  */
+
+
 class TimedOutError extends Error {
   constructor(milliseconds) {
     super(`Timed out after ${String(milliseconds)} ms`);
     this.timeout = milliseconds;
   }
-}
 
-exports.TimedOutError = TimedOutError; /**
-                                        * Returns a Promise that resolves to the same value as the given promise, or rejects with
-                                        * `TimedOutError` if it takes longer than `milliseconds` milliseconds.
-                                        */
+}
+/**
+ * Returns a Promise that resolves to the same value as the given promise, or rejects with
+ * `TimedOutError` if it takes longer than `milliseconds` milliseconds.
+ */
+
+
+exports.TimedOutError = TimedOutError;
 
 function timeoutPromise(promise, milliseconds) {
   return new Promise((resolve, reject) => {
     let timeout = setTimeout(() => {
       timeout = null;
-      reject(new TimedOutError(milliseconds));
-      // This gives useless error.stack results.
+      reject(new TimedOutError(milliseconds)); // This gives useless error.stack results.
       // We could capture the stack pre-emptively at the start
       // of this method if we wanted useful ones.
     }, milliseconds);
@@ -180,17 +196,17 @@ function timeoutPromise(promise, milliseconds) {
       if (timeout != null) {
         clearTimeout(timeout);
       }
+
       resolve(value);
     }).catch(value => {
       if (timeout != null) {
         clearTimeout(timeout);
       }
+
       reject(value);
     });
   });
-}
-
-// An DeadlineRequest parameter to an async method is a way of *requesting* that
+} // An DeadlineRequest parameter to an async method is a way of *requesting* that
 // method to throw a TimedOutError if it doesn't complete in a certain time.
 // It's just a request -- the async method will typically honor the request
 // by passing the parameter on to ALL subsidiary async methods that it awaits,
@@ -206,6 +222,8 @@ function timeoutPromise(promise, milliseconds) {
 // "delay" parameters) and safely remotable (better than "CancellationToken"
 // parameters) so long as clocks are in sync. In all other respects it's less
 // versatile than CancellationTokens.
+
+
 function createDeadline(delay) {
   return Date.now() + delay;
 }
@@ -214,7 +232,6 @@ function timeoutAfterDeadline(deadline, promise) {
   const delay = deadline - Date.now();
   return timeoutPromise(promise, delay < 0 ? 0 : delay);
 }
-
 /**
  * Call an async function repeatedly with a maximum number of trials limit,
  * until a valid result that's defined by a validation function.
@@ -229,15 +246,19 @@ function timeoutAfterDeadline(deadline, promise) {
  * If an exception is encountered on the last trial, the exception is thrown.
  * If no valid response is found, an exception is thrown.
  */
+
+
 async function retryLimit(retryFunction, validationFunction, maximumTries, retryIntervalMs = 0) {
   let result = null;
   let tries = 0;
   let lastError = null;
+
   while (tries === 0 || tries < maximumTries) {
     try {
       // eslint-disable-next-line no-await-in-loop
       result = await retryFunction();
       lastError = null;
+
       if (validationFunction(result)) {
         return result;
       }
@@ -251,6 +272,7 @@ async function retryLimit(retryFunction, validationFunction, maximumTries, retry
       await sleep(retryIntervalMs);
     }
   }
+
   if (lastError != null) {
     throw lastError;
   } else if (tries === maximumTries) {
@@ -259,7 +281,6 @@ async function retryLimit(retryFunction, validationFunction, maximumTries, retry
     return result;
   }
 }
-
 /**
  * Limits async function execution parallelism to only one at a time.
  * Hence, if a call is already running, it will wait for it to finish,
@@ -280,18 +301,23 @@ async function retryLimit(retryFunction, validationFunction, maximumTries, retry
  * const result3Promise = oneExecAtATime(); // Reuse scheduled promise and resolve to 2 in 400 ms.
  * ```
  */
+
+
 function serializeAsyncCall(asyncFun) {
   let scheduledCall = null;
   let pendingCall = null;
+
   const startAsyncCall = () => {
     const resultPromise = asyncFun();
     pendingCall = resultPromise.then(() => pendingCall = null, () => pendingCall = null);
     return resultPromise;
   };
+
   const callNext = () => {
     scheduledCall = null;
     return startAsyncCall();
   };
+
   const scheduleNextCall = () => {
     if (scheduledCall == null) {
       if (!pendingCall) {
@@ -300,8 +326,10 @@ function serializeAsyncCall(asyncFun) {
 
       scheduledCall = pendingCall.then(callNext, callNext);
     }
+
     return scheduledCall;
   };
+
   return () => {
     if (pendingCall == null) {
       return startAsyncCall();
@@ -310,7 +338,6 @@ function serializeAsyncCall(asyncFun) {
     }
   };
 }
-
 /**
  * Provides a promise along with methods to change its state. Our version of the non-standard
  * `Promise.defer()`.
@@ -318,34 +345,38 @@ function serializeAsyncCall(asyncFun) {
  * IMPORTANT: This should almost never be used!! Instead, use the Promise constructor. See
  *  <https://github.com/petkaantonov/bluebird/wiki/Promise-anti-patterns#the-deferred-anti-pattern>
  */
-class Deferred {
 
+
+class Deferred {
   constructor() {
     this.promise = new Promise((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
     });
   }
-}
 
-exports.Deferred = Deferred; /**
-                              * Returns a value derived asynchronously from an element in the items array.
-                              * The test function is applied sequentially to each element in items until
-                              * one returns a Promise that resolves to a non-null value. When this happens,
-                              * the Promise returned by this method will resolve to that non-null value. If
-                              * no such Promise is produced, then the Promise returned by this function
-                              * will resolve to null.
-                              *
-                              * @param items Array of elements that will be passed to test, one at a time.
-                              * @param test Will be called with each item and must return either:
-                              *     (1) A "thenable" (i.e, a Promise or promise-like object) that resolves
-                              *         to a derived value (that will be returned) or null.
-                              *     (2) null.
-                              *     In both cases where null is returned, test will be applied to the next
-                              *     item in the array.
-                              * @param thisArg Receiver that will be used when test is called.
-                              * @return Promise that resolves to an asynchronously derived value or null.
-                              */
+}
+/**
+ * Returns a value derived asynchronously from an element in the items array.
+ * The test function is applied sequentially to each element in items until
+ * one returns a Promise that resolves to a non-null value. When this happens,
+ * the Promise returned by this method will resolve to that non-null value. If
+ * no such Promise is produced, then the Promise returned by this function
+ * will resolve to null.
+ *
+ * @param items Array of elements that will be passed to test, one at a time.
+ * @param test Will be called with each item and must return either:
+ *     (1) A "thenable" (i.e, a Promise or promise-like object) that resolves
+ *         to a derived value (that will be returned) or null.
+ *     (2) null.
+ *     In both cases where null is returned, test will be applied to the next
+ *     item in the array.
+ * @param thisArg Receiver that will be used when test is called.
+ * @return Promise that resolves to an asynchronously derived value or null.
+ */
+
+
+exports.Deferred = Deferred;
 
 function asyncFind(items_, test, thisArg) {
   let items = items_;
@@ -363,6 +394,7 @@ function asyncFind(items_, test, thisArg) {
 
       const item = items[index];
       const result = await test.call(thisArg, item);
+
       if (result != null) {
         resolve(result);
       } else {
@@ -384,11 +416,11 @@ function denodeify(f) {
           resolve(result);
         }
       }
+
       f.apply(this, args.concat([callback]));
     });
   };
 }
-
 /**
  * A Promise utility that runs a maximum of limit async operations at a time
  * iterating over an array and returning the result of executions.
@@ -405,28 +437,32 @@ function denodeify(f) {
  * @param limit the configurable number of parallel async operations.
  * @param mappingFunction the async Promise function that could return a useful result.
  */
+
+
 function asyncLimit(array, limit, mappingFunction) {
   const result = new Array(array.length);
   let parallelPromises = 0;
   let index = 0;
-
   let parallelLimit = Math.min(limit, array.length) || 1;
-
   return new Promise((resolve, reject) => {
     const runPromise = async () => {
       if (index === array.length) {
         if (parallelPromises === 0) {
           resolve(result);
         }
+
         return;
       }
+
       ++parallelPromises;
       const i = index++;
+
       try {
         result[i] = await mappingFunction(array[i]);
       } catch (e) {
         reject(e);
       }
+
       --parallelPromises;
       runPromise();
     };
@@ -436,7 +472,6 @@ function asyncLimit(array, limit, mappingFunction) {
     }
   });
 }
-
 /**
  * `filter` Promise utility that allows filtering an array with an async Promise function.
  * It's an alternative to `Array.prototype.filter` that accepts an async function.
@@ -458,9 +493,11 @@ function asyncLimit(array, limit, mappingFunction) {
  *   boolean.
  * @param limit the configurable number of parallel async operations.
  */
+
+
 async function asyncFilter(array, filterFunction, limit) {
-  const filteredList = [];
-  // flowlint-next-line sketchy-null-number:off
+  const filteredList = []; // flowlint-next-line sketchy-null-number:off
+
   await asyncLimit(array, limit || array.length, async item => {
     if (await filterFunction(item)) {
       filteredList.push(item);
@@ -471,17 +508,17 @@ async function asyncFilter(array, filterFunction, limit) {
 
 async function asyncObjFilter(obj, filterFunction, limit) {
   const keys = Object.keys(obj);
-  const filteredObj = {};
-  // flowlint-next-line sketchy-null-number:off
+  const filteredObj = {}; // flowlint-next-line sketchy-null-number:off
+
   await asyncLimit(keys, limit || keys.length, async key => {
     const item = obj[key];
+
     if (await filterFunction(item, key)) {
       filteredObj[key] = item;
     }
   });
   return filteredObj;
 }
-
 /**
  * `some` Promise utility that allows `some` an array with an async Promise some function.
  * It's an alternative to `Array.prototype.some` that accepts an async some function.
@@ -503,32 +540,37 @@ async function asyncObjFilter(obj, filterFunction, limit) {
  *   boolean.
  * @param limit the configurable number of parallel async operations.
  */
+
+
 async function asyncSome(array, someFunction, limit) {
-  let resolved = false;
-  // flowlint-next-line sketchy-null-number:off
+  let resolved = false; // flowlint-next-line sketchy-null-number:off
+
   await asyncLimit(array, limit || array.length, async item => {
     if (resolved) {
       // We don't need to call the someFunction anymore or wait any longer.
       return;
     }
+
     if (await someFunction(item)) {
       resolved = true;
     }
   });
   return resolved;
 }
-
 /**
  * Check if an object is Promise by testing if it has a `then` function property.
  */
+
+
 function isPromise(object) {
   return Boolean(object) && typeof object === 'object' && typeof object.then === 'function';
 }
-
 /**
  * We can't name a function 'finally', so use lastly instead.
  * fn() will be executed (and completed) after the provided promise resolves/rejects.
  */
+
+
 function lastly(promise, fn) {
   return promise.then(ret => {
     return Promise.resolve(fn()).then(() => ret);
@@ -536,21 +578,29 @@ function lastly(promise, fn) {
     return Promise.resolve(fn()).then(() => Promise.reject(err));
   });
 }
-
 /**
  * With a pure promise object, there's no way to tell synchronously
  * whether or not it has 'settled' (i.e. been fulfilled or rejected).
  * Here we provide a wrapper that provides that information.
  */
-class PromiseWithState {
 
+
+class PromiseWithState {
   constructor(promise) {
-    this._state = { kind: 'pending' };
+    this._state = {
+      kind: 'pending'
+    };
     this._promise = promise.then(value => {
-      this._state = { kind: 'fulfilled', value };
+      this._state = {
+        kind: 'fulfilled',
+        value
+      };
       return value;
     }, error => {
-      this._state = { kind: 'rejected', error };
+      this._state = {
+        kind: 'rejected',
+        error
+      };
       throw error;
     });
   }
@@ -562,9 +612,11 @@ class PromiseWithState {
   getState() {
     return this._state;
   }
+
 }
 
 exports.PromiseWithState = PromiseWithState;
+
 function delayTime(ms) {
   return new Promise((resolve, reject) => {
     setTimeout(resolve, ms);

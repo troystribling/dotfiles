@@ -1,3 +1,5 @@
+/* @flow */
+
 /**
  * Adapted from https://github.com/facebook/nuclide/tree/master/flow-libs
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -5,8 +7,6 @@
  *
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
- *
- * @flow
  */
 
 /**
@@ -47,10 +47,10 @@ type atom$Octicon = 'alert' | 'alignment-align' | 'alignment-aligned-to' | 'alig
   'shield' | 'sign-in' | 'sign-out' | 'smiley' | 'split' | 'squirrel' | 'star' | 'star-add' |
   'star-delete' | 'steps' | 'stop' | 'sync' | 'tag' | 'tag-add' | 'tag-remove' | 'tasklist' |
   'telescope' | 'terminal' | 'text-size' | 'three-bars' | 'thumbsdown' | 'thumbsup' | 'tools' |
-  'trashcan' | 'triangle-down' | 'triangle-left' | 'triangle-right' | 'triangle-up' | 'type-array'|
-  'type-boolean'| 'type-class'| 'type-constant'| 'type-constructor'| 'type-enum'| 'type-field'|
-  'type-file'| 'type-function'| 'type-interface'| 'type-method'| 'type-module'| 'type-namespace'|
-  'type-number'| 'type-package'| 'type-property'| 'type-string'| 'type-variable' | 'unfold' |
+  'trashcan' | 'triangle-down' | 'triangle-left' | 'triangle-right' | 'triangle-up' | 'type-array' |
+  'type-boolean' | 'type-class' | 'type-constant' | 'type-constructor' | 'type-enum' | 'type-field' |
+  'type-file' | 'type-function' | 'type-interface' | 'type-method' | 'type-module' | 'type-namespace' |
+  'type-number' | 'type-package' | 'type-property' | 'type-string' | 'type-variable' | 'unfold' |
   'unmute' | 'unverified' | 'verified' | 'versions' | 'watch' | 'x' | 'zap';
 
 type atom$PaneLocation = 'left' | 'right' | 'bottom' | 'center';
@@ -155,6 +155,9 @@ type atom$ConfigSchema = {
   ): IDisposable,
 
   // Managing Settings
+  // get method for special cases (@NOTE: This should be listed ABOVE the general case one)
+  get("Hydrogen.wrapOutput"): boolean,
+  // get method for general cases
   get(
     keyPath?: string,
     options?: {
@@ -428,6 +431,7 @@ declare class atom$Pane {
   getActiveItemIndex(): number,
   activateItem(item: Object): ?Object,
   activateItemAtIndex(index: number): void,
+  activateItemForURI(uri: string): boolean,
   moveItemToPane(item: Object, pane: atom$Pane, index: number): void,
   destroyItem(item: Object, force?: boolean): boolean | Promise<boolean>,
   itemForURI(uri: string): Object,
@@ -1208,7 +1212,7 @@ declare class atom$Workspace {
 
   // Opening
   open(
-    uri?: string,
+    uri?: string | atom$TextEditor,
     options?: {
       activatePane?: ?boolean,
       initialLine?: ?number,
@@ -1512,6 +1516,7 @@ declare class atom$GitRepository extends atom$Repository {
 declare class atom$Grammar {
   name: string,
   scopeName: string,
+  fileTypes: Array<string>,
   tokenizeLines(text: string): Array<Array<atom$GrammarToken>>,
 }
 
@@ -1525,6 +1530,7 @@ declare class atom$GrammarRegistry {
   onDidAddGrammar(callback: (grammar: atom$Grammar) => void): IDisposable,
 
   // Managing Grammars
+  getGrammars(): Array<atom$Grammar>,
   grammarForScopeName(scopeName: string): ?atom$Grammar,
   removeGrammarForScopeName(scopeName: string): ?atom$Grammar,
   loadGrammarSync(grammarPath: string): atom$Grammar,
@@ -1549,7 +1555,7 @@ declare class atom$KeyBinding {
   cachedKeyups: ?Array<string>,
   command: string,
   index: number,
-  keystrokeArray : Array<string>,
+  keystrokeArray: Array<string>,
   keystrokeCount: number,
   keystrokes: string,
   priority: number,
@@ -2063,6 +2069,7 @@ declare class atom$Token {
 
 declare class atom$Selection {
   clear(): void,
+  fold(): void,
   getText(): string,
   getBufferRange(): atom$Range,
   insertText(
@@ -2095,4 +2102,4 @@ declare class atom$PanelContainer {
   viewRegistry: atom$ViewRegistry,
 
   getPanels(): Array<atom$Panel>,
-};
+}

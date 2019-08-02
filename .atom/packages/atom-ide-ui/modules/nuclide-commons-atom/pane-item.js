@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,10 +6,14 @@ Object.defineProperty(exports, "__esModule", {
 exports.isPending = isPending;
 exports.observePendingStateEnd = observePendingStateEnd;
 
-var _event;
+function _event() {
+  const data = require("../nuclide-commons/event");
 
-function _load_event() {
-  return _event = require('../nuclide-commons/event');
+  _event = function () {
+    return data;
+  };
+
+  return data;
 }
 
 /**
@@ -23,7 +27,6 @@ function _load_event() {
  * 
  * @format
  */
-
 function isPending(paneItem) {
   const pane = atom.workspace.paneForItem(paneItem);
   return pane && pane.getPendingItem() === paneItem;
@@ -34,5 +37,5 @@ function observePendingStateEnd(paneItem) {
     throw new Error('paneItem must implement onDidTerminatePendingState method');
   }
 
-  return (0, (_event || _load_event()).observableFromSubscribeFunction)(paneItem.onDidTerminatePendingState.bind(paneItem));
+  return (0, _event().observableFromSubscribeFunction)(paneItem.onDidTerminatePendingState.bind(paneItem));
 }

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -20,6 +20,8 @@ exports.updateStatus = updateStatus;
 exports.setCreatePasteFunction = setCreatePasteFunction;
 exports.setWatchEditor = setWatchEditor;
 exports.setFontSize = setFontSize;
+exports.SET_FONT_SIZE = exports.UPDATE_STATUS = exports.REMOVE_SOURCE = exports.REGISTER_SOURCE = exports.RECORD_RECEIVED = exports.SET_MAX_MESSAGE_COUNT = exports.SELECT_EXECUTOR = exports.REGISTER_RECORD_PROVIDER = exports.EXECUTE = exports.REGISTER_EXECUTOR = exports.SET_WATCH_EDITOR_FUNCTION = exports.SET_CREATE_PASTE_FUNCTION = exports.CLEAR_RECORDS = void 0;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -31,43 +33,63 @@ exports.setFontSize = setFontSize;
  *  strict-local
  * @format
  */
-
-const CLEAR_RECORDS = exports.CLEAR_RECORDS = 'CLEAR_RECORDS';
-const SET_CREATE_PASTE_FUNCTION = exports.SET_CREATE_PASTE_FUNCTION = 'SET_CREATE_PASTE_FUNCTION';
-const SET_WATCH_EDITOR_FUNCTION = exports.SET_WATCH_EDITOR_FUNCTION = 'SET_WATCH_EDITOR_FUNCTION';
-const REGISTER_EXECUTOR = exports.REGISTER_EXECUTOR = 'REGISTER_EXECUTOR';
-const EXECUTE = exports.EXECUTE = 'EXECUTE';
-const REGISTER_RECORD_PROVIDER = exports.REGISTER_RECORD_PROVIDER = 'REGISTER_RECORD_PROVIDER';
-const SELECT_EXECUTOR = exports.SELECT_EXECUTOR = 'SELECT_EXECUTOR';
-const SET_MAX_MESSAGE_COUNT = exports.SET_MAX_MESSAGE_COUNT = 'SET_MAX_MESSAGE_COUNT';
-const RECORD_RECEIVED = exports.RECORD_RECEIVED = 'RECORD_RECEIVED';
-const REGISTER_SOURCE = exports.REGISTER_SOURCE = 'REGISTER_SOURCE';
-const REMOVE_SOURCE = exports.REMOVE_SOURCE = 'REMOVE_SOURCE';
-const UPDATE_STATUS = exports.UPDATE_STATUS = 'UPDATE_STATUS';
-const SET_FONT_SIZE = exports.SET_FONT_SIZE = 'SET_FONT_SIZE';
+const CLEAR_RECORDS = 'CLEAR_RECORDS';
+exports.CLEAR_RECORDS = CLEAR_RECORDS;
+const SET_CREATE_PASTE_FUNCTION = 'SET_CREATE_PASTE_FUNCTION';
+exports.SET_CREATE_PASTE_FUNCTION = SET_CREATE_PASTE_FUNCTION;
+const SET_WATCH_EDITOR_FUNCTION = 'SET_WATCH_EDITOR_FUNCTION';
+exports.SET_WATCH_EDITOR_FUNCTION = SET_WATCH_EDITOR_FUNCTION;
+const REGISTER_EXECUTOR = 'REGISTER_EXECUTOR';
+exports.REGISTER_EXECUTOR = REGISTER_EXECUTOR;
+const EXECUTE = 'EXECUTE';
+exports.EXECUTE = EXECUTE;
+const REGISTER_RECORD_PROVIDER = 'REGISTER_RECORD_PROVIDER';
+exports.REGISTER_RECORD_PROVIDER = REGISTER_RECORD_PROVIDER;
+const SELECT_EXECUTOR = 'SELECT_EXECUTOR';
+exports.SELECT_EXECUTOR = SELECT_EXECUTOR;
+const SET_MAX_MESSAGE_COUNT = 'SET_MAX_MESSAGE_COUNT';
+exports.SET_MAX_MESSAGE_COUNT = SET_MAX_MESSAGE_COUNT;
+const RECORD_RECEIVED = 'RECORD_RECEIVED';
+exports.RECORD_RECEIVED = RECORD_RECEIVED;
+const REGISTER_SOURCE = 'REGISTER_SOURCE';
+exports.REGISTER_SOURCE = REGISTER_SOURCE;
+const REMOVE_SOURCE = 'REMOVE_SOURCE';
+exports.REMOVE_SOURCE = REMOVE_SOURCE;
+const UPDATE_STATUS = 'UPDATE_STATUS';
+exports.UPDATE_STATUS = UPDATE_STATUS;
+const SET_FONT_SIZE = 'SET_FONT_SIZE';
+exports.SET_FONT_SIZE = SET_FONT_SIZE;
 
 function clearRecords() {
-  return { type: CLEAR_RECORDS };
+  return {
+    type: CLEAR_RECORDS
+  };
 }
 
 function recordReceived(record) {
   return {
     type: RECORD_RECEIVED,
-    payload: { record }
+    payload: {
+      record
+    }
   };
 }
 
 function registerExecutor(executor) {
   return {
     type: REGISTER_EXECUTOR,
-    payload: { executor }
+    payload: {
+      executor
+    }
   };
 }
 
 function execute(code) {
   return {
     type: EXECUTE,
-    payload: { code }
+    payload: {
+      code
+    }
   };
 }
 
@@ -84,7 +106,6 @@ function registerOutputProvider(outputProvider) {
       data: message.data,
       tags: message.tags,
       repeatCount: 1,
-
       kind: 'message',
       sourceId: outputProvider.id,
       scopeName: null,
@@ -97,14 +118,18 @@ function registerOutputProvider(outputProvider) {
 function registerRecordProvider(recordProvider) {
   return {
     type: REGISTER_RECORD_PROVIDER,
-    payload: { recordProvider }
+    payload: {
+      recordProvider
+    }
   };
 }
 
 function registerSource(source) {
   return {
     type: REGISTER_SOURCE,
-    payload: { source }
+    payload: {
+      source
+    }
   };
 }
 
@@ -119,21 +144,27 @@ function unregisterOutputProvider(outputProvider) {
 function selectExecutor(executorId) {
   return {
     type: SELECT_EXECUTOR,
-    payload: { executorId }
+    payload: {
+      executorId
+    }
   };
 }
 
 function setMaxMessageCount(maxMessageCount) {
   return {
     type: SET_MAX_MESSAGE_COUNT,
-    payload: { maxMessageCount }
+    payload: {
+      maxMessageCount
+    }
   };
 }
 
 function removeSource(sourceId) {
   return {
     type: REMOVE_SOURCE,
-    payload: { sourceId }
+    payload: {
+      sourceId
+    }
   };
 }
 
@@ -144,27 +175,36 @@ function unregisterExecutor(executor) {
 function updateStatus(providerId, status) {
   return {
     type: UPDATE_STATUS,
-    payload: { providerId, status }
+    payload: {
+      providerId,
+      status
+    }
   };
 }
 
 function setCreatePasteFunction(createPasteFunction) {
   return {
     type: SET_CREATE_PASTE_FUNCTION,
-    payload: { createPasteFunction }
+    payload: {
+      createPasteFunction
+    }
   };
 }
 
 function setWatchEditor(watchEditor) {
   return {
     type: SET_WATCH_EDITOR_FUNCTION,
-    payload: { watchEditor }
+    payload: {
+      watchEditor
+    }
   };
 }
 
 function setFontSize(fontSize) {
   return {
     type: SET_FONT_SIZE,
-    payload: { fontSize }
+    payload: {
+      fontSize
+    }
   };
 }

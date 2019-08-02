@@ -1,30 +1,43 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _TextEditorBanner;
+function _TextEditorBanner() {
+  const data = require("./TextEditorBanner");
 
-function _load_TextEditorBanner() {
-  return _TextEditorBanner = require('./TextEditorBanner');
+  _TextEditorBanner = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Button;
+function _Button() {
+  const data = require("./Button");
 
-function _load_Button() {
-  return _Button = require('./Button');
+  _Button = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Message;
+function _Message() {
+  const data = require("./Message");
 
-function _load_Message() {
-  return _Message = require('./Message');
+  _Message = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -37,46 +50,26 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * 
  * @format
  */
-
-class ReadOnlyNotice extends _react.Component {
+class ReadOnlyNotice extends React.Component {
   render() {
     let editAnywayButton;
 
     if (this.props.canEditAnyway) {
-      editAnywayButton = _react.createElement(
-        (_Button || _load_Button()).Button,
-        { buttonType: (_Button || _load_Button()).ButtonTypes.INFO, onClick: this.props.onEditAnyway },
-        'Edit Anyway'
-      );
+      editAnywayButton = React.createElement(_Button().Button, {
+        buttonType: _Button().ButtonTypes.INFO,
+        onClick: this.props.onEditAnyway
+      }, "Edit Anyway");
     }
 
-    const dismissButton = _react.createElement(
-      (_Button || _load_Button()).Button,
-      { buttonType: (_Button || _load_Button()).ButtonTypes.INFO, onClick: this.props.onDismiss },
-      'Dismiss'
-    );
-
-    return _react.createElement(
-      (_TextEditorBanner || _load_TextEditorBanner()).Notice,
-      { messageType: (_Message || _load_Message()).MessageTypes.info },
-      _react.createElement(
-        'span',
-        null,
-        _react.createElement(
-          'strong',
-          null,
-          'This is a read-only file.'
-        ),
-        _react.createElement('br', null),
-        this.props.detailedMessage
-      ),
-      _react.createElement(
-        'div',
-        null,
-        editAnywayButton,
-        dismissButton
-      )
-    );
+    const dismissButton = React.createElement(_Button().Button, {
+      buttonType: _Button().ButtonTypes.INFO,
+      onClick: this.props.onDismiss
+    }, "Dismiss");
+    return React.createElement(_TextEditorBanner().Notice, {
+      messageType: _Message().MessageTypes.info
+    }, React.createElement("span", null, React.createElement("strong", null, "This is a read-only file."), React.createElement("br", null), this.props.detailedMessage), React.createElement("div", null, editAnywayButton, dismissButton));
   }
+
 }
+
 exports.default = ReadOnlyNotice;

@@ -135,6 +135,12 @@ Object.defineProperty(exports, 'ScrollSync', {
 
 var _Table = require('./Table');
 
+Object.defineProperty(exports, 'createTableMultiSort', {
+  enumerable: true,
+  get: function get() {
+    return _Table.createMultiSort;
+  }
+});
 Object.defineProperty(exports, 'defaultTableCellDataGetter', {
   enumerable: true,
   get: function get() {

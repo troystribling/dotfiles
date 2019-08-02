@@ -1,38 +1,55 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _LoadingSpinner;
+function _LoadingSpinner() {
+  const data = require("../../../../../nuclide-commons-ui/LoadingSpinner");
 
-function _load_LoadingSpinner() {
-  return _LoadingSpinner = require('../../../../../nuclide-commons-ui/LoadingSpinner');
+  _LoadingSpinner = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _LazyNestedValueComponent;
+function _LazyNestedValueComponent() {
+  const data = require("../../../../../nuclide-commons-ui/LazyNestedValueComponent");
 
-function _load_LazyNestedValueComponent() {
-  return _LazyNestedValueComponent = require('../../../../../nuclide-commons-ui/LazyNestedValueComponent');
+  _LazyNestedValueComponent = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _SimpleValueComponent;
+function _SimpleValueComponent() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons-ui/SimpleValueComponent"));
 
-function _load_SimpleValueComponent() {
-  return _SimpleValueComponent = _interopRequireDefault(require('../../../../../nuclide-commons-ui/SimpleValueComponent'));
+  _SimpleValueComponent = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _utils;
+function _utils() {
+  const data = require("../utils");
 
-function _load_utils() {
-  return _utils = require('../utils');
+  _utils = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -45,31 +62,36 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * 
  * @format
  */
-
-class DebuggerDatatipComponent extends _react.Component {
+class DebuggerDatatipComponent extends React.Component {
   render() {
-    const { expression, evaluationResult } = this.props;
+    const {
+      expression,
+      evaluationResult
+    } = this.props;
     let datatipElement;
+
     if (evaluationResult == null) {
-      datatipElement = _react.createElement((_LoadingSpinner || _load_LoadingSpinner()).LoadingSpinner, { delay: 100, size: 'EXTRA_SMALL' });
+      datatipElement = React.createElement(_LoadingSpinner().LoadingSpinner, {
+        delay: 100,
+        size: "EXTRA_SMALL"
+      });
     } else {
-      datatipElement = _react.createElement(
-        'span',
-        { className: 'debugger-datatip-value' },
-        _react.createElement((_LazyNestedValueComponent || _load_LazyNestedValueComponent()).LazyNestedValueComponent, {
-          evaluationResult: evaluationResult,
-          expression: expression,
-          fetchChildren: (_utils || _load_utils()).fetchChildrenForLazyComponent,
-          simpleValueComponent: (_SimpleValueComponent || _load_SimpleValueComponent()).default,
-          expansionStateId: this
-        })
-      );
+      datatipElement = React.createElement("span", {
+        className: "debugger-datatip-value"
+      }, React.createElement(_LazyNestedValueComponent().LazyNestedValueComponent, {
+        evaluationResult: evaluationResult,
+        expression: expression,
+        fetchChildren: _utils().fetchChildrenForLazyComponent,
+        simpleValueComponent: _SimpleValueComponent().default,
+        expansionStateId: this
+      }));
     }
-    return _react.createElement(
-      'div',
-      { className: 'debugger-datatip' },
-      datatipElement
-    );
+
+    return React.createElement("div", {
+      className: "debugger-datatip"
+    }, datatipElement);
   }
+
 }
+
 exports.default = DebuggerDatatipComponent;

@@ -6,17 +6,48 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.2.3] - 2019-05-14
+### Fixed
+- Fix regression that first occurred in 1.2.2 where a text buffer was trying to
+be obtained without an active text editor. The "editor:newline" event from Atom
+is global. This fixed #71.
+
+## [1.2.2] - 2019-05-13
+### Fixed
+- Fix a couple of hanging indentation failures related to the parsing library
+changes. This fixed #69. This fix introduced another, much more rare bug around
+when a comment character is at the end of a line before a line that should be a
+hanging indent.
+
+## [1.2.1] - 2019-05-10
+### Added
+- Add support for multiple cursors. This fixed #59.
+
+## [1.2.0] - 2019-05-10
+### Changed
+- __Breaking__ Remove support for versions of Atom before 1.22.
+- Separate out the parsing into a different library to allow other editors to
+use its base functionality.
+
+## [1.1.7] - 2019-02-08
+### Security
+- Upgrade dependencies
+
+## [1.1.6] - 2018-08-23
+### Added
+- Add support for Cython files.
+
 ## [1.1.5] - 2018-03-29
-# Fixed
+### Fixed
 - Allow for the new tree-sitter parser's grammar for language-python to be used.
 
 ## [1.1.4] - 2017-11-09
-# Fixed
+### Fixed
 - Fix error when typing in a "non-active" text editor (like the Git panel) after
 this package activates.
 
 ## [1.1.3] - 2017-11-09
-# Fixed
+### Fixed
 - Fix scenario that happens in Atom 1.23 and newer (currently only Beta) where
 language-python removed the "decreaseNextIndent" pattern. This fixed #54.
 - Handle edge case with bracket pair on same line.
@@ -158,7 +189,14 @@ in the line (perhaps a string).
 - Fluid indent in tuples, lists, and parameters.
 - Unindent to tab after fluid indented tuples, lists and parameters.
 
-[Unreleased]: https://github.com/DSpeckhals/python-indent/compare/v1.1.4...HEAD
+[Unreleased]: https://github.com/DSpeckhals/python-indent/compare/v1.2.3...HEAD
+[1.2.3]: https://github.com/DSpeckhals/python-indent/compare/v1.2.2...v1.2.3
+[1.2.2]: https://github.com/DSpeckhals/python-indent/compare/v1.2.1...v1.2.2
+[1.2.1]: https://github.com/DSpeckhals/python-indent/compare/v1.2.0...v1.2.1
+[1.2.0]: https://github.com/DSpeckhals/python-indent/compare/v1.1.7...v1.2.0
+[1.1.7]: https://github.com/DSpeckhals/python-indent/compare/v1.1.6...v1.1.7
+[1.1.6]: https://github.com/DSpeckhals/python-indent/compare/v1.1.5...v1.1.6
+[1.1.5]: https://github.com/DSpeckhals/python-indent/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/DSpeckhals/python-indent/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/DSpeckhals/python-indent/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/DSpeckhals/python-indent/compare/v1.1.1...v1.1.2

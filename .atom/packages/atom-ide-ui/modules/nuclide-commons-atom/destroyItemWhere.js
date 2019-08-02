@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.destroyItemWhere = destroyItemWhere;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -15,7 +16,6 @@ exports.destroyItemWhere = destroyItemWhere;
  *  strict
  * @format
  */
-
 function destroyItemWhere(predicate) {
   atom.workspace.getPanes().forEach(pane => {
     pane.getItems().forEach(item => {

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,10 +6,14 @@ Object.defineProperty(exports, "__esModule", {
 exports.getModifierKeysFromMouseEvent = getModifierKeysFromMouseEvent;
 exports.getModifierKeyFromKeyboardEvent = getModifierKeyFromKeyboardEvent;
 
-var _types;
+function _types() {
+  const data = require("./types");
 
-function _load_types() {
-  return _types = require('./types');
+  _types = function () {
+    return data;
+  };
+
+  return data;
 }
 
 /**
@@ -23,27 +27,30 @@ function _load_types() {
  *  strict-local
  * @format
  */
-
 const KEYNAME_TO_PROPERTY = {
-  Meta: (_types || _load_types()).ModifierKeys.META,
-  Shift: (_types || _load_types()).ModifierKeys.SHIFT,
-  Alt: (_types || _load_types()).ModifierKeys.ALT,
-  Control: (_types || _load_types()).ModifierKeys.CTRL
+  Meta: _types().ModifierKeys.META,
+  Shift: _types().ModifierKeys.SHIFT,
+  Alt: _types().ModifierKeys.ALT,
+  Control: _types().ModifierKeys.CTRL
 };
 
 function getModifierKeysFromMouseEvent(e) {
   const keys = new Set();
+
   if (e.metaKey) {
-    keys.add((_types || _load_types()).ModifierKeys.META);
+    keys.add(_types().ModifierKeys.META);
   }
+
   if (e.shiftKey) {
-    keys.add((_types || _load_types()).ModifierKeys.SHIFT);
+    keys.add(_types().ModifierKeys.SHIFT);
   }
+
   if (e.altKey) {
-    keys.add((_types || _load_types()).ModifierKeys.ALT);
+    keys.add(_types().ModifierKeys.ALT);
   }
+
   if (e.ctrlKey) {
-    keys.add((_types || _load_types()).ModifierKeys.CTRL);
+    keys.add(_types().ModifierKeys.CTRL);
   }
 
   return keys;

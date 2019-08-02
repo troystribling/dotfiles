@@ -1,23 +1,14 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.bindObservableAsProps = bindObservableAsProps;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-/**
- * Injects any key/value pairs from the given Observable value into the component as named props.
- * e.g. `bindObservableAsProps(Observable.just({val: 42}), FooComponent)` will translate to
- * `<FooComponent val={42} />`.
- *
- * The resulting component re-renders on updates to the observable.
- * The wrapped component is guaranteed to render only if the observable has resolved;
- * otherwise, the wrapper component renders `null`.
- */
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -30,10 +21,18 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * @format
  */
 
+/**
+ * Injects any key/value pairs from the given Observable value into the component as named props.
+ * e.g. `bindObservableAsProps(Observable.just({val: 42}), FooComponent)` will translate to
+ * `<FooComponent val={42} />`.
+ *
+ * The resulting component re-renders on updates to the observable.
+ * The wrapped component is guaranteed to render only if the observable has resolved;
+ * otherwise, the wrapper component renders `null`.
+ */
 function bindObservableAsProps(stream, ComposedComponent) {
   // $FlowIssue The return type is guaranteed to be the same as the type of ComposedComponent.
-  return class extends _react.Component {
-
+  return class extends React.Component {
     constructor(props) {
       super(props);
       this._subscription = null;
@@ -58,8 +57,10 @@ function bindObservableAsProps(stream, ComposedComponent) {
       if (!this._resolved) {
         return null;
       }
+
       const props = Object.assign({}, this.props, this.state);
-      return _react.createElement(ComposedComponent, props);
+      return React.createElement(ComposedComponent, props);
     }
+
   };
 }

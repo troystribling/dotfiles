@@ -1,24 +1,33 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _classnames;
+function _classnames() {
+  const data = _interopRequireDefault(require("classnames"));
 
-function _load_classnames() {
-  return _classnames = _interopRequireDefault(require('classnames'));
+  _classnames = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _BreakpointListComponent;
+function _BreakpointListComponent() {
+  const data = _interopRequireDefault(require("./BreakpointListComponent"));
 
-function _load_BreakpointListComponent() {
-  return _BreakpointListComponent = _interopRequireDefault(require('./BreakpointListComponent'));
+  _BreakpointListComponent = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,21 +42,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  strict-local
  * @format
  */
-
-class BreakpointsView extends _react.PureComponent {
+class BreakpointsView extends React.PureComponent {
   render() {
-    const { service } = this.props;
-
-    return _react.createElement(
-      'div',
-      {
-        className: (0, (_classnames || _load_classnames()).default)('debugger-container-new', 'debugger-breakpoint-list') },
-      _react.createElement(
-        'div',
-        { className: 'debugger-pane-content ' },
-        _react.createElement((_BreakpointListComponent || _load_BreakpointListComponent()).default, { service: service })
-      )
-    );
+    const {
+      service
+    } = this.props;
+    return React.createElement("div", {
+      className: (0, _classnames().default)('debugger-container-new', 'debugger-breakpoint-list')
+    }, React.createElement("div", {
+      className: "debugger-pane-content "
+    }, React.createElement(_BreakpointListComponent().default, {
+      service: service
+    })));
   }
+
 }
+
 exports.default = BreakpointsView;

@@ -1,15 +1,23 @@
-'use strict';
+"use strict";
 
-var _createPackage;
+function _createPackage() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/createPackage"));
 
-function _load_createPackage() {
-  return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));
+  _createPackage = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _CodeActionManager;
+function _CodeActionManager() {
+  const data = require("./CodeActionManager");
 
-function _load_CodeActionManager() {
-  return _CodeActionManager = require('./CodeActionManager');
+  _CodeActionManager = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -25,11 +33,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  strict-local
  * @format
  */
-
 class Activation {
-
   constructor() {
-    this._codeActionManager = new (_CodeActionManager || _load_CodeActionManager()).CodeActionManager();
+    this._codeActionManager = new (_CodeActionManager().CodeActionManager)();
   }
 
   dispose() {
@@ -51,6 +57,7 @@ class Activation {
   consumeIndie(register) {
     return this._codeActionManager.consumeIndie(register);
   }
+
 }
 
-(0, (_createPackage || _load_createPackage()).default)(module.exports, Activation);
+(0, _createPackage().default)(module.exports, Activation);

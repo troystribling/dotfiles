@@ -1,9 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = humanizeKeystroke;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -19,7 +20,6 @@ exports.default = humanizeKeystroke;
 /*
  * adapted from https://github.com/atom/underscore-plus/blob/master/src/underscore-plus.coffee
  */
-
 const MAC_MODIFIER_KEYMAP = {
   alt: '\u2325',
   cmd: '\u2318',
@@ -32,7 +32,6 @@ const MAC_MODIFIER_KEYMAP = {
   shift: '\u21e7',
   up: '\u2191'
 };
-
 const NON_MAC_MODIFIER_KEYMAP = {
   alt: 'Alt',
   cmd: 'Cmd',
@@ -44,10 +43,9 @@ const NON_MAC_MODIFIER_KEYMAP = {
   right: 'Right',
   shift: 'Shift',
   up: 'Up'
-};
-
-// Human key combos should always explicitly state the shift key. This map is a disambiguator.
+}; // Human key combos should always explicitly state the shift key. This map is a disambiguator.
 // 'shift-version': 'no-shift-version'
+
 const SHIFT_KEYMAP = {
   _: '-',
   ':': ';',
@@ -61,12 +59,11 @@ const SHIFT_KEYMAP = {
   '|': '\\',
   '~': '`'
 };
+const FN_KEY_RE = /f[0-9]{1,2}/; // $FlowIssue
 
-const FN_KEY_RE = /f[0-9]{1,2}/;
-
-// $FlowIssue
 function flatten(arr) {
   let flattened = [];
+
   for (const el of arr) {
     if (Array.isArray(el)) {
       flattened = flattened.concat(flatten(el));
@@ -74,6 +71,7 @@ function flatten(arr) {
       flattened.push(el);
     }
   }
+
   return flattened;
 }
 
@@ -87,26 +85,33 @@ function humanizeKey(key, platform) {
   if (!key) {
     return key;
   }
+
   const modifierKeyMap = platform === 'darwin' ? MAC_MODIFIER_KEYMAP : NON_MAC_MODIFIER_KEYMAP;
+
   if (modifierKeyMap[key]) {
     return modifierKeyMap[key];
   }
+
   if (key.length === 1) {
     if (SHIFT_KEYMAP[key]) {
       return [modifierKeyMap.shift, SHIFT_KEYMAP[key]];
     }
+
     const uppercase = key.toUpperCase();
+
     if (key === uppercase && uppercase !== key.toLowerCase()) {
       return [modifierKeyMap.shift, uppercase];
     }
+
     return uppercase;
   }
+
   if (FN_KEY_RE.test(key)) {
     return key.toUpperCase();
   }
+
   return platform === 'darwin' ? key : capitalize(key);
 }
-
 /**
  * Humanize the keystroke according to platform conventions. This method
  * attempts to mirror the text the given keystroke would have if displayed in
@@ -116,12 +121,16 @@ function humanizeKey(key, platform) {
  * @param platform An optional String platform to humanize for (default: `process.platform`).
  * @return a humanized representation of the keystroke.
  */
+
+
 function humanizeKeystroke(keystroke, platform_) {
   let platform = platform_;
+
   if (!keystroke) {
     return keystroke;
-  }
-  // flowlint-next-line sketchy-null-string:off
+  } // flowlint-next-line sketchy-null-string:off
+
+
   platform = platform || process.platform;
   const separator = platform === 'darwin' ? '' : '+';
   let key;
@@ -129,21 +138,27 @@ function humanizeKeystroke(keystroke, platform_) {
   let splitKeystroke;
   const keystrokes = keystroke.split(' ');
   const humanizedKeystrokes = [];
+
   for (let i = 0; i < keystrokes.length; i++) {
     const currentKeystroke = keystrokes[i];
     splitKeystroke = currentKeystroke.split('-');
     keys = [];
+
     for (let index = 0; index < splitKeystroke.length; index++) {
       key = splitKeystroke[index];
+
       if (key === '' && splitKeystroke[index - 1] === '') {
         key = '-';
       }
+
       if (key) {
         keys.push(humanizeKey(key, platform));
       }
     }
+
     keys = Array.from(new Set(flatten(keys)));
     humanizedKeystrokes.push(keys.join(separator));
   }
+
   return humanizedKeystrokes.join(' ');
 }

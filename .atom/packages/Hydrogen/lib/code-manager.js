@@ -3,18 +3,20 @@
 import { Point, Range } from "atom";
 
 import escapeStringRegexp from "escape-string-regexp";
+import stripIndent from "strip-indent";
 import _ from "lodash";
 
 import {
   log,
   isMultilanguageGrammar,
   getEmbeddedScope,
-  rowRangeForCodeFoldAtBufferRow
+  rowRangeForCodeFoldAtBufferRow,
+  js_idx_to_char_idx
 } from "./utils";
 
 export function normalizeString(code: ?string) {
   if (code) {
-    return code.replace(/\r\n|\r/g, "\n").trim();
+    return code.replace(/\r\n|\r/g, "\n");
   }
   return null;
 }
@@ -50,6 +52,66 @@ export function getRows(
   return normalizeString(code);
 }
 
+export function getMetadataForRow(
+  editor: atom$TextEditor,
+  anyPointInCell: atom$Point
+): HydrogenCellType {
+  if (isMultilanguageGrammar(editor.getGrammar())) {
+    return "codecell";
+  }
+  let cellType = "codecell";
+  const buffer = editor.getBuffer();
+  anyPointInCell = new Point(
+    anyPointInCell.row,
+    buffer.lineLengthForRow(anyPointInCell.row)
+  );
+  const regexString = getRegexString(editor);
+  if (regexString) {
+    const regex = new RegExp(regexString);
+    buffer.backwardsScanInRange(
+      regex,
+      new Range(new Point(0, 0), anyPointInCell),
+      ({ match }) => {
+        for (let i = 1; i < match.length; i++) {
+          if (match[i]) {
+            switch (match[i]) {
+              case "md":
+              case "markdown":
+                cellType = "markdown";
+                break;
+              case "codecell":
+              default:
+                cellType = "codecell";
+                break;
+            }
+          }
+        }
+      }
+    );
+  }
+  return cellType;
+}
+
+export function removeCommentsMarkdownCell(
+  editor: atom$TextEditor,
+  text: string
+): string {
+  const commentStartString = getCommentStartString(editor);
+  if (!commentStartString) return text;
+
+  const lines = text.split("\n");
+  const editedLines = [];
+  _.forEach(lines, line => {
+    if (line.startsWith(commentStartString)) {
+      // Remove comment from start of line
+      editedLines.push(line.slice(commentStartString.length));
+    } else {
+      editedLines.push(line);
+    }
+  });
+  return stripIndent(editedLines.join("\n"));
+}
+
 export function getSelectedText(editor: atom$TextEditor) {
   return normalizeString(editor.getSelectedText());
 }
@@ -61,7 +123,7 @@ export function isComment(editor: atom$TextEditor, position: atom$Point) {
 }
 
 export function isBlank(editor: atom$TextEditor, row: number) {
-  return editor.getBuffer().isRowBlank(row) || editor.isBufferRowCommented(row);
+  return editor.getBuffer().isRowBlank(row);
 }
 
 export function escapeBlankRows(
@@ -92,7 +154,7 @@ export function getFoldRange(editor: atom$TextEditor, row: number) {
 export function getFoldContents(editor: atom$TextEditor, row: number) {
   const range = getFoldRange(editor, row);
   if (!range) return;
-  return [getRows(editor, range[0], range[1]), range[1]];
+  return { code: getRows(editor, range[0], range[1]), row: range[1] };
 }
 
 export function getCodeToInspect(editor: atom$TextEditor) {
@@ -114,11 +176,11 @@ export function getCodeToInspect(editor: atom$TextEditor) {
       cursorPosition += identifierEnd;
     }
   }
-
+  cursorPosition = js_idx_to_char_idx(cursorPosition, code);
   return [code, cursorPosition];
 }
 
-export function getRegexString(editor: atom$TextEditor) {
+export function getCommentStartString(editor: atom$TextEditor): ?string {
   const {
     commentStartString
     // $FlowFixMe: This is an unofficial API
@@ -130,12 +192,16 @@ export function getRegexString(editor: atom$TextEditor) {
     log("CellManager: No comment string defined in root scope");
     return null;
   }
+  return commentStartString.trimRight();
+}
 
-  const escapedCommentStartString = escapeStringRegexp(
-    commentStartString.trimRight()
-  );
+export function getRegexString(editor: atom$TextEditor) {
+  const commentStartString = getCommentStartString(editor);
+  if (!commentStartString) return null;
 
-  const regexString = `${escapedCommentStartString}(%%| %%| <codecell>| In\[[0-9 ]*\]:?)`;
+  const escapedCommentStartString = escapeStringRegexp(commentStartString);
+
+  const regexString = `${escapedCommentStartString} *%% *(md|markdown)?| *<(codecell|md|markdown)>| *(In\[[0-9 ]*\])`;
 
   return regexString;
 }
@@ -148,7 +214,9 @@ export function getBreakpoints(editor: atom$TextEditor) {
   if (regexString) {
     const regex = new RegExp(regexString, "g");
     buffer.scan(regex, ({ range }) => {
-      breakpoints.push(range.start);
+      if (isComment(editor, range.start)) {
+        breakpoints.push(range.start);
+      }
     });
   }
 
@@ -159,8 +227,15 @@ export function getBreakpoints(editor: atom$TextEditor) {
   return breakpoints;
 }
 
-function getCurrentCodeCell(editor: atom$TextEditor) {
+function getCell(editor: atom$TextEditor, anyPointInCell?: atom$Point) {
+  if (!anyPointInCell) {
+    anyPointInCell = editor.getCursorBufferPosition();
+  }
   const buffer = editor.getBuffer();
+  anyPointInCell = new Point(
+    anyPointInCell.row,
+    buffer.lineLengthForRow(anyPointInCell.row)
+  );
   let start = new Point(0, 0);
   let end = buffer.getEndPosition();
   const regexString = getRegexString(editor);
@@ -170,28 +245,27 @@ function getCurrentCodeCell(editor: atom$TextEditor) {
   }
 
   const regex = new RegExp(regexString);
-  const cursor = editor.getCursorBufferPosition();
 
-  while (cursor.row < end.row && isComment(editor, cursor)) {
-    cursor.row += 1;
-    cursor.column = 0;
-  }
-
-  if (cursor.row > 0) {
+  if (anyPointInCell.row >= 0) {
     buffer.backwardsScanInRange(
       regex,
-      new Range(start, cursor),
+      new Range(start, anyPointInCell),
       ({ range }) => {
         start = new Point(range.start.row + 1, 0);
       }
     );
   }
 
-  buffer.scanInRange(regex, new Range(cursor, end), ({ range }) => {
+  buffer.scanInRange(regex, new Range(anyPointInCell, end), ({ range }) => {
     end = range.start;
   });
 
-  log("CellManager: Cell [start, end]:", [start, end], "cursor:", cursor);
+  log(
+    "CellManager: Cell [start, end]:",
+    [start, end],
+    "anyPointInCell:",
+    anyPointInCell
+  );
 
   return new Range(start, end);
 }
@@ -215,7 +289,7 @@ function getCurrentFencedCodeBlock(editor: atom$TextEditor) {
   let start = cursor.row;
   let end = cursor.row;
   const scope = getEmbeddedScope(editor, cursor);
-  if (!scope) return getCurrentCodeCell(editor);
+  if (!scope) return getCell(editor);
   while (start > 0 && isEmbeddedCode(editor, scope, start - 1)) {
     start -= 1;
   }
@@ -223,15 +297,14 @@ function getCurrentFencedCodeBlock(editor: atom$TextEditor) {
   while (end < bufferEndRow && isEmbeddedCode(editor, scope, end + 1)) {
     end += 1;
   }
-
-  return new Range([start, 0], [end, 9999999]);
+  return new Range([start, 0], [end + 1, 0]);
 }
 
 export function getCurrentCell(editor: atom$TextEditor) {
   if (isMultilanguageGrammar(editor.getGrammar())) {
     return getCurrentFencedCodeBlock(editor);
   }
-  return getCurrentCodeCell(editor);
+  return getCell(editor);
 }
 
 export function getCells(
@@ -243,16 +316,26 @@ export function getCells(
   } else {
     breakpoints = getBreakpoints(editor);
   }
-  return getCellsForBreakPoints(breakpoints);
+  return getCellsForBreakPoints(editor, breakpoints);
 }
 
-export function getCellsForBreakPoints(breakpoints: Array<atom$Point>) {
+export function getCellsForBreakPoints(
+  editor: atom$TextEditor,
+  breakpoints: Array<atom$Point>
+): Array<atom$Range> {
   let start = new Point(0, 0);
-  return _.map(breakpoints, end => {
-    const cell = new Range(start, end);
-    start = new Point(end.row + 1, 0);
-    return cell;
+  // Let start be earliest row with text
+  editor.scan(/\S/, match => {
+    start = new Point(match.range.start.row, 0);
+    match.stop();
   });
+  return _.compact(
+    _.map(breakpoints, end => {
+      const cell = end.isEqual(start) ? null : new Range(start, end);
+      start = new Point(end.row + 1, 0);
+      return cell;
+    })
+  );
 }
 
 export function moveDown(editor: atom$TextEditor, row: number) {
@@ -291,7 +374,11 @@ export function findPrecedingBlock(
       row = previousRow;
     }
     if (sameIndent && !blank && !isEnd) {
-      return [getRows(editor, previousRow, row), row];
+      const cell = getCell(editor, new Point(row, 0));
+      if (cell.start.row > row) {
+        return { code: "", row };
+      }
+      return { code: getRows(editor, previousRow, row), row };
     }
     previousRow -= 1;
   }
@@ -303,12 +390,22 @@ export function findCodeBlock(editor: atom$TextEditor) {
 
   if (selectedText) {
     const selectedRange = editor.getSelectedBufferRange();
+    const cell = getCell(editor, selectedRange.end);
+    const startPoint = cell.start.isGreaterThan(selectedRange.start)
+      ? cell.start
+      : selectedRange.start;
     let endRow = selectedRange.end.row;
     if (selectedRange.end.column === 0) {
       endRow -= 1;
     }
-    endRow = escapeBlankRows(editor, selectedRange.start.row, endRow);
-    return [selectedText, endRow];
+    endRow = escapeBlankRows(editor, startPoint.row, endRow);
+    if (startPoint.isGreaterThanOrEqual(selectedRange.end)) {
+      return { code: "", row: endRow };
+    }
+    return {
+      code: getTextInRange(editor, startPoint, selectedRange.end),
+      row: endRow
+    };
   }
 
   const cursor = editor.getLastCursor();
@@ -329,5 +426,49 @@ export function findCodeBlock(editor: atom$TextEditor) {
   if (isBlank(editor, row) || getRow(editor, row) === "end") {
     return findPrecedingBlock(editor, row, indentLevel);
   }
-  return [getRow(editor, row), row];
+  const cell = getCell(editor, new Point(row, 0));
+  if (cell.start.row > row) {
+    return { code: "", row };
+  }
+  return { code: getRow(editor, row), row };
+}
+
+export function foldCurrentCell(editor: atom$TextEditor) {
+  const cellRange = getCurrentCell(editor);
+  const newRange = adjustCellFoldRange(editor, cellRange);
+  editor.setSelectedBufferRange(newRange);
+  editor.getSelections()[0].fold();
+}
+
+export function foldAllButCurrentCell(editor: atom$TextEditor) {
+  const initialSelections = editor.getSelectedBufferRanges();
+
+  // I take .slice(1) because there's always an empty cell range from [0,0] to
+  // [0,0]
+  const allCellRanges = getCells(editor).slice(1);
+  const currentCellRange = getCurrentCell(editor);
+  const newRanges = allCellRanges
+    .filter(cellRange => !cellRange.isEqual(currentCellRange))
+    .map(cellRange => adjustCellFoldRange(editor, cellRange));
+
+  editor.setSelectedBufferRanges(newRanges);
+  editor.getSelections().forEach(selection => selection.fold());
+
+  // Restore selections
+  editor.setSelectedBufferRanges(initialSelections);
+}
+
+function adjustCellFoldRange(editor: atom$TextEditor, range: atom$Range) {
+  const startRow = range.start.row > 0 ? range.start.row - 1 : 0;
+  const startWidth = editor.lineTextForBufferRow(startRow).length;
+  const endRow =
+    range.end.row == editor.getLastBufferRow()
+      ? range.end.row
+      : range.end.row - 1;
+  const endWidth = editor.lineTextForBufferRow(endRow).length;
+
+  return new Range(
+    new Point(startRow, startWidth),
+    new Point(endRow, endWidth)
+  );
 }

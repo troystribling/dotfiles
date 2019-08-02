@@ -1,24 +1,33 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _featureConfig;
+function _featureConfig() {
+  const data = _interopRequireDefault(require("../nuclide-commons-atom/feature-config"));
 
-function _load_featureConfig() {
-  return _featureConfig = _interopRequireDefault(require('../nuclide-commons-atom/feature-config'));
+  _featureConfig = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _SettingsUtils;
+function _SettingsUtils() {
+  const data = require("./SettingsUtils");
 
-function _load_SettingsUtils() {
-  return _SettingsUtils = require('./SettingsUtils');
+  _SettingsUtils = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,8 +42,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
-class SettingsSelect extends _react.Component {
+class SettingsSelect extends React.Component {
   constructor(...args) {
     var _temp;
 
@@ -46,53 +54,40 @@ class SettingsSelect extends _react.Component {
 
   render() {
     const keyPath = this.props.keyPath;
-    const id = (0, (_SettingsUtils || _load_SettingsUtils()).normalizeIdentifier)(keyPath);
+    const id = (0, _SettingsUtils().normalizeIdentifier)(keyPath);
     const title = this.props.title;
     const description = this.props.description;
     const value = this.props.value;
 
-    const options = (_featureConfig || _load_featureConfig()).default.getSchema(keyPath);
+    const options = _featureConfig().default.getSchema(keyPath);
 
     const optionElements = [];
+
     if (options.enum) {
       options.enum.forEach((option, i) => {
         const optionValue = typeof option === 'object' ? option.value : option;
         const optionDescription = typeof option === 'object' ? option.description : option;
-        optionElements.push(_react.createElement(
-          'option',
-          { value: optionValue, key: i },
-          optionDescription
-        ));
+        optionElements.push(React.createElement("option", {
+          value: optionValue,
+          key: i
+        }, optionDescription));
       });
     }
 
-    return _react.createElement(
-      'div',
-      null,
-      _react.createElement(
-        'label',
-        { className: 'control-label' },
-        _react.createElement(
-          'div',
-          { className: 'setting-title' },
-          title
-        ),
-        _react.createElement(
-          'div',
-          { className: 'setting-description' },
-          description
-        )
-      ),
-      _react.createElement(
-        'select',
-        {
-          className: 'form-control',
-          id: id,
-          onChange: this._handleChange,
-          value: value },
-        optionElements
-      )
-    );
+    return React.createElement("div", null, React.createElement("label", {
+      className: "control-label"
+    }, React.createElement("div", {
+      className: "setting-title"
+    }, title), React.createElement("div", {
+      className: "setting-description"
+    }, description)), React.createElement("select", {
+      className: "form-control",
+      id: id,
+      onChange: this._handleChange,
+      value: value
+    }, optionElements));
   }
+
 }
+
 exports.default = SettingsSelect;

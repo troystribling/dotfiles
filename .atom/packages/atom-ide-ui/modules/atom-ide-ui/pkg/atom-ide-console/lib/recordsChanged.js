@@ -1,22 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = recordsChanged;
 
-var _idx;
-
-function _load_idx() {
-  return _idx = _interopRequireDefault(require('idx'));
-}
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Check to see if the records have changed. This is optimized to take advantage of the knowledge
- * knowledge that record lists are only ever appended.
- */
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -29,6 +17,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @format
  */
 
+/**
+ * Check to see if the records have changed. This is optimized to take advantage of the knowledge
+ * knowledge that record lists are only ever appended.
+ */
 function recordsChanged(a, b) {
   var _ref, _ref2;
 

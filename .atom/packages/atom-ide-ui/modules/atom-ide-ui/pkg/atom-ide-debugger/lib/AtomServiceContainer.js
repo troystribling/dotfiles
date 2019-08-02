@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -18,36 +18,41 @@ exports.isNuclideEnvironment = isNuclideEnvironment;
 exports.addDebugConfigurationProvider = addDebugConfigurationProvider;
 exports.resolveDebugConfiguration = resolveDebugConfiguration;
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-let _raiseNativeNotification = null; /**
-                                      * Copyright (c) 2017-present, Facebook, Inc.
-                                      * All rights reserved.
-                                      *
-                                      * This source code is licensed under the BSD-style license found in the
-                                      * LICENSE file in the root directory of this source tree. An additional grant
-                                      * of patent rights can be found in the PATENTS file in the same directory.
-                                      *
-                                      * 
-                                      * @format
-                                      */
-
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+let _raiseNativeNotification = null;
 let _registerExecutor = null;
 let _datatipService = null;
 let _createConsole = null;
 let _terminalService = null;
 let _rpcService = null;
+
 const _configurationProviders = new Map();
 
 function setConsoleService(createConsole) {
   _createConsole = createConsole;
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+  return new (_UniversalDisposable().default)(() => {
     _createConsole = null;
   });
 }
@@ -58,7 +63,7 @@ function getConsoleService() {
 
 function setConsoleRegisterExecutor(registerExecutor) {
   _registerExecutor = registerExecutor;
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+  return new (_UniversalDisposable().default)(() => {
     _registerExecutor = null;
   });
 }
@@ -69,7 +74,7 @@ function getConsoleRegisterExecutor() {
 
 function setDatatipService(datatipService) {
   _datatipService = datatipService;
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+  return new (_UniversalDisposable().default)(() => {
     _datatipService = null;
   });
 }
@@ -88,7 +93,7 @@ function getNotificationService() {
 
 function setTerminalService(terminalService) {
   _terminalService = terminalService;
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+  return new (_UniversalDisposable().default)(() => {
     _terminalService = null;
   });
 }
@@ -99,7 +104,7 @@ function getTerminalService() {
 
 function setRpcService(rpcService) {
   _rpcService = rpcService;
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+  return new (_UniversalDisposable().default)(() => {
     _rpcService = null;
   });
 }
@@ -110,16 +115,20 @@ function isNuclideEnvironment() {
 
 function addDebugConfigurationProvider(provider) {
   const existingProvider = _configurationProviders.get(provider.adapterType);
+
   if (existingProvider != null) {
     throw new Error('Debug Configuration Provider already exists for adapter type: ' + provider.adapterType);
   }
+
   _configurationProviders.set(provider.adapterType, provider);
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+
+  return new (_UniversalDisposable().default)(() => {
     _configurationProviders.delete(provider.adapterType);
   });
 }
 
 async function resolveDebugConfiguration(configuration) {
   const existingProvider = _configurationProviders.get(configuration.adapterType);
+
   return existingProvider != null ? existingProvider.resolveConfiguration(configuration) : configuration;
 }

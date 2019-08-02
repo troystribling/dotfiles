@@ -1,18 +1,23 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _collection;
+function _collection() {
+  const data = require("../nuclide-commons/collection");
 
-function _load_collection() {
-  return _collection = require('../nuclide-commons/collection');
+  _collection = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -25,17 +30,21 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * 
  * @format
  */
-
-class HighlightedText extends _react.Component {
+class HighlightedText extends React.Component {
   shouldComponentUpdate(nextProps) {
-    return this.props.text !== nextProps.text || !(0, (_collection || _load_collection()).arrayEqual)(this.props.highlightedRanges, nextProps.highlightedRanges, rangeEqual);
+    return this.props.text !== nextProps.text || !(0, _collection().arrayEqual)(this.props.highlightedRanges, nextProps.highlightedRanges, rangeEqual);
   }
 
   render() {
-    const { className, highlightedRanges, style, text } = this.props;
+    const {
+      className,
+      highlightedRanges,
+      style,
+      text
+    } = this.props; // generate counterpart unhighlightedRanges for the highlightedRanges
 
-    // generate counterpart unhighlightedRanges for the highlightedRanges
     const unhighlightedRanges = [];
+
     for (let i = 0; i < highlightedRanges.length; i++) {
       const lastHighlighted = highlightedRanges[i - 1];
       const currentHighlighted = highlightedRanges[i];
@@ -50,10 +59,8 @@ class HighlightedText extends _react.Component {
         unhighlightedRanges.push([lastHighlighted[1], currentHighlighted[0]]);
       }
 
-      if (
-      // if the last matched range
-      i === highlightedRanges.length - 1 &&
-      // doesn't end perfectly at the end of the text,
+      if ( // if the last matched range
+      i === highlightedRanges.length - 1 && // doesn't end perfectly at the end of the text,
       currentHighlighted[1] !== text.length) {
         // add an additional unmatched range to cover the rest of the text
         unhighlightedRanges.push([currentHighlighted[1], text.length]);
@@ -65,13 +72,15 @@ class HighlightedText extends _react.Component {
     }
 
     if (!(unhighlightedRanges.length === highlightedRanges.length || unhighlightedRanges.length === highlightedRanges.length + 1)) {
-      throw new Error('Invariant violation: "unhighlightedRanges.length === highlightedRanges.length ||\\n        unhighlightedRanges.length === highlightedRanges.length + 1"');
+      throw new Error("Invariant violation: \"unhighlightedRanges.length === highlightedRanges.length ||\\n        unhighlightedRanges.length === highlightedRanges.length + 1\"");
     }
 
     const renderedSequences = [];
+
     for (let i = 0; i < unhighlightedRanges.length; i++) {
       const unhighlightedRange = unhighlightedRanges[i];
       const highlightedRange = highlightedRanges[i];
+
       if (!rangeEmpty(unhighlightedRange)) {
         renderedSequences.push(renderUnmatchedSubsequence(text.slice(unhighlightedRange[0], unhighlightedRange[1]), unhighlightedRange.join(',')));
       }
@@ -81,25 +90,24 @@ class HighlightedText extends _react.Component {
       }
     }
 
-    return _react.createElement(
-      'span',
-      { className: className, style: style },
-      renderedSequences
-    );
+    return React.createElement("span", {
+      className: className,
+      style: style
+    }, renderedSequences);
   }
+
 }
 
 exports.default = HighlightedText;
+
 function renderSubsequence(seq, props) {
-  return _react.createElement(
-    'span',
-    props,
-    seq
-  );
+  return React.createElement("span", props, seq);
 }
 
 function renderUnmatchedSubsequence(seq, key) {
-  return renderSubsequence(seq, { key });
+  return renderSubsequence(seq, {
+    key
+  });
 }
 
 function renderMatchedSubsequence(seq, key) {

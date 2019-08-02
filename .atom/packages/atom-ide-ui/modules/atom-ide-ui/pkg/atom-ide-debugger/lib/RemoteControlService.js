@@ -1,30 +1,43 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _vscodeDebugprotocol;
+function DebugProtocol() {
+  const data = _interopRequireWildcard(require("vscode-debugprotocol"));
 
-function _load_vscodeDebugprotocol() {
-  return _vscodeDebugprotocol = _interopRequireWildcard(require('vscode-debugprotocol'));
+  DebugProtocol = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _constants;
+function _constants() {
+  const data = require("./constants");
 
-function _load_constants() {
-  return _constants = require('./constants');
+  _constants = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -37,19 +50,21 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * 
  * @format
  */
-
 class RemoteControlService {
-
   constructor(service) {
     this._service = service;
-    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();
+    this._disposables = new (_UniversalDisposable().default)();
   }
 
   dispose() {
     this._disposables.dispose();
   }
 
-  onSessionEnd(focusedProcess, disposables) {
+  onDidStartDebugSession(callback) {
+    return this._service.onDidStartDebugSession(callback);
+  }
+
+  _onSessionEnd(focusedProcess, disposables) {
     disposables.add(this._service.viewModel.onDidFocusProcess(() => {
       if (!this._service.getModel().getProcesses().includes(focusedProcess)) {
         disposables.dispose();
@@ -57,40 +72,28 @@ class RemoteControlService {
     }));
   }
 
-  async startDebugging(processInfo) {
-    const instance = await this.startVspDebugging(processInfo.getProcessConfig());
-
-    processInfo.setVspDebuggerInstance(instance);
-
-    const { focusedProcess } = this._service.viewModel;
-
-    if (!(focusedProcess != null)) {
-      throw new Error('Invariant violation: "focusedProcess != null"');
-    }
-
-    const disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();
-    disposables.add(processInfo);
-    this.onSessionEnd(focusedProcess, disposables);
-  }
-
   async startVspDebugging(config) {
     await this._service.startDebugging(config);
-
-    const { viewModel } = this._service;
-    const { focusedProcess } = viewModel;
+    const {
+      viewModel
+    } = this._service;
+    const {
+      focusedProcess
+    } = viewModel;
 
     if (!(focusedProcess != null)) {
-      throw new Error('Invariant violation: "focusedProcess != null"');
+      throw new Error("Invariant violation: \"focusedProcess != null\"");
     }
 
     const isFocusedProcess = () => {
-      return this._service.getDebuggerMode() !== (_constants || _load_constants()).DebuggerMode.STOPPED && viewModel.focusedProcess === focusedProcess;
+      return this._service.getDebuggerMode() !== _constants().DebuggerMode.STOPPED && viewModel.focusedProcess === focusedProcess;
     };
 
     const customRequest = async (request, args) => {
       if (!isFocusedProcess()) {
         throw new Error('Cannot send custom requests to a no longer active debug session!');
       }
+
       return focusedProcess.session.custom(request, args);
     };
 
@@ -98,15 +101,17 @@ class RemoteControlService {
       if (!isFocusedProcess()) {
         throw new Error('Cannot send custom requests to a no longer active debug session!');
       }
+
       return focusedProcess.session.observeCustomEvents();
     };
 
-    const disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();
+    const disposables = new (_UniversalDisposable().default)();
+
     const addCustomDisposable = disposable => {
       disposables.add(disposable);
     };
 
-    this.onSessionEnd(focusedProcess, disposables);
+    this._onSessionEnd(focusedProcess, disposables);
 
     return Object.freeze({
       customRequest,
@@ -114,5 +119,7 @@ class RemoteControlService {
       addCustomDisposable
     });
   }
+
 }
+
 exports.default = RemoteControlService;

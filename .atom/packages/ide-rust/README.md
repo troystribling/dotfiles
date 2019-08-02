@@ -12,7 +12,7 @@ Rust language support for Atom-IDE, powered by the Rust Language Server (RLS).
  - Find references (`ctrl-alt-shift-f` or `cmd-opt-shift-f` also in context menu)
  - Format file with rustfmt (`ctrl-shift-c` or `cmd-shift-c` also in context menu)
  - Format on save (disabled by default, see `atom-ide-ui` settings)
- - Rls toolchain selection in package settings
+ - Supports rustup default & override toolchains, or manually select rls toolchain in package settings
  - Rls toolchain update checking at startup & every 6 hours thereafter
  - Global Rls configuration for `all_targets`, `clippy_preference`
  - Per-project Rls configuration using `rls.toml` file at project root, see [rls#configuration](https://github.com/rust-lang-nursery/rls#configuration)
@@ -23,6 +23,7 @@ Rust language support for Atom-IDE, powered by the Rust Language Server (RLS).
  - Graceful handling of Rls being missing from the distribution _(which is/was somewhat common on the nightly channel)_
    * Warns before installing a rust version without Rls or when using an already installed one
    * Automatic detection of, and prompt to install, the latest working dated release
+ - Rust language snippets
 
 ## Install
 You can install from the command line with:
@@ -45,6 +46,18 @@ For example, a project with *'rust_foo'* & *'rust_bar'* directories/crates could
 members = [
     "rust_foo",
     "rust_bar",
+]
+```
+
+Even if you only have a single crate in your Atom project, RLS can only detect it if you
+have a root `Cargo.toml`. If your project is setup such that you have one or more crate nested
+in folders under the root, you can add a root `Cargo.toml` file and setup a Cargo workspace that
+includes all the crates in the project:
+```toml
+# Cargo.toml
+[workspace]
+members = [
+    "foo/bar/rust_foo",
 ]
 ```
 

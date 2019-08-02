@@ -1,105 +1,155 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.OutlineView = undefined;
+exports.OutlineView = void 0;
 
-var _Atomicon;
+function _Atomicon() {
+  const data = _interopRequireWildcard(require("../../../../nuclide-commons-ui/Atomicon"));
 
-function _load_Atomicon() {
-  return _Atomicon = _interopRequireDefault(require('../../../../nuclide-commons-ui/Atomicon'));
+  _Atomicon = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Atomicon2;
+function _HighlightedText() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-ui/HighlightedText"));
 
-function _load_Atomicon2() {
-  return _Atomicon2 = require('../../../../nuclide-commons-ui/Atomicon');
+  _HighlightedText = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _HighlightedText;
+function _collection() {
+  const data = require("../../../../nuclide-commons/collection");
 
-function _load_HighlightedText() {
-  return _HighlightedText = _interopRequireDefault(require('../../../../nuclide-commons-ui/HighlightedText'));
+  _collection = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _collection;
+function _memoizeUntilChanged() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/memoizeUntilChanged"));
 
-function _load_collection() {
-  return _collection = require('../../../../nuclide-commons/collection');
+  _memoizeUntilChanged = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _memoizeUntilChanged;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_memoizeUntilChanged() {
-  return _memoizeUntilChanged = _interopRequireDefault(require('../../../../nuclide-commons/memoizeUntilChanged'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+var React = _interopRequireWildcard(require("react"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));
+function _classnames() {
+  const data = _interopRequireDefault(require("classnames"));
+
+  _classnames = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireWildcard(require('react'));
+function _nullthrows() {
+  const data = _interopRequireDefault(require("nullthrows"));
 
-var _classnames;
+  _nullthrows = function () {
+    return data;
+  };
 
-function _load_classnames() {
-  return _classnames = _interopRequireDefault(require('classnames'));
+  return data;
 }
 
-var _nullthrows;
+function _matchIndexesToRanges() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/matchIndexesToRanges"));
 
-function _load_nullthrows() {
-  return _nullthrows = _interopRequireDefault(require('nullthrows'));
+  _matchIndexesToRanges = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _matchIndexesToRanges;
+function _analytics() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/analytics"));
 
-function _load_matchIndexesToRanges() {
-  return _matchIndexesToRanges = _interopRequireDefault(require('../../../../nuclide-commons/matchIndexesToRanges'));
+  _analytics = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _analytics;
+function _goToLocation() {
+  const data = require("../../../../nuclide-commons-atom/go-to-location");
 
-function _load_analytics() {
-  return _analytics = _interopRequireDefault(require('../../../../nuclide-commons/analytics'));
+  _goToLocation = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _goToLocation;
+function _LoadingSpinner() {
+  const data = require("../../../../nuclide-commons-ui/LoadingSpinner");
 
-function _load_goToLocation() {
-  return _goToLocation = require('../../../../nuclide-commons-atom/go-to-location');
+  _LoadingSpinner = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _LoadingSpinner;
+function _EmptyState() {
+  const data = require("../../../../nuclide-commons-ui/EmptyState");
 
-function _load_LoadingSpinner() {
-  return _LoadingSpinner = require('../../../../nuclide-commons-ui/LoadingSpinner');
+  _EmptyState = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _EmptyState;
+function _SelectableTree() {
+  const data = require("../../../../nuclide-commons-ui/SelectableTree");
 
-function _load_EmptyState() {
-  return _EmptyState = require('../../../../nuclide-commons-ui/EmptyState');
+  _SelectableTree = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _SelectableTree;
+function _OutlineViewSearch() {
+  const data = require("./OutlineViewSearch");
 
-function _load_SelectableTree() {
-  return _SelectableTree = require('../../../../nuclide-commons-ui/SelectableTree');
+  _OutlineViewSearch = function () {
+    return data;
+  };
+
+  return data;
 }
-
-var _OutlineViewSearch;
-
-function _load_OutlineViewSearch() {
-  return _OutlineViewSearch = require('./OutlineViewSearch');
-}
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -112,7 +162,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
 const TOKEN_KIND_TO_CLASS_NAME_MAP = {
   keyword: 'syntax--keyword',
   'class-name': 'syntax--entity syntax--name syntax--class',
@@ -125,7 +174,7 @@ const TOKEN_KIND_TO_CLASS_NAME_MAP = {
   type: 'syntax--support syntax--type'
 };
 
-class OutlineView extends _react.PureComponent {
+class OutlineView extends React.PureComponent {
   constructor(...args) {
     var _temp;
 
@@ -154,22 +203,19 @@ class OutlineView extends _react.PureComponent {
   }
 
   render() {
-    return _react.createElement(
-      'div',
-      { className: 'outline-view' },
-      _react.createElement(OutlineViewComponent, {
-        outline: this.props.outline,
-        ref: this._setOutlineViewRef
-      })
-    );
+    return React.createElement("div", {
+      className: "outline-view"
+    }, React.createElement(OutlineViewComponent, {
+      outline: this.props.outline,
+      ref: this._setOutlineViewRef
+    }));
   }
+
 }
 
 exports.OutlineView = OutlineView;
 
-
-class OutlineViewComponent extends _react.PureComponent {
-
+class OutlineViewComponent extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -185,65 +231,61 @@ class OutlineViewComponent extends _react.PureComponent {
   }
 
   render() {
-    const { outline } = this.props;
+    const {
+      outline
+    } = this.props;
 
     switch (outline.kind) {
       case 'empty':
       case 'not-text-editor':
-        return _react.createElement((_EmptyState || _load_EmptyState()).EmptyState, {
-          title: 'No outline available',
-          message: 'Open a file to see its outline.'
+        return React.createElement(_EmptyState().EmptyState, {
+          title: "No outline available",
+          message: "Open a file to see its outline."
         });
+
       case 'loading':
-        return _react.createElement(
-          'div',
-          { className: 'outline-view-loading' },
-          _react.createElement((_LoadingSpinner || _load_LoadingSpinner()).LoadingSpinner, {
-            className: 'inline-block',
-            size: (_LoadingSpinner || _load_LoadingSpinner()).LoadingSpinnerSizes.MEDIUM
-          })
-        );
+        return React.createElement("div", {
+          className: "outline-view-loading"
+        }, React.createElement(_LoadingSpinner().LoadingSpinner, {
+          className: "inline-block",
+          size: _LoadingSpinner().LoadingSpinnerSizes.MEDIUM
+        }));
+
       case 'no-provider':
-        return outline.grammar === 'Null Grammar' ? _react.createElement((_EmptyState || _load_EmptyState()).EmptyState, {
-          title: 'No outline available',
-          message: 'Atom doesn\'t recognize this file\'s language. Make sure this file has an extension and has been saved.'
-        }) : _react.createElement((_EmptyState || _load_EmptyState()).EmptyState, {
-          title: 'No outline available',
-          message: _react.createElement(
-            'div',
-            null,
-            outline.grammar,
-            ' files do not currently support outlines.',
-            ' ',
-            _react.createElement(
-              'a',
-              {
-                href: '#',
-                onClick: () => (0, (_goToLocation || _load_goToLocation()).goToLocation)(`atom://config/install/package:ide-${outline.grammar}`) },
-              'Install an IDE package first.'
-            )
-          )
+        return outline.grammar === 'Null Grammar' ? React.createElement(_EmptyState().EmptyState, {
+          title: "No outline available",
+          message: "Atom doesn't recognize this file's language. Make sure this file has an extension and has been saved."
+        }) : React.createElement(_EmptyState().EmptyState, {
+          title: "No outline available",
+          message: React.createElement("div", null, outline.grammar, " files do not currently support outlines.", ' ', React.createElement("a", {
+            href: "#",
+            onClick: () => (0, _goToLocation().goToLocation)(`atom://config/install/package:ide-${outline.grammar}`)
+          }, "Install an IDE package first."))
         });
+
       case 'provider-no-outline':
-        return _react.createElement((_EmptyState || _load_EmptyState()).EmptyState, {
-          title: 'No outline available',
-          message: 'This is likely an error with the language package.'
+        return React.createElement(_EmptyState().EmptyState, {
+          title: "No outline available",
+          message: "This is likely an error with the language package."
         });
+
       case 'outline':
-        return _react.createElement(OutlineViewCore, {
+        return React.createElement(OutlineViewCore, {
           outline: outline,
           ref: this._setOutlineViewCoreRef
         });
+
       default:
         outline;
     }
   }
+
 }
 
 /**
  * Contains both the search field and the scrollable outline tree
  */
-class OutlineViewCore extends _react.PureComponent {
+class OutlineViewCore extends React.PureComponent {
   constructor(...args) {
     var _temp2;
 
@@ -256,31 +298,35 @@ class OutlineViewCore extends _react.PureComponent {
       this._searchRef = element;
     }, this._handleCollapse = nodePath => {
       this.setState(prevState => {
-        const existing = this.state.collapsedPaths.find(path => (0, (_collection || _load_collection()).arrayEqual)(path, nodePath));
+        const existing = this.state.collapsedPaths.find(path => (0, _collection().arrayEqual)(path, nodePath));
+
         if (existing == null) {
           return {
+            // TODO: (wbinnssmith) T30771435 this setState depends on current state
+            // and should use an updater function rather than an object
+            // eslint-disable-next-line react/no-access-state-in-setstate
             collapsedPaths: [...this.state.collapsedPaths, nodePath]
           };
         }
       });
     }, this._handleExpand = nodePath => {
       this.setState(prevState => ({
-        collapsedPaths: prevState.collapsedPaths.filter(path => !(0, (_collection || _load_collection()).arrayEqual)(path, nodePath))
+        collapsedPaths: prevState.collapsedPaths.filter(path => !(0, _collection().arrayEqual)(path, nodePath))
       }));
     }, this._handleSelect = nodePath => {
-      (_analytics || _load_analytics()).default.track('atom-ide-outline-view:go-to-location');
+      _analytics().default.track('atom-ide-outline-view:go-to-location');
 
       if (!(this.props.outline.kind === 'outline')) {
-        throw new Error('Invariant violation: "this.props.outline.kind === \'outline\'"');
+        throw new Error("Invariant violation: \"this.props.outline.kind === 'outline'\"");
       }
 
-      const { editor } = this.props.outline;
+      const {
+        editor
+      } = this.props.outline;
       const outlineNode = selectNodeFromPath(this.props.outline, nodePath);
+      const landingPosition = outlineNode.landingPosition != null ? outlineNode.landingPosition : outlineNode.startPosition; // single click moves the cursor, but does not focus the editor
 
-      const landingPosition = outlineNode.landingPosition != null ? outlineNode.landingPosition : outlineNode.startPosition;
-
-      // single click moves the cursor, but does not focus the editor
-      (0, (_goToLocation || _load_goToLocation()).goToLocationInEditor)(editor, {
+      (0, _goToLocation().goToLocationInEditor)(editor, {
         line: landingPosition.row,
         column: landingPosition.column
       });
@@ -288,36 +334,41 @@ class OutlineViewCore extends _react.PureComponent {
       this._focusEditor();
     }, this._handleTripleClick = nodePath => {
       if (!(this.props.outline.kind === 'outline')) {
-        throw new Error('Invariant violation: "this.props.outline.kind === \'outline\'"');
+        throw new Error("Invariant violation: \"this.props.outline.kind === 'outline'\"");
       }
 
-      const { editor } = this.props.outline;
-      const outlineNode = selectNodeFromPath(this.props.outline, nodePath);
+      const {
+        editor
+      } = this.props.outline;
+      const outlineNode = selectNodeFromPath(this.props.outline, nodePath); // triple click selects the symbol's region
 
-      // triple click selects the symbol's region
       const endPosition = outlineNode.endPosition;
+
       if (endPosition != null) {
         editor.selectToBufferPosition(endPosition);
       }
+
       this._focusEditor();
     }, this._focusEditor = () => {
       if (!(this.props.outline.kind === 'outline')) {
-        throw new Error('Invariant violation: "this.props.outline.kind === \'outline\'"');
+        throw new Error("Invariant violation: \"this.props.outline.kind === 'outline'\"");
       }
 
-      const { editor } = this.props.outline;
-      // double and triple clicks focus the editor afterwards
+      const {
+        editor
+      } = this.props.outline; // double and triple clicks focus the editor afterwards
+
       const pane = atom.workspace.paneForItem(editor);
+
       if (pane == null) {
         return;
-      }
-
-      // Assumes that the click handler has already run, which moves the
+      } // Assumes that the click handler has already run, which moves the
       // cursor to the start of the symbol. Let's activate the pane now.
+
+
       pane.activate();
       pane.activateItem(editor);
-    }, this._getNodes = (0, (_memoizeUntilChanged || _load_memoizeUntilChanged()).default)(outlineTrees => outlineTrees.map(this._outlineTreeToNode),
-    // searchResults is passed here as a cache key for the memoization.
+    }, this._getNodes = (0, _memoizeUntilChanged().default)(outlineTrees => outlineTrees.map(this._outlineTreeToNode), // searchResults is passed here as a cache key for the memoization.
     // Since tree nodes contain `hidden` within them, we need to rerender
     // whenever searchResults changes to reflect that.
     outlineTrees => [outlineTrees, this.state.searchResults]), this._outlineTreeToNode = outlineTree => {
@@ -341,11 +392,11 @@ class OutlineViewCore extends _react.PureComponent {
   }
 
   componentDidMount() {
-    this._subscriptions = new (_UniversalDisposable || _load_UniversalDisposable()).default(atom.commands.add((0, (_nullthrows || _load_nullthrows()).default)(this._scrollerNode), 'atom-ide:filter', () => this.focusSearch()));
+    this._subscriptions = new (_UniversalDisposable().default)(atom.commands.add((0, _nullthrows().default)(this._scrollerNode), 'atom-ide:filter', () => this.focusSearch()));
   }
 
   componentWillUnmount() {
-    (0, (_nullthrows || _load_nullthrows()).default)(this._subscriptions).dispose();
+    (0, _nullthrows().default)(this._subscriptions).dispose();
   }
 
   focusSearch() {
@@ -355,63 +406,69 @@ class OutlineViewCore extends _react.PureComponent {
   }
 
   render() {
-    const { outline } = this.props;
+    const {
+      outline
+    } = this.props;
 
     if (!(outline.kind === 'outline')) {
-      throw new Error('Invariant violation: "outline.kind === \'outline\'"');
+      throw new Error("Invariant violation: \"outline.kind === 'outline'\"");
     }
 
-    return _react.createElement(
-      'div',
-      { className: 'outline-view-core' },
-      _react.createElement((_OutlineViewSearch || _load_OutlineViewSearch()).OutlineViewSearchComponent, {
-        outlineTrees: outline.outlineTrees,
-        editor: outline.editor,
-        updateSearchResults: searchResults => {
-          this.setState({ searchResults });
-        },
-        ref: this._setSearchRef
-      }),
-      _react.createElement(
-        'div',
-        {
-          className: 'outline-view-trees-scroller',
-          ref: this._setScrollerNode },
-        _react.createElement((_SelectableTree || _load_SelectableTree()).Tree, {
-          className: 'outline-view-trees atom-ide-filterable',
-          collapsedPaths: this.state.collapsedPaths,
-          itemClassName: 'outline-view-item',
-          items: this._getNodes(outline.outlineTrees),
-          onCollapse: this._handleCollapse,
-          onConfirm: this._handleConfirm,
-          onExpand: this._handleExpand,
-          onSelect: this._handleSelect,
-          onTripleClick: this._handleTripleClick,
-          selectedPaths: outline.highlightedPaths
-        })
-      )
-    );
+    return React.createElement("div", {
+      className: "outline-view-core"
+    }, React.createElement(_OutlineViewSearch().OutlineViewSearchComponent, {
+      outlineTrees: outline.outlineTrees,
+      editor: outline.editor,
+      updateSearchResults: searchResults => {
+        this.setState({
+          searchResults
+        });
+      },
+      ref: this._setSearchRef
+    }), React.createElement("div", {
+      className: "outline-view-trees-scroller",
+      ref: this._setScrollerNode
+    }, React.createElement(_SelectableTree().Tree, {
+      className: "outline-view-trees atom-ide-filterable",
+      collapsedPaths: this.state.collapsedPaths,
+      itemClassName: "outline-view-item",
+      items: this._getNodes(outline.outlineTrees),
+      onCollapse: this._handleCollapse,
+      onConfirm: this._handleConfirm,
+      onExpand: this._handleExpand,
+      onSelect: this._handleSelect,
+      onTripleClick: this._handleTripleClick,
+      selectedPaths: outline.highlightedPaths
+    })));
   }
+
 }
 
 function renderItem(outline, searchResult) {
   const r = [];
-
   const iconName = outline.icon;
+
   if (iconName != null) {
-    const correspondingAtomicon = (0, (_Atomicon2 || _load_Atomicon2()).getTypeFromIconName)(iconName);
+    const correspondingAtomicon = (0, _Atomicon().getTypeFromIconName)(iconName);
+
     if (correspondingAtomicon == null) {
-      r.push(_react.createElement('span', {
-        key: 'type-icon',
-        className: (0, (_classnames || _load_classnames()).default)('icon', `icon-${iconName}`)
+      r.push(React.createElement("span", {
+        key: "type-icon",
+        className: (0, _classnames().default)('icon', `icon-${iconName}`)
       }));
     } else {
       // If we're passed an icon name rather than a type, and it maps directly
       // to an atomicon, use that.
-      r.push(_react.createElement((_Atomicon || _load_Atomicon()).default, { key: 'type-icon', type: correspondingAtomicon }));
+      r.push(React.createElement(_Atomicon().default, {
+        key: "type-icon",
+        type: correspondingAtomicon
+      }));
     }
   } else if (outline.kind != null) {
-    r.push(_react.createElement((_Atomicon || _load_Atomicon()).default, { key: 'type-icon', type: outline.kind }));
+    r.push(React.createElement(_Atomicon().default, {
+      key: "type-icon",
+      type: outline.kind
+    }));
   }
 
   if (outline.tokenizedText != null) {
@@ -422,8 +479,8 @@ function renderItem(outline, searchResult) {
       return toReturn;
     }));
   } else if (outline.plainText != null) {
-    const textWithMatching = searchResult && searchResult.matchingCharacters ? _react.createElement((_HighlightedText || _load_HighlightedText()).default, {
-      highlightedRanges: (0, (_matchIndexesToRanges || _load_matchIndexesToRanges()).default)(searchResult.matchingCharacters),
+    const textWithMatching = searchResult && searchResult.matchingCharacters ? React.createElement(_HighlightedText().default, {
+      highlightedRanges: (0, _matchIndexesToRanges().default)(searchResult.matchingCharacters),
       text: outline.plainText || ''
     }) : outline.plainText;
     r.push(textWithMatching);
@@ -431,33 +488,30 @@ function renderItem(outline, searchResult) {
     r.push('Missing text');
   }
 
-  return _react.createElement(
-    'span',
-    null,
-    r
-  );
+  return React.createElement("span", null, r);
 }
 
 function renderTextToken(token, index, searchResult, offset) {
   const className = TOKEN_KIND_TO_CLASS_NAME_MAP[token.kind];
-  return _react.createElement(
-    'span',
-    { className: className, key: index },
-    searchResult && searchResult.matchingCharacters ? _react.createElement((_HighlightedText || _load_HighlightedText()).default, {
-      highlightedRanges: (0, (_matchIndexesToRanges || _load_matchIndexesToRanges()).default)(searchResult.matchingCharacters.map(el => el - offset).filter(el => el >= 0 && el < token.value.length)),
-      text: token.value
-    }) : token.value
-  );
+  return React.createElement("span", {
+    className: className,
+    key: index
+  }, searchResult && searchResult.matchingCharacters ? React.createElement(_HighlightedText().default, {
+    highlightedRanges: (0, _matchIndexesToRanges().default)(searchResult.matchingCharacters.map(el => el - offset).filter(el => el >= 0 && el < token.value.length)),
+    text: token.value
+  }) : token.value);
 }
 
 function selectNodeFromPath(outline, path) {
   if (!(outline.kind === 'outline')) {
-    throw new Error('Invariant violation: "outline.kind === \'outline\'"');
+    throw new Error("Invariant violation: \"outline.kind === 'outline'\"");
   }
 
   let node = outline.outlineTrees[path[0]];
+
   for (let i = 1; i < path.length; i++) {
     node = node.children[path[i]];
   }
+
   return node;
 }

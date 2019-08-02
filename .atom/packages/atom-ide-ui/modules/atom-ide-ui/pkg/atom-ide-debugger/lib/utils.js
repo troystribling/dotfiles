@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -13,18 +13,26 @@ exports.onUnexpectedError = onUnexpectedError;
 exports.capitalize = capitalize;
 exports.notifyOpenDebugSession = notifyOpenDebugSession;
 
-var _nullthrows;
+function _nullthrows() {
+  const data = _interopRequireDefault(require("nullthrows"));
 
-function _load_nullthrows() {
-  return _nullthrows = _interopRequireDefault(require('nullthrows'));
+  _nullthrows = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
-var _logger;
+function _logger() {
+  const data = _interopRequireDefault(require("./logger"));
 
-function _load_logger() {
-  return _logger = _interopRequireDefault(require('./logger'));
+  _logger = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -40,9 +48,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
 function getGutterLineNumber(target) {
   const eventLine = parseInt(target.dataset.line, 10);
+
   if (eventLine != null && eventLine >= 0 && !isNaN(Number(eventLine))) {
     return eventLine;
   }
@@ -52,15 +60,18 @@ const SCREEN_ROW_ATTRIBUTE_NAME = 'data-screen-row';
 
 function getEditorLineNumber(editor, target) {
   let node = target;
+
   while (node != null) {
     if (node.hasAttribute(SCREEN_ROW_ATTRIBUTE_NAME)) {
       const screenRow = Number(node.getAttribute(SCREEN_ROW_ATTRIBUTE_NAME));
+
       try {
         return editor.bufferPositionForScreenPosition([screenRow, 0]).row;
       } catch (error) {
         return null;
       }
     }
+
     node = node.parentElement;
   }
 }
@@ -71,35 +82,36 @@ async function openSourceLocation(path, line) {
     searchAllPanes: true,
     pending: true
   });
+
   if (editor == null) {
     // Failed to open file. Return an empty text editor.
     // eslint-disable-next-line nuclide-internal/atom-apis
     return atom.workspace.open();
   }
+
   editor.scrollToBufferPosition([line, 0]);
-  editor.setCursorBufferPosition([line, 0]);
+  editor.setCursorBufferPosition([line, 0]); // Put the focus back in the console prompt.
 
-  // Put the focus back in the console prompt.
   atom.commands.dispatch(atom.views.getView(atom.workspace), 'atom-ide-console:focus-console-prompt');
-
   return editor;
 }
 
 function firstNonNull(...args) {
-  return (0, (_nullthrows || _load_nullthrows()).default)(args.find(arg => arg != null));
+  return (0, _nullthrows().default)(args.find(arg => arg != null));
 }
 
 function getLineForEvent(editor, event) {
   const cursorLine = editor.getLastCursor().getBufferRow();
   const target = event ? event.target : null;
+
   if (target == null) {
     return cursorLine;
-  }
-  // toggleLine is the line the user clicked in the gutter next to, as opposed
+  } // toggleLine is the line the user clicked in the gutter next to, as opposed
   // to the line the editor's cursor happens to be in. If this command was invoked
   // from the menu, then the cursor position is the target line.
-  return firstNonNull(getGutterLineNumber(target), getEditorLineNumber(editor, target),
-  // fall back to the line the cursor is on.
+
+
+  return firstNonNull(getGutterLineNumber(target), getEditorLineNumber(editor, target), // fall back to the line the cursor is on.
   cursorLine);
 }
 
@@ -109,8 +121,12 @@ function isLocalScopeName(scopeName) {
 
 function expressionAsEvaluationResult(expression) {
   const value = expression.getValue();
+
   if (!expression.available) {
-    return { type: 'error', value };
+    return {
+      type: 'error',
+      value
+    };
   } else if (!expression.hasChildren()) {
     return {
       type: typeForSimpleValue(value),
@@ -128,7 +144,7 @@ function expressionAsEvaluationResult(expression) {
 }
 
 function expressionAsEvaluationResultStream(expression, focusedProcess, focusedStackFrame, context) {
-  return _rxjsBundlesRxMinJs.Observable.fromPromise(expression.evaluate(focusedProcess, focusedStackFrame, context)).map(() => expressionAsEvaluationResult(expression)).startWith(null);
+  return _RxMin.Observable.fromPromise(expression.evaluate(focusedProcess, focusedStackFrame, context)).map(() => expressionAsEvaluationResult(expression)).startWith(null);
 }
 
 function typeForSimpleValue(value) {
@@ -140,7 +156,7 @@ function typeForSimpleValue(value) {
 }
 
 function fetchChildrenForLazyComponent(expression) {
-  return _rxjsBundlesRxMinJs.Observable.fromPromise(expression.getChildren().then(children => children.map(child => ({
+  return _RxMin.Observable.fromPromise(expression.getChildren().then(children => children.map(child => ({
     name: child.name,
     value: expressionAsEvaluationResult(child)
   })), error => null));
@@ -148,7 +164,9 @@ function fetchChildrenForLazyComponent(expression) {
 
 function onUnexpectedError(error) {
   const errorMessage = error.stack || error.message || String(error);
-  (_logger || _load_logger()).default.error('Unexpected error', error);
+
+  _logger().default.error('Unexpected error', error);
+
   atom.notifications.addError('Atom debugger ran into an unexpected error - please file a bug!', {
     detail: errorMessage
   });

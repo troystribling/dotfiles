@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,21 +6,20 @@ Object.defineProperty(exports, "__esModule", {
 exports.attachEvent = attachEvent;
 exports.observableFromSubscribeFunction = observableFromSubscribeFunction;
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("./UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('./UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Add an event listener an return a disposable for removing it. Note that this function assumes
- * node EventEmitter semantics: namely, that adding the same combination of eventName and callback
- * adds a second listener.
- */
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -33,15 +32,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @format
  */
 
+/**
+ * Add an event listener an return a disposable for removing it. Note that this function assumes
+ * node EventEmitter semantics: namely, that adding the same combination of eventName and callback
+ * adds a second listener.
+ */
 function attachEvent(emitter, eventName, callback) {
   emitter.addListener(eventName, callback);
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+  return new (_UniversalDisposable().default)(() => {
     emitter.removeListener(eventName, callback);
   });
 }
 
 function observableFromSubscribeFunction(fn) {
-  return _rxjsBundlesRxMinJs.Observable.create(observer => {
+  return _RxMin.Observable.create(observer => {
     const disposable = fn(observer.next.bind(observer));
     return () => {
       disposable.dispose();

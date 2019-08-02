@@ -73,15 +73,13 @@ export default class HydrogenKernel {
    */
   getConnectionFile() {
     this._assertNotDestroyed();
-
+    // $FlowFixMe
     const connectionFile = this._kernel.transport.connectionFile
       ? this._kernel.transport.connectionFile
       : null;
     if (!connectionFile) {
       throw new Error(
-        `No connection file for ${
-          this._kernel.kernelSpec.display_name
-        } kernel found`
+        `No connection file for ${this._kernel.kernelSpec.display_name} kernel found`
       );
     }
 

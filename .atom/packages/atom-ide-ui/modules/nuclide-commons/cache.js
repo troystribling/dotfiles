@@ -1,20 +1,30 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.DISPOSE_VALUE = exports.Cache = undefined;
+exports.DISPOSE_VALUE = exports.Cache = void 0;
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 // A Cache mapping keys to values which creates entries as they are requested.
 class Cache {
-
   constructor(factory, disposeValue = value => {}) {
     this._values = new Map();
     this._factory = factory;
     this._disposeValue = disposeValue;
-    this._entriesSubject = new _rxjsBundlesRxMinJs.Subject();
+    this._entriesSubject = new _RxMin.Subject();
   }
 
   has(key) {
@@ -24,18 +34,21 @@ class Cache {
   get(key) {
     if (!this._values.has(key)) {
       const newValue = this._factory(key);
+
       this._values.set(key, newValue);
+
       this._entriesSubject.next([key, newValue]);
+
       return newValue;
     } else {
       // Cannot use invariant as ValueType may include null/undefined.
       return this._values.get(key);
     }
-  }
-
-  // After this method this._values.keys() === newKeys.
+  } // After this method this._values.keys() === newKeys.
   // deletes all keys not in newKeys
   // gets all keys in newKeys
+
+
   setKeys(newKeys) {
     for (const existingKey of this._values.keys()) {
       if (!newKeys.has(existingKey)) {
@@ -65,7 +78,7 @@ class Cache {
   }
 
   observeEntries() {
-    return _rxjsBundlesRxMinJs.Observable.concat(_rxjsBundlesRxMinJs.Observable.from(this._values.entries()), this._entriesSubject);
+    return _RxMin.Observable.concat(_RxMin.Observable.from(this._values.entries()), this._entriesSubject);
   }
 
   observeKeys() {
@@ -75,8 +88,11 @@ class Cache {
   delete(key) {
     if (this.has(key)) {
       const value = this.get(key);
+
       this._values.delete(key);
+
       this._disposeValue(value);
+
       return true;
     } else {
       return false;
@@ -87,6 +103,7 @@ class Cache {
     // Defend against a dispose call removing elements from the Cache.
     const values = this._values;
     this._values = new Map();
+
     for (const value of values.values()) {
       this._disposeValue(value);
     }
@@ -94,23 +111,17 @@ class Cache {
 
   dispose() {
     this.clear();
+
     this._entriesSubject.complete();
   }
-}
 
-exports.Cache = Cache; // Useful for optional second parameter to Cache constructor.
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- * @format
- */
+} // Useful for optional second parameter to Cache constructor.
 
-const DISPOSE_VALUE = exports.DISPOSE_VALUE = value => {
+
+exports.Cache = Cache;
+
+const DISPOSE_VALUE = value => {
   value.dispose();
 };
+
+exports.DISPOSE_VALUE = DISPOSE_VALUE;

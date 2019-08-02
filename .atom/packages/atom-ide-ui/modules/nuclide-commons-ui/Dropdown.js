@@ -1,34 +1,52 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ButtonSizes = exports.Dropdown = undefined;
 exports.DropdownButton = DropdownButton;
+Object.defineProperty(exports, "ButtonSizes", {
+  enumerable: true,
+  get: function () {
+    return _Button().ButtonSizes;
+  }
+});
+exports.Dropdown = void 0;
 
-var _Button;
+function _Button() {
+  const data = require("./Button");
 
-function _load_Button() {
-  return _Button = require('./Button');
+  _Button = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Icon;
+function _Icon() {
+  const data = require("./Icon");
 
-function _load_Icon() {
-  return _Icon = require('./Icon');
+  _Icon = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _classnames;
+function _classnames() {
+  const data = _interopRequireDefault(require("classnames"));
 
-function _load_classnames() {
-  return _classnames = _interopRequireDefault(require('classnames'));
+  _classnames = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _electron = _interopRequireDefault(require('electron'));
+var _electron = _interopRequireDefault(require("electron"));
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43,29 +61,56 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
-const { remote } = _electron.default;
+const {
+  remote
+} = _electron.default;
 
 if (!(remote != null)) {
-  throw new Error('Invariant violation: "remote != null"');
-}
-
-// For backwards compat, we have to do some conversion here.
+  throw new Error("Invariant violation: \"remote != null\"");
+} // For backwards compat, we have to do some conversion here.
 
 
-class Dropdown extends _react.Component {
+class Dropdown extends React.Component {
   constructor(...args) {
     var _temp;
 
     return _temp = super(...args), this._handleDropdownClick = event => {
-      const menu = this._menuFromOptions(this.props.options);
-      menu.popup({ x: event.clientX, y: event.clientY });
+      this._menu = this._menuFromOptions(this.props.options);
+
+      this._menu.popup({
+        x: event.clientX,
+        y: event.clientY,
+        async: true
+      });
+
+      event.stopPropagation();
     }, _temp;
   }
 
+  componentWillUnmount() {
+    this._closeMenu();
+  }
+
+  componentDidUpdate() {
+    this._closeMenu();
+  }
+
+  _closeMenu() {
+    if (this._menu != null) {
+      this._menu.closePopup();
+
+      this._menu = null;
+    }
+  }
+
   render() {
-    const { label: providedLabel, options, placeholder } = this.props;
+    const {
+      label: providedLabel,
+      options,
+      placeholder
+    } = this.props;
     let label;
+
     if (providedLabel != null) {
       label = providedLabel;
     } else {
@@ -82,22 +127,21 @@ class Dropdown extends _react.Component {
       }
     }
 
-    return _react.createElement(
-      DropdownButton,
-      {
-        className: this.props.className,
-        disabled: this.props.disabled,
-        isFlat: this.props.isFlat,
-        buttonComponent: this.props.buttonComponent,
-        onExpand: this._handleDropdownClick,
-        size: this.props.size,
-        tooltip: this.props.tooltip },
-      label
-    );
+    return React.createElement(DropdownButton, {
+      buttonType: this.props.buttonType,
+      className: this.props.className,
+      disabled: this.props.disabled,
+      isFlat: this.props.isFlat,
+      buttonComponent: this.props.buttonComponent,
+      onExpand: this._handleDropdownClick,
+      size: this.props.size,
+      tooltip: this.props.tooltip
+    }, label);
   }
 
   _renderSelectedLabel(option) {
     let text = null;
+
     if (option == null) {
       text = '';
     } else if (typeof option.selectedLabel === 'string') {
@@ -109,6 +153,7 @@ class Dropdown extends _react.Component {
     if (text == null || text === '') {
       return null;
     }
+
     return text;
   }
 
@@ -116,7 +161,9 @@ class Dropdown extends _react.Component {
     const menu = new remote.Menu();
     options.forEach(option => {
       if (option.type === 'separator') {
-        menu.append(new remote.MenuItem({ type: 'separator' }));
+        menu.append(new remote.MenuItem({
+          type: 'separator'
+        }));
       } else if (option.type === 'submenu') {
         const submenu = option.submenu;
         menu.append(new remote.MenuItem({
@@ -148,6 +195,7 @@ class Dropdown extends _react.Component {
 
   _findSelectedOption(options) {
     let result = null;
+
     for (const option of options) {
       if (option.type === 'separator') {
         continue;
@@ -162,8 +210,10 @@ class Dropdown extends _react.Component {
         break;
       }
     }
+
     return result;
   }
+
 }
 
 exports.Dropdown = Dropdown;
@@ -176,49 +226,47 @@ Dropdown.defaultProps = {
   title: ''
 };
 
-
 const noop = () => {};
-
 /**
  * Just the button part. This is useful for when you want to customize the dropdown behavior (e.g.)
  * show it asynchronously.
  */
+
+
 function DropdownButton(props) {
-  const ButtonComponent = props.buttonComponent || (_Button || _load_Button()).Button;
-  const className = (0, (_classnames || _load_classnames()).default)('nuclide-ui-dropdown', props.className, {
+  const ButtonComponent = props.buttonComponent || _Button().Button;
+
+  const className = (0, _classnames().default)('nuclide-ui-dropdown', props.className, {
     'nuclide-ui-dropdown-flat': props.isFlat === true
   });
-
-  const label = props.children == null ? null : _react.createElement(
-    'span',
-    { className: 'nuclide-dropdown-label-text-wrapper' },
-    props.children
-  );
-
-  return _react.createElement(
-    ButtonComponent,
-    {
-      tooltip: props.tooltip,
-      size: getButtonSize(props.size),
-      className: className,
-      disabled: props.disabled === true,
-      onClick: props.onExpand || noop },
-    label,
-    _react.createElement((_Icon || _load_Icon()).Icon, { icon: 'triangle-down', className: 'nuclide-ui-dropdown-icon' })
-  );
+  const label = props.children == null ? null : React.createElement("span", {
+    className: "nuclide-dropdown-label-text-wrapper"
+  }, props.children);
+  return React.createElement(ButtonComponent, {
+    buttonType: props.buttonType,
+    tooltip: props.tooltip,
+    size: getButtonSize(props.size),
+    className: className,
+    disabled: props.disabled === true,
+    onClick: props.onExpand || noop
+  }, label, React.createElement(_Icon().Icon, {
+    icon: "triangle-down",
+    className: "nuclide-ui-dropdown-icon"
+  }));
 }
 
 function getButtonSize(size) {
   switch (size) {
     case 'xs':
       return 'EXTRA_SMALL';
+
     case 'sm':
       return 'SMALL';
+
     case 'lg':
       return 'LARGE';
+
     default:
       return 'SMALL';
   }
 }
-
-exports.ButtonSizes = (_Button || _load_Button()).ButtonSizes;

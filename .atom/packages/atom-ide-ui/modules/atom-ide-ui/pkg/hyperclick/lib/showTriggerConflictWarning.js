@@ -1,14 +1,18 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = showTriggerConflictWarning;
 
-var _featureConfig;
+function _featureConfig() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/feature-config"));
 
-function _load_featureConfig() {
-  return _featureConfig = _interopRequireDefault(require('../../../../nuclide-commons-atom/feature-config'));
+  _featureConfig = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -24,16 +28,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
 function showTriggerConflictWarning() {
-  const triggerKeys = (_featureConfig || _load_featureConfig()).default.get(`hyperclick.${process.platform}TriggerKeys`);
+  const triggerKeys = _featureConfig().default.get(`hyperclick.${process.platform}TriggerKeys`);
 
   if (!(typeof triggerKeys === 'string')) {
-    throw new Error('Invariant violation: "typeof triggerKeys === \'string\'"');
+    throw new Error("Invariant violation: \"typeof triggerKeys === 'string'\"");
   }
 
   const triggerKeyDescription = getTriggerDescription(triggerKeys);
-  const { platform } = process;
+  const {
+    platform
+  } = process;
   const commandOrMeta = platform === 'darwin' ? 'command' : 'meta';
   const optionOrAlt = platform === 'darwin' ? 'option' : 'alt';
   const alternative = triggerKeys === 'altKey,metaKey' ? commandOrMeta : `${commandOrMeta} + ${optionOrAlt}`;
@@ -44,22 +49,22 @@ function showTriggerConflictWarning() {
 }
 
 function getTriggerDescription(trigger) {
-  const schema = (_featureConfig || _load_featureConfig()).default.getSchema(`hyperclick.${process.platform}TriggerKeys`);
+  const schema = _featureConfig().default.getSchema(`hyperclick.${process.platform}TriggerKeys`);
 
   if (!(schema != null && schema.enum != null)) {
-    throw new Error('Invariant violation: "schema != null && schema.enum != null"');
+    throw new Error("Invariant violation: \"schema != null && schema.enum != null\"");
   }
 
   const match = schema.enum.find(option => {
     if (!(option != null && typeof option.value === 'string')) {
-      throw new Error('Invariant violation: "option != null && typeof option.value === \'string\'"');
+      throw new Error("Invariant violation: \"option != null && typeof option.value === 'string'\"");
     }
 
     return option.value === trigger;
   });
 
   if (!(match != null && typeof match.description === 'string')) {
-    throw new Error('Invariant violation: "match != null && typeof match.description === \'string\'"');
+    throw new Error("Invariant violation: \"match != null && typeof match.description === 'string'\"");
   }
 
   return match.description;

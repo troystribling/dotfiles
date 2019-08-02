@@ -1,14 +1,18 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getDebuggerService = getDebuggerService;
 
-var _consumeFirstProvider;
+function _consumeFirstProvider() {
+  const data = _interopRequireDefault(require("./consumeFirstProvider"));
 
-function _load_consumeFirstProvider() {
-  return _consumeFirstProvider = _interopRequireDefault(require('./consumeFirstProvider'));
+  _consumeFirstProvider = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -24,7 +28,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  strict-local
  * @format
  */
-
 function getDebuggerService() {
-  return (0, (_consumeFirstProvider || _load_consumeFirstProvider()).default)('debugger.remote');
+  return (0, _consumeFirstProvider().default)('debugger.remote');
 }

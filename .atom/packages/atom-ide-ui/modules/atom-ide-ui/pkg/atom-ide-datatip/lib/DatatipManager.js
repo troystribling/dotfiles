@@ -1,99 +1,141 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.DatatipManager = undefined;
+exports.DatatipManager = void 0;
 
-var _atom = require('atom');
+var _atom = require("atom");
 
-var _promise;
+function _promise() {
+  const data = require("../../../../nuclide-commons/promise");
 
-function _load_promise() {
-  return _promise = require('../../../../nuclide-commons/promise');
+  _promise = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _reactDom = _interopRequireDefault(require('react-dom'));
+var _reactDom = _interopRequireDefault(require("react-dom"));
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _analytics;
+function _analytics() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/analytics"));
 
-function _load_analytics() {
-  return _analytics = _interopRequireDefault(require('../../../../nuclide-commons/analytics'));
+  _analytics = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _debounce;
+function _debounce() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/debounce"));
 
-function _load_debounce() {
-  return _debounce = _interopRequireDefault(require('../../../../nuclide-commons/debounce'));
+  _debounce = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _featureConfig;
+function _featureConfig() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/feature-config"));
 
-function _load_featureConfig() {
-  return _featureConfig = _interopRequireDefault(require('../../../../nuclide-commons-atom/feature-config'));
+  _featureConfig = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _idx;
+function _performanceNow() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/performanceNow"));
 
-function _load_idx() {
-  return _idx = _interopRequireDefault(require('idx'));
+  _performanceNow = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _performanceNow;
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
-function _load_performanceNow() {
-  return _performanceNow = _interopRequireDefault(require('../../../../nuclide-commons/performanceNow'));
+function _log4js() {
+  const data = require("log4js");
+
+  _log4js = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+function _ProviderRegistry() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/ProviderRegistry"));
 
-var _log4js;
+  _ProviderRegistry = function () {
+    return data;
+  };
 
-function _load_log4js() {
-  return _log4js = require('log4js');
+  return data;
 }
 
-var _ProviderRegistry;
+function _getModifierKeys() {
+  const data = require("./getModifierKeys");
 
-function _load_ProviderRegistry() {
-  return _ProviderRegistry = _interopRequireDefault(require('../../../../nuclide-commons-atom/ProviderRegistry'));
+  _getModifierKeys = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _getModifierKeys;
+function _DatatipComponent() {
+  const data = require("./DatatipComponent");
 
-function _load_getModifierKeys() {
-  return _getModifierKeys = require('./getModifierKeys');
+  _DatatipComponent = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _DatatipComponent;
+function _isScrollable() {
+  const data = _interopRequireDefault(require("./isScrollable"));
 
-function _load_DatatipComponent() {
-  return _DatatipComponent = require('./DatatipComponent');
+  _isScrollable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _isScrollable;
+function _PinnedDatatip() {
+  const data = require("./PinnedDatatip");
 
-function _load_isScrollable() {
-  return _isScrollable = _interopRequireDefault(require('./isScrollable'));
-}
+  _PinnedDatatip = function () {
+    return data;
+  };
 
-var _PinnedDatatip;
-
-function _load_PinnedDatatip() {
-  return _PinnedDatatip = require('./PinnedDatatip');
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -108,15 +150,16 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  */
 
 /* global performance */
-
 const DEFAULT_DATATIP_DEBOUNCE_DELAY = 1000;
 const DEFAULT_DATATIP_INTERACTED_DEBOUNCE_DELAY = 1000;
+const TRACK_SAMPLE_RATE = 10;
 
 function getProviderName(provider) {
   if (provider.providerName == null) {
-    (0, (_log4js || _load_log4js()).getLogger)('datatip').error('Datatip provider has no name', provider);
+    (0, _log4js().getLogger)('datatip').error('Datatip provider has no name', provider);
     return 'unknown';
   }
+
   return provider.providerName;
 }
 
@@ -126,54 +169,59 @@ function getBufferPosition(editor, editorView, event) {
   }
 
   const text = editorView.component;
+
   if (!text) {
     return null;
   }
 
   const screenPosition = text.screenPositionForMouseEvent(event);
   const pixelPosition = text.pixelPositionForMouseEvent(event);
-  const pixelPositionFromScreenPosition = text.pixelPositionForScreenPosition(screenPosition);
-  // Distance (in pixels) between screenPosition and the cursor.
-  const horizontalDistance = pixelPosition.left - pixelPositionFromScreenPosition.left;
-  // `screenPositionForMouseEvent.column` cannot exceed the current line length.
+  const pixelPositionFromScreenPosition = text.pixelPositionForScreenPosition(screenPosition); // Distance (in pixels) between screenPosition and the cursor.
+
+  const horizontalDistance = pixelPosition.left - pixelPositionFromScreenPosition.left; // `screenPositionForMouseEvent.column` cannot exceed the current line length.
   // This is essentially a heuristic for "mouse cursor is to the left or right
   // of text content".
+
   if (pixelPosition.left <= 0 || horizontalDistance > editor.getDefaultCharWidth()) {
     return null;
   }
+
   return editor.bufferPositionForScreenPosition(screenPosition);
 }
 
 async function getDatatipResults(providers, editor, position, invoke) {
   const filteredDatatipProviders = Array.from(providers.getAllProvidersForEditor(editor));
+
   if (filteredDatatipProviders.length === 0) {
     return [];
   }
 
   const promises = filteredDatatipProviders.map(async provider => {
     const name = getProviderName(provider);
-    const timingTracker = new (_analytics || _load_analytics()).default.TimingTracker(name + '.datatip', {});
+
     try {
-      const datatip = await invoke(provider);
-      if (!datatip) {
-        return null;
-      }
+      return await _analytics().default.trackTimingSampled(name + '.datatip', async () => {
+        const datatip = await invoke(provider);
 
-      timingTracker.onSuccess();
+        if (!datatip) {
+          return null;
+        }
 
-      const result = {
-        datatip,
-        provider
-      };
-      return result;
+        return {
+          datatip,
+          provider
+        };
+      }, TRACK_SAMPLE_RATE, {
+        path: editor.getPath()
+      });
     } catch (e) {
-      timingTracker.onError(e);
-      (0, (_log4js || _load_log4js()).getLogger)('datatip').error(`Error getting datatip from provider ${name}`, e);
+      (0, _log4js().getLogger)('datatip').error(`Error getting datatip from provider ${name}`, e);
       return null;
     }
   });
-  if ((_featureConfig || _load_featureConfig()).default.get('atom-ide-datatip.onlyTopDatatip')) {
-    const result = await (0, (_promise || _load_promise()).asyncFind)(promises, x => x);
+
+  if (_featureConfig().default.get('atom-ide-datatip.onlyTopDatatip')) {
+    const result = await (0, _promise().asyncFind)(promises, x => x);
     return result != null ? [result] : [];
   } else {
     return (await Promise.all(promises)).filter(Boolean);
@@ -186,17 +234,16 @@ function PinnableDatatip({
   onPinClick
 }) {
   let action;
-  let actionTitle;
-  // Datatips are pinnable by default, unless explicitly specified
+  let actionTitle; // Datatips are pinnable by default, unless explicitly specified
   // otherwise.
+
   if (datatip.pinnable !== false) {
-    action = (_DatatipComponent || _load_DatatipComponent()).DATATIP_ACTIONS.PIN;
+    action = _DatatipComponent().DATATIP_ACTIONS.PIN;
     actionTitle = 'Pin this Datatip';
   }
 
-  return (
-    // $FlowFixMe(>=0.53.0) Flow suppress
-    _react.createElement((_DatatipComponent || _load_DatatipComponent()).DatatipComponent, {
+  return (// $FlowFixMe(>=0.53.0) Flow suppress
+    React.createElement(_DatatipComponent().DatatipComponent, {
       action: action,
       actionTitle: actionTitle,
       datatip: datatip,
@@ -213,24 +260,22 @@ function mountDatatipWithMarker(editor, element, range, renderedProviders, posit
   editor.decorateMarker(highlightMarker, {
     type: 'highlight',
     class: 'datatip-highlight-region'
-  });
+  }); // The actual datatip should appear at the trigger position.
 
-  // The actual datatip should appear at the trigger position.
   const overlayMarker = editor.markBufferRange(new _atom.Range(position, position), {
     invalidate: 'never'
   });
-  editor.decorateMarker(overlayMarker, {
-    type: 'overlay',
-    position: 'tail',
-    item: element
-  });
-
-  return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => highlightMarker.destroy(), () => overlayMarker.destroy(),
-  // The editor may not mount the marker until the next update.
+  return new (_UniversalDisposable().default)(() => highlightMarker.destroy(), () => overlayMarker.destroy(), // The editor may not mount the marker until the next update.
   // It's not safe to render anything until that point, as datatips
   // often need to measure their size in the DOM.
-  _rxjsBundlesRxMinJs.Observable.from(editor.getElement().getNextUpdatePromise()).subscribe(() => {
+  _RxMin.Observable.from(editor.getElement().getNextUpdatePromise()).subscribe(() => {
+    editor.decorateMarker(overlayMarker, {
+      type: 'overlay',
+      position: 'tail',
+      item: element
+    });
     element.style.display = 'block';
+
     _reactDom.default.render(renderedProviders, element);
   }));
 }
@@ -241,23 +286,22 @@ const DatatipState = Object.freeze({
   VISIBLE: 'VISIBLE'
 });
 
-
 function ensurePositiveNumber(value, defaultValue) {
   if (typeof value !== 'number' || value < 0) {
     return defaultValue;
   }
+
   return value;
 }
 
 class DatatipManagerForEditor {
-
   constructor(editor, datatipProviders, modifierDatatipProviders) {
     _initialiseProps.call(this);
 
     this._editor = editor;
     this._editorView = atom.views.getView(editor);
     this._pinnedDatatips = new Set();
-    this._subscriptions = new (_UniversalDisposable || _load_UniversalDisposable()).default();
+    this._subscriptions = new (_UniversalDisposable().default)();
     this._datatipProviders = datatipProviders;
     this._modifierDatatipProviders = modifierDatatipProviders;
     this._datatipElement = document.createElement('div');
@@ -271,87 +315,102 @@ class DatatipManagerForEditor {
     this._lastFetchedFromCursorPosition = false;
     this._shouldDropNextMouseMoveAfterFocus = false;
 
-    this._subscriptions.add((_featureConfig || _load_featureConfig()).default.observe('atom-ide-datatip.datatipDebounceDelay', () => this._setStartFetchingDebounce()), (_featureConfig || _load_featureConfig()).default.observe('atom-ide-datatip.datatipInteractedWithDebounceDelay', () => this._setHideIfOutsideDebounce()), _rxjsBundlesRxMinJs.Observable.fromEvent(this._editorView, 'focus').subscribe(e => {
+    this._subscriptions.add(_featureConfig().default.observe('atom-ide-datatip.datatipDebounceDelay', () => this._setStartFetchingDebounce()), _featureConfig().default.observe('atom-ide-datatip.datatipInteractedWithDebounceDelay', () => this._setHideIfOutsideDebounce()), _RxMin.Observable.fromEvent(this._editorView, 'focus').subscribe(e => {
       this._shouldDropNextMouseMoveAfterFocus = true;
+
       if (!this._insideDatatip) {
         this._setState(DatatipState.HIDDEN);
       }
-    }), _rxjsBundlesRxMinJs.Observable.fromEvent(this._editorView, 'blur').subscribe(e => {
+    }), _RxMin.Observable.fromEvent(this._editorView, 'blur').subscribe(e => {
       if (!this._insideDatatip) {
         this._setState(DatatipState.HIDDEN);
       }
-    }), _rxjsBundlesRxMinJs.Observable.fromEvent(this._editorView, 'mousemove').subscribe(e => {
+    }), _RxMin.Observable.fromEvent(this._editorView, 'mousemove').subscribe(e => {
       this._lastFetchedFromCursorPosition = false;
+
       if (this._shouldDropNextMouseMoveAfterFocus) {
         this._shouldDropNextMouseMoveAfterFocus = false;
         return;
       }
 
       this._lastMoveEvent = e;
-      this._heldKeys = (0, (_getModifierKeys || _load_getModifierKeys()).getModifierKeysFromMouseEvent)(e);
+      this._heldKeys = (0, _getModifierKeys().getModifierKeysFromMouseEvent)(e);
+
       if (this._datatipState === DatatipState.HIDDEN) {
         this._startFetchingDebounce();
       } else {
         this._hideIfOutside();
       }
-    }), _rxjsBundlesRxMinJs.Observable.fromEvent(this._editorView, 'mouseleave').subscribe(() => {
+    }), _RxMin.Observable.fromEvent(this._editorView, 'mouseleave').subscribe(() => {
       this._lastMoveEvent = null;
+
       this._hideIfOutside();
-    }), _rxjsBundlesRxMinJs.Observable.fromEvent(this._editorView, 'mousedown').subscribe(e => {
+    }), _RxMin.Observable.fromEvent(this._editorView, 'mousedown').subscribe(e => {
       let node = e.target;
+
       while (node != null) {
         if (node === this._datatipElement) {
           return;
         }
+
         node = node.parentNode;
       }
 
       this._hideOrCancel();
-    }), _rxjsBundlesRxMinJs.Observable.fromEvent(this._editorView, 'keydown').subscribe(e => {
-      const modifierKey = (0, (_getModifierKeys || _load_getModifierKeys()).getModifierKeyFromKeyboardEvent)(e);
+    }), _RxMin.Observable.fromEvent(this._editorView, 'keydown').subscribe(e => {
+      const modifierKey = (0, _getModifierKeys().getModifierKeyFromKeyboardEvent)(e);
+
       if (modifierKey) {
         // On Windows, key repeat applies to modifier keys too!
         // So it's quite possible that we hit this twice without hitting keyup.
         if (this._heldKeys.has(modifierKey)) {
           return;
         }
+
         this._heldKeys.add(modifierKey);
+
         if (this._datatipState !== DatatipState.HIDDEN) {
           this._fetchInResponseToKeyPress();
         }
       } else {
         this._hideOrCancel();
       }
-    }), _rxjsBundlesRxMinJs.Observable.fromEvent(this._editorView, 'keyup').subscribe(e => {
-      const modifierKey = (0, (_getModifierKeys || _load_getModifierKeys()).getModifierKeyFromKeyboardEvent)(e);
+    }), _RxMin.Observable.fromEvent(this._editorView, 'keyup').subscribe(e => {
+      const modifierKey = (0, _getModifierKeys().getModifierKeyFromKeyboardEvent)(e);
+
       if (modifierKey) {
         this._heldKeys.delete(modifierKey);
+
         if (this._datatipState !== DatatipState.HIDDEN) {
           this._fetchInResponseToKeyPress();
         }
       }
-    }), _rxjsBundlesRxMinJs.Observable.fromEvent(this._datatipElement, 'wheel').subscribe(e => {
+    }), _RxMin.Observable.fromEvent(this._datatipElement, 'wheel').subscribe(e => {
       // We'll mark this as an 'interaction' only if the scroll target was scrollable.
       // This requires going over the ancestors, so only check this once.
       // If it comes back as false, we won't bother checking again.
       if (!this._checkedScrollable) {
-        this._isScrollable = (0, (_isScrollable || _load_isScrollable()).default)(this._datatipElement, e);
+        this._isScrollable = (0, _isScrollable().default)(this._datatipElement, e);
         this._checkedScrollable = true;
       }
+
       if (this._isScrollable) {
         this._interactedWith = true;
         e.stopPropagation();
       }
-    }), _rxjsBundlesRxMinJs.Observable.fromEvent(this._datatipElement, 'mousedown').subscribe(() => {
+    }), _RxMin.Observable.fromEvent(this._datatipElement, 'mousedown').subscribe(() => {
       this._interactedWith = true;
-    }), _rxjsBundlesRxMinJs.Observable.fromEvent(this._datatipElement, 'mouseenter').subscribe(() => {
+    }), _RxMin.Observable.fromEvent(this._datatipElement, 'mouseenter').subscribe(() => {
       this._insideDatatip = true;
+
       this._hideIfOutside();
-    }), _rxjsBundlesRxMinJs.Observable.fromEvent(this._datatipElement, 'mouseleave').subscribe(() => {
+    }), _RxMin.Observable.fromEvent(this._datatipElement, 'mouseleave').subscribe(() => {
       this._insideDatatip = false;
+
       this._hideIfOutside();
     }), this._editorView.onDidChangeScrollTop(() => {
       this._lastMoveEvent = null;
+
       if (this._datatipState === DatatipState.VISIBLE) {
         this._setState(DatatipState.HIDDEN);
       }
@@ -371,22 +430,26 @@ class DatatipManagerForEditor {
   }
 
   _setStartFetchingDebounce() {
-    this._startFetchingDebounce = (0, (_debounce || _load_debounce()).default)(() => {
+    this._startFetchingDebounce = (0, _debounce().default)(() => {
       this._startFetching(() => getBufferPosition(this._editor, this._editorView, this._lastMoveEvent));
-    }, ensurePositiveNumber((_featureConfig || _load_featureConfig()).default.get('atom-ide-datatip.datatipDebounceDelay'), DEFAULT_DATATIP_DEBOUNCE_DELAY),
-    /* immediate */false);
+    }, ensurePositiveNumber(_featureConfig().default.get('atom-ide-datatip.datatipDebounceDelay'), DEFAULT_DATATIP_DEBOUNCE_DELAY),
+    /* immediate */
+    false);
   }
 
   _setHideIfOutsideDebounce() {
-    this._hideIfOutsideDebounce = (0, (_debounce || _load_debounce()).default)(() => {
+    this._hideIfOutsideDebounce = (0, _debounce().default)(() => {
       this._hideIfOutsideImmediate();
-    }, ensurePositiveNumber((_featureConfig || _load_featureConfig()).default.get('atom-ide-datatip.datatipInteractedWithDebounceDelay'), DEFAULT_DATATIP_INTERACTED_DEBOUNCE_DELAY),
-    /* immediate */false);
+    }, ensurePositiveNumber(_featureConfig().default.get('atom-ide-datatip.datatipInteractedWithDebounceDelay'), DEFAULT_DATATIP_INTERACTED_DEBOUNCE_DELAY),
+    /* immediate */
+    false);
   }
 
   dispose() {
     this._setState(DatatipState.HIDDEN);
+
     this._subscriptions.dispose();
+
     this._datatipElement.remove();
   }
 
@@ -396,6 +459,7 @@ class DatatipManagerForEditor {
 
     if (newState === DatatipState.HIDDEN) {
       this._blacklistedPosition = null;
+
       if (oldState !== DatatipState.HIDDEN) {
         this._hideDatatip();
       }
@@ -404,36 +468,45 @@ class DatatipManagerForEditor {
 
   async _startFetching(getPosition) {
     const position = getPosition();
+
     if (!position) {
       return;
     }
 
     const data = await this._fetchAndRender(position);
+
     if (data == null) {
       this._setState(DatatipState.HIDDEN);
+
       return;
     }
+
     if (this._datatipState !== DatatipState.FETCHING) {
       this._setState(DatatipState.HIDDEN);
     }
 
     if (this._blacklistedPosition && data.range && data.range.containsPoint(this._blacklistedPosition)) {
       this._setState(DatatipState.HIDDEN);
+
       return;
     }
 
     const currentPosition = getPosition();
+
     if (!currentPosition || !data.range || !data.range.containsPoint(currentPosition)) {
       this._setState(DatatipState.HIDDEN);
+
       return;
     }
 
     if (this._isHoveringOverPinnedTip()) {
       this._setState(DatatipState.HIDDEN);
+
       return;
     }
 
     this._setState(DatatipState.VISIBLE);
+
     this._interactedWith = false;
     this._checkedScrollable = false;
     this._range = data.range;
@@ -441,6 +514,7 @@ class DatatipManagerForEditor {
     if (this._markerDisposable) {
       this._markerDisposable.dispose();
     }
+
     this._markerDisposable = mountDatatipWithMarker(this._editor, this._datatipElement, data.range, data.renderedProviders, currentPosition);
   }
 
@@ -448,6 +522,7 @@ class DatatipManagerForEditor {
     this._setState(DatatipState.FETCHING);
 
     let results;
+
     if (this._lastPosition != null && position.isEqual(this._lastPosition) && this._lastResultsPromise != null) {
       results = this._lastResultsPromise;
     } else {
@@ -461,12 +536,14 @@ class DatatipManagerForEditor {
 
   async _fetchAndRender(position) {
     const datatipsAndProviders = await this._fetch(position);
+
     if (datatipsAndProviders.length === 0) {
       return null;
     }
 
     const range = datatipsAndProviders[0].datatip.range;
-    (_analytics || _load_analytics()).default.track('datatip-popup', {
+
+    _analytics().default.track('datatip-popup', {
       scope: this._editor.getGrammar().scopeName,
       providerName: getProviderName(datatipsAndProviders[0].provider),
       rangeStartRow: String(range.start.row),
@@ -475,17 +552,15 @@ class DatatipManagerForEditor {
       rangeEndColumn: String(range.end.column)
     });
 
-    const renderedProviders = _react.createElement(
-      'div',
-      null,
-      datatipsAndProviders.map(({ datatip, provider }) => _react.createElement(PinnableDatatip, {
-        datatip: datatip,
-        editor: this._editor,
-        key: getProviderName(provider),
-        onPinClick: this._handlePinClicked
-      }))
-    );
-
+    const renderedProviders = React.createElement("div", null, datatipsAndProviders.map(({
+      datatip,
+      provider
+    }) => React.createElement(PinnableDatatip, {
+      datatip: datatip,
+      editor: this._editor,
+      key: getProviderName(provider),
+      onPinClick: this._handlePinClicked
+    })));
     return {
       range,
       renderedProviders
@@ -500,12 +575,17 @@ class DatatipManagerForEditor {
 
   _hideDatatip() {
     this._lastHiddenTime = performance.now();
+
     if (this._markerDisposable) {
       this._markerDisposable.dispose();
+
       this._markerDisposable = null;
     }
+
     this._range = null;
+
     _reactDom.default.unmountComponentAtNode(this._datatipElement);
+
     this._datatipElement.style.display = 'none';
   }
 
@@ -514,6 +594,7 @@ class DatatipManagerForEditor {
       if (this._blacklistedPosition == null) {
         this._blacklistedPosition = getBufferPosition(this._editor, this._editorView, this._lastMoveEvent);
       }
+
       return;
     }
 
@@ -536,16 +617,19 @@ class DatatipManagerForEditor {
     if (this._datatipState !== DatatipState.VISIBLE) {
       return;
     }
+
     if (this._insideDatatip) {
       return;
     }
 
     if (this._isHoveringOverPinnedTip()) {
       this._setState(DatatipState.HIDDEN);
+
       return;
     }
 
     const currentPosition = getBufferPosition(this._editor, this._editorView, this._lastMoveEvent);
+
     if (currentPosition && this._range && this._range.containsPoint(currentPosition)) {
       return;
     }
@@ -554,7 +638,7 @@ class DatatipManagerForEditor {
   }
 
   createPinnedDataTip(datatip, editor, options) {
-    const pinnedDatatip = new (_PinnedDatatip || _load_PinnedDatatip()).PinnedDatatip(datatip, editor, Object.assign({}, options, {
+    const pinnedDatatip = new (_PinnedDatatip().PinnedDatatip)(datatip, editor, Object.assign({}, options, {
       onDispose: () => {
         this._pinnedDatatips.delete(pinnedDatatip);
       },
@@ -569,14 +653,18 @@ class DatatipManagerForEditor {
 
 var _initialiseProps = function () {
   this._handlePinClicked = (editor, datatip) => {
-    (_analytics || _load_analytics()).default.track('datatip-pinned-open');
-    const startTime = (0, (_performanceNow || _load_performanceNow()).default)();
+    _analytics().default.track('datatip-pinned-open');
+
+    const startTime = (0, _performanceNow().default)();
+
     this._setState(DatatipState.HIDDEN);
-    this._pinnedDatatips.add(new (_PinnedDatatip || _load_PinnedDatatip()).PinnedDatatip(datatip, editor, {
+
+    this._pinnedDatatips.add(new (_PinnedDatatip().PinnedDatatip)(datatip, editor, {
       onDispose: pinnedDatatip => {
         this._pinnedDatatips.delete(pinnedDatatip);
-        (_analytics || _load_analytics()).default.track('datatip-pinned-close', {
-          duration: (0, (_performanceNow || _load_performanceNow()).default)() - startTime
+
+        _analytics().default.track('datatip-pinned-close', {
+          duration: (0, _performanceNow().default)() - startTime
         });
       },
       hideDataTips: () => {
@@ -587,30 +675,29 @@ var _initialiseProps = function () {
   };
 
   this._toggleDatatip = e => {
-    var _ref, _ref2;
+    var _ref;
 
     if (atom.workspace.getActiveTextEditor() !== this._editor) {
       return;
-    }
-
-    // Note that we don't need to hide the tooltip, we already hide it on
+    } // Note that we don't need to hide the tooltip, we already hide it on
     // keydown, which is going to be triggered before the key binding which is
     // evaluated on keyup.
     // $FlowFixMe (v0.54.1 <)
-    const maybeEventType = (_ref = e) != null ? (_ref2 = _ref.originalEvent) != null ? _ref2.type : _ref2 : _ref;
 
-    // Unfortunately, when you do keydown of the shortcut, it's going to
+
+    const maybeEventType = (_ref = e) != null ? (_ref = _ref.originalEvent) != null ? _ref.type : _ref : _ref; // Unfortunately, when you do keydown of the shortcut, it's going to
     // hide it, we need to make sure that when we do keyup, it doesn't show
     // it up right away. We assume that a keypress is done within 100ms
     // and don't show it again if it was hidden so soon.
+
     const forceShow = maybeEventType === 'keydown' && performance.now() - this._lastHiddenTime > 100;
     const forceHide = maybeEventType === 'keyup';
     const forceToggle = maybeEventType !== 'keydown' && maybeEventType !== 'keyup';
 
-    if (
-    // if we have event information, prefer that for determining show/hide
+    if ( // if we have event information, prefer that for determining show/hide
     forceShow || forceToggle && this._datatipState === DatatipState.HIDDEN) {
       this._lastFetchedFromCursorPosition = true;
+
       this._startFetching(() => this._editor.getCursorScreenPosition());
     } else if (forceHide || forceToggle) {
       this._hideOrCancel();
@@ -618,30 +705,36 @@ var _initialiseProps = function () {
   };
 
   this._copyDatatipToClipboard = async () => {
-    var _ref3, _ref4;
+    var _ref2;
 
     if (atom.workspace.getActiveTextEditor() !== this._editor) {
       return;
     }
 
     const pos = this._editor.getCursorScreenPosition();
+
     if (pos == null) {
       return;
     }
+
     const results = await this._fetch(pos);
+
     this._setState(DatatipState.HIDDEN);
 
-    const tip = (_ref3 = results) != null ? (_ref4 = _ref3[0]) != null ? _ref4.datatip : _ref4 : _ref3;
+    const tip = (_ref2 = results) != null ? (_ref2 = _ref2[0]) != null ? _ref2.datatip : _ref2 : _ref2;
+
     if (tip == null || tip.markedStrings == null) {
       return;
     }
 
     const markedStrings = tip.markedStrings;
+
     if (markedStrings == null) {
       return;
     }
 
     const value = markedStrings.map(string => string.value).join();
+
     if (value === '') {
       return;
     }
@@ -652,22 +745,18 @@ var _initialiseProps = function () {
 };
 
 class DatatipManager {
-
   constructor() {
-    this._subscriptions = new (_UniversalDisposable || _load_UniversalDisposable()).default();
-    this._editorManagers = new Map();
-    this._datatipProviders = new (_ProviderRegistry || _load_ProviderRegistry()).default();
-    this._modifierDatatipProviders = new (_ProviderRegistry || _load_ProviderRegistry()).default();
+    this._subscriptions = new (_UniversalDisposable().default)();
+    this._editorManagers = new WeakMap();
+    this._datatipProviders = new (_ProviderRegistry().default)();
+    this._modifierDatatipProviders = new (_ProviderRegistry().default)();
 
     this._subscriptions.add(atom.workspace.observeTextEditors(editor => {
       const manager = new DatatipManagerForEditor(editor, this._datatipProviders, this._modifierDatatipProviders);
+
       this._editorManagers.set(editor, manager);
-      const disposable = new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
-        manager.dispose();
-        this._editorManagers.delete(editor);
-      });
-      this._subscriptions.add(disposable);
-      editor.onDidDestroy(() => disposable.dispose());
+
+      this._subscriptions.addUntilDestroyed(editor, manager);
     }));
   }
 
@@ -681,18 +770,18 @@ class DatatipManager {
 
   createPinnedDataTip(datatip, editor, options) {
     const manager = this._editorManagers.get(editor);
+
     if (!manager) {
       throw new Error('Trying to create a pinned data tip on an editor that has ' + 'no datatip manager');
     }
+
     return manager.createPinnedDataTip(datatip, editor, options);
   }
 
   dispose() {
     this._subscriptions.dispose();
-    this._editorManagers.forEach(manager => {
-      manager.dispose();
-    });
-    this._editorManagers = new Map();
   }
+
 }
+
 exports.DatatipManager = DatatipManager;

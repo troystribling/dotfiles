@@ -1,25 +1,24 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.buildFailureTestResult = exports.parseMessage = exports.makeMessage = exports.parseJSON = exports.MESSAGE_TYPES = exports.extractIPCIDsFromFilePath = exports.parseIPCIDs = exports.mergeIPCIDs = exports.makeUniqWorkerId = exports.makeUniqServerId = exports.rand = undefined;
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.buildFailureTestResult = exports.parseMessage = exports.makeMessage = exports.parseJSON = exports.MESSAGE_TYPES = exports.extractIPCIDsFromFilePath = exports.parseIPCIDs = exports.mergeIPCIDs = exports.makeUniqWorkerId = exports.makeUniqServerId = exports.rand = void 0;
 
+var _path = _interopRequireDefault(require("path"));
 
+function _jestMessageUtil() {
+  const data = require("jest-message-util");
 
+  _jestMessageUtil = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-
-
-
-
-
-
-
-
-
-
-
-var _path = _interopRequireDefault(require('path'));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-const IPC_IDS_SEPARATOR = '_'; // server id and worker id merged into one string
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -30,44 +29,73 @@ const IPC_IDS_SEPARATOR = '_'; // server id and worker id merged into one string
  *
  * 
  * @format
- */ /* eslint-disable nuclide-internal/prefer-nuclide-uri */const rand = exports.rand = () => Math.floor(Math.random() * 10000000);const makeUniqServerId = exports.makeUniqServerId = () => `jest-atom-runner-ipc-server-${Date.now() + rand()}`;const makeUniqWorkerId = exports.makeUniqWorkerId = () => `jest-atom-runner-ipc-worker-${Date.now() + rand()}`;const mergeIPCIDs = exports.mergeIPCIDs = ({ serverID,
-  workerID }) =>
+ */
 
+/* eslint-disable nuclide-internal/prefer-nuclide-uri */
+// server id and worker id merged into one string
+const IPC_IDS_SEPARATOR = '_';
 
+const rand = () => Math.floor(Math.random() * 10000000);
 
-`${serverID}${IPC_IDS_SEPARATOR}${workerID}`;
+exports.rand = rand;
 
-const parseIPCIDs = exports.parseIPCIDs = mergedIDs => {
+const makeUniqServerId = () => `jest-atom-runner-ipc-server-${Date.now() + rand()}`;
+
+exports.makeUniqServerId = makeUniqServerId;
+
+const makeUniqWorkerId = () => `jest-atom-runner-ipc-worker-${Date.now() + rand()}`;
+
+exports.makeUniqWorkerId = makeUniqWorkerId;
+
+const mergeIPCIDs = ({
+  serverID,
+  workerID
+}) => `${serverID}${IPC_IDS_SEPARATOR}${workerID}`;
+
+exports.mergeIPCIDs = mergeIPCIDs;
+
+const parseIPCIDs = mergedIDs => {
   const [serverID, workerID] = mergedIDs.split(IPC_IDS_SEPARATOR);
-  return { serverID, workerID };
-};
-
-// The only way atom allows us to pass data to it is in the form of a file path.
+  return {
+    serverID,
+    workerID
+  };
+}; // The only way atom allows us to pass data to it is in the form of a file path.
 // So we pass a non-existing file path to it that encodes server and worker IDs,
 // that we later parse and use to communicate back with the parent process.
-const extractIPCIDsFromFilePath = exports.extractIPCIDsFromFilePath =
-passedFilePath =>
-{
-  const { serverID, workerID } = parseIPCIDs(_path.default.basename(passedFilePath));
-  return { serverID, workerID };
+
+
+exports.parseIPCIDs = parseIPCIDs;
+
+const extractIPCIDsFromFilePath = passedFilePath => {
+  const {
+    serverID,
+    workerID
+  } = parseIPCIDs(_path.default.basename(passedFilePath));
+  return {
+    serverID,
+    workerID
+  };
 };
 
-const MESSAGE_TYPES = exports.MESSAGE_TYPES = Object.freeze({
+exports.extractIPCIDsFromFilePath = extractIPCIDsFromFilePath;
+const MESSAGE_TYPES = Object.freeze({
   INITIALIZE: 'INITIALIZE',
   DATA: 'DATA',
   RUN_TEST: 'RUN_TEST',
   TEST_RESULT: 'TEST_RESULT',
   TEST_FAILURE: 'TEST_FAILURE',
-  SHUT_DOWN: 'SHUT_DOWN' });
+  SHUT_DOWN: 'SHUT_DOWN'
+});
+exports.MESSAGE_TYPES = MESSAGE_TYPES;
 
-
-
-
-const parseJSON = exports.parseJSON = str => {
+const parseJSON = str => {
   if (str == null) {
     throw new Error('String needs to be passed when parsing JSON');
   }
+
   let data;
+
   try {
     data = JSON.parse(str);
   } catch (error) {
@@ -77,42 +105,45 @@ const parseJSON = exports.parseJSON = str => {
   return data;
 };
 
-const makeMessage = exports.makeMessage = ({
+exports.parseJSON = parseJSON;
+
+const makeMessage = ({
   messageType,
-  data }) =>
+  data
+}) => `${messageType}-${data || ''}`;
 
+exports.makeMessage = makeMessage;
 
-
-`${messageType}-${data || ''}`;
-
-const parseMessage = exports.parseMessage = message => {
-  const messageType = Object.values(MESSAGE_TYPES).find(msgType =>
-  message.startsWith(msgType));
+const parseMessage = message => {
+  const messageType = Object.values(MESSAGE_TYPES).find(msgType => message.startsWith(msgType));
 
   if (!messageType) {
     throw new Error(`IPC message of unknown type. Message must start from one of the following strings representing types followed by "-'.
          known types: ${JSON.stringify(MESSAGE_TYPES)}`);
   }
 
-  return { messageType, data: message.slice(messageType.length + 1) };
+  return {
+    messageType,
+    data: message.slice(messageType.length + 1)
+  };
 };
 
-const buildFailureTestResult = exports.buildFailureTestResult = (
-testPath,
-err) =>
-{
+exports.parseMessage = parseMessage;
+
+const buildFailureTestResult = (testPath, err, config, globalConfig) => {
+  const failureMessage = (0, _jestMessageUtil().formatExecError)(err, config, globalConfig);
   return {
     console: null,
     displayName: '',
-    failureMessage: null,
+    failureMessage,
     leaks: false,
     numFailingTests: 0,
     numPassingTests: 0,
     numPendingTests: 0,
     perfStats: {
       end: 0,
-      start: 0 },
-
+      start: 0
+    },
     skipped: false,
     snapshot: {
       added: 0,
@@ -121,16 +152,17 @@ err) =>
       unchecked: 0,
       uncheckedKeys: [],
       unmatched: 0,
-      updated: 0 },
-
+      updated: 0
+    },
     sourceMaps: {},
-    testExecError: err,
+    testExecError: failureMessage,
     testFilePath: testPath,
-    testResults: [] };
+    testResults: []
+  };
+};
 
-};exports.default =
-
-{
+exports.buildFailureTestResult = buildFailureTestResult;
+var _default = {
   rand,
   makeUniqServerId,
   makeUniqWorkerId,
@@ -140,4 +172,6 @@ err) =>
   makeMessage,
   MESSAGE_TYPES,
   parseJSON,
-  buildFailureTestResult };
+  buildFailureTestResult
+};
+exports.default = _default;

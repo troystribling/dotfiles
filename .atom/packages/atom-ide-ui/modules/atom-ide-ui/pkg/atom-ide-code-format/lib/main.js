@@ -1,15 +1,23 @@
-'use strict';
+"use strict";
 
-var _createPackage;
+function _createPackage() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/createPackage"));
 
-function _load_createPackage() {
-  return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));
+  _createPackage = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _CodeFormatManager;
+function _CodeFormatManager() {
+  const data = _interopRequireDefault(require("./CodeFormatManager"));
 
-function _load_CodeFormatManager() {
-  return _CodeFormatManager = _interopRequireDefault(require('./CodeFormatManager'));
+  _CodeFormatManager = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -25,11 +33,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  strict-local
  * @format
  */
-
 class Activation {
-
   constructor() {
-    this.codeFormatManager = new (_CodeFormatManager || _load_CodeFormatManager()).default();
+    this.codeFormatManager = new (_CodeFormatManager().default)();
   }
 
   consumeLegacyProvider(provider) {
@@ -37,6 +43,7 @@ class Activation {
     provider.grammarScopes = provider.grammarScopes || (provider.selector != null ? provider.selector.split(', ') : null);
     provider.priority = provider.priority != null ? provider.priority : // $FlowFixMe(>=0.68.0) Flow suppress (T27187857)
     provider.inclusionPriority != null ? provider.inclusionPriority : 0;
+
     if (provider.formatCode) {
       return this.consumeRangeProvider(provider);
     } else if (provider.formatEntireFile) {
@@ -46,6 +53,7 @@ class Activation {
     } else if (provider.formatOnSave) {
       return this.consumeOnSaveProvider(provider);
     }
+
     throw new Error('Invalid code format provider');
   }
 
@@ -72,6 +80,7 @@ class Activation {
   dispose() {
     this.codeFormatManager.dispose();
   }
+
 }
 
-(0, (_createPackage || _load_createPackage()).default)(module.exports, Activation);
+(0, _createPackage().default)(module.exports, Activation);

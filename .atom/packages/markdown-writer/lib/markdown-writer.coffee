@@ -44,13 +44,15 @@ module.exports =
       editorCommands["markdown-writer:insert-#{media}"] =
         @registerView("./views/insert-#{media}-view")
 
-    ["code", "codeblock", "bold", "italic", "strikethrough", "keystroke",
+    ["code", "codeblock", "math", "mathblock",
+     "bold", "italic", "strikethrough", "keystroke",
      "deletion", "addition", "substitution", "comment", "highlight"
     ].forEach (style) =>
       editorCommands["markdown-writer:toggle-#{style}-text"] =
         @registerCommand("./commands/style-text", args: style)
 
-    ["h1", "h2", "h3", "h4", "h5", "ul", "ol", "task", "taskdone", "blockquote"].forEach (style) =>
+    ["h1", "h2", "h3", "h4", "h5", "ul", "ol",
+     "task", "taskdone", "blockquote"].forEach (style) =>
       editorCommands["markdown-writer:toggle-#{style}"] =
         @registerCommand("./commands/style-line", args: style)
 
@@ -63,11 +65,23 @@ module.exports =
         @registerCommand("./commands/edit-line",
           args: command, skipList: ["autocomplete-active"])
 
-    ["correct-order-list-numbers", "format-table"].forEach (command) =>
+    ["insert-toc", "update-toc"].forEach (command) =>
+      editorCommands["markdown-writer:#{command}"] =
+        @registerCommand("./commands/edit-toc", args: command)
+
+    ["correct-order-list-numbers", "format-order-list", "format-table"].forEach (command) =>
       editorCommands["markdown-writer:#{command}"] =
         @registerCommand("./commands/format-text", args: command)
 
-    ["publish-draft", "open-link-in-browser", "insert-image"].forEach (command) =>
+    ["fold-links", "fold-headings", "fold-h1", "fold-h2", "fold-h3", "focus-current-heading"].forEach (command) =>
+      editorCommands["markdown-writer:#{command}"] =
+        @registerCommand("./commands/fold-text", args: command)
+
+    ["open-link-in-browser", "open-link-in-file"].forEach (command) =>
+      editorCommands["markdown-writer:#{command}"] =
+        @registerCommand("./commands/open-link", args: command)
+
+    ["publish-draft", "insert-image"].forEach (command) =>
       editorCommands["markdown-writer:#{command}"] =
         @registerCommand("./commands/#{command}")
 

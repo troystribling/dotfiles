@@ -3,7 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
 exports.default = createCallbackMemoizer;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /**
  * Helper utility that updates the specified callback whenever any of the specified indices have changed.
  */
@@ -16,12 +24,12 @@ function createCallbackMemoizer() {
     var callback = _ref.callback,
         indices = _ref.indices;
 
-    var keys = Object.keys(indices);
+    var keys = (0, _keys2.default)(indices);
     var allInitialized = !requireAllKeys || keys.every(function (key) {
       var value = indices[key];
       return Array.isArray(value) ? value.length > 0 : value >= 0;
     });
-    var indexChanged = keys.length !== Object.keys(cachedIndices).length || keys.some(function (key) {
+    var indexChanged = keys.length !== (0, _keys2.default)(cachedIndices).length || keys.some(function (key) {
       var cachedValue = cachedIndices[key];
       var value = indices[key];
 

@@ -1,261 +1,323 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TerminalView = exports.URI_PREFIX = exports.COLOR_CONFIGS = undefined;
 exports.deserializeTerminalView = deserializeTerminalView;
 exports.getSafeInitialInput = getSafeInitialInput;
+exports.TerminalView = exports.URI_PREFIX = void 0;
 
-var _atom = require('atom');
+var _atom = require("atom");
 
-var _electron = require('electron');
+var _electron = require("electron");
 
-var _projects;
+function _observePaneItemVisibility() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/observePaneItemVisibility"));
 
-function _load_projects() {
-  return _projects = require('../../../../nuclide-commons-atom/projects');
+  _observePaneItemVisibility = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _event;
+function _projects() {
+  const data = require("../../../../nuclide-commons-atom/projects");
 
-function _load_event() {
-  return _event = require('../../../../nuclide-commons/event');
+  _projects = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+function _event() {
+  const data = require("../../../../nuclide-commons/event");
 
-var _url = _interopRequireDefault(require('url'));
+  _event = function () {
+    return data;
+  };
 
-var _xterm;
-
-function _load_xterm() {
-  return _xterm = require('xterm');
+  return data;
 }
 
-var _fit;
+function _observable() {
+  const data = require("../../../../nuclide-commons/observable");
 
-function _load_fit() {
-  return _fit = _interopRequireWildcard(require('xterm/lib/addons/fit/fit'));
+  _observable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _AtomServiceContainer;
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
-function _load_AtomServiceContainer() {
-  return _AtomServiceContainer = require('./AtomServiceContainer');
+var _url = _interopRequireDefault(require("url"));
+
+function _AtomServiceContainer() {
+  const data = require("./AtomServiceContainer");
+
+  _AtomServiceContainer = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _featureConfig;
+function _featureConfig() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/feature-config"));
 
-function _load_featureConfig() {
-  return _featureConfig = _interopRequireDefault(require('../../../../nuclide-commons-atom/feature-config'));
+  _featureConfig = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _observableDom;
+function _observableDom() {
+  const data = require("../../../../nuclide-commons-ui/observable-dom");
 
-function _load_observableDom() {
-  return _observableDom = require('../../../../nuclide-commons-ui/observable-dom');
+  _observableDom = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _performanceNow;
+function _performanceNow() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/performanceNow"));
 
-function _load_performanceNow() {
-  return _performanceNow = _interopRequireDefault(require('../../../../nuclide-commons/performanceNow'));
+  _performanceNow = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _nuclideTerminalUri;
+function _createTerminal() {
+  const data = require("./createTerminal");
 
-function _load_nuclideTerminalUri() {
-  return _nuclideTerminalUri = require('./nuclide-terminal-uri');
+  _createTerminal = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _nuclideUri;
+function _measurePerformance() {
+  const data = _interopRequireDefault(require("./measure-performance"));
 
-function _load_nuclideUri() {
-  return _nuclideUri = _interopRequireDefault(require('../../../../nuclide-commons/nuclideUri'));
+  _measurePerformance = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+function _nuclideTerminalUri() {
+  const data = require("./nuclide-terminal-uri");
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));
+  _nuclideTerminalUri = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _analytics;
+function _nuclideUri() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/nuclideUri"));
 
-function _load_analytics() {
-  return _analytics = require('../../../../nuclide-commons/analytics');
+  _nuclideUri = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _goToLocation;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_goToLocation() {
-  return _goToLocation = require('../../../../nuclide-commons-atom/go-to-location');
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _sink;
+function _analytics() {
+  const data = require("../../../../nuclide-commons/analytics");
 
-function _load_sink() {
-  return _sink = require('./sink');
+  _analytics = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _goToLocation() {
+  const data = require("../../../../nuclide-commons-atom/go-to-location");
+
+  _goToLocation = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _config() {
+  const data = require("./config");
+
+  _config = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _sink() {
+  const data = require("./sink");
+
+  _sink = function () {
+    return data;
+  };
+
+  return data;
+}
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const COLOR_CONFIGS = exports.COLOR_CONFIGS = Object.freeze({
-  // dark
-  black: 'atom-ide-terminal.black',
-  red: 'atom-ide-terminal.red',
-  green: 'atom-ide-terminal.green',
-  blue: 'atom-ide-terminal.blue',
-  yellow: 'atom-ide-terminal.yellow',
-  cyan: 'atom-ide-terminal.cyan',
-  magenta: 'atom-ide-terminal.magenta',
-  white: 'atom-ide-terminal.white',
-  // bright
-  brightBlack: 'atom-ide-terminal.brightBlack',
-  brightRed: 'atom-ide-terminal.brightRed',
-  brightGreen: 'atom-ide-terminal.brightGreen',
-  brightBlue: 'atom-ide-terminal.brightBlue',
-  brightYellow: 'atom-ide-terminal.brightYellow',
-  brightCyan: 'atom-ide-terminal.brightCyan',
-  brightMagenta: 'atom-ide-terminal.brightMagenta',
-  brightWhite: 'atom-ide-terminal.brightWhite'
-}); /**
-     * Copyright (c) 2017-present, Facebook, Inc.
-     * All rights reserved.
-     *
-     * This source code is licensed under the BSD-style license found in the
-     * LICENSE file in the root directory of this source tree. An additional grant
-     * of patent rights can be found in the PATENTS file in the same directory.
-     *
-     * 
-     * @format
-     */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
 
-const PRESERVED_COMMANDS_CONFIG = 'atom-ide-terminal.preservedCommands';
-const SCROLLBACK_CONFIG = 'atom-ide-terminal.scrollback';
-const CURSOR_STYLE_CONFIG = 'atom-ide-terminal.cursorStyle';
-const CURSOR_BLINK_CONFIG = 'atom-ide-terminal.cursorBlink';
-const FONT_FAMILY_CONFIG = 'atom-ide-terminal.fontFamily';
-const FONT_SCALE_CONFIG = 'atom-ide-terminal.fontScale';
-const LINE_HEIGHT_CONFIG = 'atom-ide-terminal.lineHeight';
-const DOCUMENTATION_MESSAGE_CONFIG = 'atom-ide-terminal.documentationMessage';
-const ADD_ESCAPE_COMMAND = 'atom-ide-terminal:add-escape-prefix';
+/* eslint-env browser */
 const TMUX_CONTROLCONTROL_PREFIX = '\x1BP1000p';
-const URI_PREFIX = exports.URI_PREFIX = 'atom://nuclide-terminal-view';
+const URI_PREFIX = 'atom://nuclide-terminal-view';
+exports.URI_PREFIX = URI_PREFIX;
 
 class TerminalView {
-
   constructor(paneUri) {
     this._syncFontAndFit = () => {
-      const scaledFont = parseFloat((_featureConfig || _load_featureConfig()).default.get(FONT_SCALE_CONFIG)) * parseFloat(atom.config.get('editor.fontSize'));
-      this._terminal.setOption('fontSize', scaledFont);
-      this._terminal.setOption('lineHeight', (_featureConfig || _load_featureConfig()).default.get(LINE_HEIGHT_CONFIG));
-      this._terminal.setOption('fontFamily', (_featureConfig || _load_featureConfig()).default.get(FONT_FAMILY_CONFIG));
+      this._setTerminalOption('fontSize', (0, _config().getFontSize)());
+
+      this._setTerminalOption('lineHeight', _featureConfig().default.get(_config().LINE_HEIGHT_CONFIG));
+
+      this._setTerminalOption('fontFamily', _featureConfig().default.get(_config().FONT_FAMILY_CONFIG));
+
       this._fitAndResize();
     };
 
-    if ((_xterm || _load_xterm()).Terminal.fit == null) {
-      // The 'fit' add-on resizes the terminal based on the container size
-      // and the font size such that the terminal fills the container.
-      // Load the addon on-demand the first time we create a terminal.
-      (_xterm || _load_xterm()).Terminal.applyAddon(_fit || _load_fit());
-    }
-
     this._paneUri = paneUri;
-    const info = (0, (_nuclideTerminalUri || _load_nuclideTerminalUri()).infoFromUri)(paneUri);
+    const info = (0, _nuclideTerminalUri().infoFromUri)(paneUri);
     this._terminalInfo = info;
     const cwd = this._cwd = info.cwd == null ? null : info.cwd;
     this._command = info.command == null ? null : info.command;
     this._title = info.title == null ? 'terminal' : info.title;
     this._path = cwd;
     this._initialInput = info.initialInput == null ? '' : getSafeInitialInput(info.initialInput);
-    this._processExitCallback = () => {};
-    this._useTitleAsPath = false;
 
-    this._startTime = (0, (_performanceNow || _load_performanceNow()).default)();
+    this._processExitCallback = () => {};
+
+    this._useTitleAsPath = false;
+    this._startTime = (0, _performanceNow().default)();
     this._bytesIn = 0;
     this._bytesOut = 0;
     this._focusStart = null;
     this._focusDuration = 0;
     this._isFirstOutput = true;
-
-    const subscriptions = this._subscriptions = new (_UniversalDisposable || _load_UniversalDisposable()).default();
+    const subscriptions = this._subscriptions = new (_UniversalDisposable().default)();
     this._processOutput = this._createOutputSink();
-
     this._emitter = new _atom.Emitter();
     subscriptions.add(this._emitter);
-
-    subscriptions.add((_featureConfig || _load_featureConfig()).default.observeAsStream(PRESERVED_COMMANDS_CONFIG).subscribe(preserved => {
+    subscriptions.add(_featureConfig().default.observeAsStream(_config().PRESERVED_COMMANDS_CONFIG).subscribe(preserved => {
       this._preservedCommands = new Set([...(preserved || []), ...(info.preservedCommands || [])]);
     }), atom.config.onDidChange('core.themes', this._syncAtomTheme.bind(this)), atom.themes.onDidChangeActiveThemes(this._syncAtomTheme.bind(this)));
-
-    subscriptions.add(
-    // Skip the first value because the observe callback triggers once when
+    subscriptions.add( // Skip the first value because the observe callback triggers once when
     // we begin observing, duplicating work in the constructor.
-    ...Object.keys(COLOR_CONFIGS).map(color => (_featureConfig || _load_featureConfig()).default.observeAsStream(COLOR_CONFIGS[color]).skip(1).subscribe(this._syncAtomTheme.bind(this))));
-
+    ...Object.keys(_config().COLOR_CONFIGS).map(color => _featureConfig().default.observeAsStream(_config().COLOR_CONFIGS[color]).skip(1).subscribe(this._syncAtomTheme.bind(this))));
     const div = this._div = document.createElement('div');
     div.classList.add('terminal-pane');
     subscriptions.add(() => div.remove());
-
-    const terminal = this._terminal = new (_xterm || _load_xterm()).Terminal({
-      cols: 512,
-      rows: 512,
-      cursorBlink: (_featureConfig || _load_featureConfig()).default.get(CURSOR_BLINK_CONFIG),
-      cursorStyle: (_featureConfig || _load_featureConfig()).default.get(CURSOR_STYLE_CONFIG),
-      scrollback: (_featureConfig || _load_featureConfig()).default.get(SCROLLBACK_CONFIG)
-    });
-    div.terminal = terminal;
-    terminal.open(this._div);
-    terminal.setHypertextLinkHandler(openLink);
+    const terminal = this._terminal = (0, _createTerminal().createTerminal)();
     terminal.attachCustomKeyEventHandler(this._checkIfKeyBoundOrDivertToXTerm.bind(this));
-    this._subscriptions.add(() => terminal.destroy());
-    registerLinkHandlers(terminal, this._cwd);
 
-    if ((_featureConfig || _load_featureConfig()).default.get(DOCUMENTATION_MESSAGE_CONFIG)) {
-      const docsUrl = 'https://nuclide.io/docs/features/terminal';
-      terminal.writeln(`For more info check out the docs: ${docsUrl}`);
-    }
+    this._subscriptions.add(() => terminal.dispose());
+
+    terminal.webLinksInit(openLink);
+    registerLinkHandlers(terminal, this._cwd);
 
     this._subscriptions.add(atom.commands.add(div, 'core:copy', () => {
       document.execCommand('copy');
     }), atom.commands.add(div, 'core:paste', () => {
       document.execCommand('paste');
-    }), atom.commands.add(div, ADD_ESCAPE_COMMAND, this._addEscapePrefix.bind(this)), atom.commands.add(div, 'atom-ide-terminal:clear', this._clear.bind(this)), (_featureConfig || _load_featureConfig()).default.observeAsStream(CURSOR_STYLE_CONFIG).skip(1).subscribe(cursorStyle => terminal.setOption('cursorStyle', cursorStyle)), (_featureConfig || _load_featureConfig()).default.observeAsStream(CURSOR_BLINK_CONFIG).skip(1).subscribe(cursorBlink => terminal.setOption('cursorBlink', cursorBlink)), (_featureConfig || _load_featureConfig()).default.observeAsStream(SCROLLBACK_CONFIG).skip(1).subscribe(scrollback => terminal.setOption('scrollback', scrollback)), _rxjsBundlesRxMinJs.Observable.merge((0, (_event || _load_event()).observableFromSubscribeFunction)(cb => atom.config.onDidChange('editor.fontSize', cb)), (_featureConfig || _load_featureConfig()).default.observeAsStream(FONT_SCALE_CONFIG).skip(1), (_featureConfig || _load_featureConfig()).default.observeAsStream(FONT_FAMILY_CONFIG).skip(1), (_featureConfig || _load_featureConfig()).default.observeAsStream(LINE_HEIGHT_CONFIG).skip(1), _rxjsBundlesRxMinJs.Observable.fromEvent(this._terminal, 'focus'), _rxjsBundlesRxMinJs.Observable.fromEvent(window, 'resize'), new (_observableDom || _load_observableDom()).ResizeObservable(this._div)).subscribe(this._syncFontAndFit));
+    }), atom.commands.add(div, _config().ADD_ESCAPE_COMMAND, this._addEscapePrefix.bind(this)), atom.commands.add(div, 'atom-ide-terminal:clear', this._clear.bind(this)));
 
     if (process.platform === 'win32') {
       // On Windows, add Putty-style highlight and right click to copy, right click to paste.
-      this._subscriptions.add(_rxjsBundlesRxMinJs.Observable.fromEvent(div, 'contextmenu').subscribe(e => {
+      this._subscriptions.add(_RxMin.Observable.fromEvent(div, 'contextmenu').subscribe(e => {
         // Note: Manipulating the clipboard directly because atom's core:copy and core:paste
         // commands are not working correctly with terminal selection.
         if (terminal.hasSelection()) {
           // $FlowFixMe: add types for clipboard
-          _electron.clipboard.writeText(terminal.selectionManager.selectionText);
+          _electron.clipboard.writeText(terminal.getSelection());
         } else {
           document.execCommand('paste');
         }
-        terminal.selectionManager.clearSelection();
+
+        terminal.clearSelection();
         terminal.focus();
         e.stopPropagation();
       }));
     }
 
-    if (cwd != null && (_nuclideUri || _load_nuclideUri()).default.isRemote(cwd)) {
-      this._subscriptions.add((0, (_projects || _load_projects()).observeRemovedHostnames)().subscribe(hostname => {
-        if ((_nuclideUri || _load_nuclideUri()).default.getHostname(cwd) === hostname) {
+    if (cwd != null && _nuclideUri().default.isRemote(cwd)) {
+      this._subscriptions.add((0, _projects().observeRemovedHostnames)().subscribe(hostname => {
+        if (_nuclideUri().default.getHostname(cwd) === hostname) {
           this._closeTab();
         }
       }));
-    }
+    } // div items don't support a 'focus' event, and we need to forward.
 
-    // div items don't support a 'focus' event, and we need to forward.
+
     this._div.focus = () => terminal.focus();
-    this._div.blur = () => terminal.blur();
 
-    this._spawn(cwd).then(pty => this._onPtyFulfill(pty)).catch(error => this._onPtyFail(error));
+    this._div.blur = () => terminal.blur(); // Terminal.open only works after its div has been attached to the DOM,
+    // which happens in getElement, not in this constructor. Therefore delay
+    // open and spawn until the div is visible, which means it is in the DOM.
+
+
+    this._subscriptions.add((0, _observePaneItemVisibility().default)(this).filter(Boolean).first().subscribe(() => {
+      terminal.open(this._div);
+      div.terminal = terminal;
+
+      if (_featureConfig().default.get(_config().DOCUMENTATION_MESSAGE_CONFIG)) {
+        const docsUrl = 'https://nuclide.io/docs/features/terminal';
+        terminal.writeln(`For more info check out the docs: ${docsUrl}`);
+      }
+
+      terminal.focus();
+
+      this._subscriptions.add(this._subscribeFitEvents());
+
+      this._spawn(cwd).then(pty => this._onPtyFulfill(pty)).catch(error => this._onPtyFail(error));
+    }));
+  }
+
+  _subscribeFitEvents() {
+    return new (_UniversalDisposable().default)(_featureConfig().default.observeAsStream(_config().OPTION_IS_META_CONFIG).skip(1).subscribe(optionIsMeta => {
+      this._setTerminalOption('macOptionIsMeta', optionIsMeta);
+    }), _featureConfig().default.observeAsStream(_config().CURSOR_STYLE_CONFIG).skip(1).subscribe(cursorStyle => this._setTerminalOption('cursorStyle', cursorStyle)), _featureConfig().default.observeAsStream(_config().CURSOR_BLINK_CONFIG).skip(1).subscribe(cursorBlink => this._setTerminalOption('cursorBlink', cursorBlink)), _featureConfig().default.observeAsStream(_config().SCROLLBACK_CONFIG).skip(1).subscribe(scrollback => this._setTerminalOption('scrollback', scrollback)), _RxMin.Observable.combineLatest((0, _observePaneItemVisibility().default)(this), _RxMin.Observable.merge((0, _event().observableFromSubscribeFunction)(cb => atom.config.onDidChange('editor.fontSize', cb)), _featureConfig().default.observeAsStream(_config().FONT_SCALE_CONFIG).skip(1), _featureConfig().default.observeAsStream(_config().FONT_FAMILY_CONFIG).skip(1), _featureConfig().default.observeAsStream(_config().LINE_HEIGHT_CONFIG).skip(1), _RxMin.Observable.fromEvent(this._terminal, 'focus'), // Debounce resize observables to reduce lag.
+    _RxMin.Observable.merge(_RxMin.Observable.fromEvent(window, 'resize'), new (_observableDom().ResizeObservable)(this._div)).let((0, _observable().fastDebounce)(100)))) // Don't emit syncs if the pane is not visible.
+    .filter(([visible]) => visible).subscribe(this._syncFontAndFit));
   }
 
   _spawn(cwd) {
@@ -263,70 +325,89 @@ class TerminalView {
     const info = Object.assign({
       terminalType: 'xterm-256color',
       environment: this._terminalInfo.environmentVariables
-    }, command == null ? {} : { command });
+    }, command == null ? {} : {
+      command
+    });
+
     const performSpawn = () => {
       this._setUseTitleAsPath(cwd);
-      return (0, (_AtomServiceContainer || _load_AtomServiceContainer()).getPtyServiceByNuclideUri)(cwd).spawn(cwd != null ? Object.assign({}, info, { cwd: (_nuclideUri || _load_nuclideUri()).default.getPath(cwd) }) : info, this);
+
+      return (0, _AtomServiceContainer().getPtyServiceByNuclideUri)(cwd).spawn(cwd != null ? Object.assign({}, info, {
+        cwd: _nuclideUri().default.getPath(cwd)
+      }) : info, this);
     };
-    if (cwd == null || (_nuclideUri || _load_nuclideUri()).default.isLocal(cwd)) {
+
+    if (cwd == null || _nuclideUri().default.isLocal(cwd)) {
       return performSpawn();
     } else {
-      const cwdHostname = (_nuclideUri || _load_nuclideUri()).default.getHostname(cwd);
-      // Wait for the remote connection to be added before spawning.
-      const hostnameAddedPromise = (0, (_projects || _load_projects()).observeAddedHostnames)().filter(hostname => hostname === cwdHostname).take(1).toPromise();
+      const cwdHostname = _nuclideUri().default.getHostname(cwd); // Wait for the remote connection to be added before spawning.
+
+
+      const hostnameAddedPromise = (0, _projects().observeAddedHostnames)().filter(hostname => hostname === cwdHostname).take(1).toPromise();
       return hostnameAddedPromise.then(performSpawn);
     }
   }
 
   _setUseTitleAsPath(cwd) {
-    (0, (_AtomServiceContainer || _load_AtomServiceContainer()).getPtyServiceByNuclideUri)(cwd).useTitleAsPath(this).then(value => this._useTitleAsPath = value);
+    (0, _AtomServiceContainer().getPtyServiceByNuclideUri)(cwd).useTitleAsPath(this).then(value => this._useTitleAsPath = value);
   }
 
   _onPtyFulfill(pty) {
     if (!(this._pty == null)) {
-      throw new Error('Invariant violation: "this._pty == null"');
+      throw new Error("Invariant violation: \"this._pty == null\"");
     }
 
     this._pty = pty;
-
-    const now = (0, (_performanceNow || _load_performanceNow()).default)();
+    const now = (0, _performanceNow().default)();
     this._focusStart = now;
-    (0, (_analytics || _load_analytics()).track)('nuclide-terminal.started', {
+    (0, _analytics().track)('nuclide-terminal.started', {
       pane: this._paneUri,
       uri: this._cwd,
       startDelay: Math.round(now - this._startTime)
     });
 
-    this._subscriptions.add(this.dispose.bind(this), _rxjsBundlesRxMinJs.Observable.fromEvent(this._terminal, 'data').subscribe(this._onInput.bind(this)), _rxjsBundlesRxMinJs.Observable.fromEvent(this._terminal, 'title').subscribe(title => {
+    this._subscriptions.add(this.dispose.bind(this), _RxMin.Observable.fromEvent(this._terminal, 'data').subscribe(this._onInput.bind(this)), _RxMin.Observable.fromEvent(this._terminal, 'title').subscribe(title => {
       this._setTitle(title);
+
       if (this._useTitleAsPath) {
         this._setPath(title);
       }
-    }), _rxjsBundlesRxMinJs.Observable.interval(60 * 60 * 1000).subscribe(() => (0, (_analytics || _load_analytics()).track)('nuclide-terminal.hourly', this._statistics())), _rxjsBundlesRxMinJs.Observable.fromEvent(this._terminal, 'focus').subscribe(this._focused.bind(this)), _rxjsBundlesRxMinJs.Observable.fromEvent(this._terminal, 'blur').subscribe(this._blurred.bind(this)));
+    }), _RxMin.Observable.interval(60 * 60 * 1000).subscribe(() => (0, _analytics().track)('nuclide-terminal.hourly', this._statistics())), _RxMin.Observable.fromEvent(this._terminal, 'focus').subscribe(this._focused.bind(this)), _RxMin.Observable.fromEvent(this._terminal, 'blur').subscribe(this._blurred.bind(this)));
+
     this._syncFontAndFit();
+
+    const performanceDisposable = (0, _measurePerformance().default)(this._terminal); // Stop observing performance if the renderer type is no longer auto.
+
+    this._subscriptions.add(_featureConfig().default.observeAsStream(_config().RENDERER_TYPE_CONFIG).filter(value => value !== 'auto').take(1).subscribe(() => performanceDisposable.dispose()));
+
+    this._subscriptions.add(performanceDisposable);
   }
 
   _focused() {
     if (this._focusStart == null) {
-      this._focusStart = (0, (_performanceNow || _load_performanceNow()).default)();
+      this._focusStart = (0, _performanceNow().default)();
     }
   }
 
   _blurred() {
     const focusStart = this._focusStart;
+
     if (focusStart != null) {
       this._focusStart = null;
-      this._focusDuration += (0, (_performanceNow || _load_performanceNow()).default)() - focusStart;
+      this._focusDuration += (0, _performanceNow().default)() - focusStart;
     }
   }
 
   _statistics() {
-    const now = (0, (_performanceNow || _load_performanceNow()).default)();
+    const now = (0, _performanceNow().default)();
     const focusStart = this._focusStart;
     const focusDuration = this._focusDuration + (focusStart == null ? 0 : now - focusStart);
-    const { query } = _url.default.parse(this._paneUri, true);
-    const id = query == null ? null : query.unique;
 
+    const {
+      query
+    } = _url.default.parse(this._paneUri, true);
+
+    const id = query == null ? null : query.unique;
     return {
       id,
       uri: this._cwd,
@@ -339,38 +420,49 @@ class TerminalView {
 
   _onPtyFail(error) {
     this._terminal.writeln('Error starting process:');
+
     for (const line of String(error).split('\n')) {
       this._terminal.writeln(line);
     }
-    (0, (_analytics || _load_analytics()).track)('nuclide-terminal.failed', {
+
+    (0, _analytics().track)('nuclide-terminal.failed', {
       pane: this._paneUri,
       uri: this._cwd,
-      startDelay: Math.round((0, (_performanceNow || _load_performanceNow()).default)() - this._startTime),
+      startDelay: Math.round((0, _performanceNow().default)() - this._startTime),
       error: String(error)
     });
-  }
-
-  // Since changing the font settings may resize the contents, we have to
+  } // Since changing the font settings may resize the contents, we have to
   // trigger a re-fit when updating font settings.
 
+
+  _setTerminalOption(optionName, value) {
+    if (this._terminal.getOption(optionName) !== value) {
+      this._terminal.setOption(optionName, value);
+    }
+  }
 
   _fitAndResize() {
     // Force character measure before 'fit' runs.
     this._terminal.resize(this._terminal.cols, this._terminal.rows);
+
     this._terminal.fit();
+
     if (this._pty != null) {
       this._pty.resize(this._terminal.cols, this._terminal.rows);
     }
-    this._syncAtomTheme();
-    // documented workaround for https://github.com/xtermjs/xterm.js/issues/291
+
+    this._syncAtomTheme(); // documented workaround for https://github.com/xtermjs/xterm.js/issues/291
     // see https://github.com/Microsoft/vscode/commit/134cbec22f81d5558909040491286d72b547bee6
-    this._terminal.emit('scroll', this._terminal.buffer.ydisp);
+    // $FlowIgnore: using unofficial _core interface defined in https://github.com/Microsoft/vscode/blob/master/src/typings/vscode-xterm.d.ts#L682-L706
+
+
+    this._terminal.emit('scroll', this._terminal._core.buffer.ydisp);
   }
 
   _syncAtomTheme() {
-    const terminal = this._terminal;
     const div = this._div;
-    terminal.setOption('theme', getTerminalTheme(div));
+
+    this._setTerminalOption('theme', getTerminalTheme(div));
   }
 
   _clear() {
@@ -380,23 +472,27 @@ class TerminalView {
   _onInput(data) {
     if (this._pty != null) {
       this._bytesIn += data.length;
+
       this._pty.writeInput(data);
     }
   }
 
   _setTitle(title) {
     this._title = title;
+
     this._emitter.emit('did-change-title', title);
   }
 
   _setPath(path) {
     this._path = path;
+
     this._emitter.emit('did-change-path', path);
   }
 
   _addEscapePrefix(event) {
     if (typeof event.originalEvent === 'object') {
       const keyEvent = event.originalEvent;
+
       if (typeof keyEvent.key === 'string') {
         this._onInput(`\x1B${keyEvent.key}`);
       }
@@ -416,16 +512,17 @@ class TerminalView {
     });
     const preserved = this._preservedCommands;
 
-    if (preserved.has(ADD_ESCAPE_COMMAND) && bindings.some(b => b.command === ADD_ESCAPE_COMMAND)) {
+    if (preserved.has(_config().ADD_ESCAPE_COMMAND) && bindings.some(b => b.command === _config().ADD_ESCAPE_COMMAND)) {
       // Intercept the add escape binding and send escape directly, then
       // divert to xterm (to handle keys like Backspace).
       this._onInput('\x1B');
+
       return true;
     }
 
-    const result = !bindings.some(b => preserved.has(b.command));
-    // This facilitates debugging keystroke issues.  You can set a breakpoint
+    const result = !bindings.some(b => preserved.has(b.command)); // This facilitates debugging keystroke issues.  You can set a breakpoint
     // in the else block without stopping on modifier keys.
+
     if (keystroke === 'alt' || keystroke === 'shift' || keystroke === 'ctrl' || keystroke === 'cmd') {
       return result;
     } else {
@@ -438,10 +535,11 @@ class TerminalView {
     let lines = 0;
     let firstChar = null;
     let warned = false;
-    return (0, (_sink || _load_sink()).removePrefixSink)(TMUX_CONTROLCONTROL_PREFIX, (0, (_sink || _load_sink()).patternCounterSink)('\n%', n => ++tmuxLines < 2, (0, (_sink || _load_sink()).patternCounterSink)('\n', n => ++lines < 2, data => {
+    return (0, _sink().removePrefixSink)(TMUX_CONTROLCONTROL_PREFIX, (0, _sink().patternCounterSink)('\n%', n => ++tmuxLines < 2, (0, _sink().patternCounterSink)('\n', n => ++lines < 2, data => {
       if (firstChar == null && data.length > 0) {
         firstChar = data.charAt(0);
       }
+
       if (firstChar === '%' && tmuxLines === lines && tmuxLines >= 2 && !warned) {
         warned = true;
         atom.notifications.addWarning('Tmux control protocol detected', {
@@ -449,12 +547,14 @@ class TerminalView {
           dismissable: true
         });
       }
+
       this._terminal.write(data);
     })));
   }
 
   _closeTab() {
     const pane = atom.workspace.paneForItem(this);
+
     if (pane != null) {
       pane.destroyItem(this);
     }
@@ -462,20 +562,26 @@ class TerminalView {
 
   onOutput(data) {
     this._bytesOut += data.length;
+
     this._processOutput(data);
 
     if (this._isFirstOutput) {
       this._isFirstOutput = false;
+
       this._onInput(this._initialInput);
     }
   }
 
   onExit(code, signal) {
     const terminal = this._terminal;
-    (0, (_analytics || _load_analytics()).track)('nuclide-terminal.exit', Object.assign({}, this._statistics(), { code, signal }));
+    (0, _analytics().track)('nuclide-terminal.exit', Object.assign({}, this._statistics(), {
+      code,
+      signal
+    }));
 
     if (code === 0 && !this._terminalInfo.remainOnCleanExit) {
       this._closeTab();
+
       return;
     }
 
@@ -484,9 +590,11 @@ class TerminalView {
     const command = this._terminalInfo.command;
     const process = command == null ? 'Process' : `${command.file} ${command.args.join(' ')}`;
     terminal.writeln(`${process} exited with error code '${code}'.`);
+
     if (signal !== 0) {
       terminal.writeln(`  killed by signal '${signal}'.`);
     }
+
     terminal.writeln('');
 
     this._disableTerminal();
@@ -494,10 +602,12 @@ class TerminalView {
 
   _disableTerminal() {
     this.dispose();
-    this._terminal.blur();
 
-    // Disable terminal's ability to capture input once in error state.
+    this._terminal.blur(); // Disable terminal's ability to capture input once in error state.
+
+
     this._div.focus = () => {};
+
     this._div.blur = () => {};
   }
 
@@ -508,30 +618,35 @@ class TerminalView {
   terminateProcess() {
     if (this._pty != null) {
       this._disableTerminal();
+
       this._terminal.writeln('');
+
       this._terminal.writeln('Process terminated.');
+
       this._terminal.writeln('');
     }
   }
 
   copy() {
-    const paneUri = (0, (_nuclideTerminalUri || _load_nuclideTerminalUri()).uriFromInfo)(this._terminalInfo);
+    const paneUri = (0, _nuclideTerminalUri().uriFromInfo)(this._terminalInfo);
     return new TerminalView(paneUri);
-  }
-
-  // Remote connection is closing--note the window remains open to show error
+  } // Remote connection is closing--note the window remains open to show error
   // output if the process exit code was not 0.
+
+
   dispose() {
     if (this._pty != null) {
       this._pty.dispose();
+
       this._pty = null;
     }
 
     this._processExitCallback();
-    this._processExitCallback = () => {};
-  }
 
-  // Window is closing, so close everything.
+    this._processExitCallback = () => {};
+  } // Window is closing, so close everything.
+
+
   destroy() {
     this._subscriptions.dispose();
   }
@@ -578,19 +693,21 @@ class TerminalView {
       paneUri: this._paneUri
     };
   }
+
 }
 
 exports.TerminalView = TerminalView;
+
 function deserializeTerminalView(state) {
   // Convert from/to uri to generate a new unique id.
-  const info = (0, (_nuclideTerminalUri || _load_nuclideTerminalUri()).infoFromUri)(state.paneUri, true);
-  const paneUri = (0, (_nuclideTerminalUri || _load_nuclideTerminalUri()).uriFromInfo)(info);
+  const info = (0, _nuclideTerminalUri().infoFromUri)(state.paneUri, true);
+  const paneUri = (0, _nuclideTerminalUri().uriFromInfo)(info);
   return new TerminalView(paneUri);
 }
 
 function registerLinkHandlers(terminal, cwd) {
-  const diffPattern = toString((_featureConfig || _load_featureConfig()).default.get('atom-ide-console.diffUrlPattern'));
-  const taskPattern = toString((_featureConfig || _load_featureConfig()).default.get('atom-ide-console.taskUrlPattern'));
+  const diffPattern = toString(_featureConfig().default.get('atom-ide-console.diffUrlPattern'));
+  const taskPattern = toString(_featureConfig().default.get('atom-ide-console.taskUrlPattern'));
   const bindings = [{
     // Diff (e.g. 'D1234') with word boundary on either side.
     regex: /\bD[1-9][0-9]{3,}\b/,
@@ -622,18 +739,26 @@ function registerLinkHandlers(terminal, cwd) {
   }];
 
   for (const _ref of bindings) {
-    const { regex, matchIndex, urlPattern } = _ref;
-
-    terminal.linkifier.registerLinkMatcher(regex, (event, match) => {
+    const {
+      regex,
+      matchIndex,
+      urlPattern
+    } = _ref;
+    terminal.registerLinkMatcher(regex, (event, match) => {
       const replacedUrl = urlPattern.replace('%s', match);
+
       if (replacedUrl !== '') {
         const commandClicked = process.platform === 'win32' ? event.ctrlKey : event.metaKey;
+
         if (commandClicked && tryOpenInAtom(replacedUrl, cwd)) {
           return;
         }
+
         _electron.shell.openExternal(replacedUrl);
       }
-    }, { matchIndex });
+    }, {
+      matchIndex
+    });
   }
 }
 
@@ -642,14 +767,17 @@ function tryOpenInAtom(link, cwd) {
 
   if (parsed.protocol === 'open-file-object:') {
     let path = parsed.path;
+
     if (path != null) {
-      if (cwd != null && (_nuclideUri || _load_nuclideUri()).default.isRemote(cwd)) {
-        const terminalLocation = (_nuclideUri || _load_nuclideUri()).default.parseRemoteUri(cwd);
-        path = (_nuclideUri || _load_nuclideUri()).default.createRemoteUri(terminalLocation.hostname, path);
+      if (cwd != null && _nuclideUri().default.isRemote(cwd)) {
+        const terminalLocation = _nuclideUri().default.parseRemoteUri(cwd);
+
+        path = _nuclideUri().default.createRemoteUri(terminalLocation.hostname, path);
       }
 
-      (0, (_goToLocation || _load_goToLocation()).goToLocation)(path);
+      (0, _goToLocation().goToLocation)(path);
     }
+
     return true;
   }
 
@@ -666,14 +794,14 @@ function trimTrailingDot(s) {
 
 function toString(value) {
   return typeof value === 'string' ? value : '';
-}
+} // As a precaution, we should not let any undisplayable or potentially unsafe characters through
 
-// As a precaution, we should not let any undisplayable or potentially unsafe characters through
+
 function getSafeInitialInput(initialInput) {
   for (let i = 0; i < initialInput.length; i++) {
-    const code = initialInput.charCodeAt(i);
-    // ASCII codes under 32 and 127 are control characters (potentially dangerous)
+    const code = initialInput.charCodeAt(i); // ASCII codes under 32 and 127 are control characters (potentially dangerous)
     // ASCII codes 128-165 are extended ASCII characters that have uses in other languages
+
     if (code < 32 || code === 127 || code > 165) {
       atom.notifications.addWarning('Initial input for terminal unable to be prefilled', {
         detail: `Potentially malicious characters were found in the prefill command: ${initialInput}`,
@@ -682,16 +810,19 @@ function getSafeInitialInput(initialInput) {
       return '';
     }
   }
+
   return initialInput;
 }
 
 function getTerminalColors() {
   const colorsMap = {};
-  for (const color of Object.keys(COLOR_CONFIGS)) {
-    const configValue = (_featureConfig || _load_featureConfig()).default.get(COLOR_CONFIGS[color]);
-    // config value may be string when Atom deserializes the terminal package
+
+  for (const color of Object.keys(_config().COLOR_CONFIGS)) {
+    const configValue = _featureConfig().default.get(_config().COLOR_CONFIGS[color]); // config value may be string when Atom deserializes the terminal package
     // on startup, and it may be undefined if this is the first time the package
     // is being deserialized after the config was added.
+
+
     if (configValue != null) {
       if (typeof configValue === 'string') {
         colorsMap[color] = configValue;
@@ -700,28 +831,18 @@ function getTerminalColors() {
       }
     }
   }
+
   return colorsMap;
 }
 
 function getTerminalTheme(div) {
   const style = window.getComputedStyle(div);
-  const foreground = convertRgbToHash(style.getPropertyValue('color'));
-  const background = convertRgbToHash(style.getPropertyValue('background-color'));
-  // return type: https://git.io/vxooH
+  const foreground = style.getPropertyValue('color');
+  const background = style.getPropertyValue('background-color'); // return type: https://git.io/vxooH
+
   return Object.assign({
     foreground,
     background,
     cursor: foreground
   }, getTerminalColors());
-}
-
-// Terminal only allows colors of the form '#rrggbb' or '#rgb' and falls back
-// to black otherwise. https://git.io/vNE8a  :-(
-const rgbRegex = / *rgb *\( *([0-9]+) *, *([0-9]+) *, *([0-9]+) *\) */;
-function convertRgbToHash(rgb) {
-  const matches = rgb.match(rgbRegex);
-  if (matches == null) {
-    return rgb;
-  }
-  return '#' + matches.slice(1, 4).map(Number).map(n => (n < 0x10 ? '0' : '') + n.toString(16)).join('');
 }

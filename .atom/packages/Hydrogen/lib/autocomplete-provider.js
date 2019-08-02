@@ -1,7 +1,7 @@
 /* @flow */
 
 import _ from "lodash";
-import { log } from "./utils";
+import { log, char_idx_to_js_idx } from "./utils";
 import store from "./store";
 
 type Autocomplete = {
@@ -38,7 +38,10 @@ const regexes = {
 };
 
 function parseCompletions(results: CompleteReply, prefix: string) {
-  const { matches, cursor_start, cursor_end, metadata } = results;
+  const { matches, metadata } = results;
+  let { cursor_start, cursor_end } = results;
+  cursor_start = char_idx_to_js_idx(cursor_start, prefix);
+  cursor_end = char_idx_to_js_idx(cursor_end, prefix);
 
   if (metadata && metadata._jupyter_types_experimental) {
     const comps = metadata._jupyter_types_experimental;
@@ -70,12 +73,15 @@ function parseCompletions(results: CompleteReply, prefix: string) {
 export default function() {
   const autocompleteProvider = {
     selector: ".source",
-    disableForSelector: ".comment, .string",
+    disableForSelector: ".comment",
 
     // `excludeLowerPriority: false` won't suppress providers with lower
     // priority.
     // The default provider has a priority of 0.
     inclusionPriority: 1,
+    suggestionPriority: atom.config.get("Hydrogen.showAutocompleteFirst")
+      ? 3
+      : 1,
     excludeLowerPriority: false,
 
     // Required: Return a promise, an array of suggestions, or null.

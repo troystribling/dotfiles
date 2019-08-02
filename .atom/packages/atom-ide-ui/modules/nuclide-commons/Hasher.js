@@ -1,8 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -35,7 +37,6 @@ Object.defineProperty(exports, "__esModule", {
  *    }
  */
 class Hasher {
-
   constructor() {
     this._hashes = new WeakMap();
     this._objectCount = 0;
@@ -46,28 +47,40 @@ class Hasher {
     if (item === null) {
       return 'null';
     }
+
     const type = typeof item;
+
     switch (typeof item) {
       case 'object':
         {
           let hash = this._hashes.get(item);
+
           if (hash == null) {
             hash = `${type}:${this._objectCount}`;
+
             this._hashes.set(item, hash);
+
             this._objectCount = this._objectCount + 1 === Number.MAX_SAFE_INTEGER ? Number.MIN_SAFE_INTEGER : this._objectCount + 1;
           }
+
           return hash;
         }
+
       case 'undefined':
         return 'undefined';
+
       case 'string':
       case 'boolean':
         return `${type}:${item.toString()}`;
+
       case 'number':
         return item;
+
       default:
         throw new Error('Unhashable object');
     }
   }
+
 }
+
 exports.default = Hasher;

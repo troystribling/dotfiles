@@ -1,60 +1,96 @@
-'use strict';
+"use strict";
 
-var _createPackage;
+function _createPackage() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/createPackage"));
 
-function _load_createPackage() {
-  return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));
+  _createPackage = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _event;
+function _event() {
+  const data = require("../../../../nuclide-commons/event");
 
-function _load_event() {
-  return _event = require('../../../../nuclide-commons/event');
+  _event = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _MessageRangeTracker;
+function _MessageRangeTracker() {
+  const data = _interopRequireDefault(require("./MessageRangeTracker"));
 
-function _load_MessageRangeTracker() {
-  return _MessageRangeTracker = _interopRequireDefault(require('./MessageRangeTracker'));
+  _MessageRangeTracker = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _DiagnosticUpdater;
+function _DiagnosticUpdater() {
+  const data = _interopRequireDefault(require("./services/DiagnosticUpdater"));
 
-function _load_DiagnosticUpdater() {
-  return _DiagnosticUpdater = _interopRequireDefault(require('./services/DiagnosticUpdater'));
+  _DiagnosticUpdater = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _IndieLinterRegistry;
+function _IndieLinterRegistry() {
+  const data = _interopRequireDefault(require("./services/IndieLinterRegistry"));
 
-function _load_IndieLinterRegistry() {
-  return _IndieLinterRegistry = _interopRequireDefault(require('./services/IndieLinterRegistry'));
+  _IndieLinterRegistry = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _LinterAdapterFactory;
+function _LinterAdapterFactory() {
+  const data = require("./services/LinterAdapterFactory");
 
-function _load_LinterAdapterFactory() {
-  return _LinterAdapterFactory = require('./services/LinterAdapterFactory');
+  _LinterAdapterFactory = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Actions;
+function Actions() {
+  const data = _interopRequireWildcard(require("./redux/Actions"));
 
-function _load_Actions() {
-  return _Actions = _interopRequireWildcard(require('./redux/Actions'));
+  Actions = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _createStore;
+function _createStore() {
+  const data = _interopRequireDefault(require("./redux/createStore"));
 
-function _load_createStore() {
-  return _createStore = _interopRequireDefault(require('./redux/createStore'));
+  _createStore = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69,17 +105,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  strict-local
  * @format
  */
-
 class Activation {
-
   constructor() {
     this._allLinterAdapters = new Set();
-
-    const messageRangeTracker = new (_MessageRangeTracker || _load_MessageRangeTracker()).default();
-    this._store = (0, (_createStore || _load_createStore()).default)(messageRangeTracker);
-
-    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(messageRangeTracker, () => {
+    const messageRangeTracker = new (_MessageRangeTracker().default)();
+    this._store = (0, _createStore().default)(messageRangeTracker);
+    this._disposables = new (_UniversalDisposable().default)(messageRangeTracker, () => {
       this._allLinterAdapters.forEach(adapter => adapter.dispose());
+
       this._allLinterAdapters.clear();
     });
   }
@@ -87,17 +120,20 @@ class Activation {
   dispose() {
     this._disposables.dispose();
   }
-
   /**
    * @return A wrapper around the methods on DiagnosticStore that allow reading data.
    */
+
+
   provideDiagnosticUpdates() {
-    return new (_DiagnosticUpdater || _load_DiagnosticUpdater()).default(this._store);
+    return new (_DiagnosticUpdater().default)(this._store);
   }
 
   provideIndie() {
-    const registry = new (_IndieLinterRegistry || _load_IndieLinterRegistry()).default();
+    const registry = new (_IndieLinterRegistry().default)();
+
     this._disposables.add(registry);
+
     return config => {
       const delegate = registry.register(config);
       const disposable = this.consumeDiagnosticsProviderV2(delegate);
@@ -110,7 +146,7 @@ class Activation {
 
   consumeBusySignal(service) {
     this._busySignalService = service;
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+    return new (_UniversalDisposable().default)(() => {
       this._busySignalService = null;
     });
   }
@@ -119,29 +155,35 @@ class Activation {
     if (this._busySignalService != null) {
       return this._busySignalService.reportBusy(title);
     }
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default();
+
+    return new (_UniversalDisposable().default)();
   }
 
   consumeCodeActionFetcher(fetcher) {
-    this._store.dispatch((_Actions || _load_Actions()).setCodeActionFetcher(fetcher));
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
+    this._store.dispatch(Actions().setCodeActionFetcher(fetcher));
+
+    return new (_UniversalDisposable().default)(() => {
       if (!(this._store.getState().codeActionFetcher === fetcher)) {
-        throw new Error('Invariant violation: "this._store.getState().codeActionFetcher === fetcher"');
+        throw new Error("Invariant violation: \"this._store.getState().codeActionFetcher === fetcher\"");
       }
 
-      this._store.dispatch((_Actions || _load_Actions()).setCodeActionFetcher(null));
+      this._store.dispatch(Actions().setCodeActionFetcher(null));
     });
   }
 
   consumeLinterProvider(providers_) {
     const providers = Array.isArray(providers_) ? providers_ : [providers_];
-    const adapterDisposables = new (_UniversalDisposable || _load_UniversalDisposable()).default();
+    const adapterDisposables = new (_UniversalDisposable().default)();
+
     for (const provider of providers) {
-      const adapter = (0, (_LinterAdapterFactory || _load_LinterAdapterFactory()).createAdapter)(provider, title => this._reportBusy(title));
+      const adapter = (0, _LinterAdapterFactory().createAdapter)(provider, title => this._reportBusy(title));
+
       if (adapter == null) {
         continue;
       }
+
       this._allLinterAdapters.add(adapter);
+
       const diagnosticDisposable = this.consumeDiagnosticsProviderV2({
         updates: adapter.getUpdates(),
         invalidations: adapter.getInvalidations()
@@ -149,27 +191,31 @@ class Activation {
       adapterDisposables.add(() => {
         diagnosticDisposable.dispose();
         adapter.dispose();
+
         this._allLinterAdapters.delete(adapter);
       });
     }
+
     return adapterDisposables;
   }
 
   consumeDiagnosticsProviderV1(provider) {
     // Register the diagnostic store for updates from the new provider.
     const observableProvider = {
-      updates: (0, (_event || _load_event()).observableFromSubscribeFunction)(provider.onMessageUpdate.bind(provider)),
-      invalidations: (0, (_event || _load_event()).observableFromSubscribeFunction)(provider.onMessageInvalidation.bind(provider))
+      updates: (0, _event().observableFromSubscribeFunction)(provider.onMessageUpdate.bind(provider)),
+      invalidations: (0, _event().observableFromSubscribeFunction)(provider.onMessageInvalidation.bind(provider))
     };
     return this.consumeDiagnosticsProviderV2(observableProvider);
   }
 
   consumeDiagnosticsProviderV2(provider) {
-    this._store.dispatch((_Actions || _load_Actions()).addProvider(provider));
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default(() => {
-      this._store.dispatch((_Actions || _load_Actions()).removeProvider(provider));
+    this._store.dispatch(Actions().addProvider(provider));
+
+    return new (_UniversalDisposable().default)(() => {
+      this._store.dispatch(Actions().removeProvider(provider));
     });
   }
+
 }
 
-(0, (_createPackage || _load_createPackage()).default)(module.exports, Activation);
+(0, _createPackage().default)(module.exports, Activation);

@@ -1,33 +1,45 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = SettingsModal;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _BoundSettingsControl;
+function _BoundSettingsControl() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons-ui/BoundSettingsControl"));
 
-function _load_BoundSettingsControl() {
-  return _BoundSettingsControl = _interopRequireDefault(require('../../../../../nuclide-commons-ui/BoundSettingsControl'));
+  _BoundSettingsControl = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _HR;
+function _HR() {
+  const data = require("../../../../../nuclide-commons-ui/HR");
 
-function _load_HR() {
-  return _HR = require('../../../../../nuclide-commons-ui/HR');
+  _HR = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _featureConfig;
+function _featureConfig() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons-atom/feature-config"));
 
-function _load_featureConfig() {
-  return _featureConfig = _interopRequireDefault(require('../../../../../nuclide-commons-atom/feature-config'));
+  _featureConfig = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -40,36 +52,28 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * 
  * @format
  */
-
 function SettingsModal(props) {
   const hasProviderSettings = props.config.some(config => config.settings.length > 0);
-  return _react.createElement(
-    'div',
-    { className: 'nuclide-diagnostics-ui-settings-modal settings-view' },
-    _react.createElement(
-      'section',
-      { className: 'settings-panel' },
-      _react.createElement((_BoundSettingsControl || _load_BoundSettingsControl()).default, {
-        keyPath: (_featureConfig || _load_featureConfig()).default.formatKeyPath('atom-ide-diagnostics-ui.showDirectoryColumn')
-      }),
-      _react.createElement((_BoundSettingsControl || _load_BoundSettingsControl()).default, {
-        keyPath: (_featureConfig || _load_featureConfig()).default.formatKeyPath('atom-ide-diagnostics-ui.autoVisibility')
-      })
-    ),
-    hasProviderSettings ? _react.createElement((_HR || _load_HR()).HR, null) : null,
-    props.config.map(p => _react.createElement(SettingsSection, Object.assign({ key: p.providerName }, p)))
-  );
+  return React.createElement("div", {
+    className: "nuclide-diagnostics-ui-settings-modal settings-view"
+  }, React.createElement("section", {
+    className: "settings-panel"
+  }, React.createElement(_BoundSettingsControl().default, {
+    keyPath: _featureConfig().default.formatKeyPath('atom-ide-diagnostics-ui.showDirectoryColumn')
+  }), React.createElement(_BoundSettingsControl().default, {
+    keyPath: _featureConfig().default.formatKeyPath('atom-ide-diagnostics-ui.autoVisibility')
+  })), hasProviderSettings ? React.createElement(_HR().HR, null) : null, props.config.map(p => React.createElement(SettingsSection, Object.assign({
+    key: p.providerName
+  }, p))));
 }
 
 function SettingsSection(props) {
-  return _react.createElement(
-    'section',
-    { className: 'settings-panel' },
-    _react.createElement(
-      'h1',
-      { className: 'section-heading' },
-      props.providerName
-    ),
-    props.settings.map(keyPath => _react.createElement((_BoundSettingsControl || _load_BoundSettingsControl()).default, { key: keyPath, keyPath: keyPath }))
-  );
+  return React.createElement("section", {
+    className: "settings-panel"
+  }, React.createElement("h1", {
+    className: "section-heading"
+  }, props.providerName), props.settings.map(keyPath => React.createElement(_BoundSettingsControl().default, {
+    key: keyPath,
+    keyPath: keyPath
+  })));
 }

@@ -1,36 +1,53 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _event;
+function _event() {
+  const data = require("../../../../nuclide-commons/event");
 
-function _load_event() {
-  return _event = require('../../../../nuclide-commons/event');
+  _event = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _goToLocation;
+function _goToLocation() {
+  const data = require("../../../../nuclide-commons-atom/go-to-location");
 
-function _load_goToLocation() {
-  return _goToLocation = require('../../../../nuclide-commons-atom/go-to-location');
+  _goToLocation = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _bindObservableAsProps;
+function _bindObservableAsProps() {
+  const data = require("../../../../nuclide-commons-ui/bindObservableAsProps");
 
-function _load_bindObservableAsProps() {
-  return _bindObservableAsProps = require('../../../../nuclide-commons-ui/bindObservableAsProps');
+  _bindObservableAsProps = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _DiagnosticsPopup;
+function _DiagnosticsPopup() {
+  const data = require("./ui/DiagnosticsPopup");
 
-function _load_DiagnosticsPopup() {
-  return _DiagnosticsPopup = require('./ui/DiagnosticsPopup');
+  _DiagnosticsPopup = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -43,30 +60,34 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  *  strict-local
  * @format
  */
-
-const gotoLine = (file, line) => (0, (_goToLocation || _load_goToLocation()).goToLocation)(file, { line });
+const gotoLine = (file, line) => (0, _goToLocation().goToLocation)(file, {
+  line
+});
 
 function makeDatatipComponent(messages, diagnosticUpdater) {
   const fixer = message => diagnosticUpdater.applyFix(message);
-  return (0, (_bindObservableAsProps || _load_bindObservableAsProps()).bindObservableAsProps)((0, (_event || _load_event()).observableFromSubscribeFunction)(cb => diagnosticUpdater.observeCodeActionsForMessage(cb)).map(codeActionsForMessage => ({
+
+  return (0, _bindObservableAsProps().bindObservableAsProps)((0, _event().observableFromSubscribeFunction)(cb => diagnosticUpdater.observeCodeActionsForMessage(cb)).map(codeActionsForMessage => ({
     messages,
     fixer,
     goToLocation: gotoLine,
     codeActionsForMessage
-  })), (_DiagnosticsPopup || _load_DiagnosticsPopup()).DiagnosticsPopup);
+  })), _DiagnosticsPopup().DiagnosticsPopup);
 }
 
-exports.default = async function getDiagnosticDatatip(editor, position, messagesAtPosition, diagnosticUpdater) {
+var getDiagnosticDatatip = async function getDiagnosticDatatip(editor, position, messagesAtPosition, diagnosticUpdater) {
   let range = null;
+
   for (const message of messagesAtPosition) {
     if (message.range != null) {
       range = range == null ? message.range : message.range.union(range);
     }
   }
+
   diagnosticUpdater.fetchCodeActions(editor, messagesAtPosition);
 
   if (!(range != null)) {
-    throw new Error('Invariant violation: "range != null"');
+    throw new Error("Invariant violation: \"range != null\"");
   }
 
   return {
@@ -75,3 +96,5 @@ exports.default = async function getDiagnosticDatatip(editor, position, messages
     range
   };
 };
+
+exports.default = getDiagnosticDatatip;

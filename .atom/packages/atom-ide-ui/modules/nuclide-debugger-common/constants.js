@@ -1,22 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-const VsAdapterTypes = exports.VsAdapterTypes = Object.freeze({
-  HHVM: 'hhvm',
-  PYTHON: 'python',
-  REACT_NATIVE: 'react-native',
-  NODE: 'node',
-  JAVA: 'java',
-  PREPACK: 'prepack',
-  OCAML: 'ocaml',
-  MOBILEJS: 'mobilejs',
-  NATIVE_GDB: 'native_gdb',
-  NATIVE_LLDB: 'native_lldb'
-});
+exports.VsAdapterNames = exports.VsAdapterTypes = void 0;
 
-// This is to work around flow's missing support of enums.
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -28,5 +16,33 @@ const VsAdapterTypes = exports.VsAdapterTypes = Object.freeze({
  *  strict-local
  * @format
  */
+const VsAdapterTypes = Object.freeze({
+  HHVM: 'hhvm',
+  PYTHON: 'python',
+  REACT_NATIVE: 'react-native',
+  NODE: 'node',
+  JAVA: 'java',
+  JAVA_ANDROID: 'java_android',
+  PREPACK: 'prepack',
+  OCAML: 'ocaml',
+  MOBILEJS: 'mobilejs',
+  NATIVE_GDB: 'native_gdb',
+  NATIVE_LLDB: 'native_lldb'
+}); // This is to work around flow's missing support of enums.
 
+exports.VsAdapterTypes = VsAdapterTypes;
 VsAdapterTypes;
+const VsAdapterNames = Object.freeze({
+  HHVM: 'Hack / PHP',
+  PYTHON: 'Python',
+  REACT_NATIVE: 'React Native',
+  NODE: 'Node',
+  JAVA: 'Java - Desktop',
+  JAVA_ANDROID: 'Java - Android',
+  PREPACK: 'Prepack',
+  OCAML: 'OCaml',
+  MOBILEJS: 'Mobile JS',
+  NATIVE_GDB: 'Native - GDB (C/C++)',
+  NATIVE_LLDB: 'Native - LLDB (C/C++)'
+});
+exports.VsAdapterNames = VsAdapterNames;

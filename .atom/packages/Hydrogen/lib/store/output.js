@@ -1,19 +1,14 @@
 /* @flow */
 
 import { action, computed, observable } from "mobx";
-import { richestMimetype } from "@nteract/transforms";
+import _ from "lodash";
 import {
   escapeCarriageReturn,
   escapeCarriageReturnSafe
 } from "escape-carriage";
 
-import {
-  transforms,
-  displayOrder
-} from "./../components/result-view/transforms";
-
 import type { IObservableArray } from "mobx";
-
+import { isTextOutputOnly } from "../components/result-view/display";
 const outputTypes = ["execute_result", "display_data", "stream", "error"];
 
 /**
@@ -27,9 +22,9 @@ const outputTypes = ["execute_result", "display_data", "stream", "error"];
  * @return {Array<Object>} updated-outputs - Outputs + Output
  */
 export function reduceOutputs(
-  outputs: IObservableArray<Object>,
+  outputs: Array<Object>,
   output: Object
-): IObservableArray<Object> {
+): Array<Object> {
   const last = outputs.length - 1;
   if (
     outputs.length > 0 &&
@@ -54,19 +49,25 @@ export function reduceOutputs(
   return outputs;
 }
 
-export function isSingeLine(text: string, availableSpace: number) {
+export function isSingleLine(text: ?string, availableSpace: number) {
   // If it turns out escapeCarriageReturn is a bottleneck, we should remove it.
   return (
-    (text.indexOf("\n") === -1 || text.indexOf("\n") === text.length - 1) &&
+    (!text ||
+      text.indexOf("\n") === -1 ||
+      text.indexOf("\n") === text.length - 1) &&
     availableSpace > escapeCarriageReturn(text).length
   );
 }
 
 export default class OutputStore {
-  outputs: IObservableArray<Object> = observable([]);
-  @observable status: string = "running";
-  @observable executionCount: ?number = null;
-  @observable index: number = -1;
+  @observable
+  outputs: Array<Object> = [];
+  @observable
+  status: string = "running";
+  @observable
+  executionCount: ?number = null;
+  @observable
+  index: number = -1;
   @observable
   position = {
     lineHeight: 0,
@@ -90,13 +91,12 @@ export default class OutputStore {
       case "execute_result":
       case "display_data": {
         const bundle = output.data;
-        const mimetype = richestMimetype(bundle, displayOrder, transforms);
-        return mimetype === "text/plain"
-          ? isSingeLine(bundle[mimetype], availableSpace)
+        return isTextOutputOnly(bundle)
+          ? isSingleLine(bundle["text/plain"], availableSpace)
           : false;
       }
       case "stream": {
-        return isSingeLine(output.text, availableSpace);
+        return isSingleLine(output.text, availableSpace);
       }
       default: {
         return false;
@@ -151,7 +151,7 @@ export default class OutputStore {
 
   @action
   clear = () => {
-    this.outputs.clear();
+    this.outputs = [];
     this.index = -1;
   };
 }

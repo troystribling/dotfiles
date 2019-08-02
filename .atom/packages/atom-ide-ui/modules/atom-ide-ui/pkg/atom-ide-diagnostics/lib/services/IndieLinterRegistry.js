@@ -1,22 +1,30 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.IndieLinterDelegate = undefined;
+exports.default = exports.IndieLinterDelegate = void 0;
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _LinterAdapter;
+function _LinterAdapter() {
+  const data = require("../services/LinterAdapter");
 
-function _load_LinterAdapter() {
-  return _LinterAdapter = require('../services/LinterAdapter');
+  _LinterAdapter = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -32,19 +40,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
 class IndieLinterDelegate {
-
   // For compatibility with the Nuclide API.
   constructor(config) {
     this._name = config.name;
     this._supportedMessageKinds = config.supportedMessageKinds || ['lint'];
     this._uiSettings = Object.freeze(config.uiSettings ? config.uiSettings.slice() : []);
     this._messages = [];
-    this._updates = new _rxjsBundlesRxMinJs.Subject();
-    this._invalidations = new _rxjsBundlesRxMinJs.Subject();
-    this._destroyed = new _rxjsBundlesRxMinJs.BehaviorSubject(false);
-
+    this._updates = new _RxMin.Subject();
+    this._invalidations = new _RxMin.Subject();
+    this._destroyed = new _RxMin.BehaviorSubject(false);
     this.updates = this._updates.asObservable();
     this.invalidations = this._invalidations.asObservable();
   }
@@ -68,49 +73,58 @@ class IndieLinterDelegate {
 
   clearMessages() {
     this._messages = [];
-    this._invalidations.next({ scope: 'all' });
+
+    this._invalidations.next({
+      scope: 'all'
+    });
   }
 
   setMessages(filePath, messages) {
     this._messages = this._messages.filter(message => message.location.file !== filePath).concat(messages);
-    this._updates.next((0, (_LinterAdapter || _load_LinterAdapter()).linterMessagesToDiagnosticUpdate)(filePath, [...messages], this._name));
+
+    this._updates.next((0, _LinterAdapter().linterMessagesToDiagnosticUpdate)(filePath, [...messages], this._name));
   }
 
   setAllMessages(messages) {
     this.clearMessages();
     this._messages = messages;
-    this._updates.next((0, (_LinterAdapter || _load_LinterAdapter()).linterMessagesToDiagnosticUpdate)(null, [...messages], this._name));
+
+    this._updates.next((0, _LinterAdapter().linterMessagesToDiagnosticUpdate)(null, [...messages], this._name));
   }
 
   onDidUpdate(callback) {
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default(_rxjsBundlesRxMinJs.Observable.merge(this.updates, this.invalidations).subscribe(() => {
+    return new (_UniversalDisposable().default)(_RxMin.Observable.merge(this.updates, this.invalidations).subscribe(() => {
       callback(this._messages);
     }));
   }
 
   onDidDestroy(callback) {
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default(this._destroyed.filter(Boolean).take(1).subscribe(callback));
+    return new (_UniversalDisposable().default)(this._destroyed.filter(Boolean).take(1).subscribe(callback));
   }
 
   dispose() {
     // Guard against double-destruction.
     if (!this._destroyed.getValue()) {
       this.clearMessages();
+
       this._destroyed.next(true);
     }
   }
+
 }
 
 exports.IndieLinterDelegate = IndieLinterDelegate;
-class IndieLinterRegistry {
 
+class IndieLinterRegistry {
   constructor() {
     this._delegates = new Set();
   }
 
   register(config) {
     const delegate = new IndieLinterDelegate(config);
+
     this._delegates.add(delegate);
+
     delegate.onDidDestroy(() => {
       this._delegates.delete(delegate);
     });
@@ -119,7 +133,10 @@ class IndieLinterRegistry {
 
   dispose() {
     this._delegates.forEach(delegate => delegate.dispose());
+
     this._delegates.clear();
   }
+
 }
+
 exports.default = IndieLinterRegistry;

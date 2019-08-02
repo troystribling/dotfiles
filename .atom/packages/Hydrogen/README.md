@@ -1,7 +1,6 @@
 # Hydrogen <img src="https://cdn.rawgit.com/nteract/hydrogen/17eda245/static/animate-logo.svg" alt="hydrogen animated logo" height="50px" align="right" />
 
 [![slack in](https://slackin-nteract.now.sh/badge.svg)](https://slackin-nteract.now.sh)
-[![Greenkeeper badge](https://badges.greenkeeper.io/nteract/hydrogen.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/nteract/hydrogen.svg?branch=master)](https://travis-ci.org/nteract/hydrogen)
 
 Hydrogen is an interactive coding environment that supports Python, R, JavaScript and [other Jupyter kernels](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels).
@@ -11,6 +10,7 @@ Checkout our [Documentation](https://nteract.gitbooks.io/hydrogen/) and [Medium 
 ![hero](https://cloud.githubusercontent.com/assets/13285808/20360886/7e03e524-ac03-11e6-9176-37677f226619.gif)
 
 ## Contents
+
 1. [Background](#background)
 2. [Features](#features)
 3. [Plugins for Hydrogen](#plugins-for-hydrogen)
@@ -25,7 +25,6 @@ Checkout our [Documentation](https://nteract.gitbooks.io/hydrogen/) and [Medium 
 Hydrogen was inspired by Bret Victor's ideas about the power of instantaneous feedback and the design of [Light Table](http://lighttable.com/). Running code inline and in real time is a more natural way to develop. By bringing the interactive style of Light Table to the rock-solid usability of Atom, Hydrogen makes it easy to write code the way you want to.
 
 You also may be interested in our latest project – [nteract](https://github.com/nteract/nteract) – a desktop application that wraps up the best of the web based Jupyter notebook.
-
 
 ## Features
 
@@ -44,16 +43,22 @@ You also may be interested in our latest project – [nteract](https://github.co
 - [Usage](https://nteract.gitbooks.io/hydrogen/docs/Usage/GettingStarted.html)
   - [Getting started](https://nteract.gitbooks.io/hydrogen/docs/Usage/GettingStarted.html)
   - [Examples](https://nteract.gitbooks.io/hydrogen/docs/Usage/Examples.html)
+  - [Notebook Import and Export](https://nteract.gitbooks.io/hydrogen/docs/Usage/NotebookFiles.html)
   - [Remote Kernels](https://nteract.gitbooks.io/hydrogen/docs/Usage/RemoteKernelConnection.html)
 - [Troubleshooting Guide](https://nteract.gitbooks.io/hydrogen/docs/Troubleshooting.html)
+- [Style Customization](https://nteract.gitbooks.io/hydrogen/docs/StyleCustomization.html)
+- [Plugin API](https://nteract.gitbooks.io/hydrogen/docs/PluginAPI.html)
 
 ## Plugins for Hydrogen
 
 Hydrogen has support for plugins. Feel free to add your own to the list:
+
 - [Hydrogen Launcher](https://github.com/lgeiger/hydrogen-launcher)
 - [hydrogen-python](https://github.com/nikitakit/hydrogen-python)
+- [Data Explorer](https://github.com/BenRussert/data-explorer)
+- [Cell Navigation](https://github.com/hoishing/cell-navigation)
 
-If you are interested in building a plugin take a look at our [plugin API documentation](https://nteract.gitbooks.io/hydrogen/docs/PluginAPI.md).
+If you are interested in building a plugin take a look at our [plugin API documentation](https://nteract.gitbooks.io/hydrogen/docs/PluginAPI.html).
 
 ## How it works
 
@@ -68,6 +73,8 @@ Plus, it was easy to make a logo.
 ## Contributing
 
 Thanks for taking the time to contribute. Take a look at our [Contributing Guide](https://github.com/nteract/hydrogen/blob/master/CONTRIBUTING.md) to get started.
+
+Then, take a look at any issue labeled [good first issue](https://github.com/nteract/hydrogen/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) or [help wanted](https://github.com/nteract/hydrogen/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) that has not been claimed. These are great starting points.
 
 ## Changelog
 

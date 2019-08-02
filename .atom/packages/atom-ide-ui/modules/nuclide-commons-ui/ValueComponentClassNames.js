@@ -1,8 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.ValueComponentClassNames = void 0;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -14,10 +16,10 @@ Object.defineProperty(exports, "__esModule", {
  *  strict
  * @format
  */
-
 // A very basic heuristic for coloring the values.
+
 /* eslint-disable key-spacing */
-const ValueComponentClassNames = exports.ValueComponentClassNames = {
+const ValueComponentClassNames = {
   boolean: 'syntax--constant syntax--language syntax--boolean',
   identifier: 'syntax--variable',
   nullish: 'syntax--constant syntax--language syntax--null',
@@ -27,3 +29,5 @@ const ValueComponentClassNames = exports.ValueComponentClassNames = {
   stringOpeningQuote: 'syntax--punctuation syntax--definition syntax--string syntax--begin'
 };
 /* eslint-enable key-spacing */
+
+exports.ValueComponentClassNames = ValueComponentClassNames;

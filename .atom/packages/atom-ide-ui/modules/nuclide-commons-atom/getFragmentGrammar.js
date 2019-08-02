@@ -1,9 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = getFragmentGrammar;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -20,7 +21,6 @@ exports.default = getFragmentGrammar;
  * Some grammars should use a specialized grammar for code fragments
  * (namely PHP, since it's wildly different depending on the presence of a <?php opening).
  */
-
 const FRAGMENT_GRAMMARS = Object.freeze({
   'text.html.hack': 'source.hackfragment',
   'text.html.php': 'source.hackfragment'
@@ -31,5 +31,6 @@ function getFragmentGrammar(grammar) {
     const fragmentGrammar = FRAGMENT_GRAMMARS[grammar.scopeName];
     return atom.grammars.grammarForScopeName(fragmentGrammar) || grammar;
   }
+
   return grammar;
 }

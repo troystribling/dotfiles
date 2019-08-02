@@ -1,7 +1,8 @@
 /* @flow */
 
-import { CompositeDisposable } from "atom";
 import React from "react";
+import { Provider } from "@nteract/mathjax";
+import { mathJaxPath } from "mathjax-electron";
 import { action, observable } from "mobx";
 import { observer } from "mobx-react";
 import Anser from "anser";
@@ -11,19 +12,19 @@ import ScrollList from "./result-view/list";
 import { OUTPUT_AREA_URI, EmptyMessage } from "./../utils";
 
 import typeof store from "../store";
-import type { IObservableValue } from "mobx";
 
 @observer
 class OutputArea extends React.Component<{ store: store }> {
-  showHistory: IObservableValue<boolean> = observable.box(true);
+  @observable
+  showHistory: boolean = true;
   @action
   setHistory = () => {
-    this.showHistory.set(true);
+    this.showHistory = true;
   };
 
   @action
   setScrollList = () => {
-    this.showHistory.set(false);
+    this.showHistory = false;
   };
 
   getOutputText(output: Object): ?string {
@@ -63,49 +64,51 @@ class OutputArea extends React.Component<{ store: store }> {
       }
     }
     return (
-      <div className="sidebar output-area">
-        {kernel.outputStore.outputs.length > 0 ? (
-          <div className="block">
-            <div className="btn-group">
-              <button
-                className={`btn icon icon-clock${
-                  this.showHistory.get() ? " selected" : ""
-                }`}
-                onClick={this.setHistory}
-              />
-              <button
-                className={`btn icon icon-three-bars${
-                  !this.showHistory.get() ? " selected" : ""
-                }`}
-                onClick={this.setScrollList}
-              />
-            </div>
-            <div style={{ float: "right" }}>
-              {this.showHistory.get() ? (
+      <Provider src={mathJaxPath}>
+        <div className="sidebar output-area">
+          {kernel.outputStore.outputs.length > 0 ? (
+            <div className="block">
+              <div className="btn-group">
                 <button
-                  className="btn icon icon-clippy"
-                  onClick={this.handleClick}
+                  className={`btn icon icon-clock${
+                    this.showHistory ? " selected" : ""
+                  }`}
+                  onClick={this.setHistory}
+                />
+                <button
+                  className={`btn icon icon-three-bars${
+                    !this.showHistory ? " selected" : ""
+                  }`}
+                  onClick={this.setScrollList}
+                />
+              </div>
+              <div style={{ float: "right" }}>
+                {this.showHistory ? (
+                  <button
+                    className="btn icon icon-clippy"
+                    onClick={this.handleClick}
+                  >
+                    Copy
+                  </button>
+                ) : null}
+                <button
+                  className="btn icon icon-trashcan"
+                  onClick={kernel.outputStore.clear}
                 >
-                  Copy
+                  Clear
                 </button>
-              ) : null}
-              <button
-                className="btn icon icon-trashcan"
-                onClick={kernel.outputStore.clear}
-              >
-                Clear
-              </button>
+              </div>
             </div>
-          </div>
-        ) : (
-          <EmptyMessage />
-        )}
-        {this.showHistory.get() ? (
-          <History store={kernel.outputStore} />
-        ) : (
-          <ScrollList outputs={kernel.outputStore.outputs} />
-        )}
-      </div>
+          ) : (
+            <EmptyMessage />
+          )}
+          {this.showHistory ? (
+            <History store={kernel.outputStore} />
+          ) : (
+            <ScrollList outputs={kernel.outputStore.outputs} />
+          )}
+        </div>
+      </Provider>
     );
   }
 }

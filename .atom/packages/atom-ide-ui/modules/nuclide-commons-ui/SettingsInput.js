@@ -1,37 +1,57 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _AtomInput;
+function _AtomInput() {
+  const data = require("./AtomInput");
 
-function _load_AtomInput() {
-  return _AtomInput = require('./AtomInput');
+  _AtomInput = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _SettingsUtils;
+function _SettingsUtils() {
+  const data = require("./SettingsUtils");
 
-function _load_SettingsUtils() {
-  return _SettingsUtils = require('./SettingsUtils');
+  _SettingsUtils = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-class SettingsInput extends _react.Component {
-
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+class SettingsInput extends React.Component {
   constructor(props) {
     super(props);
 
     this._handleChange = newValue_ => {
       let newValue = newValue_;
+
       if (this._ignoreInputCallback) {
         return;
       }
 
-      newValue = (0, (_SettingsUtils || _load_SettingsUtils()).parseValue)(this.props.type, newValue);
+      newValue = (0, _SettingsUtils().parseValue)(this.props.type, newValue);
       this.props.onChange(newValue);
     };
 
@@ -40,11 +60,12 @@ class SettingsInput extends _react.Component {
       const input = this._input;
 
       if (!(input != null)) {
-        throw new Error('Invariant violation: "input != null"');
+        throw new Error("Invariant violation: \"input != null\"");
       }
 
-      if ((0, (_SettingsUtils || _load_SettingsUtils()).isDefaultConfigValue)(keyPath)) {
-        const defaultValue = (0, (_SettingsUtils || _load_SettingsUtils()).getDefaultConfigValueString)(keyPath);
+      if ((0, _SettingsUtils().isDefaultConfigValue)(keyPath)) {
+        const defaultValue = (0, _SettingsUtils().getDefaultConfigValueString)(keyPath);
+
         this._updateInput(input, defaultValue);
       }
     };
@@ -54,10 +75,10 @@ class SettingsInput extends _react.Component {
       const input = this._input;
 
       if (!(input != null)) {
-        throw new Error('Invariant violation: "input != null"');
+        throw new Error("Invariant violation: \"input != null\"");
       }
 
-      if ((0, (_SettingsUtils || _load_SettingsUtils()).isDefaultConfigValue)(keyPath, input.getText())) {
+      if ((0, _SettingsUtils().isDefaultConfigValue)(keyPath, input.getText())) {
         this._updateInput(input, '');
       }
     };
@@ -72,9 +93,9 @@ class SettingsInput extends _react.Component {
   }
 
   _getValue() {
-    let value = (0, (_SettingsUtils || _load_SettingsUtils()).valueToString)(this.props.value);
+    let value = (0, _SettingsUtils().valueToString)(this.props.value);
+    const defaultValue = (0, _SettingsUtils().getDefaultConfigValueString)(this.props.keyPath);
 
-    const defaultValue = (0, (_SettingsUtils || _load_SettingsUtils()).getDefaultConfigValueString)(this.props.keyPath);
     if (defaultValue === value) {
       value = '';
     }
@@ -83,7 +104,7 @@ class SettingsInput extends _react.Component {
   }
 
   _getPlaceholder() {
-    const defaultValue = (0, (_SettingsUtils || _load_SettingsUtils()).getDefaultConfigValueString)(this.props.keyPath);
+    const defaultValue = (0, _SettingsUtils().getDefaultConfigValueString)(this.props.keyPath);
     return defaultValue ? 'Default: ' + defaultValue : '';
   }
 
@@ -91,10 +112,11 @@ class SettingsInput extends _react.Component {
     const input = this._input;
 
     if (!(input != null)) {
-      throw new Error('Invariant violation: "input != null"');
+      throw new Error("Invariant violation: \"input != null\"");
     }
 
     const value = this._getValue();
+
     if (input.getText() !== value) {
       this._updateInput(input, value);
     }
@@ -102,64 +124,38 @@ class SettingsInput extends _react.Component {
 
   render() {
     const keyPath = this.props.keyPath;
-    const id = (0, (_SettingsUtils || _load_SettingsUtils()).normalizeIdentifier)(keyPath);
+    const id = (0, _SettingsUtils().normalizeIdentifier)(keyPath);
     const title = this.props.title;
     const description = this.props.description;
+
     const value = this._getValue();
+
     const placeholder = this._getPlaceholder();
 
-    return _react.createElement(
-      'div',
-      null,
-      _react.createElement(
-        'label',
-        { className: 'control-label' },
-        _react.createElement(
-          'div',
-          { className: 'setting-title' },
-          title
-        ),
-        _react.createElement(
-          'div',
-          { className: 'setting-description' },
-          description
-        )
-      ),
-      _react.createElement(
-        'div',
-        { className: 'controls' },
-        _react.createElement(
-          'div',
-          { className: 'editor-container' },
-          _react.createElement(
-            'subview',
-            null,
-            _react.createElement((_AtomInput || _load_AtomInput()).AtomInput, {
-              className: id,
-              initialValue: value,
-              onDidChange: this._handleChange,
-              onFocus: this._onFocus,
-              onBlur: this._onBlur,
-              placeholderText: placeholder,
-              ref: input => {
-                this._input = input;
-              },
-              text: value
-            })
-          )
-        )
-      )
-    );
+    return React.createElement("div", null, React.createElement("label", {
+      className: "control-label"
+    }, React.createElement("div", {
+      className: "setting-title"
+    }, title), React.createElement("div", {
+      className: "setting-description"
+    }, description)), React.createElement("div", {
+      className: "controls"
+    }, React.createElement("div", {
+      className: "editor-container"
+    }, React.createElement("subview", null, React.createElement(_AtomInput().AtomInput, {
+      className: id,
+      initialValue: value,
+      onDidChange: this._handleChange,
+      onFocus: this._onFocus,
+      onBlur: this._onBlur,
+      placeholderText: placeholder,
+      ref: input => {
+        this._input = input;
+      },
+      text: value
+    })))));
   }
+
 }
-exports.default = SettingsInput; /**
-                                  * Copyright (c) 2017-present, Facebook, Inc.
-                                  * All rights reserved.
-                                  *
-                                  * This source code is licensed under the BSD-style license found in the
-                                  * LICENSE file in the root directory of this source tree. An additional grant
-                                  * of patent rights can be found in the PATENTS file in the same directory.
-                                  *
-                                  * 
-                                  * @format
-                                  */
+
+exports.default = SettingsInput;

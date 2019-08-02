@@ -1,8 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.ModifierKeys = void 0;
+
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -20,11 +22,11 @@ Object.defineProperty(exports, "__esModule", {
  * You can register providers (which will be triggered on mouseover) or manually
  * create pinned datatips on-demand.
  */
-const ModifierKeys = exports.ModifierKeys = Object.freeze({
+// Borrowed from the LSP API.
+const ModifierKeys = Object.freeze({
   META: 'metaKey',
   SHIFT: 'shiftKey',
   ALT: 'altKey',
   CTRL: 'ctrlKey'
 });
-
-// Borrowed from the LSP API.
+exports.ModifierKeys = ModifierKeys;

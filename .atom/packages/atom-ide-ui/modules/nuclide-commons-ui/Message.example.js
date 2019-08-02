@@ -1,116 +1,56 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MessageExamples = undefined;
+exports.MessageExamples = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _Block;
+function _Block() {
+  const data = require("./Block");
 
-function _load_Block() {
-  return _Block = require('./Block');
+  _Block = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Message;
+function _Message() {
+  const data = require("./Message");
 
-function _load_Message() {
-  return _Message = require('./Message');
+  _Message = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-const MessageExample = () => _react.createElement(
-  'div',
-  null,
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement(
-      (_Message || _load_Message()).Message,
-      null,
-      _react.createElement(
-        'h2',
-        null,
-        'Message'
-      ),
-      'Hello, I\'m a simple message.'
-    )
-  ),
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement(
-      (_Message || _load_Message()).Message,
-      { type: (_Message || _load_Message()).MessageTypes.info },
-      'Hello I\'m an ',
-      _react.createElement(
-        'strong',
-        null,
-        'info'
-      ),
-      ' message.'
-    )
-  ),
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement(
-      (_Message || _load_Message()).Message,
-      { type: (_Message || _load_Message()).MessageTypes.success },
-      'Hello I\'m a ',
-      _react.createElement(
-        'strong',
-        null,
-        'success'
-      ),
-      ' message.'
-    )
-  ),
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement(
-      (_Message || _load_Message()).Message,
-      { type: (_Message || _load_Message()).MessageTypes.warning },
-      'Hello I\'m a ',
-      _react.createElement(
-        'strong',
-        null,
-        'warning'
-      ),
-      ' message.'
-    )
-  ),
-  _react.createElement(
-    (_Block || _load_Block()).Block,
-    null,
-    _react.createElement(
-      (_Message || _load_Message()).Message,
-      { type: (_Message || _load_Message()).MessageTypes.error },
-      'Hello I\'m an ',
-      _react.createElement(
-        'strong',
-        null,
-        'error'
-      ),
-      ' message.'
-    )
-  )
-); /**
-    * Copyright (c) 2017-present, Facebook, Inc.
-    * All rights reserved.
-    *
-    * This source code is licensed under the BSD-style license found in the
-    * LICENSE file in the root directory of this source tree. An additional grant
-    * of patent rights can be found in the PATENTS file in the same directory.
-    *
-    * 
-    * @format
-    */
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+const MessageExample = () => React.createElement("div", null, React.createElement(_Block().Block, null, React.createElement(_Message().Message, null, React.createElement("h2", null, "Message"), "Hello, I'm a simple message.")), React.createElement(_Block().Block, null, React.createElement(_Message().Message, {
+  type: _Message().MessageTypes.info
+}, "Hello I'm an ", React.createElement("strong", null, "info"), " message.")), React.createElement(_Block().Block, null, React.createElement(_Message().Message, {
+  type: _Message().MessageTypes.success
+}, "Hello I'm a ", React.createElement("strong", null, "success"), " message.")), React.createElement(_Block().Block, null, React.createElement(_Message().Message, {
+  type: _Message().MessageTypes.warning
+}, "Hello I'm a ", React.createElement("strong", null, "warning"), " message.")), React.createElement(_Block().Block, null, React.createElement(_Message().Message, {
+  type: _Message().MessageTypes.error
+}, "Hello I'm an ", React.createElement("strong", null, "error"), " message.")));
 
-const MessageExamples = exports.MessageExamples = {
+const MessageExamples = {
   sectionName: 'Messages',
   description: 'Message boxes are used to surface issues, such as warnings, inline within Nuclide.',
   examples: [{
@@ -118,3 +58,4 @@ const MessageExamples = exports.MessageExamples = {
     component: MessageExample
   }]
 };
+exports.MessageExamples = MessageExamples;

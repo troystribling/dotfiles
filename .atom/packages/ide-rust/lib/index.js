@@ -16,9 +16,11 @@ const { showConflictingPackageWarnings } = require("./competition.js")
 /** @type {number} interval between toolchain update checks, milliseconds */
 const PERIODIC_UPDATE_CHECK_MILLIS = 6 * 60 * 60 * 1000
 
-async function exec(command) {
+async function exec(command, { cwd }={}) {
   return new Promise((resolve, reject) => {
-    cp.exec(command, { env: { PATH: envPath() } }, (err, stdout, stderr) => {
+    const env = process.env
+    env.PATH = envPath()
+    cp.exec(command, { env, cwd }, (err, stdout, stderr) => {
       if (err != null) {
         reject(err)
         return
@@ -30,8 +32,7 @@ async function exec(command) {
 }
 
 function logErr(e, logFn = console.warn) {
-  const message = e && '' + e
-  message && logFn(message)
+  e && logFn('' + e)
 }
 
 function clearIdeRustInfos() {
@@ -76,6 +77,37 @@ function configToolchain() {
   return atom.config.get('ide-rust.rlsToolchain')
 }
 
+function rustupRun(toolchain, command, opts={}) {
+  return toolchain && exec(`rustup run ${toolchain} ${command}`, opts) || exec(`${command}`, opts)
+}
+
+async function rustupDefaultToolchain() {
+  let { stdout } = await exec("rustup default")
+  return stdout.split("-")[0].trim()
+}
+
+async function hasCommand(rustCommand) {
+  try {
+    await exec(`${rustCommand} -V`)
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+async function rustupOverrides() {
+  let { stdout } = await exec("rustup override list")
+  return stdout.split(/[\r\n]+/g)
+    .map(line => {
+      let lastSpace = line.lastIndexOf(' ')
+      return {
+        path: line.slice(0, lastSpace).trim(),
+        toolchain: line.slice(lastSpace).trim()
+      }
+    })
+    .filter(({ path, toolchain }) => path && toolchain)
+}
+
 /** @return {?string} developer override of the command to start a Rls instance */
 function rlsCommandOverride() {
   return atom.config.get('ide-rust.rlsCommandOverride')
@@ -87,21 +119,31 @@ function installCompiler() {
 }
 
 /**
- * @param {string} toolchain
+ * @param {string} projectPath
+ * @return {bool} the project path has been explicitly disabled
+ */
+function shouldIgnoreProjectPath(projectPath) {
+  const ignoredPaths = atom.config.get('ide-rust.ignoredProjectPaths')
+  return ignoredPaths && ignoredPaths.split(',')
+    .map(path => path.trim().replace(/[/\\]*$/, ''))
+    .some(path => path === projectPath.trim().replace(/[/\\]*$/, ''))
+}
+
+/**
+ * @param {string} [toolchain]
+ * @param {string} [cwd]
  * @return {Promise<string>} `rustc --print sysroot` stdout
  */
-async function rustcSysroot(toolchain) {
+async function rustcSysroot(toolchain, cwd) {
   try {
-    let { stdout } = await exec(`rustup run ${toolchain} rustc --print sysroot`)
+    let { stdout } = await rustupRun(toolchain, "rustc --print sysroot", { cwd })
     return stdout.trim()
-  }
-  catch (e) {
+  } catch (e) {
     // make an attempt to use system rustc
     try {
-      let { stdout } = await exec(`rustc --print sysroot`)
+      let { stdout } = await exec(`rustc --print sysroot`, { cwd })
       return stdout.trim()
-    }
-    catch (sys_e) {
+    } catch (sys_e) {
       throw e
     }
   }
@@ -118,25 +160,23 @@ let envPath = () => {
 
 /**
  * @param {string} [toolchain]
+ * @param {string} [cwd]
  * @return {Promise<object>} environment vars
  */
-async function serverEnv(toolchain) {
+async function serverEnv(toolchain, cwd) {
   const env = process.env
   env.PATH = envPath()
   env.RUST_BACKTRACE = env.RUST_BACKTRACE || "1"
 
   if (!env.RUST_LOG && atom.config.get('core.debugLSP')) {
-    env.RUST_LOG = 'rls=warn'
+    env.RUST_LOG = 'rls=warn,rls::build=info'
   }
 
-  if (toolchain) {
-    try {
-      let sysroot = await rustcSysroot(toolchain)
-      env.RUST_SRC_PATH = path.join(sysroot, "/lib/rustlib/src/rust/src/")
-    }
-    catch (e) {
-      console.warn("Failed to find sysroot: " + e)
-    }
+  try {
+    let sysroot = await rustcSysroot(toolchain, cwd)
+    env.RUST_SRC_PATH = path.join(sysroot, "/lib/rustlib/src/rust/src/")
+  } catch (e) {
+    console.warn("Failed to find sysroot: " + e)
   }
   return env
 }
@@ -144,12 +184,13 @@ async function serverEnv(toolchain) {
 /**
  * Install rls-preview, rust-src, rust-analysis
  * @param {string} toolchain
+ * @param {string} [cwd]
  */
-async function installRlsComponents(toolchain) {
+async function installRlsComponents(toolchain, cwd) {
+  const toolchainArg = toolchain && `--toolchain ${toolchain}` || ''
   try {
-    await exec(`rustup component add rls-preview --toolchain ${toolchain}`)
-  }
-  catch (e) {
+    await exec(`rustup component add rls-preview ${toolchainArg}`, { cwd })
+  } catch (e) {
     let suggestedVersion
     if (toolchain.startsWith('nightly')) {
       // 'rls-preview' not available search for a decent suggestion
@@ -170,18 +211,19 @@ async function installRlsComponents(toolchain) {
         onDidClick: () => atom.config.set('ide-rust.rlsToolchain', suggestedVersion)
       })
     }
-    atom.notifications.addError(`\`rls-preview\` was not found on \`${toolchain}\``, note)
+    atom.notifications
+      .addError(`\`rls\` was not found on \`${toolchain || 'the default toolchain'}\``, note)
     throw e
   }
 
   try {
-    await exec(`rustup component add rust-src --toolchain ${toolchain}`)
-    await exec(`rustup component add rust-analysis --toolchain ${toolchain}`)
-  }
-  catch (e) {
-    atom.notifications.addError(`\`rust-src\`/\`rust-analysis\` not found on \`${toolchain}\``, {
-      dismissable: true
-    })
+    await exec(`rustup component add rust-src ${toolchainArg}`, { cwd })
+    await exec(`rustup component add rust-analysis ${toolchainArg}`, { cwd })
+  } catch (e) {
+    atom.notifications
+      .addError(`\`rust-src\`/\`rust-analysis\` not found on \`${toolchain || 'the default toolchain'}\``, {
+        dismissable: true
+      })
     throw e
   }
 }
@@ -196,7 +238,10 @@ function logSuspiciousStdout(process) {
   process.stdout.on('data', chunk => {
     chunk.toString('utf8')
       .split('\n')
-      .filter(l => l.trim() && !l.startsWith("Content-Length:") && !l.includes('"jsonrpc":"2.0"'))
+      .filter(l => l.trim() &&
+        l.length < 10000 && // ignore long chunks, these are much more likely to be false positives
+        !l.startsWith("Content-Length:") &&
+        !l.includes('"jsonrpc":"2.0"'))
       .forEach(line => console.error("Rust (RLS) suspicious stdout:", line))
   })
   return process
@@ -208,23 +253,34 @@ let _checkingRls
 /**
  * Check for and install Rls
  * @param {?BusySignalService} busySignalService
+ * @param {string} [cwd]
  * @return {Promise<*>} rls installed
  */
-async function checkRls(busySignalService) {
+async function checkRls(busySignalService, cwd) {
   if (_checkingRls) return _checkingRls
 
   const toolchain = configToolchain()
+  const toolchainArg = toolchain && `--toolchain ${toolchain}` || ""
+
   _checkingRls = (async () => {
-    let { stdout: toolchainList } = await exec(`rustup component list --toolchain ${toolchain}`)
+    if (!await hasCommand("rustup")) {
+      if (await hasCommand("rls")) {
+        return // have system rls without rustup
+      } else {
+        throw new Error("rls & rustup missing")
+      }
+    }
+
+    let { stdout: toolchainList } = await exec(`rustup component list ${toolchainArg}`, { cwd })
     if (
-      toolchainList.search(/^rls-preview.* \((default|installed)\)$/m) >= 0 &&
+      toolchainList.search(/^rls.* \((default|installed)\)$/m) >= 0 &&
       toolchainList.search(/^rust-analysis.* \((default|installed)\)$/m) >= 0 &&
       toolchainList.search(/^rust-src.* \((default|installed)\)$/m) >= 0
     ) {
       return // have rls
     }
     // try to install rls
-    const installRlsPromise = installRlsComponents(toolchain)
+    const installRlsPromise = installRlsComponents(toolchain, cwd)
     if (busySignalService) {
       busySignalService.reportBusyWhile(
         `Adding components rls-preview, rust-src, rust-analysis`,
@@ -237,9 +293,8 @@ async function checkRls(busySignalService) {
 
   try {
     return await _checkingRls
-  }
-  finally {
-    _checkingRls = null
+  } finally {
+    _checkingRls = null  // eslint-disable-line
   }
 }
 
@@ -248,19 +303,21 @@ class RustLanguageClient extends AutoLanguageClient {
     super()
     /** (projectPath -> RlsProject) mappings */
     this.projects = {}
+    this.activeOverrides = new Set()
     this.disposables = new CompositeDisposable()
 
     /** Configuration schema */
     this.config = {
       rlsToolchain: {
         description: 'Sets the toolchain installed using rustup and used to run the Rls.' +
+          ' When blank will use the rustup/system default.' +
           ' For example ***nightly***, ***stable***, ***beta***, or ***nightly-yyyy-mm-dd***.',
         type: 'string',
-        default: 'nightly',
+        default: '',
         order: 1
       },
       checkForToolchainUpdates: {
-        description: 'Check on startup & periodically for toolchain updates, prompting to install if available',
+        description: 'Check on startup & periodically for rustup toolchain updates, prompting to install if available.',
         type: 'boolean',
         default: true,
         order: 2
@@ -270,6 +327,7 @@ class RustLanguageClient extends AutoLanguageClient {
         description: 'Configuration default sent to all Rls instances, overridden by project rls.toml configuration',
         type: 'object',
         collapsed: false,
+        order: 3,
         properties: {
           allTargets: {
             title: "Check All Targets",
@@ -288,7 +346,30 @@ class RustLanguageClient extends AutoLanguageClient {
             enum: ["On", "Opt-in", "Off", "Rls Default"]
           }
         }
+      },
+      ignoredProjectPaths: {
+        description: 'Disables ide-rust functionality on a comma-separated list of project paths.',
+        type: 'string',
+        default: '',
+        order: 999
       }
+    }
+  }
+
+  async _refreshActiveOverrides() {
+    try {
+      const overrides = (await rustupOverrides())
+        .filter(({ path }) => Object.keys(this.projects).some(project => project.startsWith(path)))
+        .map(override => override.toolchain)
+      const oldActive = this.activeOverrides
+      this.activeOverrides = new Set(overrides)
+      if (this.activeOverrides.size > oldActive.size) {
+        const confToolchain = configToolchain() || await rustupDefaultToolchain()
+        if (confToolchain) oldActive.add(confToolchain)
+        this._promptToUpdateToolchain({ ignore: oldActive })
+      }
+    } catch (e) {
+      if (await hasCommand("rustup")) logErr(e)
     }
   }
 
@@ -299,57 +380,81 @@ class RustLanguageClient extends AutoLanguageClient {
   }
 
   // check for toolchain updates if installed & not dated
-  async _promptToUpdateToolchain() {
+  async _promptToUpdateToolchain({ ignore } = {}) {
     if (!atom.config.get('ide-rust.checkForToolchainUpdates')) return
 
-    const confToolchain = configToolchain()
-    const dated = confToolchain.match(DATED_REGEX)
-    const toolchain = (dated ? dated[1] : confToolchain)
+    if (!await hasCommand("rustup")) {
+      atom.config.set('ide-rust.checkForToolchainUpdates', false)
+      this._handleMissingRustup()
+      return
+    }
 
-    let { stdout: currentVersion } = await exec(`rustup run ${confToolchain} rustc --version`)
-    let newVersion = await fetchLatestDist({ toolchain, currentVersion }).catch(() => false)
-    if (!newVersion) return
+    const toolchains = new Set(this.activeOverrides)
 
-    atom.notifications.addInfo(`Rls \`${toolchain}\` toolchain update available`, {
-      description: newVersion,
-      _src: 'ide-rust',
-      dismissable: true,
-      buttons: [{
-        text: confToolchain === toolchain ? 'Update' : 'Update & Switch',
-        onDidClick: () => {
-          clearIdeRustInfos()
+    const confToolchain = configToolchain() || await rustupDefaultToolchain()
+    if (confToolchain) toolchains.add(confToolchain)
 
-          const updatePromise = exec(`rustup update ${toolchain}`)
-            // set config in case going from dated -> latest
-            .then(() => atom.config.set('ide-rust.rlsToolchain', toolchain))
-            .then(() => this._checkToolchain())
-            .then(() => checkRls())
-            .then(() => this._restartLanguageServers(`Updated Rls toolchain`))
-            .catch(logErr)
-
-          if (this.busySignalService) {
-            this.busySignalService.reportBusyWhile(
-              `Updating rust \`${toolchain}\` toolchain`,
-              () => updatePromise
-            )
-          }
+    Array.from(toolchains)
+      .filter(toolchain => !ignore || !ignore.has(toolchain))
+      .forEach(async confToolchain => {
+        const dated = confToolchain.match(DATED_REGEX)
+        let toolchain = (dated ? dated[1] : confToolchain)
+        if (!dated && toolchain.includes('-')) {
+          toolchain = toolchain.split('-')[0]
         }
-      }]
-    })
+
+        let { stdout: currentVersion } = await rustupRun(confToolchain, "rustc --version")
+        let newVersion = await fetchLatestDist({ toolchain, currentVersion }).catch(() => false)
+        if (!newVersion) return
+
+        atom.notifications.addInfo(`Rls \`${toolchain}\` toolchain update available`, {
+          description: newVersion,
+          _src: 'ide-rust',
+          dismissable: true,
+          buttons: [{
+            text: dated ? 'Update & Switch' : 'Update' ,
+            onDidClick: () => {
+              clearIdeRustInfos()
+
+              const updatePromise = exec(`rustup update ${toolchain}`)
+              // set config in case going from dated -> latest
+              .then(() => dated && atom.config.set('ide-rust.rlsToolchain', toolchain))
+              .then(() => this._checkToolchain())
+              .then(() => checkRls())
+              .then(() => this._restartLanguageServers(`Updated Rls toolchain`))
+              .catch(e => {
+                logErr(e)
+                e && atom.notifications.addError(`\`rustup update ${toolchain}\` failed`, {
+                  detail: e,
+                  dismissable: true,
+                })
+              })
+
+              if (this.busySignalService) {
+                this.busySignalService.reportBusyWhile(
+                  `Updating rust \`${toolchain}\` toolchain`,
+                  () => updatePromise
+                )
+              }
+            }
+          }]
+        })
+      })
+
   }
 
   /**
    * Checks for rustup, toolchain & rls components
    * If not found prompts to fix & throws error
+   * @param {string} [cwd]
    */
-  async _checkToolchain() {
+  async _checkToolchain(cwd) {
     const toolchain = configToolchain()
 
     try {
-      await exec(`rustup run ${toolchain} rustc --version`)
+      await rustupRun(toolchain, "rustc --version", { cwd })
       clearIdeRustInfos()
-    }
-    catch (e) {
+    } catch (e) {
       this._handleMissingToolchain(toolchain)
       throw e
     }
@@ -362,8 +467,7 @@ class RustLanguageClient extends AutoLanguageClient {
   async _handleMissingToolchain(toolchain) {
     if (!await exec('rustup --version').catch(() => false)) {
       this._handleMissingRustup()
-    }
-    else if (await checkHasRls(toolchain)) {
+    } else if (await checkHasRls(toolchain)) {
       let clicked = await atomPrompt(`\`rustup\` missing ${toolchain} toolchain`, {
         detail: `rustup toolchain install ${toolchain}`,
       }, ['Install'])
@@ -391,8 +495,7 @@ class RustLanguageClient extends AutoLanguageClient {
           )
         }
       }
-    }
-    else {
+    } else {
       this._handleMissingToolchainMissingRls(toolchain)
     }
   }
@@ -404,7 +507,7 @@ class RustLanguageClient extends AutoLanguageClient {
    */
   async _handleMissingToolchainMissingRls(toolchain) {
     const note = {
-      description: '**Warning**: This toolchain is unavilable or missing Rls.',
+      description: '**Warning**: This toolchain is unavailable or missing RLS.',
       buttons: [{
         text: 'Configure',
         onDidClick: () => atom.workspace.open('atom://config/packages/ide-rust')
@@ -413,8 +516,7 @@ class RustLanguageClient extends AutoLanguageClient {
 
     if (toolchain === 'nightly') {
       note.description += ' Try using a previous _dated_ nightly.'
-    }
-    else if (toolchain.startsWith('nightly')) {
+    } else if (toolchain.startsWith('nightly')) {
       note.description += ' Try using another nightly version.'
     }
 
@@ -434,8 +536,7 @@ class RustLanguageClient extends AutoLanguageClient {
           }
         })
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.warn(e)
     }
 
@@ -468,8 +569,7 @@ class RustLanguageClient extends AutoLanguageClient {
           .then(() => this._restartLanguageServers())
           .catch(logErr)
       }
-    }
-    catch (e) {
+    } catch (e) {
       e && console.warn(e)
     }
   }
@@ -478,7 +578,7 @@ class RustLanguageClient extends AutoLanguageClient {
     super.activate()
 
     // Get required dependencies
-    require("atom-package-deps").install("ide-rust", false)
+    require("atom-package-deps").install("ide-rust")
 
     // Watch rls.toml file changes -> update rls
     this.disposables.add(atom.project.onDidChangeFiles(events => {
@@ -495,17 +595,28 @@ class RustLanguageClient extends AutoLanguageClient {
 
     // Watch config toolchain changes -> switch, install & update toolchains, restart servers
     this.disposables.add(atom.config.onDidChange('ide-rust.rlsToolchain',
-      _.debounce(({ newValue }) => {
+      _.debounce(async ({ newValue }) => {
         if (rlsCommandOverride()) {
           // don't bother checking toolchain if an override is being used
           return
         }
 
-        return this._checkToolchain()
-          .then(() => checkRls(this.busySignalService))
-          .then(() => this._restartLanguageServers(`Switched Rls toolchain to \`${newValue}\``))
-          .then(() => this._promptToUpdateToolchain())
-          .catch(e => logErr(e, console.info))
+        try {
+          await this._checkToolchain()
+          await checkRls(this.busySignalService)
+          let toolchainText = newValue && `\`${newValue}\``
+          if (!toolchainText) {
+            try {
+              toolchainText = `default (\`${await rustupDefaultToolchain()}\`)`
+            } catch (e) {
+              toolchainText = "default"
+            }
+          }
+          await this._restartLanguageServers(`Switched Rls toolchain to ${toolchainText}`)
+          return this._promptToUpdateToolchain()
+        } catch (e) {
+          return logErr(e, console.info)
+        }
       }, 1000)
     ))
 
@@ -548,9 +659,12 @@ class RustLanguageClient extends AutoLanguageClient {
 
     server.process.on('exit', () => {
       delete this.projects[server.projectPath]
+      this._refreshActiveOverrides()
     })
 
     project.sendRlsTomlConfig()
+
+    this._refreshActiveOverrides()
   }
 
   getGrammarScopes() {
@@ -574,8 +688,25 @@ class RustLanguageClient extends AutoLanguageClient {
       !filePath.includes('/target/release/')
   }
 
+  // Rls can run a long time before gracefully shutting down, so it's better to
+  // kill servers as the cargo builds should be kill-safe
+  shutdownServersGracefully() {
+    return false
+  }
+
+  serversSupportDefinitionDestinations() {
+    return true
+  }
+
   async startServerProcess(projectPath) {
-    if (!this._periodicUpdateChecking) {
+    if (shouldIgnoreProjectPath(projectPath)) {
+      console.warn("ide-rust disabled on", projectPath)
+      // It's a bit ugly to just return as it causes some upstream error logs
+      // But there doesn't seem to be a better option for path disabling at the moment
+      return
+    }
+
+    if (!this._periodicUpdateChecking && await hasCommand("rustup")) {
       // if haven't started periodic checks for updates yet start now
       let periodicUpdateTimeoutId
       const periodicUpdate = async () => {
@@ -610,15 +741,19 @@ class RustLanguageClient extends AutoLanguageClient {
     }
 
     try {
-      await this._checkToolchain()
-      await checkRls(this.busySignalService)
-      let toolchain = configToolchain()
-      return logSuspiciousStdout(cp.spawn("rustup", ["run", toolchain, "rls"], {
-        env: await serverEnv(toolchain),
+      await this._checkToolchain(projectPath)
+      await checkRls(this.busySignalService, projectPath)
+      const toolchain = configToolchain()
+      const opts = {
+        env: await serverEnv(toolchain, projectPath),
         cwd: projectPath
-      }))
-    }
-    catch (e) {
+      }
+      if (toolchain) {
+        return logSuspiciousStdout(cp.spawn("rustup", ["run", toolchain, "rls"], opts))
+      } else {
+        return logSuspiciousStdout(cp.spawn("rls", opts))
+      }
+    } catch (e) {
       throw new Error("failed to start server: " + e)
     }
   }
@@ -638,6 +773,20 @@ class RustLanguageClient extends AutoLanguageClient {
     }
 
     return provide
+  }
+
+  // Workaround #133 that affects stable rust 1.35.0
+  async getCodeFormat(...args) {
+    const edits = await super.getCodeFormat(...args)
+    for (const edit of edits) {
+      const end = edit && edit.oldRange && edit.oldRange.end
+      if (end && end.column > 18e18) {
+        end.row += 1
+        end.column = 0
+        edit.newText += (process.platform === "win32" ? "\r\n" : "\n")
+      }
+    }
+    return edits
   }
 }
 
@@ -667,7 +816,7 @@ if (process.platform === "win32") {
   RustLanguageClient.prototype._handleMissingRustup = () => {
     atomPrompt("`rustup` is not available", {
       description: "`rustup` is required for ide-rust functionality. " +
-      "**Install from https://www.rustup.rs and restart atom**."
+        "**Install from https://www.rustup.rs and restart atom**."
     })
   }
 }

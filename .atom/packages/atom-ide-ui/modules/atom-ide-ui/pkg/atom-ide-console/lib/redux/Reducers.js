@@ -1,29 +1,41 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = accumulateState;
 
-var _immutable;
+function _immutable() {
+  const data = require("immutable");
 
-function _load_immutable() {
-  return _immutable = require('immutable');
+  _immutable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _collection;
+function _collection() {
+  const data = require("../../../../../nuclide-commons/collection");
 
-function _load_collection() {
-  return _collection = require('../../../../../nuclide-commons/collection');
+  _collection = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Actions;
+function Actions() {
+  const data = _interopRequireWildcard(require("./Actions"));
 
-function _load_Actions() {
-  return _Actions = _interopRequireWildcard(require('./Actions'));
+  Actions = function () {
+    return data;
+  };
+
+  return data;
 }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -36,35 +48,34 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  *  strict-local
  * @format
  */
-
 const RECORD_PROPERTIES_TO_COMPARE = ['text', 'level', 'format', 'scopeName', 'sourceId', 'kind'];
 
 function shouldAccumulateRecordCount(recordA, recordB) {
   if (String(recordA.sourceId).toLowerCase().includes('debugger') || String(recordB.sourceId).toLowerCase().includes('debugger')) {
     return false;
   }
-  const areRelevantPropertiesEqual = RECORD_PROPERTIES_TO_COMPARE.every(prop => recordA[prop] === recordB[prop]);
 
-  // if data exists, we should not accumulate this into the previous record
+  const areRelevantPropertiesEqual = RECORD_PROPERTIES_TO_COMPARE.every(prop => recordA[prop] === recordB[prop]); // if data exists, we should not accumulate this into the previous record
+
   const doesDataExist = recordA.data || recordB.data;
-
   const recATags = recordA.tags;
   const recBTags = recordB.tags;
-  const areTagsEqual = !recATags && !recBTags || recATags && recBTags && (0, (_collection || _load_collection()).arrayEqual)(recATags, recBTags);
-
+  const areTagsEqual = !recATags && !recBTags || recATags && recBTags && (0, _collection().arrayEqual)(recATags, recBTags);
   return areRelevantPropertiesEqual && !Boolean(doesDataExist) && Boolean(areTagsEqual);
 }
 
 function accumulateState(state, action) {
   switch (action.type) {
-    case (_Actions || _load_Actions()).RECORD_RECEIVED:
+    case Actions().RECORD_RECEIVED:
       {
-        const { record } = action.payload;
-        let nextRecords = state.records;
-
-        // check if the message is exactly the same as the previous one, if so
+        const {
+          record
+        } = action.payload;
+        let nextRecords = state.records; // check if the message is exactly the same as the previous one, if so
         // we add a count to it.
+
         const lastRecord = nextRecords.last();
+
         if (lastRecord != null && shouldAccumulateRecordCount(lastRecord, record)) {
           // Update the last record. Don't use `splice()` because that's O(n)
           const updatedRecord = Object.assign({}, lastRecord, {
@@ -85,49 +96,67 @@ function accumulateState(state, action) {
           records: nextRecords
         });
       }
-    case (_Actions || _load_Actions()).SET_MAX_MESSAGE_COUNT:
+
+    case Actions().SET_MAX_MESSAGE_COUNT:
       {
-        const { maxMessageCount } = action.payload;
+        const {
+          maxMessageCount
+        } = action.payload;
+
         if (maxMessageCount <= 0) {
           return state;
         }
+
         return Object.assign({}, state, {
           maxMessageCount,
           records: state.records.slice(-maxMessageCount)
         });
       }
-    case (_Actions || _load_Actions()).REGISTER_SOURCE:
+
+    case Actions().REGISTER_SOURCE:
       {
-        const { source } = action.payload;
+        const {
+          source
+        } = action.payload;
         return Object.assign({}, state, {
           providers: new Map(state.providers).set(source.id, Object.assign({}, source, {
             name: source.name || source.id
           }))
         });
       }
-    case (_Actions || _load_Actions()).CLEAR_RECORDS:
+
+    case Actions().CLEAR_RECORDS:
       {
         return Object.assign({}, state, {
-          records: (0, (_immutable || _load_immutable()).List)()
+          records: (0, _immutable().List)()
         });
       }
-    case (_Actions || _load_Actions()).REGISTER_EXECUTOR:
+
+    case Actions().REGISTER_EXECUTOR:
       {
-        const { executor } = action.payload;
+        const {
+          executor
+        } = action.payload;
         return Object.assign({}, state, {
           executors: new Map(state.executors).set(executor.id, executor)
         });
       }
-    case (_Actions || _load_Actions()).SELECT_EXECUTOR:
+
+    case Actions().SELECT_EXECUTOR:
       {
-        const { executorId } = action.payload;
+        const {
+          executorId
+        } = action.payload;
         return Object.assign({}, state, {
           currentExecutorId: executorId
         });
       }
-    case (_Actions || _load_Actions()).REMOVE_SOURCE:
+
+    case Actions().REMOVE_SOURCE:
       {
-        const { sourceId } = action.payload;
+        const {
+          sourceId
+        } = action.payload;
         const providers = new Map(state.providers);
         const providerStatuses = new Map(state.providerStatuses);
         const executors = new Map(state.executors);
@@ -140,37 +169,51 @@ function accumulateState(state, action) {
           executors
         });
       }
-    case (_Actions || _load_Actions()).UPDATE_STATUS:
+
+    case Actions().UPDATE_STATUS:
       {
-        const { status, providerId } = action.payload;
+        const {
+          status,
+          providerId
+        } = action.payload;
         return Object.assign({}, state, {
           providerStatuses: new Map(state.providerStatuses).set(providerId, status)
         });
       }
-    case (_Actions || _load_Actions()).EXECUTE:
+
+    case Actions().EXECUTE:
       {
         const command = action.payload.code;
         return Object.assign({}, state, {
           history: state.history.concat(command).slice(-1000)
         });
       }
-    case (_Actions || _load_Actions()).SET_CREATE_PASTE_FUNCTION:
+
+    case Actions().SET_CREATE_PASTE_FUNCTION:
       {
-        const { createPasteFunction } = action.payload;
+        const {
+          createPasteFunction
+        } = action.payload;
         return Object.assign({}, state, {
           createPasteFunction
         });
       }
-    case (_Actions || _load_Actions()).SET_WATCH_EDITOR_FUNCTION:
+
+    case Actions().SET_WATCH_EDITOR_FUNCTION:
       {
-        const { watchEditor } = action.payload;
+        const {
+          watchEditor
+        } = action.payload;
         return Object.assign({}, state, {
           watchEditor
         });
       }
-    case (_Actions || _load_Actions()).SET_FONT_SIZE:
+
+    case Actions().SET_FONT_SIZE:
       {
-        const { fontSize } = action.payload;
+        const {
+          fontSize
+        } = action.payload;
         return Object.assign({}, state, {
           fontSize
         });

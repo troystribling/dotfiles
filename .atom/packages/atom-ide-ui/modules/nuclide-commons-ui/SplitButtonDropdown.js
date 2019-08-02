@@ -1,41 +1,63 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ButtonSizes = exports.SplitButtonDropdown = undefined;
+Object.defineProperty(exports, "ButtonSizes", {
+  enumerable: true,
+  get: function () {
+    return _Button().ButtonSizes;
+  }
+});
+exports.SplitButtonDropdown = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-var _Button;
+function _Button() {
+  const data = require("./Button");
 
-function _load_Button() {
-  return _Button = require('./Button');
+  _Button = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _ButtonGroup;
+function _ButtonGroup() {
+  const data = require("./ButtonGroup");
 
-function _load_ButtonGroup() {
-  return _ButtonGroup = require('./ButtonGroup');
+  _ButtonGroup = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _Dropdown;
+function _Dropdown() {
+  const data = require("./Dropdown");
 
-function _load_Dropdown() {
-  return _Dropdown = require('./Dropdown');
+  _Dropdown = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _classnames;
+function _classnames() {
+  const data = _interopRequireDefault(require("classnames"));
 
-function _load_classnames() {
-  return _classnames = _interopRequireDefault(require('classnames'));
+  _classnames = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _electron = _interopRequireDefault(require('electron'));
+var _electron = _interopRequireDefault(require("electron"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
@@ -48,14 +70,15 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * 
  * @format
  */
-
-const { remote } = _electron.default;
+const {
+  remote
+} = _electron.default;
 
 if (!(remote != null)) {
-  throw new Error('Invariant violation: "remote != null"');
+  throw new Error("Invariant violation: \"remote != null\"");
 }
 
-class SplitButtonDropdown extends _react.Component {
+class SplitButtonDropdown extends React.Component {
   render() {
     const {
       buttonComponent,
@@ -66,52 +89,52 @@ class SplitButtonDropdown extends _react.Component {
       onConfirm,
       options,
       size,
-      value
+      value,
+      selectionComparator
     } = this.props;
     const selectedOption = this._findSelectedOption(options) || options[0];
 
     if (!(selectedOption.type !== 'separator')) {
-      throw new Error('Invariant violation: "selectedOption.type !== \'separator\'"');
+      throw new Error("Invariant violation: \"selectedOption.type !== 'separator'\"");
     }
 
-    const ButtonComponent = buttonComponent || (_Button || _load_Button()).Button;
-    // $FlowFixMe(>=0.53.0) Flow suppress
+    const ButtonComponent = buttonComponent || _Button().Button; // $FlowFixMe(>=0.53.0) Flow suppress
+
+
     const dropdownOptions = options.map(option => Object.assign({}, option, {
       selectedLabel: ''
     }));
-
-    return _react.createElement(
-      (_ButtonGroup || _load_ButtonGroup()).ButtonGroup,
-      {
-        className: (0, (_classnames || _load_classnames()).default)(className, 'nuclide-ui-split-button-dropdown') },
-      _react.createElement(
-        ButtonComponent,
-        {
-          size: size == null ? undefined : size,
-          disabled: confirmDisabled === true,
-          icon: selectedOption.icon || undefined,
-          onClick: onConfirm.bind(null, value) },
-        // flowlint-next-line sketchy-null-mixed:off, sketchy-null-string:off
-        selectedOption.selectedLabel || selectedOption.label || ''
-      ),
-      _react.createElement((_Dropdown || _load_Dropdown()).Dropdown, {
-        size: this._getDropdownSize(size),
-        disabled: changeDisabled === true,
-        options: dropdownOptions,
-        value: value,
-        onChange: onChange
-      })
-    );
+    return React.createElement(_ButtonGroup().ButtonGroup, {
+      className: (0, _classnames().default)(className, 'nuclide-ui-split-button-dropdown')
+    }, React.createElement(ButtonComponent, {
+      buttonType: this.props.buttonType,
+      size: size == null ? undefined : size,
+      disabled: confirmDisabled === true,
+      icon: selectedOption.icon || undefined,
+      onClick: onConfirm.bind(null, value)
+    }, // flowlint-next-line sketchy-null-mixed:off, sketchy-null-string:off
+    selectedOption.selectedLabel || selectedOption.label || ''), React.createElement(_Dropdown().Dropdown, {
+      buttonType: this.props.buttonType,
+      size: this._getDropdownSize(size),
+      disabled: changeDisabled === true,
+      options: dropdownOptions,
+      value: value,
+      onChange: onChange,
+      selectionComparator: selectionComparator
+    }));
   }
 
   _getDropdownSize(size) {
     switch (size) {
-      case (_Button || _load_Button()).ButtonSizes.EXTRA_SMALL:
+      case _Button().ButtonSizes.EXTRA_SMALL:
         return 'xs';
-      case (_Button || _load_Button()).ButtonSizes.SMALL:
+
+      case _Button().ButtonSizes.SMALL:
         return 'sm';
-      case (_Button || _load_Button()).ButtonSizes.LARGE:
+
+      case _Button().ButtonSizes.LARGE:
         return 'lg';
+
       default:
         return 'sm';
     }
@@ -119,13 +142,15 @@ class SplitButtonDropdown extends _react.Component {
 
   _findSelectedOption(options) {
     let result = null;
+    const selectionComparator = this.props.selectionComparator == null ? (a, b) => a === b : this.props.selectionComparator;
+
     for (const option of options) {
       if (option.type === 'separator') {
         continue;
       } else if (option.type === 'submenu') {
         const submenu = option.submenu;
         result = this._findSelectedOption(submenu);
-      } else if (option.value === this.props.value) {
+      } else if (selectionComparator(option.value, this.props.value)) {
         result = option;
       }
 
@@ -133,9 +158,10 @@ class SplitButtonDropdown extends _react.Component {
         break;
       }
     }
+
     return result;
   }
+
 }
 
 exports.SplitButtonDropdown = SplitButtonDropdown;
-exports.ButtonSizes = (_Button || _load_Button()).ButtonSizes;

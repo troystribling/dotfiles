@@ -1,14 +1,18 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = getElementFilePath;
 
-var _textEditor;
+function _textEditor() {
+  const data = require("./text-editor");
 
-function _load_textEditor() {
-  return _textEditor = require('./text-editor');
+  _textEditor = function () {
+    return data;
+  };
+
+  return data;
 }
 
 /**
@@ -22,30 +26,37 @@ function _load_textEditor() {
  * 
  * @format
  */
-
 function getElementFilePath(element, fallbackToActiveTextEditor = false) {
   let el = element;
+
   while (el != null) {
     if (el.dataset != null && el.dataset.path != null) {
       return el.dataset.path;
-    }
-    // $FlowFixMe(>=0.68.0) Flow suppress (T27187857)
+    } // $FlowFixMe(>=0.68.0) Flow suppress (T27187857)
+
+
     if (typeof el.getModel === 'function') {
       const model = el.getModel();
-      if ((0, (_textEditor || _load_textEditor()).isValidTextEditor)(model)) {
+
+      if ((0, _textEditor().isValidTextEditor)(model)) {
         const path = model.getPath();
+
         if (path != null) {
           return path;
         }
       }
     }
+
     el = el.parentElement;
   }
+
   if (fallbackToActiveTextEditor) {
     const editor = atom.workspace.getActiveTextEditor();
+
     if (editor != null) {
       return editor.getPath();
     }
   }
+
   return null;
 }

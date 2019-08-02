@@ -1,60 +1,96 @@
-'use strict';
+"use strict";
 
-var _ActiveEditorRegistry;
+function _ActiveEditorRegistry() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/ActiveEditorRegistry"));
 
-function _load_ActiveEditorRegistry() {
-  return _ActiveEditorRegistry = _interopRequireDefault(require('../../../../nuclide-commons-atom/ActiveEditorRegistry'));
+  _ActiveEditorRegistry = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _debounced;
+function _debounced() {
+  const data = require("../../../../nuclide-commons-atom/debounced");
 
-function _load_debounced() {
-  return _debounced = require('../../../../nuclide-commons-atom/debounced');
+  _debounced = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _textEditor;
+function _textEditor() {
+  const data = require("../../../../nuclide-commons-atom/text-editor");
 
-function _load_textEditor() {
-  return _textEditor = require('../../../../nuclide-commons-atom/text-editor');
+  _textEditor = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _createPackage;
+function _createPackage() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/createPackage"));
 
-function _load_createPackage() {
-  return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));
+  _createPackage = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _UniversalDisposable;
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
-function _load_UniversalDisposable() {
-  return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));
+  _UniversalDisposable = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _analytics;
+function _analytics() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/analytics"));
 
-function _load_analytics() {
-  return _analytics = _interopRequireDefault(require('../../../../nuclide-commons/analytics'));
+  _analytics = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _destroyItemWhere;
+function _destroyItemWhere() {
+  const data = require("../../../../nuclide-commons-atom/destroyItemWhere");
 
-function _load_destroyItemWhere() {
-  return _destroyItemWhere = require('../../../../nuclide-commons-atom/destroyItemWhere');
+  _destroyItemWhere = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _OutlineViewPanel;
+function _OutlineViewPanel() {
+  const data = require("./OutlineViewPanel");
 
-function _load_OutlineViewPanel() {
-  return _OutlineViewPanel = require('./OutlineViewPanel');
+  _OutlineViewPanel = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _createOutlines;
+function _createOutlines() {
+  const data = require("./createOutlines");
 
-function _load_createOutlines() {
-  return _createOutlines = require('./createOutlines');
+  _createOutlines = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');
+var _RxMin = require("rxjs/bundles/Rx.min.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69,16 +105,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @format
  */
-
 class Activation {
-
   constructor() {
-    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(this.registerOpenerAndCommand());
-
-    this._editorService = new (_ActiveEditorRegistry || _load_ActiveEditorRegistry()).default((provider, editor) => {
-      (_analytics || _load_analytics()).default.track('outline-view-getoutline');
-      return provider.getOutline(editor);
-    }, {}, getActiveEditorRegistryEventSources());
+    this._disposables = new (_UniversalDisposable().default)(this.registerOpenerAndCommand());
+    this._editorService = new (_ActiveEditorRegistry().default)((provider, editor) => provider.getOutline(editor), {}, getActiveEditorRegistryEventSources());
   }
 
   dispose() {
@@ -90,20 +120,21 @@ class Activation {
   }
 
   _createOutlineViewPanelState() {
-    (_analytics || _load_analytics()).default.track('outline-view-show');
-    return new (_OutlineViewPanel || _load_OutlineViewPanel()).OutlineViewPanelState((0, (_createOutlines || _load_createOutlines()).createOutlines)(this._editorService));
+    _analytics().default.track('outline-view-show');
+
+    return new (_OutlineViewPanel().OutlineViewPanelState)((0, _createOutlines().createOutlines)(this._editorService));
   }
 
   registerOpenerAndCommand() {
     const commandDisposable = atom.commands.add('atom-workspace', 'outline-view:toggle', () => {
-      atom.workspace.toggle((_OutlineViewPanel || _load_OutlineViewPanel()).WORKSPACE_VIEW_URI);
+      atom.workspace.toggle(_OutlineViewPanel().WORKSPACE_VIEW_URI);
     });
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default(atom.workspace.addOpener(uri => {
-      if (uri === (_OutlineViewPanel || _load_OutlineViewPanel()).WORKSPACE_VIEW_URI) {
+    return new (_UniversalDisposable().default)(atom.workspace.addOpener(uri => {
+      if (uri === _OutlineViewPanel().WORKSPACE_VIEW_URI) {
         return this._createOutlineViewPanelState();
       }
     }), () => {
-      (0, (_destroyItemWhere || _load_destroyItemWhere()).destroyItemWhere)(item => item instanceof (_OutlineViewPanel || _load_OutlineViewPanel()).OutlineViewPanelState);
+      (0, _destroyItemWhere().destroyItemWhere)(item => item instanceof _OutlineViewPanel().OutlineViewPanelState);
     }, commandDisposable);
   }
 
@@ -116,22 +147,23 @@ class Activation {
       getResultsStream: () => this._editorService.getResultsStream()
     };
   }
+
 }
 
-(0, (_createPackage || _load_createPackage()).default)(module.exports, Activation);
-
-// TODO this can be removed once we no longer want to support versions of Atom less than 1.17.0
+(0, _createPackage().default)(module.exports, Activation); // TODO this can be removed once we no longer want to support versions of Atom less than 1.17.0
 // (D4973408)
+
 function getActiveEditorRegistryEventSources() {
   return {
-    activeEditors: (0, (_debounced || _load_debounced()).observeActivePaneItemDebounced)().switchMap(item => {
-      if ((0, (_textEditor || _load_textEditor()).isValidTextEditor)(item)) {
-        return _rxjsBundlesRxMinJs.Observable.of(item);
-      } else if (item instanceof (_OutlineViewPanel || _load_OutlineViewPanel()).OutlineViewPanelState) {
+    activeEditors: (0, _debounced().observeActivePaneItemDebounced)().switchMap(item => {
+      if ((0, _textEditor().isValidTextEditor)(item)) {
+        return _RxMin.Observable.of(item);
+      } else if (item instanceof _OutlineViewPanel().OutlineViewPanelState) {
         // Ignore switching to the outline view.
-        return _rxjsBundlesRxMinJs.Observable.empty();
+        return _RxMin.Observable.empty();
       }
-      return _rxjsBundlesRxMinJs.Observable.of(null);
+
+      return _RxMin.Observable.of(null);
     }).distinctUntilChanged()
   };
 }

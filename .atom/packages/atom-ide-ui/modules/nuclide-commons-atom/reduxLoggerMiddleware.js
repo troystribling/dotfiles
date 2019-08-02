@@ -1,36 +1,32 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = createLoggerMiddleware;
 
-var _reduxLogger;
+function _reduxLogger() {
+  const data = require("redux-logger");
 
-function _load_reduxLogger() {
-  return _reduxLogger = require('redux-logger');
+  _reduxLogger = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _featureConfig;
+function _featureConfig() {
+  const data = _interopRequireDefault(require("./feature-config"));
 
-function _load_featureConfig() {
-  return _featureConfig = _interopRequireDefault(require('./feature-config'));
+  _featureConfig = function () {
+    return data;
+  };
+
+  return data;
 }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/*
-To turn on debug console logging for the feature you are debugging, add to your config.cson:
-
-"*":
-  "nuclide":
-    "redux-debug-loggers": [
-      "<YOUR_APP_NAME>"
-    ]
-*/
-
-// More options can be found here if you wish to enable them:
-// https://github.com/evgenyrodionov/redux-logger#options
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -42,8 +38,7 @@ To turn on debug console logging for the feature you are debugging, add to your 
  * 
  * @format
  */
-
-const enabledLoggers = (_featureConfig || _load_featureConfig()).default.getWithDefaults('redux-debug-loggers', []);
+const enabledLoggers = _featureConfig().default.getWithDefaults('redux-debug-loggers', []);
 
 const noopMiddleware = store => next => action => next(action);
 
@@ -52,5 +47,5 @@ function createLoggerMiddleware(appName, loggerConfig) {
     return noopMiddleware;
   }
 
-  return (0, (_reduxLogger || _load_reduxLogger()).createLogger)(loggerConfig);
+  return (0, _reduxLogger().createLogger)(loggerConfig);
 }

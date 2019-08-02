@@ -1,7 +1,10 @@
 /* @flow */
 
-import { CompositeDisposable, Point } from "atom";
+import { CompositeDisposable } from "atom";
 import React from "react";
+
+import { Provider } from "@nteract/mathjax";
+import { mathJaxPath } from "mathjax-electron";
 
 import { reactFactory } from "./../../utils";
 import OutputStore from "./../../store/output";
@@ -16,6 +19,10 @@ export default class ResultView {
   outputStore: OutputStore;
 
   destroy = () => {
+    const editor = atom.workspace.getActiveTextEditor();
+    if (editor != null) {
+      editor.element.focus();
+    }
     this.disposer.dispose();
     this.marker.destroy();
   };
@@ -71,12 +78,14 @@ export default class ResultView {
     markerStore.new(this);
 
     reactFactory(
-      <ResultViewComponent
-        store={this.outputStore}
-        kernel={kernel}
-        destroy={this.destroy}
-        showResult={showResult}
-      />,
+      <Provider src={mathJaxPath}>
+        <ResultViewComponent
+          store={this.outputStore}
+          kernel={kernel}
+          destroy={this.destroy}
+          showResult={showResult}
+        />
+      </Provider>,
       element,
       null,
       this.disposer

@@ -127,18 +127,23 @@ class EditLine
 
     cursor = selection.getHeadBufferPosition()
     line = @editor.lineTextForBufferRow(cursor.row)
+
     lineMeta = new LineMeta(line)
+    # don't care about alpha list
+    return e.abortKeyBinding() if lineMeta.isList("al")
 
     if lineMeta.isList("ol")
-      line = "#{@editor.getTabText()}#{lineMeta.lineHead(lineMeta.defaultHead)}#{lineMeta.body}"
-      @_replaceLine(selection, cursor.row, line)
+      newline = "#{@editor.getTabText()}#{lineMeta.lineHead(lineMeta.defaultHead)}#{lineMeta.body}"
+      newcursor = [cursor.row, cursor.column + newline.length - line.length]
+      @_replaceLine(selection, newline, newcursor)
 
     else if lineMeta.isList("ul")
       bullet = config.get("templateVariables.ulBullet#{@editor.indentationForBufferRow(cursor.row)+1}")
       bullet = bullet || config.get("templateVariables.ulBullet") || lineMeta.defaultHead
 
-      line = "#{@editor.getTabText()}#{lineMeta.lineHead(bullet)}#{lineMeta.body}"
-      @_replaceLine(selection, cursor.row, line)
+      newline = "#{@editor.getTabText()}#{lineMeta.lineHead(bullet)}#{lineMeta.body}"
+      newcursor = [cursor.row, cursor.column + newline.length - line.length]
+      @_replaceLine(selection, newline, newcursor)
 
     else
       e.abortKeyBinding()
@@ -149,10 +154,11 @@ class EditLine
 
     head.row != tail.row || head.column != tail.column
 
-  _replaceLine: (selection, row, line) ->
+  _replaceLine: (selection, line, cursor) ->
     range = selection.cursor.getCurrentLineBufferRange()
     selection.setBufferRange(range)
     selection.insertText(line)
+    selection.cursor.setBufferPosition(cursor)
 
   _isAtLineBeginning: (line, col) ->
     col == 0 || line.substring(0, col).trim() == ""
@@ -166,19 +172,23 @@ class EditLine
 
     line = @editor.lineTextForBufferRow(cursor.row)
     lineMeta = new LineMeta(line)
+    # don't care about alpha list
+    return e.abortKeyBinding() if lineMeta.isList("al")
 
     if lineMeta.isList("ol")
-      line = "#{lineMeta.lineHead(lineMeta.defaultHead)}#{lineMeta.body}"
-      line = line.substring(@editor.getTabText().length) # remove one indent
-      @_replaceLine(selection, cursor.row, line)
+      newline = "#{lineMeta.lineHead(lineMeta.defaultHead)}#{lineMeta.body}"
+      newline = newline.substring(@editor.getTabText().length) # remove one indent
+      newcursor = [cursor.row, Math.max(cursor.column + newline.length - line.length, 0)]
+      @_replaceLine(selection, newline, newcursor)
 
     else if lineMeta.isList("ul")
       bullet = config.get("templateVariables.ulBullet#{currentIndentation-1}")
       bullet = bullet || config.get("templateVariables.ulBullet") || lineMeta.defaultHead
 
-      line = "#{lineMeta.lineHead(bullet)}#{lineMeta.body}"
-      line = line.substring(@editor.getTabText().length) # remove one indent
-      @_replaceLine(selection, cursor.row, line)
+      newline = "#{lineMeta.lineHead(bullet)}#{lineMeta.body}"
+      newline = newline.substring(@editor.getTabText().length) # remove one indent
+      newcursor = [cursor.row, Math.max(cursor.column + newline.length - line.length, 0)]
+      @_replaceLine(selection, newline, newcursor)
 
     else
       e.abortKeyBinding()

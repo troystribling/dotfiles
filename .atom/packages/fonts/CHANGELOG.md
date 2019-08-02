@@ -1,3 +1,114 @@
+## 3.4.0
+
+### New fonts
+
+With many thanks to [vekuda](https://github.com/vekuda)
+
+-   CatV 6x12 9
+-   CMU Typewriter Text
+-   Corbi Mono S
+-   Fairfax HD
+-   Kawkab Mono
+-   Kawkab Mono Light
+-   Libertinus Mono
+-   Meyrin
+-   Monodeco
+-   Monodeco Light
+
+### Updated fonts
+
+-   Updated IBM 3270 font to v2.0.0 (also, name it correctly)
+
+    **Notice:** '3270' font face has been renamed to 'IBM 3270'. If you used
+    '3270' then your config should be updated automatically. If it isn't,
+    however, just open font selector (or fonts package config) and select
+    'IBM 3270' font-face.
+
+-   Fixed Source Code Pro bold weights in Light and Medium variants
+
+### New features
+
+-   Interactive font selector. Now you don't have to go into package settings
+    to try out new fonts. Access through "Packages" → "Fonts" → "Open Font
+    Selector" menu option, or by running `fonts:open-font-selector` command (
+    e.g. from command palette)
+
+### Other changes
+
+-   Convert all fonts to woff2
+
+    This dramatically reduces resources size at the cost of a slightly more
+    processing overhead when loading fonts. Keeping your data limit safe.
+
+### Maintenance
+
+-   Case-insensitive sort for fonts in settings, readme and fonts.less
+-   Put precise number of fonts in readme
+-   Added specs (checks if all fonts can be loaded, are rendered correctly, and
+    are used in TextEditor)
+-   Fix OpenDyslexic license
+
+## 3.3.0
+
+### New fonts
+
+With many thanks to [vekuda](https://github.com/vekuda)
+
+-   agave
+-   APL2741
+-   APL385 Unicode
+-   B612 Mono
+-   Bedstead
+-   Bedstead Condensed
+-   Bedstead Extended
+-   Bedstead Extra Condensed
+-   Bedstead Ultra Condensed
+-   DaddyTimeMono
+-   DejaVu Sans Mono - Bront
+-   iA Writer Mono S
+-   OpenDyslexicMono
+-   Press Start 2P
+-   Ubuntu Mono - Bront
+
+### Updated fonts
+
+-   BPMono
+
+### General maintenance
+
+-   Added yaml font description generator
+-   Removed broken link from README
+
+## 3.2.0
+
+### New fonts
+
+-   Borg Sans Mono (Marnen Laibow-Koser)
+
+### Updated fonts
+
+-   FiraCode updated from 1.205 to 1.206
+
+### Fixes
+
+Fixed CSS styles for the following fonts:
+
+-   Plex Mono
+-   Average Mono bold-italic
+
+### General maintenance
+
+-   Added FiraCode license
+-   Added contribution guide and PR template
+-   Cleaned-up styles
+-   Sorted fonts list in config schema
+
+### README updates
+
+-   We have over 70 fonts now! (Marnen Laibow-Koser)
+-   List all fonts (generated)
+-   Fix formatting
+
 ## 3.1.0
 
 -   Use atom.styles to set CSS style

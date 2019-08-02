@@ -1,20 +1,36 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _SettingsUtils;
+function _SettingsUtils() {
+  const data = require("./SettingsUtils");
 
-function _load_SettingsUtils() {
-  return _SettingsUtils = require('./SettingsUtils');
+  _SettingsUtils = function () {
+    return data;
+  };
+
+  return data;
 }
 
-var _react = _interopRequireWildcard(require('react'));
+var React = _interopRequireWildcard(require("react"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-class SettingsColorInput extends _react.Component {
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+class SettingsColorInput extends React.Component {
   constructor(...args) {
     var _temp;
 
@@ -25,43 +41,29 @@ class SettingsColorInput extends _react.Component {
   }
 
   render() {
-    const { keyPath, title, description, value } = this.props;
-    const id = (0, (_SettingsUtils || _load_SettingsUtils()).normalizeIdentifier)(keyPath);
-
-    return _react.createElement(
-      'div',
-      { className: 'color' },
-      _react.createElement(
-        'label',
-        { className: 'control-label' },
-        _react.createElement('input', {
-          id: id,
-          type: 'color',
-          onChange: this._handleChange,
-          value: value.toHexString()
-        }),
-        _react.createElement(
-          'div',
-          { className: 'setting-title' },
-          title
-        )
-      ),
-      _react.createElement(
-        'div',
-        { className: 'setting-description' },
-        description
-      )
-    );
+    const {
+      keyPath,
+      title,
+      description,
+      value
+    } = this.props;
+    const id = (0, _SettingsUtils().normalizeIdentifier)(keyPath);
+    return React.createElement("div", {
+      className: "color"
+    }, React.createElement("label", {
+      className: "control-label"
+    }, React.createElement("input", {
+      id: id,
+      type: "color",
+      onChange: this._handleChange,
+      value: value.toHexString()
+    }), React.createElement("div", {
+      className: "setting-title"
+    }, title)), React.createElement("div", {
+      className: "setting-description"
+    }, description));
   }
+
 }
-exports.default = SettingsColorInput; /**
-                                       * Copyright (c) 2017-present, Facebook, Inc.
-                                       * All rights reserved.
-                                       *
-                                       * This source code is licensed under the BSD-style license found in the
-                                       * LICENSE file in the root directory of this source tree. An additional grant
-                                       * of patent rights can be found in the PATENTS file in the same directory.
-                                       *
-                                       * 
-                                       * @format
-                                       */
+
+exports.default = SettingsColorInput;
