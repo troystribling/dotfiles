@@ -34,7 +34,6 @@ brewInstallIfNotInstalled coreutils
 brew tap caskroom/cask
 
 brewCaskInstallIfNotInstalled launchrocket
-brewCaskInstallIfNotInstalled julia
 brewCaskInstallIfNotInstalled psequel
 brewCaskInstallIfNotInstalled google-chrome
 

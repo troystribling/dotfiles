@@ -34,7 +34,6 @@ function gitCloneBundle {
 
 # link to startup scripts
 linkToHome .vimrc
-linkToHome .juliarc.jl
 
 # intstall pathogen
 if [ ! -f $VIM_AUTOLOAD/pathogen.vim ]; then
