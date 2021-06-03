@@ -85,7 +85,17 @@ fi
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export NODE_PATH="$NODE_PATH:/usr/local/lib/node_modules"
 
+# Add pyenv executable to PATH and
+# enable shims by adding the following
+# to ~/.profile and ~/.zprofile:
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+
+# Load pyenv into the shell by adding
+# the following to ~/.zshrc:
+
 eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
