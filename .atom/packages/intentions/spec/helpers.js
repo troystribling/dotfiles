@@ -1,8 +1,8 @@
-'use babel'
+"use babel"
 
-import { processListItems } from '../lib/helpers'
+import { processListItems } from "../dist/helpers"
 
-export function createSuggestion(text, selected, className = '', icon = '', process = true) {
+export function createSuggestion(text, selected, className = "", icon = "", process = true) {
   const suggestion = {
     icon,
     title: text,
@@ -16,9 +16,9 @@ export function createSuggestion(text, selected, className = '', icon = '', proc
   return suggestion
 }
 
-export function getKeyboardEvent(name = 'keydown', code = 0): KeyboardEvent {
+export function getKeyboardEvent(name = "keydown", code = 0): KeyboardEvent {
   const event = new KeyboardEvent(name)
-  Object.defineProperty(event, 'keyCode', {
+  Object.defineProperty(event, "keyCode", {
     value: code,
   })
   return event

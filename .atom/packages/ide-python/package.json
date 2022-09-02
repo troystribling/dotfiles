@@ -1,25 +1,25 @@
 {
-  "_from": "https://www.atom.io/api/packages/ide-python/versions/1.4.2/tarball",
-  "_id": "ide-python@1.4.2",
+  "_from": "https://www.atom.io/api/packages/ide-python/versions/1.9.3/tarball",
+  "_id": "ide-python@1.9.3",
   "_inBundle": false,
-  "_integrity": "sha512-AaBUszpZeTVVjmvjMjecTYzvLr0BHGn2hYP/Seq5O2sYkTKI1Kz2avpzOnqXc7+FOPPGnwZg7cFfBxP+HX33Pw==",
+  "_integrity": "sha512-oYzzNfj2fhOgnnoG3Re1MdOW4DsjEZbjuyKNXBJGp+ljRQTmq5C0tx14fKIoNCJj7ywqGcD8OsOQFr7yGywIlQ==",
   "_location": "/ide-python",
   "_phantomChildren": {},
   "_requested": {
     "type": "remote",
-    "raw": "https://www.atom.io/api/packages/ide-python/versions/1.4.2/tarball",
-    "rawSpec": "https://www.atom.io/api/packages/ide-python/versions/1.4.2/tarball",
-    "saveSpec": "https://www.atom.io/api/packages/ide-python/versions/1.4.2/tarball",
-    "fetchSpec": "https://www.atom.io/api/packages/ide-python/versions/1.4.2/tarball"
+    "raw": "https://www.atom.io/api/packages/ide-python/versions/1.9.3/tarball",
+    "rawSpec": "https://www.atom.io/api/packages/ide-python/versions/1.9.3/tarball",
+    "saveSpec": "https://www.atom.io/api/packages/ide-python/versions/1.9.3/tarball",
+    "fetchSpec": "https://www.atom.io/api/packages/ide-python/versions/1.9.3/tarball"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://www.atom.io/api/packages/ide-python/versions/1.4.2/tarball",
-  "_shasum": "66900dbacfe6ff7d8f9de1c5ff14c77e06c24704",
-  "_spec": "https://www.atom.io/api/packages/ide-python/versions/1.4.2/tarball",
-  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-11972-13401-fsvlla.hfkv",
+  "_resolved": "https://www.atom.io/api/packages/ide-python/versions/1.9.3/tarball",
+  "_shasum": "9954d89a2a8ed51e9114f7ea0bda0ce0cdd1364d",
+  "_spec": "https://www.atom.io/api/packages/ide-python/versions/1.9.3/tarball",
+  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-2021518-21774-wd313p.er7z",
   "activationHooks": [
     "core:loaded-shell-environment"
   ],
@@ -34,6 +34,12 @@
       "type": "string",
       "default": "python",
       "description": "Absolute path of your Python binary. This is used to launch the Python language server. Make sure to install `pyls` for this version of Python. Changes will take effect after a restart of the language server. Use `$PIPENV_PATH/bin/python` if you want to use the pipenv path of your project"
+    },
+    "pyls": {
+      "title": "Path to pyls executable",
+      "order": 2,
+      "type": "string",
+      "default": "pylsp"
     },
     "pylsConfigurationSources": {
       "order": 2,
@@ -385,6 +391,113 @@
             }
           }
         },
+        "pyls_mypy": {
+          "title": "MyPy",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "title": "Enabled",
+              "type": "boolean",
+              "order": 1,
+              "default": true,
+              "description": "Enable or disable MyPy."
+            },
+            "live_mode": {
+              "title": "Live mode",
+              "type": "boolean",
+              "order": 1,
+              "default": true,
+              "description": "Turn on live mode. If disabled, mypy linters on file save. Note: Linting on file save may not work on all machines."
+            }
+          }
+        },
+        "flake8": {
+          "title": "Flake8",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "title": "Enabled",
+              "order": 1,
+              "type": "boolean",
+              "default": false,
+              "description": "Enable or disable Flake8."
+            },
+            "exclude": {
+              "title": "Exclude",
+              "type": "array",
+              "default": [
+                ".svn",
+                "CVS",
+                ".bzr",
+                ".hg",
+                ".git",
+                "__pycache__",
+                ".tox",
+                ".eggs",
+                "*.egg"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "description": "Comma-separated list of files or directories to exclude."
+            },
+            "filename": {
+              "title": "Filename",
+              "type": "array",
+              "default": [
+                "*.py"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "description": "Only check for filenames matching the patterns in this comma-separated list."
+            },
+            "hangClosing": {
+              "title": "Hang Closing",
+              "type": "boolean",
+              "default": false,
+              "description": "Hang closing bracket instead of matching indentation of opening bracket's line."
+            },
+            "ignore": {
+              "title": "Ignore",
+              "type": "array",
+              "default": [
+                "E121",
+                "E123",
+                "E126",
+                "E226",
+                "E24",
+                "E704",
+                "W503",
+                "W504"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "description": "Comma-separated list of errors and warnings to ignore (or skip)."
+            },
+            "maxLineLength": {
+              "title": "Max Line Length",
+              "type": "number",
+              "default": 79,
+              "description": "Maximum allowed line length for the entirety of this run."
+            },
+            "select": {
+              "title": "Select",
+              "type": "array",
+              "default": [
+                "E",
+                "F",
+                "W",
+                "C90"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "description": "Comma-separated list of errors and warnings to enable."
+            }
+          }
+        },
         "pylint": {
           "title": "Pylint",
           "type": "object",
@@ -393,7 +506,17 @@
               "title": "Enabled",
               "type": "boolean",
               "default": false,
+              "order": 1,
               "description": "Enable or disable Pylint. Note that Pylint can only be run on files that have been saved to disk."
+            },
+            "args": {
+              "title": "Arguments",
+              "type": "array",
+              "default": [],
+              "items": {
+                "type": "string"
+              },
+              "description": "List of arguments to pass to pylint."
             }
           }
         },
@@ -526,12 +649,47 @@
     }
   },
   "dependencies": {
-    "atom-languageclient": "0.9.9"
+    "@atom-ide-community/nuclide-commons": "^0.8.2",
+    "@atom-ide-community/nuclide-commons-atom": "^0.8.2",
+    "@atom-ide-community/nuclide-debugger-common": "^0.8.2",
+    "arch": "2.1.0",
+    "atom-languageclient": "^1.12.1",
+    "atom-package-deps": "^7.2.3",
+    "dotenv": "5.0.1",
+    "fs-extra": "4.0.3",
+    "getos": "3.1.0",
+    "iconv-lite": "^0.4.21",
+    "inversify": "4.11.1",
+    "line-by-line": "0.1.5",
+    "lodash": "4.17.10",
+    "log4js": "1.1.1",
+    "minimatch": "3.0.4",
+    "nullthrows": "1.0.0",
+    "react": "16.14.0",
+    "reflect-metadata": "0.1.12",
+    "rxjs": "5.5.9",
+    "rxjs-compat": "6.3.3",
+    "semver": "5.5.0",
+    "tmp": "0.0.29",
+    "tree-kill": "1.1.0",
+    "uint64be": "1.0.1",
+    "untildify": "3.0.2",
+    "vscode-debugadapter": "1.24.0",
+    "vscode-debugprotocol": "1.24.0",
+    "which": "^2.0.2",
+    "xml2js": "0.4.17"
   },
   "deprecated": false,
   "description": "Python language support for Atom-IDE",
   "devDependencies": {
-    "mock-spawn": "0.2.6"
+    "@babel/cli": "7.14.3",
+    "@babel/core": "7.14.3",
+    "babel-preset-atomic": "^4.1.0",
+    "build-commit": "0.1.4",
+    "cross-env": "^7.0.3",
+    "mock-spawn": "0.2.6",
+    "prettier-config-atomic": "^2.0.5",
+    "shx": "^0.3.3"
   },
   "engines": {
     "atom": ">=1.21.0 <2.0.0"
@@ -549,6 +707,7 @@
     "rope",
     "pyflakes",
     "pylint",
+    "flake8",
     "pycodestyle",
     "pydocstyle",
     "autopep8",
@@ -559,8 +718,12 @@
     "language-client"
   ],
   "license": "MIT",
-  "main": "./lib/main",
+  "main": "./dist/main",
   "name": "ide-python",
+  "package-deps": [
+    "atom-ide-base"
+  ],
+  "prettier": "prettier-config-atomic",
   "providedServices": {
     "autocomplete.provider": {
       "versions": {
@@ -591,11 +754,30 @@
       "versions": {
         "0.1.0": "provideOutlines"
       }
+    },
+    "debugger.provider": {
+      "description": "Python debugger engine.",
+      "versions": {
+        "0.0.0": "createDebuggerProvider"
+      }
     }
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lgeiger/ide-python.git"
   },
-  "version": "1.4.2"
+  "scripts": {
+    "babel": "npm run clean && shx cp -r lib dist && cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=false babel dist --out-dir dist",
+    "build": "npm run babel",
+    "build-commit": "build-commit -o dist",
+    "clean": "shx rm -rf dist",
+    "copy": "shx cp -r lib/debugger/VendorLib dist/debugger",
+    "format": "prettier --write .",
+    "lint": "eslint . --fix",
+    "prepare": "npm run build",
+    "test": "apm test",
+    "test.format": "prettier . --check",
+    "test.lint": "eslint ."
+  },
+  "version": "1.9.3"
 }

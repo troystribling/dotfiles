@@ -1,3 +1,112 @@
+## 3.13.0
+
+### Updated fonts
+
+-   Update iosevka to v4.5.0
+-   Update victor-mono to v1.4.2
+-   Update fira to 4.202
+
+### Maintenance
+
+-   Make update-github.sh a little more flexible
+
+## 3.12.0
+
+### Updated fonts
+
+-   Update victor-mono to v1.4.1
+-   Update fantasque-sans to v1.8.0
+-   Update iosevka to v3.3.1
+-   Update firacode to 5.2
+
+### Maintenance
+
+-   Add semi-automated update scripts for some fonts
+
+## 3.11.0
+
+### Updated Fonts
+
+-   Updated FiraCode to v4
+-   Updated Iosevka to 3.0.0
+
+### New font variants
+
+-   FiraCode Medium (weight 500)
+-   Iosevka Extended (wider than regular Iosevka)
+
+### Changes
+
+-   FiraCode Light now uses a slightly heavier weight (600 instead of 500) for the bold font-face.
+
+## 3.10.0
+
+### New font
+
+-   JetBrains Mono (PR #96) (thanks Amin Mahmudian)
+
+### Updated fonts
+
+-   Fantasque Sans Mono
+
+### Maintenance
+
+-   Add note on disabling templates for certain variants
+-   Shorten Fantaque Sans Mono definition
+-   Error out if template-derived file does not exist
+-   Allow templates in font paths
+-   Fix up Office Code Pro D file naming scheme
+-   Format code with prettier
+-   Type annotations, refactors, remove unused definitions, mionr fixes, etc
+
+## 3.9.0
+
+### New font
+
+-   Office Code Pro D, the Office Code variant with dotted zero
+
+
+### Other
+
+-   Use more consistent order for fonts in font selection and package settings windows.
+
+## 3.8.0
+
+### New font
+
+-   Victor Mono, with both oblique and true italic faces.
+
+### Maintenance
+
+-   Generator script became smarter. For one, it doesn't count
+    font variants as different fonts anymore. For two, defining
+    font families with a lot of variants became easier. See contribution
+    guide for a more or less comprehensive description.
+
+## 3.7.2
+
+-   Fix cascadia code style
+
+## 3.7.1
+
+-   Compress cascadia-code to woff2
+
+## 3.7.0
+
+-   Add Microsoft Cascadia Code
+
+## 3.6.0
+
+-   Bump FiraCode to v2, add FiraCode Retina
+
+## 3.5.0
+
+### New font
+
+With many thanks to [Sighery](https://github.com/Sighery)
+
+-   Fantasque Sans Mono variant without loop k
+
 ## 3.4.0
 
 ### New fonts

@@ -15,9 +15,8 @@
     automaticallyUpdate: false
     disabledPackages: [
       "wrap-guide"
-      "linter"
-      "linter-solidity"
-      "autocomplete-solidity"
+      "etheratom"
+      "markdown-writer"
     ]
     ignoredNames: [
       ".git"
@@ -54,7 +53,7 @@
     openResultAfterBuild: false
     openResultInBackground: false
   "linter-ui-default":
-    panelHeight: 474
+    panelHeight: 399
   "markdown-writer":
     fileExtension: ".md"
   "spell-check":
@@ -81,6 +80,10 @@
       "varepsilon"
       "AR"
       "Jacobian"
+      "periodigram"
+      "Cholesky"
+      "cointegrated"
+      "cointegration"
     ]
   "split-diff":
     diffWords: true

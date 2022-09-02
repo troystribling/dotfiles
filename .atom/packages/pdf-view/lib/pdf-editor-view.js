@@ -14,6 +14,7 @@ require('./../node_modules/pdfjs-dist/build/pdf.js');
 PDFJS.workerSrc = "file://" + path.resolve(__dirname, "../node_modules/pdfjs-dist/build/pdf.worker.js");
 PDFJS.cMapUrl = "file://" + path.resolve(__dirname, "../node_modules/pdfjs-dist/cmaps")+"/";
 let {exec, execFile} = require('child_process');
+PDFJS.disableWorker = true;
 
 export default class PdfEditorView extends ScrollView {
   static content() {
@@ -110,7 +111,7 @@ export default class PdfEditorView extends ScrollView {
 
     this.on('scroll', scrollCallback);
     $(window).on('resize', resizeHandler);
-    
+
     disposables.add(new Disposable(() => {
       $(window).off('scroll', scrollCallback);
       $(window).off('resize', resizeHandler);
@@ -734,6 +735,11 @@ export default class PdfEditorView extends ScrollView {
   }
 
   destroy() {
+    try {
+      this.pdfDocument.destroy();
+    } catch (e) {
+      console.error(e);
+    }
     return this.detach();
   }
 

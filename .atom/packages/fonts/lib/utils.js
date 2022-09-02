@@ -5,6 +5,9 @@ export function triggerMeasurements() {
   atom.workspace.decreaseFontSize()
 }
 
+/**
+ * @param {string} fontFamily
+ */
 export function applyFont(fontFamily) {
   const font = `'${fontFamily}', ${atom.config.get('fonts.secondaryFonts')}`
 
@@ -15,8 +18,8 @@ export function applyFont(fontFamily) {
   const disp = atom.styles.addStyleSheet(
     `:root { --fonts-package-editorfont: ${font}; }`,
     {
-      sourcePath: 'fonts-package-editorfont'
-    },
+      sourcePath: 'fonts-package-editorfont',
+    }
   )
 
   triggerMeasurements()

@@ -321,6 +321,9 @@ module.exports =
   setSnippetsManager: (@snippetsManager) ->
 
   _completeArguments: (editor, bufferPosition, force) ->
+    # Skip this if Kite is active
+    return if atom.packages.isPackageActive('kite')
+
     useSnippets = atom.config.get('autocomplete-python.useSnippets')
     if not force and useSnippets == 'none'
       atom.commands.dispatch(document.querySelector('atom-text-editor'),
@@ -364,6 +367,7 @@ module.exports =
     return candidates
 
   getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix}) ->
+    return if atom.packages.isPackageActive('kite')
     @load()
     if not @triggerCompletionRegex.test(prefix)
       return @lastSuggestions = []

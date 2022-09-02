@@ -32,7 +32,8 @@ function indent() {
         // Loop through cursor positions to allow for multiple cursors.
         editor.getCursorBufferPositions().forEach(({ row, column: col }) => {
             const tabSize = editor.getTabLength();
-            let lines = editor.getTextInBufferRange([[0, 0], [row, col]]).split("\n");
+            const lineEnding = buffer.getPreferredLineEnding() || "\n";
+            let lines = editor.getTextInBufferRange([[0, 0], [row, col]]).split(lineEnding);
 
             // At this point, the newline character has just been added,
             // so remove the last element of lines, which will be the empty line
@@ -41,13 +42,13 @@ function indent() {
             // Use hanging indentation if it's needed.
             const { nextIndentationLevel, parseOutput } = parser.indentationInfo(lines, tabSize);
             const {
-                canHang, dedent, lastClosedRow, lastColonRow, openBracketStack,
+                canHang, dedentNext, lastClosedRow, lastColonRow, openBracketStack,
             } = parseOutput;
 
             // Use hanging indentation
             const previousLine = lines[row - 1];
-            if (canHang
-                && parser.shouldHang(previousLine, previousLine.length) === parser.Hanging.Full) {
+            const hangType = parser.shouldHang(previousLine, previousLine.length);
+            if (canHang && hangType !== parser.Hanging.None) {
                 const indentation = editor.indentationForBufferRow(row)
                     + atom.config.get("python-indent.hangingIndentTabs");
 
@@ -55,7 +56,7 @@ function indent() {
                 buffer.groupLastChanges();
 
             // Account for Atom's auto-indentation in some cases (don't try to add to it)
-            } else if (!openBracketStack.length && !dedent) {
+            } else if (!openBracketStack.length && !dedentNext) {
                 // Can assume lastClosedRow is not empty
                 if (lastClosedRow[1] === row - 1) {
                     // We just closed a bracket on the row, get indentation from the

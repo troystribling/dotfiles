@@ -3,7 +3,7 @@
 // const { dialog } = require("electron").remote;
 const { existsSync } = require("fs");
 const { EOL } = require("os");
-import { _loadNotebook } from "../lib/import-notebook";
+import { _loadNotebook } from "../dist/import-notebook";
 import { waitAsync } from "./helpers/test-utils";
 
 describe("Import notebook", () => {
@@ -19,12 +19,12 @@ describe("Import notebook", () => {
     const editor = atom.workspace.getActiveTextEditor();
     const code = editor.getText();
     expect(code.split(EOL)).toEqual([
-      "# %%",
+      "# %% codecell",
       "import pandas as pd",
-      "# %%",
+      "# %% codecell",
       "pd.util.testing.makeDataFrame()",
-      "# %%",
-      ""
+      "# %% codecell",
+      "",
     ]);
   });
 });

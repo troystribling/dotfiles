@@ -1,25 +1,28 @@
 {
-  "_from": "https://www.atom.io/api/packages/linter/versions/2.3.0/tarball",
-  "_id": "linter@2.3.0",
+  "_from": "https://www.atom.io/api/packages/linter/versions/3.4.0/tarball",
+  "_id": "linter@3.4.0",
   "_inBundle": false,
-  "_integrity": "sha512-Vc9+azDU7YUxiv25D7qi4DW/3czQYO8c0LqcYEjy0zjmDyZsgO928V+tEYW4Bmaf84ao2W2vEQqTRjOvvnWlFQ==",
+  "_integrity": "sha512-JmSK1/dTX7TEdY7JoX0AWxYzDV+2vErMYwKMLvyEVuq9Laj0qN2/FkuBQf/KEudeMTKAdWy5Nv0xWt1aWJb+5g==",
   "_location": "/linter",
   "_phantomChildren": {},
   "_requested": {
     "type": "remote",
-    "raw": "https://www.atom.io/api/packages/linter/versions/2.3.0/tarball",
-    "rawSpec": "https://www.atom.io/api/packages/linter/versions/2.3.0/tarball",
-    "saveSpec": "https://www.atom.io/api/packages/linter/versions/2.3.0/tarball",
-    "fetchSpec": "https://www.atom.io/api/packages/linter/versions/2.3.0/tarball"
+    "raw": "https://www.atom.io/api/packages/linter/versions/3.4.0/tarball",
+    "rawSpec": "https://www.atom.io/api/packages/linter/versions/3.4.0/tarball",
+    "saveSpec": "https://www.atom.io/api/packages/linter/versions/3.4.0/tarball",
+    "fetchSpec": "https://www.atom.io/api/packages/linter/versions/3.4.0/tarball"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://www.atom.io/api/packages/linter/versions/2.3.0/tarball",
-  "_shasum": "3b397c466a5a5cde369ee21673760d004488e26f",
-  "_spec": "https://www.atom.io/api/packages/linter/versions/2.3.0/tarball",
-  "_where": "/private/var/folders/sw/29ny48hs3wj9v9m9rkcd56h00000gn/T/apm-install-dir-11931-37223-4gthxg.lq7l",
+  "_resolved": "https://www.atom.io/api/packages/linter/versions/3.4.0/tarball",
+  "_shasum": "de9273e3bdc1e94bbd0c81cb7ee760791ac05f5b",
+  "_spec": "https://www.atom.io/api/packages/linter/versions/3.4.0/tarball",
+  "_where": "/private/var/folders/hc/xc94zvls2pq_pw366sdbqlhr0000gn/T/apm-install-dir-2021519-82371-14ml4ev.pyt2g",
+  "activationHooks": [
+    "core:loaded-shell-environment"
+  ],
   "author": {
     "name": "steelbrain"
   },
@@ -85,17 +88,35 @@
     }
   },
   "dependencies": {
-    "atom-package-deps": "^5.0.0",
-    "atom-select-list": "^0.7.2",
-    "lodash": "^4.17.11",
-    "minimatch": "^3.0.3"
+    "atom-package-deps": "^7.2.3",
+    "atom-select-list": "^0.8.1",
+    "lodash": "^4.17.21",
+    "minimatch": "^3.0.4"
   },
   "deprecated": false,
   "description": "A Base Linter with Cow Powers",
   "devDependencies": {
-    "eslint-config-steelbrain": "^6.0.0",
-    "flow-bin": "^0.90.0",
-    "jasmine-fix": "^1.3.1"
+    "@types/atom": "^1.40.10",
+    "@types/jasmine": "^3.7.7",
+    "@types/lodash": "^4.14.170",
+    "@types/minimatch": "^3.0.4",
+    "@types/node": "^15.12.2",
+    "@types/requestidlecallback": "^0.3.1",
+    "atom-ide-base": "^3.1.1",
+    "build-commit": "0.1.4",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.28.0",
+    "eslint-config-atomic": "^1.16.1",
+    "fs-plus": "^3.1.1",
+    "gitly": "^2.1.1",
+    "jasmine-fix": "^1.3.1",
+    "prettier-config-atomic": "^2.0.5",
+    "rollup": "^2.52.1",
+    "rollup-plugin-atomic": "^2.3.2",
+    "shx": "^0.3.3",
+    "solid-js": "^0.26.5",
+    "temp": "^0.9.4",
+    "typescript": "^4.3.4"
   },
   "engines": {
     "atom": ">=1.14.0 <2.0.0"
@@ -106,10 +127,13 @@
     "base linter"
   ],
   "license": "MIT",
-  "main": "./lib/index.js",
+  "main": "./dist/index.js",
   "name": "linter",
   "package-deps": [
-    "linter-ui-default"
+    {
+      "name": "linter-ui-default",
+      "minimumVersion": "3.3.1"
+    }
   ],
   "private": true,
   "providedServices": {
@@ -124,8 +148,23 @@
     "url": "git+https://github.com/steelbrain/linter.git"
   },
   "scripts": {
-    "lint": "(flow check) && (eslint . ) && (prettier --list-different lib/*.js)",
-    "test": "apm test"
+    "build": "npm run tsc.types && npm run build.bundle",
+    "build-commit": "npm run clean && build-commit -o dist",
+    "build.bundle": "cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c",
+    "clean": "shx rm -rf dist",
+    "dev": "npm run clean && cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=true rollup -c -w",
+    "format": "prettier --write .",
+    "get.ui-types": "node ./scripts/get-ui-types.js",
+    "lint": "eslint . --fix",
+    "prepare": "npm run get.ui-types && npm run clean && npm run build",
+    "prepublishOnly": "npm run build-commit",
+    "test": "npm run tsc.build && npm run build && npm run test.only",
+    "test.format": "prettier . --check",
+    "test.lint": "eslint .",
+    "test.only": "atom --test spec",
+    "tsc.build": "npm run clean && cross-env NODE_ENV=production tsc -p lib/tsconfig.json || echo done",
+    "tsc.dev": "npm run clean && cross-env NODE_ENV=development tsc --watch -p lib/tsconfig.json || echo done",
+    "tsc.types": "(tsc -p ./lib/tsconfig.json --emitDeclarationOnly || echo done)"
   },
-  "version": "2.3.0"
+  "version": "3.4.0"
 }
