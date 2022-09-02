@@ -11,11 +11,11 @@ function brewInstallIfNotInstalled {
 
 
 function brewCaskInstallIfNotInstalled {
-   if brew cask ls --versions $1 &> /dev/null; then
+   if brew ls --cask --versions $1 &> /dev/null; then
      echo "brew cask is installed:" $1
    else
      echo "brew cask install install: " $1
-     brew cask install $1
+     brew  install --cask $1
    fi
  }
 
@@ -34,8 +34,6 @@ brewInstallIfNotInstalled coreutils
 brew tap caskroom/cask
 
 brewCaskInstallIfNotInstalled launchrocket
-brewCaskInstallIfNotInstalled psequel
-brewCaskInstallIfNotInstalled google-chrome
 
 linkToHome .atom
 linkToHomeTarget .zshrc.darwin .zshrc
