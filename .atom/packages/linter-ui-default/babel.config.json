@@ -1,5 +1,0 @@
-{
-  "presets": ["@babel/preset-typescript", "babel-preset-solid", "babel-preset-atomic"],
-  "plugins": ["babel-plugin-transform-globalthis"],
-  "exclude": "node_modules/**"
-}
